@@ -13,7 +13,7 @@ def create_unconfirmed_user
   create_visitor
   delete_user
   sign_up
-  visit '/users/sign_out'
+  page.driver.submit :delete, "/users/sign_out", {}
 end
 
 def create_user
@@ -47,7 +47,7 @@ end
 
 ### GIVEN ###
 Given /^I am not logged in$/ do
-  visit '/users/sign_out'
+  page.driver.submit :delete, "/users/sign_out", {}
 end
 
 Given /^I am logged in$/ do
@@ -75,7 +75,7 @@ When /^I sign in with valid credentials$/ do
 end
 
 When /^I sign out$/ do
-  visit '/users/sign_out'
+  page.driver.submit :delete, "/users/sign_out", {}
 end
 
 When /^I sign up with valid user data$/ do
