@@ -30,6 +30,9 @@ gem 'jbuilder', '~> 1.2'
 # User authentication with Devise
 gem 'devise'
 
+# Static Pages served with high_voltage
+gem 'high_voltage'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
