@@ -1,3 +1,8 @@
+[![Build
+Status](https://travis-ci.org/bmorrall/PleaseIgnore.png?branch=master)](https://travis-ci.org/bmorrall/PleaseIgnore)
+[![Coverage
+Status](https://coveralls.io/repos/bmorrall/PleaseIgnore/badge.png)](https://coveralls.io/r/bmorrall/PleaseIgnore)
+
 == README
 
 This README would normally document whatever steps are necessary to get the
