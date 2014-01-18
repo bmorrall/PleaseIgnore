@@ -7,7 +7,7 @@ describe PagesController, type: :routing do
       expect(get('/')).to route_to('pages#show', id: 'home')
     end
 
-    %w(styles privacy terms).each do |page|
+    %w(about styles privacy terms).each do |page|
       it "routes /#{page} to #show" do
         expect(get("/#{page}")).to route_to('pages#show', id: page)
       end

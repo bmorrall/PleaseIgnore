@@ -7,6 +7,8 @@ class PagesController < ApplicationController
   include HighVoltage::StaticPage
   include Concerns::ContentForLayout
 
+  FRONTEND_PAGES = %w{home about styles}
+
   skip_authorization_check # Pages are available for all
   skip_before_action :verify_authenticity_token # No actions are here
 
@@ -24,7 +26,7 @@ class PagesController < ApplicationController
   # Adds Metadata based on the current page
   def set_page_metadata
     params[:id].tap do |page|
-      if %w(home privacy styles terms).include? page
+      if %w(home about privacy styles terms).include? page
         page_title t("pages.#{page}.page_title") unless page == 'home'
         page_author t("pages.#{page}.page_author", default: '')
         page_description t("pages.#{page}.page_description", default: '')
@@ -34,11 +36,10 @@ class PagesController < ApplicationController
   end
 
   def layout_for_page
-    case params[:id]
-    when /terms|privacy/
-      'backend_static'
-    else
+    if FRONTEND_PAGES.include? params[:id]
       'frontend_static'
+    else
+      'backend_static'
     end
   end
 end

@@ -22,6 +22,8 @@ en:
       new:
         page_title: Create Account
   pages:
+    about:
+      page_title: About PleaseIgnore
     privacy:
       page_title: PleaseIgnore Privacy Policy
     styles:

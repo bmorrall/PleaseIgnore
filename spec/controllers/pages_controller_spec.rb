@@ -5,7 +5,7 @@ describe PagesController, type: :controller do
   describe 'GET show' do
     context 'as a visitor' do
       # Frontend Pages
-      %w(home styles).each do |page|
+      %w(home about styles).each do |page|
         context "with GET to /#{page}" do
           before(:each) { get :show, id: page }
           it { is_expected.to render_template(page) }

@@ -5,6 +5,7 @@ describe 'Pages', type: :request do
 
   def page_titles
     @page_titles ||= {
+      'about' => t('pages.about.page_title'),
       'privacy' => t('pages.privacy.page_title'),
       'styles' => t('pages.styles.page_title'),
       'terms' => t('pages.terms.page_title')
@@ -45,7 +46,7 @@ describe 'Pages', type: :request do
     end
   end
 
-  %w(styles privacy terms).each do |page|
+  %w(about styles privacy terms).each do |page|
     describe "GET /#{page}" do
       context 'as a visitor' do
         it "renders the #{page} page" do
