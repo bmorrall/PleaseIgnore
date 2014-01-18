@@ -54,6 +54,7 @@ group :test, :development do
   gem 'rspec-rails'
 end
 group :test do
+  gem 'coveralls', require: false
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
