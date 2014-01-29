@@ -2,31 +2,33 @@
 Status](https://travis-ci.org/bmorrall/PleaseIgnore.png?branch=master)](https://travis-ci.org/bmorrall/PleaseIgnore)
 [![Coverage
 Status](https://coveralls.io/repos/bmorrall/PleaseIgnore/badge.png)](https://coveralls.io/r/bmorrall/PleaseIgnore)
+[![Dependency Status](https://gemnasium.com/bmorrall/PleaseIgnore.png)](https://gemnasium.com/bmorrall/PleaseIgnore)
 
-== README
+README
+======
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+  * Ruby version
 
-* System dependencies
+  * System dependencies
 
-* Configuration
+  * Configuration
 
-* Database creation
+  * Database creation
 
-* Database initialization
+  * Database initialization
 
-* How to run the test suite
+  * How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+  * Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+  * Deployment instructions
 
-* ...
+  * ...
 
 
 Please feel free to use a different markup language if you do not plan to run
