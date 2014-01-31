@@ -27,7 +27,7 @@ gem 'turbolinks'
 gem 'bootstrap-sass'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder' # , '~> 1.2'
 
 # User authentication with Devise
 gem 'devise'
