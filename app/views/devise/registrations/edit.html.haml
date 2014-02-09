@@ -15,6 +15,8 @@
     .form-group
       .col-sm-offset-3.col-sm-6
         %button.btn.btn.btn-primary(type='submit') Update Profile
+        - if resource.errors.any?
+          = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
 - if display_password_change?
   .page-header
@@ -48,6 +50,8 @@
     .form-group
       .col-sm-offset-3.col-sm-6
         %button.btn.btn.btn-primary(type='submit') Change Password
+        - if resource.errors.any?
+          = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
 - if display_accounts?
   .page-header
