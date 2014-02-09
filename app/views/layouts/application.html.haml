@@ -35,8 +35,8 @@
                 %a(href=root_url) Home
               %li{class: header_nav_class('/api')}<
                 %a(href='/api') API Browser
-              %li{class: header_nav_class('/contact')}<
-                %a(href='/contact') Contact
+              %li{class: header_nav_class(contact_path)}<
+                = link_to 'Contact', contact_path
             %ul.nav.navbar-nav.navbar-right
               - if user_signed_in?
                 %li.dropdown{class:page_title=~/Account Management/i?'active':nil}
@@ -69,7 +69,7 @@
             Hackathon Starter
             Project
             ·
-            Created by
+            Modified by
           %a(href='http://benmorrall.com') Ben Morrall
         %div
           Code licensed under
