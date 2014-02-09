@@ -122,10 +122,17 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I edit my account details$/ do
-  click_link "Edit account"
+  click_link "My Account"
   fill_in "user_name", :with => "newname"
-  fill_in "user_current_password", :with => @visitor[:password]
   click_button "Update"
+end
+
+When /^I edit my password details$/ do
+  click_link "My Account"
+  fill_in "user_password", :with => "newpassword1"
+  fill_in "user_password_confirmation", :with => "newpassword1"
+  fill_in "user_current_password", :with => @visitor[:password]
+  click_button "Change Password"
 end
 
 When /^I look at the list of users$/ do
@@ -140,7 +147,7 @@ Then /^I should be signed in$/ do
 end
 
 Then /^I should be signed out$/ do
-  page.should have_content "Sign up"
+  page.should have_content "Create Account"
   page.should have_content "Login"
   page.should_not have_content "Logout"
 end
@@ -183,6 +190,10 @@ end
 
 Then /^I should see an account edited message$/ do
   page.should have_content "You updated your account successfully."
+end
+
+Then /^I should see a password changed message$/ do
+  page.should have_content "You updated your password successfully."
 end
 
 Then /^I should see my name$/ do
