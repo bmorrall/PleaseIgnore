@@ -29,8 +29,6 @@ GEM
     arel (4.0.1)
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
-    bootstrap-sass (3.0.3.0)
-      sass (~> 3.2)
     builder (3.1.4)
     capybara (2.2.1)
       mime-types (>= 1.16)
@@ -45,6 +43,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    commonjs (0.2.7)
     coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
@@ -81,8 +80,11 @@ GEM
     factory_girl_rails (4.3.0)
       factory_girl (~> 4.3.0)
       railties (>= 3.0.0)
+    flutie (2.0.0)
     gherkin (2.12.2)
       multi_json (~> 1.3)
+    haml (4.0.5)
+      tilt
     high_voltage (2.1.0)
     hike (1.2.3)
     i18n (0.6.9)
@@ -95,6 +97,12 @@ GEM
     json (1.8.1)
     launchy (2.4.2)
       addressable (~> 2.3)
+    less (2.4.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.4.2)
+      actionpack (>= 3.1)
+      less (~> 2.4.0)
+    libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -107,6 +115,8 @@ GEM
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
     polyglot (0.3.3)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -127,6 +137,7 @@ GEM
     rake (10.1.1)
     rdoc (4.1.1)
       json (~> 1.4)
+    ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-core (2.14.7)
@@ -168,6 +179,9 @@ GEM
     sqlite3 (1.3.8)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
+    therubyracer (0.12.0)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.18.1)
     thread_safe (0.1.3)
       atomic
@@ -191,7 +205,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass
   coffee-rails (~> 4.0.0)
   coveralls
   cucumber-rails
@@ -199,9 +212,13 @@ DEPENDENCIES
   devise
   email_spec
   factory_girl_rails
+  flutie
+  haml
   high_voltage
   jbuilder (~> 1.2)
   jquery-rails
+  less-rails
+  quiet_assets
   rails (= 4.0.2)
   rails_layout
   rspec-rails
@@ -209,5 +226,6 @@ DEPENDENCIES
   sdoc
   shoulda-matchers
   sqlite3
+  therubyracer
   turbolinks
   uglifier (>= 1.3.0)
