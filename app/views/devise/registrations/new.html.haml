@@ -1,0 +1,26 @@
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form', :class => 'form-horizontal'}) do |f|
+  / %form.form-horizontal(id='signup-form' method='POST')
+  %legend
+    Signup
+  = devise_error_messages!
+  .form-group
+    = f.label :name, class: 'col-sm-3 control-label'
+    .col-sm-7
+      = f.text_field :name, :autofocus => true, class: 'form-control', placeholder: 'Name'
+  .form-group
+    = f.label :email, class: 'col-sm-3 control-label'
+    .col-sm-7
+      = f.email_field :email, class: 'form-control', placeholder: 'Email'
+  .form-group
+    = f.label :password, class: 'col-sm-3 control-label'
+    .col-sm-7
+      = f.password_field :password, class: 'form-control', placeholder: 'Password'
+  .form-group
+    = f.label :password_confirmation, 'Confirm Password', class: 'col-sm-3 control-label'
+    .col-sm-7
+      = f.password_field :password_confirmation, class: 'form-control', placeholder: 'Confirm Password'
+  .form-group
+    .col-sm-offset-3.col-sm-7
+      %button.btn.btn-success(type='submit')
+        %i.fa.fa-check
+        Sign up

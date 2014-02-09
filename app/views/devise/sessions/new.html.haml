@@ -1,0 +1,36 @@
+.col-sm-8.col-sm-offset-2.col-mobile-single
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
+    %legend Sign In
+    = devise_error_messages!
+    .form-group
+      .btn-group.btn-group-justified
+        %a.btn.btn-facebook(href='/auth/facebook')
+          %i.fa.fa-facebook
+          %span
+            Facebook
+        %a.btn.btn-twitter(href='/auth/twitter')
+          %i.fa.fa-twitter
+          %span
+            Twitter
+        %a.btn.btn-github(href='/auth/github')
+          %i.fa.fa-github
+          %span
+            GitHub
+        %a.btn.btn-google-plus(href='/auth/google')
+          %i.fa.fa-google-plus
+          %span
+            Google
+    .form-group
+      - if devise_mapping.registerable?
+        = link_to 'Create Account', new_registration_path(resource_name), class: 'right'
+      = f.label :email, class: 'control-label'
+      = f.email_field :email, class: 'form-control', placeholder: 'Email'
+    .form-group
+      - if devise_mapping.recoverable?
+        = link_to "Forgot password?", new_password_path(resource_name), class: 'right'
+      = f.label :password, class: 'control-label'
+      = f.password_field :password, class: 'form-control', placeholder: 'Password'
+    .form-group
+      %button.btn.btn-primary(type='submit')
+        %i.fa.fa-unlock-alt
+        Log in

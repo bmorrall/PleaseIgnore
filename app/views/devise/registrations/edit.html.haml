@@ -1,0 +1,94 @@
+- if display_profile?
+  .page-header
+    %h3 Profile Information
+
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }) do |f|
+    = devise_error_messages!
+    .form-group
+      = f.label :name, class: 'col-sm-3 control-label'
+      .col-sm-6
+        = f.text_field :name, class: 'form-control'
+    .form-group
+      = f.label :email, class: 'col-sm-3 control-label'
+      .col-sm-6
+        = f.email_field :email, class: 'form-control'
+    .form-group
+      .col-sm-offset-3.col-sm-6
+        %button.btn.btn.btn-primary(type='submit') Update Profile
+
+- if display_password_change?
+  .page-header
+    - if resource.encrypted_password.blank?
+      %h3 Add Password
+    - else
+      %h3 Change Password
+
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }) do |f|
+    = devise_error_messages!
+    - if resource.encrypted_password.blank?
+      .form-group
+        = f.label :email, class: 'col-sm-3 control-label'
+        .col-sm-6
+          = f.email_field :email, class: 'form-control'
+    .form-group
+      = f.label :password, 'New Password', class: 'col-sm-3 control-label'
+      .col-sm-6
+        = f.password_field :password, class: 'form-control'
+    .form-group
+      = f.label :password_confirmation, 'Confirm Password', class: 'col-sm-3 control-label'
+      .col-sm-6
+        = f.password_field :password_confirmation, class: 'form-control'
+    - unless resource.encrypted_password.blank?
+      .form-group
+        = f.label :current_password, 'Current Password', class: 'col-sm-3 control-label'
+        .col-sm-6
+          = f.password_field :current_password, class: 'form-control'
+          .hint
+            You must enter your current password to make changes. 
+    .form-group
+      .col-sm-offset-3.col-sm-6
+        %button.btn.btn.btn-primary(type='submit') Change Password
+
+- if display_accounts?
+  .page-header
+    %h3 Linked Accounts
+
+  .col-sm-offset-3
+    - if resource.facebook_login?
+      %p
+        %a.text-danger(href='/account/unlink/facebook') Unlink your Facebook account
+    - else
+      %p
+        %a(href='/auth/facebook') Link your Facebook account
+
+  .col-sm-offset-3
+    - if resource.twitter_login?
+      %p
+        %a.text-danger(href='/account/unlink/twitter') Unlink your Twitter account
+    - else
+      %p
+        %a(href='/auth/twitter') Link your Twitter account
+
+  .col-sm-offset-3
+    - if resource.github_login?
+      %p
+        %a.text-danger(href='/account/unlink/github') Unlink your GitHub account
+    - else
+      %p
+        %a(href='/auth/github') Link your GitHub account
+
+  .col-sm-offset-3
+    - if resource.google_login?
+      %p
+        %a.text-danger(href='/account/unlink/google') Unlink your Google account
+    - else
+      %p
+        %a(href='/auth/google') Link your Google account
+
+- if display_accounts?
+  .page-header
+    %h3 Delete Account
+
+  .col-sm-offset-3
+    %p You can delete your account, but keep in mind this action is irreversiable.
+    = button_to "Delete my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger'
