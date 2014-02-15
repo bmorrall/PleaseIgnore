@@ -1,5 +1,5 @@
 class SupportMailer < ActionMailer::Base
-  default from: "support@example.com"
+  default to: "support@pleaseignore.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -9,6 +9,6 @@ class SupportMailer < ActionMailer::Base
   def contact_email(attributes)
     @contact = Contact.new(attributes)
 
-    mail to: "support@example.com"
+    mail from: "contact@pleaseignore.com"
   end
 end
