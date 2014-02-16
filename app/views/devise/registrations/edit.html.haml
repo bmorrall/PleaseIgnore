@@ -14,7 +14,9 @@
         = f.email_field :email, class: 'form-control'
     .form-group
       .col-sm-offset-3.col-sm-6
-        %button.btn.btn.btn-primary(type='submit') Update Profile
+        %button.btn.btn.btn-primary(type='submit')
+          %i.fa.fa-user
+          Update Profile
         - if resource.errors.any?
           = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
@@ -49,7 +51,9 @@
             You must enter your current password to change your password.
     .form-group
       .col-sm-offset-3.col-sm-6
-        %button.btn.btn.btn-primary(type='submit') Change Password
+        %button.btn.btn.btn-primary(type='submit')
+          %i.fa.fa-key
+          Change Password
         - if resource.errors.any?
           = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
@@ -95,4 +99,6 @@
 
   .col-sm-offset-3
     %p You can delete your account, but keep in mind this action is irreversiable.
-    = button_to "Delete my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger'
+    = button_to registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger' do
+      %i.fa.fa-trash-o
+      Delete my account
