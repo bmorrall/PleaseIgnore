@@ -26,7 +26,7 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
-# gem 'bootstrap-sass'
+gem 'bootstrap-sass'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
@@ -48,9 +48,6 @@ group :development do
   gem 'rails_layout'
   gem 'quiet_assets'
 end
-
-gem 'therubyracer'
-gem 'less-rails'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

@@ -21,16 +21,16 @@
           %span
             Google
     .form-group
-      - if devise_mapping.registerable?
-        = link_to 'Create Account', new_registration_path(resource_name), class: 'right'
       = f.label :email, class: 'control-label'
       = f.email_field :email, class: 'form-control', placeholder: 'Email'
     .form-group
       - if devise_mapping.recoverable?
-        = link_to "Forgot password?", new_password_path(resource_name), class: 'right'
+        = link_to "Forgot password?", new_password_path(resource_name), class: 'pull-right'
       = f.label :password, class: 'control-label'
       = f.password_field :password, class: 'form-control', placeholder: 'Password'
     .form-group
       %button.btn.btn-primary(type='submit')
         %i.fa.fa-unlock-alt
         Log in
+      - if devise_mapping.registerable?
+        = link_to 'Create a new account', new_registration_path(resource_name), class: 'btn btn-link create-account'
