@@ -45,6 +45,12 @@ def sign_in
   click_button "Log in"
 end
 
+def reset_password
+  visit '/users/password/new'
+  fill_in "user_email", :with => @visitor[:email]
+  click_button 'Reset Password'
+end
+
 ### GIVEN ###
 Given /^I am not logged in$/ do
   page.driver.submit :delete, "/users/sign_out", {}
@@ -66,6 +72,10 @@ end
 
 Given /^I exist as an unconfirmed user$/ do
   create_unconfirmed_user
+end
+
+Given /^I have made a password reset request$/ do
+  reset_password
 end
 
 ### WHEN ###
@@ -139,6 +149,22 @@ When /^I look at the list of users$/ do
   visit '/'
 end
 
+When /^I enter a valid password reset request$/ do
+  reset_password
+end
+
+When /^I enter valid password reset details$/ do
+  fill_in "user_password", :with => @visitor[:password]
+  fill_in "user_password_confirmation", :with => @visitor[:password]
+  click_button "Change my password"
+end
+
+When /^I enter mismatched password reset confirmation$/ do
+  fill_in "user_password", :with => @visitor[:password]
+  fill_in "user_password_confirmation", :with => 'changeme123'
+  click_button "Change my password"
+end
+
 ### THEN ###
 Then /^I should be signed in$/ do
   page.should have_content "Logout"
@@ -199,4 +225,12 @@ end
 Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
+end
+
+Then /^I should see a password reset email has been sent notice$/ do
+  page.should have_content "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
+end
+
+Then /^I should see a password was reset message$/ do
+  page.should have_content "Your password was changed successfully"
 end
