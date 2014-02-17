@@ -485,20 +485,20 @@ $jumbotron-font-size:            ceil(($font-size-base * 1.5));
 //
 //## Define colors for form feedback states and, by default, alerts.
 
-$state-success-text:             #fff;
-$state-success-bg:               $brand-success;
+$state-success-text:             $brand-success;
+$state-success-bg:               #fff;
 $state-success-border:           $brand-success;
 
-$state-info-text:                #fff;
-$state-info-bg:                  $brand-info;
+$state-info-text:                $brand-info;
+$state-info-bg:                  #fff;
 $state-info-border:              $brand-info;
 
-$state-warning-text:             #fff;
-$state-warning-bg:               $brand-warning;
+$state-warning-text:             $brand-warning;
+$state-warning-bg:               #fff;
 $state-warning-border:           $brand-warning;
 
-$state-danger-text:              #fff;
-$state-danger-bg:                $brand-danger;
+$state-danger-text:              $brand-danger;
+$state-danger-bg:                #fff;
 $state-danger-border:            $brand-danger;
 
 
@@ -613,20 +613,20 @@ $alert-padding:               15px;
 $alert-border-radius:         $border-radius-base;
 $alert-link-font-weight:      bold;
 
-$alert-success-bg:            $state-success-bg;
-$alert-success-text:          $state-success-text;
+$alert-success-bg:            $brand-success;
+$alert-success-text:          #fff;
 $alert-success-border:        $state-success-border;
 
-$alert-info-bg:               $state-info-bg;
-$alert-info-text:             $state-info-text;
+$alert-info-bg:               $brand-info;
+$alert-info-text:             #fff;
 $alert-info-border:           $state-info-border;
 
-$alert-warning-bg:            $state-warning-bg;
-$alert-warning-text:          $state-warning-text;
+$alert-warning-bg:            $brand-warning;
+$alert-warning-text:          #fff;
 $alert-warning-border:        $state-warning-border;
 
-$alert-danger-bg:             $state-danger-bg;
-$alert-danger-text:           $state-danger-text;
+$alert-danger-bg:             $brand-danger;
+$alert-danger-text:           #fff;
 $alert-danger-border:         $state-danger-border;
 
 
@@ -696,21 +696,21 @@ $panel-primary-text:          #fff;
 $panel-primary-border:        $brand-primary;
 $panel-primary-heading-bg:    $brand-primary;
 
-$panel-success-text:          $state-success-text;
+$panel-success-text:          #fff;
 $panel-success-border:        $state-success-border;
-$panel-success-heading-bg:    $state-success-bg;
+$panel-success-heading-bg:    $brand-success;
 
-$panel-info-text:             $state-info-text;
+$panel-info-text:             #fff;
 $panel-info-border:           $state-info-border;
-$panel-info-heading-bg:       $state-info-bg;
+$panel-info-heading-bg:       $brand-info;
 
-$panel-warning-text:          $state-warning-text;
+$panel-warning-text:          #fff;
 $panel-warning-border:        $state-warning-border;
-$panel-warning-heading-bg:    $state-warning-bg;
+$panel-warning-heading-bg:    $brand-warning;
 
-$panel-danger-text:           $state-danger-text;
+$panel-danger-text:           #fff;
 $panel-danger-border:         $state-danger-border;
-$panel-danger-heading-bg:     $state-danger-bg;
+$panel-danger-heading-bg:     $brand-danger;
 
 
 //== Thumbnails

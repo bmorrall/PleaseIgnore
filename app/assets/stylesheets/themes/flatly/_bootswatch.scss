@@ -101,9 +101,9 @@ input[type="color"],
 }
 
 .has-warning {
-  .help-block,
-  .control-label {
-    color: $brand-warning;
+  .input-group-addon {
+    color: #fff;
+    background-color: $brand-warning;
   }
 
   .form-control,
@@ -113,9 +113,9 @@ input[type="color"],
 }
 
 .has-error {
-  .help-block,
-  .control-label {
-    color: $brand-danger;
+  .input-group-addon {
+    color: #fff;
+    background-color: $brand-danger;
   }
 
   .form-control,
@@ -125,9 +125,9 @@ input[type="color"],
 }
 
 .has-success {
-  .help-block,
-  .control-label {
-    color: $brand-success;
+  .input-group-addon {
+    color: #fff;
+    background-color: $brand-success;
   }
 
   .form-control,
