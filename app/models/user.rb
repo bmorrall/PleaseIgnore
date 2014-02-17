@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
 
+  validates :terms_and_conditions, acceptance: true
+
   def facebook_login?
     false # TODO: Implement OAuth
   end
