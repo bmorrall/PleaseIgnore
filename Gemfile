@@ -33,6 +33,8 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'haml'
 
+gem 'simple_form'
+
 # User authentication with Devise
 gem 'devise'
 
