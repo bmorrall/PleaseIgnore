@@ -13,7 +13,6 @@ class ContactsController < ApplicationController
       flash[:notice] = 'Your contact request has been sent'
       redirect_to thank_you_contact_path
     else
-      flash.now[:warning] = 'Your have errors in your contact details'
       render :show
     end
   end
