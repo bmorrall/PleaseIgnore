@@ -34,6 +34,7 @@ def sign_up
   fill_in "user_email", :with => @visitor[:email]
   fill_in "user_password", :with => @visitor[:password]
   fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
+  check "user_terms_and_conditions"
   click_button "Sign up"
   find_user
 end
