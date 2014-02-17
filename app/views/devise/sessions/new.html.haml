@@ -1,7 +1,6 @@
 .col-sm-8.col-sm-offset-2.col-mobile-single
   = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
     %legend Sign In
-    = f.error_notification
     .form-group
       .btn-group.btn-group-justified
         %a.btn.btn-facebook(href='/auth/facebook')
@@ -20,6 +19,7 @@
           %i.fa.fa-google-plus
           %span
             Google
+    = f.error_notification
     = f.input :email
     .form-group
       - if devise_mapping.recoverable?
