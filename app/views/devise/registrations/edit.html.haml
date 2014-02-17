@@ -2,16 +2,10 @@
   .page-header
     %h3 Profile Information
 
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }) do |f|
-    = devise_error_messages!
-    .form-group
-      = f.label :name, class: 'col-sm-3 control-label'
-      .col-sm-6
-        = f.text_field :name, class: 'form-control'
-    .form-group
-      = f.label :email, class: 'col-sm-3 control-label'
-      .col-sm-6
-        = f.email_field :email, class: 'form-control'
+  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+    = f.error_notification
+    = f.input :name
+    = f.input :email
     .form-group
       .col-sm-offset-3.col-sm-6
         %button.btn.btn.btn-primary(type='submit')
@@ -27,28 +21,14 @@
     - else
       %h3 Change Password
 
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }) do |f|
-    = devise_error_messages!
+  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+    = f.error_notification
     - if resource.encrypted_password.blank?
-      .form-group
-        = f.label :email, class: 'col-sm-3 control-label'
-        .col-sm-6
-          = f.email_field :email, class: 'form-control'
-    .form-group
-      = f.label :password, 'New Password', class: 'col-sm-3 control-label'
-      .col-sm-6
-        = f.password_field :password, class: 'form-control'
-    .form-group
-      = f.label :password_confirmation, 'Confirm Password', class: 'col-sm-3 control-label'
-      .col-sm-6
-        = f.password_field :password_confirmation, class: 'form-control'
+      = f.input :email
+    = f.input :password, :label => 'New Password'
+    = f.input :password_confirmation
     - unless resource.encrypted_password.blank?
-      .form-group
-        = f.label :current_password, 'Current Password', class: 'col-sm-3 control-label'
-        .col-sm-6
-          = f.password_field :current_password, class: 'form-control'
-          .hint
-            You must enter your current password to change your password.
+      = f.input :current_password
     .form-group
       .col-sm-offset-3.col-sm-6
         %button.btn.btn.btn-primary(type='submit')

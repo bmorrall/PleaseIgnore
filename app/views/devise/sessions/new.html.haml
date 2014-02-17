@@ -1,7 +1,7 @@
 .col-sm-8.col-sm-offset-2.col-mobile-single
-  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
+  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
     %legend Sign In
-    = devise_error_messages!
+    = f.error_notification
     .form-group
       .btn-group.btn-group-justified
         %a.btn.btn-facebook(href='/auth/facebook')
@@ -20,14 +20,12 @@
           %i.fa.fa-google-plus
           %span
             Google
-    .form-group
-      = f.label :email, class: 'control-label'
-      = f.email_field :email, class: 'form-control', placeholder: 'Email'
+    = f.input :email
     .form-group
       - if devise_mapping.recoverable?
-        = link_to "Forgot password?", new_password_path(resource_name), class: 'pull-right'
-      = f.label :password, class: 'control-label'
-      = f.password_field :password, class: 'form-control', placeholder: 'Password'
+        = link_to "Forgot password?", new_password_path(resource_name), class: 'pull-right', tabindex: '-1'
+      = f.label :password
+      = f.input_field :password
     .form-group
       %button.btn.btn-primary(type='submit')
         %i.fa.fa-unlock-alt
