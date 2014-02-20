@@ -1,4 +1,4 @@
-class RegistrationsController < Devise::RegistrationsController
+class Users::RegistrationsController < Devise::RegistrationsController
   helper_method :display_accounts?
   helper_method :display_profile?
   helper_method :display_password_change?
