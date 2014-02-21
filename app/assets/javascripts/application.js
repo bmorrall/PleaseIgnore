@@ -15,8 +15,3 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require main
-
-$(document).on("page:change", function() {
-  $('a[rel=external]').attr('target', '_blank');
-});
-

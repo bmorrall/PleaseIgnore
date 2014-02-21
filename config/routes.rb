@@ -1,5 +1,9 @@
 PleaseIgnore::Application.routes.draw do
-  devise_for :users, :controllers => { :registrations => 'users/registrations' }
+  devise_for :users, :controllers => { :registrations => 'users/registrations', :omniauth_callbacks => "users/omniauth_callbacks" }
+
+  namespace :users do
+    resources :accounts, :only => :destroy
+  end
 
   resource :contact, :only => [:show, :create] do
     get :thank_you

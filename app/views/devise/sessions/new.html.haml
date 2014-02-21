@@ -3,22 +3,11 @@
     %legend Sign In
     .form-group
       .btn-group.btn-group-justified
-        %a.btn.btn-facebook(href='/auth/facebook')
-          %i.fa.fa-facebook
-          %span
-            Facebook
-        %a.btn.btn-twitter(href='/auth/twitter')
-          %i.fa.fa-twitter
-          %span
-            Twitter
-        %a.btn.btn-github(href='/auth/github')
-          %i.fa.fa-github
-          %span
-            GitHub
-        %a.btn.btn-google-plus(href='/auth/google')
-          %i.fa.fa-google-plus
-          %span
-            Google
+        - %w(facebook twitter github google_oauth2).each do |provider|
+          = link_to user_omniauth_authorize_path(provider), class: "btn btn-#{provider_class(provider)}" do
+            %i{ class: "fa fa-#{provider_class(provider)}" }
+            %span
+              = provider_name(provider)
     = f.error_notification
     = f.input :email
     .form-group

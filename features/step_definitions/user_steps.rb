@@ -58,7 +58,7 @@ Given /^I am not logged in$/ do
 end
 
 Given /^I am logged in$/ do
-  create_user
+  @user || create_user
   sign_in
 end
 
@@ -235,3 +235,4 @@ end
 Then /^I should see a password was reset message$/ do
   page.should have_content "Your password was changed successfully"
 end
+

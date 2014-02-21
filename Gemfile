@@ -38,6 +38,11 @@ gem 'simple_form'
 # User authentication with Devise
 gem 'devise'
 
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem "omniauth-google-oauth2"
+gem 'omniauth-twitter'
+
 # Static Pages served with high_voltage
 gem 'high_voltage'
 

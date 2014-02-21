@@ -2,6 +2,11 @@
   %legend
     Signup
   = f.error_notification
+
+  / Pending Linked Accounts
+  = render partial: 'account', collection: resource.new_session_accounts
+
+  / Registration Details
   = f.input :name, :input_html => { autofocus: true }
   = f.input :email
   = f.input :password
