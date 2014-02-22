@@ -4,6 +4,18 @@ module ApplicationHelper
     current_page?(path) ? 'active' : nil
   end
 
+  def message_alert_class(name)
+    if name == :notice
+      'success'
+    elsif name == :warning
+      'warning'
+    elsif name == :info
+      'info'
+    else
+      'danger'
+    end
+  end
+
   def account_icon(account)
     provider_icon account.provider
   end
