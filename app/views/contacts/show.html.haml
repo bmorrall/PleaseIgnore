@@ -1,13 +1,6 @@
-
+- content_for(:page_title) { 'Contact Form' }
 .page-header
   %h3 Contact Form
-
-- if !@contact.errors.any? && @contact.referer && !current_page?(@contact.referer)
-  #flash_info.alert.alert-info.animated.fadeInDown
-    %button.close(type='button' data-dismiss='alert' aria-hidden=true) &times;
-    Your message will mention you visited this page from
-    %strong
-      = @contact.referer
 
 = simple_form_for(@contact, :url => contact_path, :html => { :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap_wide, :defaults => { :label_html => { class: 'col-sm-2' } }) do |f|
   = f.error_notification

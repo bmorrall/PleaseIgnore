@@ -1,9 +1,13 @@
 class ContactsController < ApplicationController
+  include ActionView::Helpers::UrlHelper
 
   def show
     @contact = Contact.new
     referer = request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']
     @contact.referer = referer
+    if referer && !current_page?(referer)
+      flash.now[:info] = "Your message will mention you visited this page from #{referer}"
+    end
   end
 
   def create
