@@ -45,12 +45,22 @@
 
 // Tables =====================================================================
 
+table,
 .table {
 
-  tr.success,
-  tr.warning,
-  tr.danger {
+  a {
+    text-decoration: underline;
+  }
+
+  .success,
+  .warning,
+  .danger,
+  .info {
     color: #fff;
+
+    a {
+      color: #fff;
+    }
   }
 
   > thead > tr > th,
@@ -61,6 +71,7 @@
   > tfoot > tr > td {
     border: none;
   }
+
 }
 
 .table-bordered {
@@ -101,9 +112,9 @@ input[type="color"],
 }
 
 .has-warning {
-  .input-group-addon {
-    color: #fff;
-    background-color: $brand-warning;
+  .help-block,
+  .control-label {
+    color: $brand-warning;
   }
 
   .form-control,
@@ -113,9 +124,9 @@ input[type="color"],
 }
 
 .has-error {
-  .input-group-addon {
-    color: #fff;
-    background-color: $brand-danger;
+  .help-block,
+  .control-label {
+    color: $brand-danger;
   }
 
   .form-control,
@@ -125,9 +136,9 @@ input[type="color"],
 }
 
 .has-success {
-  .input-group-addon {
-    color: #fff;
-    background-color: $brand-success;
+  .help-block,
+  .control-label {
+    color: $brand-success;
   }
 
   .form-control,
