@@ -142,5 +142,15 @@ body {
 // Page Tweaks
 // -------------------------
 
+.has-warning,
+.has-error,
+.has-success {
+  // Fix Checkbox labels for errors
+  .checkbox,
+  .radio {
+    color: $brand-primary;
+  }
+}
+
 @import 'devise';
 @import 'simple_form';
