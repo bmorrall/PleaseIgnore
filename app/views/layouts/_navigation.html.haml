@@ -12,8 +12,8 @@
       %ul.nav.navbar-nav
         %li{class: header_nav_class(root_path)}<
           %a(href=root_url) Home
-        %li{class: header_nav_class('/api')}<
-          %a(href='/api') API Browser
+        %li{class: header_nav_class(page_path('styles'))}<
+          = link_to 'Styles', page_path('styles')
         %li{class: header_nav_class(contact_path)}<
           = link_to 'Contact', contact_path
       %ul.nav.navbar-nav.navbar-right

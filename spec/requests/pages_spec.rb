@@ -22,4 +22,15 @@ describe "Pages" do
     end
   end
 
+  %w(styles).each do |page|
+    describe "GET /#{page}" do
+      context "as a visitor" do
+        it "renders the #{page} page" do
+          get page_path(page)
+          response.status.should be(200)
+        end
+      end
+    end
+  end
+
 end

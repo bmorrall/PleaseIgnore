@@ -142,13 +142,30 @@ body {
 // Page Tweaks
 // -------------------------
 
-.has-warning,
-.has-error,
+.page-header {
+  margin-top: 0; // Remove top margin for page headers
+}
+
+.has-warning {
+  // Fix Checkbox labels for errors
+  .checkbox,
+  .radio {
+    color: $brand-warning;
+  }
+}
+.has-error {
+  // Fix Checkbox labels for errors
+  .checkbox,
+  .radio {
+    color: $brand-danger;
+  }
+}
+
 .has-success {
   // Fix Checkbox labels for errors
   .checkbox,
   .radio {
-    color: $brand-primary;
+    color: $brand-success;
   }
 }
 
