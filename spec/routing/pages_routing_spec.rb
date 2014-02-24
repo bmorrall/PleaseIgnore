@@ -7,5 +7,10 @@ describe HighVoltage::PagesController do
       get("/").should route_to("high_voltage/pages#show", id: 'home')
     end
 
+    %w(styles privacy terms).each do |page|
+      it "routes /#{page} to #show" do
+        get("/#{page}").should route_to("high_voltage/pages#show", id: page)
+      end
+    end
   end
 end

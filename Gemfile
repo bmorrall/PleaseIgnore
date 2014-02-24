@@ -46,14 +46,20 @@ gem 'omniauth-twitter'
 # Static Pages served with high_voltage
 gem 'high_voltage'
 
+# Use Haml for cleaner HTML
+gem 'haml'
+
+# Use redcarpet for markdown parseing
+gem 'redcarpet'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
 
 group :development do
-  gem 'rails_layout'
   gem 'quiet_assets'
+  gem 'rails_layout'
 end
 
 # Use ActiveModel has_secure_password

@@ -22,7 +22,7 @@ describe "Pages" do
     end
   end
 
-  %w(styles).each do |page|
+  %w(styles privacy terms).each do |page|
     describe "GET /#{page}" do
       context "as a visitor" do
         it "renders the #{page} page" do
