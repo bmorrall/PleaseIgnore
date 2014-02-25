@@ -50,7 +50,7 @@
     // Link Account Items
     - omniauth_providers.each do |provider|
       - unless resource.has_provider_account? provider
-        = render partial: 'new_account', locals: { provider: provider, provider_name: provider_name(provider) }
+        = render partial: 'new_account', locals: { provider: provider }
 
 - if display_accounts?
   .page-header
