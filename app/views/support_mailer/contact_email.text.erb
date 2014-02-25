@@ -9,5 +9,8 @@ Email:
 Body:
   <%= @contact.body%>
 
+<% unless @contact.referer.blank? -%>
 Referer:
   <%= @contact.referer %>
+
+<%- end -%>
