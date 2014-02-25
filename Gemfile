@@ -9,8 +9,6 @@ gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
-gem 'flutie'
-
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -26,28 +24,32 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
+# Use Twitter Bootstrap for base stylesheet
 gem 'bootstrap-sass'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'haml'
-
+# Use simple form to simplify forms
 gem 'simple_form'
 
 # User authentication with Devise
 gem 'devise'
 
+# Omniauth providers
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem "omniauth-google-oauth2"
 gem 'omniauth-twitter'
 
+# Use Haml for cleaner HTML
+gem 'haml'
+
 # Static Pages served with high_voltage
 gem 'high_voltage'
 
-# Use Haml for cleaner HTML
-gem 'haml'
+# Use flutie for page_title and body_class
+gem 'flutie'
 
 # Use redcarpet for markdown parseing
 gem 'redcarpet'
