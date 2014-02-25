@@ -4,6 +4,7 @@
 
 = simple_form_for(@contact, :url => contact_path, :html => { :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap_wide, :defaults => { :label_html => { class: 'col-sm-2' } }) do |f|
   = f.error_notification
+  = f.input :referer, :as => :hidden
   = f.input :name, :input_html => { autofocus: contact_autofocus(:name) }
   = f.input :email, :input_html => { autofocus: contact_autofocus(:email) }
   = f.input :body, :as => :text, :input_html => { rows: 7, autofocus: contact_autofocus(:body) }
