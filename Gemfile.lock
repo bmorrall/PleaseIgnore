@@ -193,6 +193,8 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    sendgrid (1.2.0)
+      json
     shoulda-matchers (2.5.0)
       activesupport (>= 3.0.0)
     simple_form (3.0.1)
@@ -263,6 +265,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
+  sendgrid
   shoulda-matchers
   simple_form
   sqlite3

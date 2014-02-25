@@ -54,6 +54,9 @@ gem 'flutie'
 # Use redcarpet for markdown parseing
 gem 'redcarpet'
 
+# Use sendgrid to send emails
+gem 'sendgrid'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

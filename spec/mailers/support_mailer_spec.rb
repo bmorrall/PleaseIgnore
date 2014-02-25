@@ -13,7 +13,7 @@ describe SupportMailer do
     end
 
     it "renders the headers" do
-      mail.subject.should eq("Contact email")
+      mail.subject.should eq("PleaseIgnore Contact Email")
       mail.to.should eq(["support@pleaseignore.com"])
       mail.from.should eq(["contact@pleaseignore.com"])
     end
