@@ -17,6 +17,12 @@ module NavigationHelpers
     when /the sign in page/
       '/users/sign_in'
 
+    when /the privacy policy page/
+      '/privacy'
+
+    when /the terms of service page/
+      '/terms'
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
