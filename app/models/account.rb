@@ -24,6 +24,10 @@ class Account < ActiveRecord::Base
     end
   end
 
+  def self.omniauth_providers
+    Devise.omniauth_configs.keys.keep_if { |provider| provider != :developer }
+  end
+
   def self.provider_name(provider)
     return "GitHub" if provider == 'github'
     return "Google" if provider =~ /google/

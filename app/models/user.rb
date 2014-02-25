@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
 
   validates :terms_and_conditions, acceptance: true
 
+  def has_provider_account?(provider)
+    accounts.where(provider: provider.to_s).any?
+  end
+
   def facebook_login?
     accounts.where(:provider => 'facebook').any?
   end

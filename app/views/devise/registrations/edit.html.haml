@@ -48,14 +48,9 @@
     = render partial: 'account', collection: resource.accounts
 
     // Link Account Items
-    - unless resource.facebook_login?
-      = render partial: 'new_account', locals: { provider: 'facebook', provider_name: 'Facebook' }
-    - unless resource.twitter_login?
-      = render partial: 'new_account', locals: { provider: 'twitter', provider_name: 'Twitter' }
-    - unless resource.github_login?
-      = render partial: 'new_account', locals: { provider: 'github', provider_name: 'GitHub'  }
-    - unless resource.google_login?
-      = render partial: 'new_account', locals: { provider: 'google_oauth2', provider_name: 'Google'  }
+    - omniauth_providers.each do |provider|
+      - unless resource.has_provider_account? provider
+        = render partial: 'new_account', locals: { provider: provider, provider_name: provider_name(provider) }
 
 - if display_accounts?
   .page-header
