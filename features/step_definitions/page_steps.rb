@@ -1,5 +1,5 @@
 
-Given /^I am at the (.+) page$/ do |page|
-  visit page_path(page)
+Given /^I am at (.+)$/ do |page|
+  visit path_to(page)
 end
 
