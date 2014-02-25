@@ -3,6 +3,10 @@ class ContactsController < ApplicationController
 
   def show
     @contact = Contact.new
+    if user_signed_in?
+      @contact.name = current_user.name
+      @contact.email = current_user.email
+    end
     referer = request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']
     @contact.referer = referer
     if referer && !current_page?(referer)
