@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.3'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -24,16 +24,38 @@ gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
+# Use Twitter Bootstrap for base stylesheet
 gem 'bootstrap-sass'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder' # , '~> 1.2'
 
+# Use simple form to simplify forms
+gem 'simple_form'
+
 # User authentication with Devise
 gem 'devise'
 
+# Omniauth providers
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem "omniauth-google-oauth2"
+gem 'omniauth-twitter'
+
+# Use Haml for cleaner HTML
+gem 'haml'
+
 # Static Pages served with high_voltage
 gem 'high_voltage'
+
+# Use flutie for page_title and body_class
+gem 'flutie'
+
+# Use redcarpet for markdown parseing
+gem 'redcarpet'
+
+# Use sendgrid to send emails
+gem 'sendgrid'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -41,6 +63,7 @@ group :doc do
 end
 
 group :development do
+  gem 'quiet_assets'
   gem 'rails_layout'
 end
 
@@ -64,6 +87,7 @@ group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'faker'
   gem 'email_spec'
   gem 'shoulda-matchers'
 end

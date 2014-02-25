@@ -11,7 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140116121309) do
+ActiveRecord::Schema.define(version: 20140218050239) do
+
+  create_table "accounts", force: true do |t|
+    t.string   "provider",         null: false
+    t.string   "uid",              null: false
+    t.string   "name"
+    t.string   "nickname"
+    t.string   "image"
+    t.string   "website"
+    t.string   "oauth_token"
+    t.string   "oauth_secret"
+    t.datetime "oauth_expires_at"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "accounts", ["provider", "uid"], name: "index_accounts_on_provider_and_uid", unique: true
+  add_index "accounts", ["user_id"], name: "index_accounts_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

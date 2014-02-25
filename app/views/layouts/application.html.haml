@@ -1,0 +1,41 @@
+!!! 5
+%html
+  %head
+    %meta(charset='utf-8')
+    %meta(http-equiv='X-UA-Compatible' content='IE=edge')
+    %meta(name='viewport' content='width=device-width initial-scale=1.0')
+    %meta(name='description' content='')
+    %meta(name='author' content='')
+
+    %title<
+      = page_title :app_name => 'PleaseIgnore', :separator => " | "
+
+    = stylesheet_link_tag 'application', media: 'all', "data-turbolinks-track" => true
+
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body
+    #wrap
+      = render 'layouts/navigation'
+      .container
+        = render 'layouts/messages'
+        = yield
+    #footer
+      .container.text-center
+        %div<
+          &copy; 2014 Company, Inc.
+        %div
+          %strong
+            Hackathon Starter
+            Project
+            ·
+            Modified by
+          %a(href='http://benmorrall.com') Ben Morrall
+        %div
+          Code licensed under
+          %a(href='http://opensource.org/licenses/mit-license.html')  MIT License
+        %div
+          %a(href='https://github.com/bmorrall/PleaseIgnore') GitHub Project
+          ·
+          %a(href='https://github.com/bmorrall/PleaseIgnore/issues')  Issues
+    

@@ -1,0 +1,26 @@
+- content_for(:page_title) { 'Create Account' }
+= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :role => 'form', :class => 'form-horizontal'}, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+  %legend
+    Create Account
+  = f.error_notification
+
+  / Pending Linked Accounts
+  = render partial: 'account', collection: resource.new_session_accounts
+
+  / Registration Details
+  = f.input :name, :input_html => { autofocus: true }
+  = f.input :email
+  = f.input :password
+  = f.input :password_confirmation
+  - terms_and_conditions_label = content_tag :span do
+    I accept the
+    = link_to 'Terms of Service', page_path('terms'), rel: 'external'
+    and
+    = succeed "." do
+      = link_to 'Privacy Policy', page_path('privacy'), rel: 'external'
+  = f.input :terms_and_conditions, :as => :boolean, inline_label: terms_and_conditions_label
+  .form-group
+    .col-sm-offset-3.col-sm-7
+      %button.btn.btn-success(type='submit')
+        %i.fa.fa-check
+        Sign up

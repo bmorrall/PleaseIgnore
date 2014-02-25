@@ -34,6 +34,7 @@ def sign_up
   fill_in "user_email", :with => @visitor[:email]
   fill_in "user_password", :with => @visitor[:password]
   fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
+  check "user_terms_and_conditions"
   click_button "Sign up"
   find_user
 end
@@ -42,7 +43,13 @@ def sign_in
   visit '/users/sign_in'
   fill_in "user_email", :with => @visitor[:email]
   fill_in "user_password", :with => @visitor[:password]
-  click_button "Log in"
+  click_button "Sign in"
+end
+
+def reset_password
+  visit '/users/password/new'
+  fill_in "user_email", :with => @visitor[:email]
+  click_button 'Reset Password'
 end
 
 ### GIVEN ###
@@ -51,7 +58,7 @@ Given /^I am not logged in$/ do
 end
 
 Given /^I am logged in$/ do
-  create_user
+  @user || create_user
   sign_in
 end
 
@@ -66,6 +73,10 @@ end
 
 Given /^I exist as an unconfirmed user$/ do
   create_unconfirmed_user
+end
+
+Given /^I have made a password reset request$/ do
+  reset_password
 end
 
 ### WHEN ###
@@ -122,14 +133,37 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I edit my account details$/ do
-  click_link "Edit account"
+  click_link "My Account"
   fill_in "user_name", :with => "newname"
-  fill_in "user_current_password", :with => @visitor[:password]
   click_button "Update"
+end
+
+When /^I edit my password details$/ do
+  click_link "My Account"
+  fill_in "user_password", :with => "newpassword1"
+  fill_in "user_password_confirmation", :with => "newpassword1"
+  fill_in "user_current_password", :with => @visitor[:password]
+  click_button "Change Password"
 end
 
 When /^I look at the list of users$/ do
   visit '/'
+end
+
+When /^I enter a valid password reset request$/ do
+  reset_password
+end
+
+When /^I enter valid password reset details$/ do
+  fill_in "user_password", :with => @visitor[:password]
+  fill_in "user_password_confirmation", :with => @visitor[:password]
+  click_button "Change my password"
+end
+
+When /^I enter mismatched password reset confirmation$/ do
+  fill_in "user_password", :with => @visitor[:password]
+  fill_in "user_password_confirmation", :with => 'changeme123'
+  click_button "Change my password"
 end
 
 ### THEN ###
@@ -140,7 +174,7 @@ Then /^I should be signed in$/ do
 end
 
 Then /^I should be signed out$/ do
-  page.should have_content "Sign up"
+  page.should have_content "Create Account"
   page.should have_content "Login"
   page.should_not have_content "Logout"
 end
@@ -185,7 +219,20 @@ Then /^I should see an account edited message$/ do
   page.should have_content "You updated your account successfully."
 end
 
+Then /^I should see a password changed message$/ do
+  page.should have_content "You updated your password successfully."
+end
+
 Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
 end
+
+Then /^I should see a password reset email has been sent notice$/ do
+  page.should have_content "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
+end
+
+Then /^I should see a password was reset message$/ do
+  page.should have_content "Your password was changed successfully"
+end
+

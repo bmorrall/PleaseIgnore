@@ -1,0 +1,7 @@
+.form-group{ class: "btn-#{provider_class(provider)}"}
+  %label.control-label.col-sm-3
+    = provider_icon(provider)
+    = provider_name
+    account
+  .col-sm-7
+    = link_to "Link your #{provider_name} account", user_omniauth_authorize_path(provider), class: 'form-control btn btn-primary', rel: 'nofollow'

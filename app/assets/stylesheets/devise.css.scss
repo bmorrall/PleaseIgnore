@@ -1,0 +1,56 @@
+
+.input-group-addon.account-image {
+  padding: 10px;
+  img {
+    margin-top: -15px;
+    margin-bottom: -10px;
+  }
+}
+
+a.form-control[disabled]:hover {
+  color: $brand-primary;
+}
+a.form-control[disabled]:hover {
+  text-decoration: none;
+}
+
+.form-group {
+  &.btn-developer,
+  &.btn-facebook,
+  &.btn-twitter,
+  &.btn-google-plus,
+  &.btn-github {
+    padding: 4px 0;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  // Change Login buttons to only show logo on mobile devices
+  .btn-group-justified {
+    [class^="fa-"], [class*="fa-"] {
+      margin-right: 0;
+    }
+    a {
+      @include responsive-invisibility(span);
+    }
+  }
+
+  // Single Column shouldn't have any padding
+  .col-mobile-single {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Form Groups need extra label padding
+  .form-group {
+    &.btn-developer,
+    &.btn-facebook,
+    &.btn-twitter,
+    &.btn-google-plus,
+    &.btn-github {
+      label {
+        padding-bottom: 11px;
+      }
+    }
+  }
+}

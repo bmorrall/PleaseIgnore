@@ -1,0 +1,16 @@
+- content_for(:page_title) { 'Contact form' }
+.page-header
+  %h3 Contact form
+
+= simple_form_for(@contact, :url => contact_path, :html => { :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap_wide, :defaults => { :label_html => { class: 'col-sm-2' } }) do |f|
+  = f.error_notification
+  = f.input :referer, :as => :hidden
+  = f.input :name, :input_html => { autofocus: contact_autofocus(:name) }
+  = f.input :email, :input_html => { autofocus: contact_autofocus(:email) }
+  = f.input :body, :as => :text, :input_html => { rows: 7, autofocus: contact_autofocus(:body) }
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      %button.btn.btn-default(type='submit')
+        %i.fa.fa-mail-forward
+        Send
+      = image_tag 'sendgrid.png', height: 34, class: 'pull-right'

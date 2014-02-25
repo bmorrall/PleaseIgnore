@@ -1,0 +1,16 @@
+You have received a Contact Email from PleaseIgnore
+
+Name:
+  <%= @contact.name %>
+
+Email:
+  <%= @contact.email %>
+
+Body:
+  <%= @contact.body%>
+
+<% unless @contact.referer.blank? -%>
+Referer:
+  <%= @contact.referer %>
+
+<%- end -%>

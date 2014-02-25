@@ -1,0 +1,13 @@
+- content_for(:page_title) { 'Change your password' }
+.col-sm-8.col-sm-offset-2.col-mobile-single
+  = simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+    %legend
+      Change your password
+    = f.error_notification
+    = f.hidden_field :reset_password_token
+    = f.input :password, :input_html => { autofocus: true }, label: 'New Password', placeholder: 'New Password'
+    = f.input :password_confirmation
+    .form-group
+      %button.btn.btn-primary(type='submit')
+        %i.fa.fa-key
+        Change my password

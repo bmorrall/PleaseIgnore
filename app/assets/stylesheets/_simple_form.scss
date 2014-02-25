@@ -1,0 +1,20 @@
+
+.form-group {
+  // Remove bottom margin in check box
+  .help-block {
+    margin-bottom: 0;
+  }
+}
+
+// Checkbox Input Label should not be bold
+label.checkbox {
+  font-weight: normal;
+}
+
+.checkbox {
+  // Fix Checbox Input Poisition
+  .form-control {
+    height: auto;
+    width: auto;
+  }
+}

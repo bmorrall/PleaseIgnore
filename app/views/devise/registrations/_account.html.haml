@@ -1,0 +1,20 @@
+.form-group{ class: "btn-#{provider_class(account.provider)}"}
+  %label.control-label.col-sm-3
+    = account_icon(account)
+    = account.provider_name
+    account
+  .col-sm-7
+    .input-group
+      - if account.image
+        %span.input-group-addon.account-image
+          = image_tag account.image, size: '32x32'
+      - if account.website
+        = link_to account.website, class: 'form-control', rel: 'external' do
+          = account.account_uid
+      - else
+        = link_to '#', class: 'form-control', disabled: true do
+          = account.account_uid
+      - if account.persisted?
+        = link_to '&times;'.html_safe, users_account_path(account), method: 'delete', class: "input-group-addon unlink-account unlink-#{provider_class(account.provider)}", data: { confirm: "Are you sure you want to unlink your #{account.provider_name} account?" }, rel: 'nofollow'
+      - else
+        = link_to '&times;'.html_safe, destroy_user_session_path, method: 'delete', class: 'input-group-addon cancel-signup', data: { confirm: 'Are you sure you want to cancel sign in?' }, rel: 'nofollow'
