@@ -10,7 +10,7 @@
     %title<
       = page_title :app_name => 'PleaseIgnore', :separator => " | "
 
-    = stylesheet_link_tag 'application', media: 'all', "data-turbolinks-track" => true
+    = stylesheet_link_tag 'application', media: 'all'
 
     / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     /[if lt IE 9]
@@ -21,7 +21,7 @@
   %body
     #wrap
       = render 'layouts/navigation'
-      %main.container(role='main')
+      %main.container(role='main' data-pjax-container)
         = render 'layouts/messages'
         = yield
     %footer#footer(role='footer')
@@ -43,4 +43,4 @@
           ·
           %a(href='https://github.com/bmorrall/PleaseIgnore/issues')  Issues
 
-    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = javascript_include_tag "application"

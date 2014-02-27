@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]
     devise_parameter_sanitizer.for(:account_update) << :name
   end
+
+  def pjax_layout
+    'pjax'
+  end
+
 end
