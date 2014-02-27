@@ -64,7 +64,6 @@ end
 
 group :development do
   gem 'quiet_assets'
-  gem 'rails_layout'
 end
 
 # Use ActiveModel has_secure_password

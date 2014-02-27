@@ -2,3 +2,27 @@
 // Shorter Navbar Height
 $navbar-height: 50px;
 $navbar-padding-vertical: (($navbar-height - $line-height-computed) / 2);
+
+// Inverse Navbar
+$navbar-inverse-color:             $navbar-default-bg;
+$navbar-inverse-bg:                #fff;
+$navbar-inverse-border:            darken($navbar-inverse-bg, 6.5%);
+
+// Inverse Navbar links
+$navbar-inverse-link-color:                $navbar-default-bg;
+$navbar-inverse-link-hover-color:          $brand-success;
+$navbar-inverse-link-hover-bg:             transparent;
+$navbar-inverse-link-active-color:         #fff;
+$navbar-inverse-link-active-bg:            darken($navbar-default-bg, 10%);
+$navbar-inverse-link-disabled-color:       #ccc;
+$navbar-inverse-link-disabled-bg:          transparent;
+
+// Inverse Navbar brand label
+$navbar-inverse-brand-color:               $navbar-inverse-link-color;
+$navbar-inverse-brand-hover-color:         $navbar-inverse-link-hover-color;
+$navbar-inverse-brand-hover-bg:            transparent;
+
+// Inverse Navbar toggle
+$navbar-inverse-toggle-hover-bg:           darken($navbar-inverse-bg, 10%);
+$navbar-inverse-toggle-icon-bar-bg:        $navbar-inverse-color;
+$navbar-inverse-toggle-border-color:       darken($navbar-inverse-bg, 10%);

@@ -1,63 +1,67 @@
 - content_for(:page_title) { 'Account Management' }
 
 - if display_profile?
-  .page-header
-    %h3 Profile Information
+  %section
+    %header.page-header
+      %h3 Profile Information
 
-  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
-    = f.error_notification
-    = f.input :name
-    = f.input :email
-    .form-group
-      .col-sm-offset-3.col-sm-6
-        %button.btn.btn.btn-primary(type='submit')
-          %i.fa.fa-user
-          Update Profile
-        - if resource.errors.any?
-          = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+      = f.error_notification
+      = f.input :name
+      = f.input :email
+      .form-group
+        .col-sm-offset-3.col-sm-6
+          %button.btn.btn.btn-primary(type='submit')
+            %i.fa.fa-user
+            Update Profile
+          - if resource.errors.any?
+            = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
 - if display_password_change?
-  .page-header
-    - if resource.encrypted_password.blank?
-      %h3 Add Password
-    - else
-      %h3 Change Password
+  %section
+    %header.page-header
+      - if resource.encrypted_password.blank?
+        %h3 Add Password
+      - else
+        %h3 Change Password
 
-  = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
-    = f.error_notification
-    - if resource.encrypted_password.blank?
-      = f.input :email
-    = f.input :password, :label => 'New Password'
-    = f.input :password_confirmation
-    - unless resource.encrypted_password.blank?
-      = f.input :current_password
-    .form-group
-      .col-sm-offset-3.col-sm-6
-        %button.btn.btn.btn-primary(type='submit')
-          %i.fa.fa-key
-          Change Password
-        - if resource.errors.any?
-          = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
-
-- if display_accounts?
-  .page-header
-    %h3 Linked Accounts
-
-  .form-horizontal
-    // Linked Accounts
-    = render partial: 'account', collection: resource.accounts
-
-    // Link Account Items
-    - omniauth_providers.each do |provider|
-      - unless resource.has_provider_account? provider
-        = render partial: 'new_account', locals: { provider: provider }
+    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+      = f.error_notification
+      - if resource.encrypted_password.blank?
+        = f.input :email
+      = f.input :password, :label => 'New Password'
+      = f.input :password_confirmation
+      - unless resource.encrypted_password.blank?
+        = f.input :current_password
+      .form-group
+        .col-sm-offset-3.col-sm-6
+          %button.btn.btn.btn-primary(type='submit')
+            %i.fa.fa-key
+            Change Password
+          - if resource.errors.any?
+            = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
 - if display_accounts?
-  .page-header
-    %h3 Delete Account
+  %section
+    %header.page-header
+      %h3 Linked Accounts
 
-  .col-sm-offset-3.col-sm-7
-    %p You can delete your account, but keep in mind this action is irreversiable.
-    = button_to registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger' do
-      %i.fa.fa-trash-o
-      Delete my account
+    .form-horizontal
+      // Linked Accounts
+      = render partial: 'account', collection: resource.accounts
+
+      // Link Account Items
+      - omniauth_providers.each do |provider|
+        - unless resource.has_provider_account? provider
+          = render partial: 'new_account', locals: { provider: provider }
+
+- if display_accounts?
+  %section
+    %header.page-header
+      %h3 Delete Account
+
+    .col-sm-offset-3.col-sm-7
+      %p You can delete your account, but keep in mind this action is irreversiable.
+      = button_to registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger' do
+        %i.fa.fa-trash-o
+        Delete my account
