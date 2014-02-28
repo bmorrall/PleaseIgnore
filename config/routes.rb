@@ -9,6 +9,7 @@ PleaseIgnore::Application.routes.draw do
     get :thank_you
   end
 
+  get "/home", to: redirect('/')
   get "/*id" => 'pages#show', as: :page, format: false
   root to: 'pages#show', id: 'home'
 
