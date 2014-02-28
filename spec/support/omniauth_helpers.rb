@@ -118,7 +118,7 @@ module OmniauthHelpers
 
     OmniAuth::AuthHash.new({
       'uid' => @google_credentials[:uid],
-      'provider' => 'github',
+      'provider' => 'google_oauth2',
       'info' => {
         'name' => @google_credentials[:name],
         'email' => @auth_account[:email],
