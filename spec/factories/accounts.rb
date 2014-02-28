@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :account do
     provider "developer"
     sequence(:uid) { |n| "uid_#{n}" }
-    name "MyString"
+    name { Faker::Name.name }
     user
 
     factory :facebook_account do
