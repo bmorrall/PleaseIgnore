@@ -1,12 +1,25 @@
 class User < ActiveRecord::Base
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  devise :omniauthable, :omniauth_providers => [:developer, :facebook, :twitter, :github, :google_oauth2]
 
-  has_many :accounts, -> { order 'accounts.provider ASC' }, :dependent => :destroy
-  after_create :save_new_session_accounts!
+  devise :omniauthable, :omniauth_providers => [
+    :developer,
+    :facebook,
+    :twitter,
+    :github,
+    :google_oauth2
+  ]
+
+  # Associations
+
+  has_many :accounts,
+    -> { order 'accounts.provider ASC' },
+    :dependent => :destroy
+
+  # Class Methods
 
   def self.new_with_session(params, session)
     super.tap do |user|
@@ -27,56 +40,52 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates :name, presence: true
+  # Validations
 
-  validates :terms_and_conditions, acceptance: true
+  validates :name,
+    presence: true
+
+  validates :terms_and_conditions,
+    acceptance: true
+
+  # Callbacks
+
+  after_create :save_new_session_accounts!
+
+  # Instance Methods
 
   def has_provider_account?(provider)
     accounts.where(provider: provider.to_s).any?
   end
 
-  def facebook_login?
-    accounts.where(:provider => 'facebook').any?
+  # List of Accounts that will be saved on create
+  def new_session_accounts
+    @new_session_accounts ||= []
   end
 
-  def github_login?
-    accounts.where(:provider => 'github').any?
+  # Primary account of user
+  def primary_account
+    accounts.first
   end
 
-  def google_login?
-    accounts.where(:provider => 'google_oauth2').any?
-  end
-
-  def twitter_login?
-    accounts.where(:provider => 'twitter').any?
-  end
-
-  def email_required?
-    !(facebook_login? || github_login? || google_login? || twitter_login?)
-  end
-
-  def password_required?
-    email_required? && super
-  end
-
+  # Picture representation of user
   def profile_picture(size=128)
-    account = accounts.first
-    if account && account.image
-      # Use Account Image
-      account.image
-    elsif email.present?
+    account = primary_account
+    image ||= account && account.profile_picture(size)
+    image ||= gravatar_image(size)
+  end
+
+  protected
+
+  def gravatar_image(size)
+    if email.present?
       # Fall back to Gravatar
       gravatar_id = Digest::MD5.hexdigest(email.downcase)
       "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
     end
   end
 
-  def new_session_accounts
-    @new_session_accounts ||= []
-  end
-
-  protected
-
+  # Saves Accounts loaded with session on create
   def save_new_session_accounts!
     new_session_accounts.each do |account|
       account.user = self

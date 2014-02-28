@@ -1,20 +1,31 @@
 class Account < ActiveRecord::Base
+
+  # Associations
+
   belongs_to :user
 
-  def self.find_for_oauth(auth_hash, force_provider = nil)
-    provider = force_provider || auth_hash_provider
+  # Class Methods
+
+  # Finds a existing Account from an OmniAuth hash, and updates from latest details
+  def self.find_for_oauth(auth_hash, force_provider = nil) 
+    provider = auth_hash.provider
+    if force_provider && provider != force_provider
+      # Provider from hash doesn't match expected values
+      raise "Provider (#{provider}) doesn't match expected value: #{force_provider}"
+    end
+
     find_by_provider_and_uid(provider, auth_hash.uid).tap do |account|
       unless account.nil?
         account.update_from_auth_hash(auth_hash)
-        account.save!
+        unless account.save
+          errors = account.errors.full_messages.join(', ')
+          logger.error "Unable to update account (#{account.uid}): #{errors}"
+        end
       end
     end
   end
 
-  def self.find_for_facebook_oauth(data)
-    find_for_oauth(data, 'facebook')
-  end
-
+  # Creates a New Account based off OmniAuth Hash
   def self.new_with_auth_hash(data, force_provider=nil)
     provider = force_provider || data.provider
     Account.new.tap do |account|
@@ -24,33 +35,56 @@ class Account < ActiveRecord::Base
     end
   end
 
+  # List of available OmniAuth Providers
   def self.omniauth_providers
     Devise.omniauth_configs.keys.keep_if { |provider| provider != :developer }
   end
 
+  # Humanizes Provider Name
   def self.provider_name(provider)
     return "GitHub" if provider == 'github'
     return "Google" if provider =~ /google/
     provider.humanize
   end
 
-  validates :provider, presence: true, inclusion: { in: %w(developer facebook twitter github google_oauth2) }
-  validates :uid, presence: true, uniqueness: { :scope => :provider }
-  validates :user_id, presence: true
+  # Validations
 
+  validates :provider,
+    presence: true,
+    inclusion: { in: %w(developer facebook twitter github google_oauth2) }
+
+  validates :uid,
+    presence: true,
+    uniqueness: { :scope => :provider }
+
+  validates :user_id,
+    presence: true
+
+  # Instance Methods
+
+  # Personal UID display, based off provider
+  def account_uid
+    # Display Name for Facebook and Google - Test User
+    account_uid ||= name if provider == 'facebook' || provider =~ /google/
+    # Display Handle for Twitter - @testuser
+    account_uid ||= nickname =~ /\A@/ ? nickname : "@#{nickname}" if nickname && provider == 'twitter'
+    # Display Nickname for GitHub - testuser
+    account_uid ||= nickname if provider == 'github'
+    # Display Generic UID as fallback
+    account_uid ||= uid
+  end
+
+  # Accounts can be orphaned to prevent sign in
   def enabled?
     user.present?
   end
 
-  def provider_name
-    Account::provider_name(provider)
+  def profile_picture(size=128)
+    image
   end
 
-  def account_uid
-    account_uid ||= name if provider == 'facebook' || provider =~ /google/
-    account_uid ||= nickname =~ /\A@/ ? nickname : "@#{nickname}" if provider == 'twitter'
-    account_uid ||= nickname if provider == 'github'
-    account_uid ||= uid
+  def provider_name
+    Account::provider_name(provider)
   end
 
   # Update Account properties from OAuth data
