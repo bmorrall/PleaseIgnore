@@ -9,7 +9,7 @@
         %span.input-group-addon.account-image
           = image_tag account.image, size: '32x32'
       - if account.website
-        = link_to account.website, class: 'form-control', rel: 'external' do
+        = external_link account.website, class: 'form-control' do
           = account.account_uid
       - else
         = link_to '#', class: 'form-control', disabled: true do

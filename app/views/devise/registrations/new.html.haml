@@ -14,10 +14,10 @@
   = f.input :password_confirmation
   - terms_and_conditions_label = content_tag :span do
     I accept the
-    = link_to 'Terms of Service', page_path('terms'), rel: 'external'
+    = external_link 'Terms of Service', page_path('terms')
     and
     = succeed "." do
-      = link_to 'Privacy Policy', page_path('privacy'), rel: 'external'
+      = external_link 'Privacy Policy', page_path('privacy')
   = f.input :terms_and_conditions, :as => :boolean, inline_label: terms_and_conditions_label
   .form-group
     .col-sm-offset-3.col-sm-7
