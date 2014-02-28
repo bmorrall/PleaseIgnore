@@ -41,7 +41,7 @@ module ApplicationHelper
 
   # Link is to a critical tasks and should not be turbolinked or followed by robots
   def system_link(name = nil, options = nil, html_options = nil, &block)
-    extra_options = {rel: 'nofollow'}
+    extra_options = {rel: 'nofollow', 'data-no-turbolink' => true}
     if block_given?
       options = (options || {}).merge(extra_options)
     else
