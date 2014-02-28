@@ -4,6 +4,10 @@ module ApplicationHelper
     current_page?(path) ? 'active' : nil
   end
 
+  def fa(icon_name)
+    content_tag :i, nil, class: "fa fa-#{icon_name}"
+  end
+
   def message_alert_class(name)
     if name == :notice
       'success'

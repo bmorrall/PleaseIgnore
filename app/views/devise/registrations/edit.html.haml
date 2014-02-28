@@ -12,7 +12,7 @@
       .form-group
         .col-sm-offset-3.col-sm-6
           %button.btn.btn.btn-primary(type='submit')
-            %i.fa.fa-user
+            = fa 'user'
             Update Profile
           - if resource.errors.any?
             = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
@@ -36,7 +36,7 @@
       .form-group
         .col-sm-offset-3.col-sm-6
           %button.btn.btn.btn-primary(type='submit')
-            %i.fa.fa-key
+            = fa 'key'
             Change Password
           - if resource.errors.any?
             = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
@@ -63,5 +63,5 @@
     .col-sm-offset-3.col-sm-7
       %p You can delete your account, but keep in mind this action is irreversiable.
       = button_to registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger' do
-        %i.fa.fa-trash-o
+        = fa 'trash-o'
         Delete my account

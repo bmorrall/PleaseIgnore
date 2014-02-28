@@ -18,7 +18,7 @@
       = f.input_field :password
     .form-group
       %button.btn.btn-primary(type='submit')
-        %i.fa.fa-unlock-alt
+        = fa "unlock-alt"
         Sign in
       - if devise_mapping.registerable?
         = link_to 'Create a new account', new_registration_path(resource_name), class: 'btn btn-link create-account'

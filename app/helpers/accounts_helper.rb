@@ -12,7 +12,7 @@ module AccountsHelper
   def provider_icon(provider)
     icon_name = provider_class(provider)
     icon_name = "user" if provider == 'developer'
-    content_tag :id, nil, class: "fa fa-#{icon_name}"
+    fa(icon_name)
   end
 
   def provider_name(provider)
