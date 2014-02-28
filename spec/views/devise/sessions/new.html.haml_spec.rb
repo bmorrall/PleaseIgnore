@@ -22,10 +22,10 @@ describe "devise/sessions/new.html.haml" do
     it "renders the social media login buttons" do
       render
 
-      assert_select "a.btn-facebook[href=?]", '/users/auth/facebook'
-      assert_select "a.btn-google-plus[href=?]", '/users/auth/google_oauth2'
-      assert_select "a.btn-github[href=?]", '/users/auth/github'
-      assert_select "a.btn-twitter[href=?]", '/users/auth/twitter'
+      assert_select "a.btn-facebook[href=?][rel='nofollow']", '/users/auth/facebook'
+      assert_select "a.btn-google-plus[href=?][rel='nofollow']", '/users/auth/google_oauth2'
+      assert_select "a.btn-github[href=?][rel='nofollow']", '/users/auth/github'
+      assert_select "a.btn-twitter[href=?][rel='nofollow']", '/users/auth/twitter'
     end
 
     it "renders a create account link" do
