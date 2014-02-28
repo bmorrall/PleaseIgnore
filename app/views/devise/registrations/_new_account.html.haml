@@ -4,4 +4,4 @@
     = provider_name(provider)
     account
   .col-sm-7
-    = link_to "Link your #{provider_name(provider)} account", user_omniauth_authorize_path(provider), class: 'form-control btn btn-primary', rel: 'nofollow'
+    = system_link "Link your #{provider_name(provider)} account", user_omniauth_authorize_path(provider), class: 'form-control btn btn-primary'

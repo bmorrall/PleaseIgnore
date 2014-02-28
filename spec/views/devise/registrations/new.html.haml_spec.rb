@@ -29,7 +29,7 @@ describe "devise/registrations/new.html.haml" do
         render
         assert_select '.btn-facebook' do
           assert_select 'a[href=?][rel="external"]', facebook_account.website
-          assert_select 'a[href=?][data-method="delete"]', users_account_path(facebook_account)
+          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(facebook_account)
         end
       end
       it 'renders a pending twitter account' do
@@ -39,7 +39,7 @@ describe "devise/registrations/new.html.haml" do
         render
         assert_select '.btn-twitter' do
           assert_select 'a[href=?][rel="external"]', twitter_account.website
-          assert_select 'a[href=?][data-method="delete"]', users_account_path(twitter_account)
+          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(twitter_account)
         end
       end
       it 'renders a pending github account' do
@@ -49,7 +49,7 @@ describe "devise/registrations/new.html.haml" do
         render
         assert_select '.btn-github' do
           assert_select 'a[href=?][rel="external"]', github_account.website
-          assert_select 'a[href=?][data-method="delete"]', users_account_path(github_account)
+          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(github_account)
         end
       end
       it 'renders a pending google account' do
@@ -59,7 +59,7 @@ describe "devise/registrations/new.html.haml" do
         render
         assert_select '.btn-google-plus' do
           assert_select 'a[href="#"][disabled]' # Google has no website
-          assert_select 'a[href=?][data-method="delete"]', users_account_path(google_account)
+          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(google_account)
         end
       end
     end

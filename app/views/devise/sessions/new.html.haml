@@ -5,7 +5,7 @@
     .form-group
       .btn-group.btn-group-justified
         - omniauth_providers.each do |provider|
-          = link_to user_omniauth_authorize_path(provider), class: "btn btn-#{provider_class(provider)}", rel: 'nofollow' do
+          = system_link user_omniauth_authorize_path(provider), class: "btn btn-#{provider_class(provider)}" do
             = provider_icon(provider)
             %span
               = provider_name(provider)
