@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe HighVoltage::PagesController do
 
-  describe '#show' do
+  describe 'GET show' do
     context 'as a visitor' do
       %w(home styles privacy terms).each do |page|
         context "with GET to /#{page}" do

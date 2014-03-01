@@ -4,7 +4,7 @@ describe Users::OmniauthCallbacksController do
   include OmniauthHelpers
   before(:each) { @request.env["devise.mapping"] = Devise.mappings[:user] }
 
-  describe '#facebook' do
+  describe 'GET facebook' do
     context 'with omniauth.auth containing a Facebook auth hash' do
       let(:auth_hash) { facebook_auth_hash }
       before(:each) do
@@ -111,7 +111,7 @@ describe Users::OmniauthCallbacksController do
     end
   end
 
-  describe '#github' do
+  describe 'GET github' do
     context 'with omniauth.auth containing a GitHub auth hash' do
       let(:auth_hash) { github_auth_hash }
       before(:each) do
@@ -220,7 +220,7 @@ describe Users::OmniauthCallbacksController do
     end
   end
 
-  describe '#google_oauth2' do
+  describe 'GET google_oauth2' do
     context 'with omniauth.auth containing a Google auth hash' do
       let(:auth_hash) { google_auth_hash }
       before(:each) do
@@ -329,7 +329,7 @@ describe Users::OmniauthCallbacksController do
     end
   end
 
-  describe '#twitter' do
+  describe 'GET twitter' do
     context 'with omniauth.auth containing a Twitter auth hash' do
       let(:auth_hash) { twitter_auth_hash }
       before(:each) do
@@ -438,7 +438,7 @@ describe Users::OmniauthCallbacksController do
     end
   end
 
-  describe '#developer' do
+  describe 'GET developer' do
     context 'with omniauth.auth containing a Developer auth hash' do
       let(:auth_hash) { developer_auth_hash }
       before(:each) do
