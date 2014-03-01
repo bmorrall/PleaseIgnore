@@ -10,6 +10,12 @@ PleaseIgnore::Application.routes.draw do
   resource :contact, :only => [:show, :create] do
     get :thank_you
   end
+
+  # HighVoltage Pages
+  get "/home", to: redirect('/')
+  get "/*id" => 'pages#show', as: :page, format: false
+  root to: 'pages#show', id: 'home'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
