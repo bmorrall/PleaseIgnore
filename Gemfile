@@ -38,6 +38,9 @@ gem 'acts_as_list'
 # User authentication with Devise
 gem 'devise'
 
+# Use Action Caching to save pages
+gem 'actionpack-action_caching'
+
 # Omniauth providers
 gem 'omniauth-facebook'
 gem 'omniauth-github'
