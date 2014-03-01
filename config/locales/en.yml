@@ -21,3 +21,28 @@
 
 en:
   hello: "Hello world"
+
+  contacts:
+    show:
+      page_title: Contact form
+  devise:
+    passwords:
+      edit:
+        page_title: Change your password
+      new:
+        page_title: Forgot your password?
+    sessions:
+      new:
+        page_title: Login
+    registrations:
+      edit:
+        page_title: Account Management
+      new:
+        page_title: Create Account
+  pages:
+    privacy:
+      page_title: Privacy Policy
+    styles:
+      page_title: PleaseIgnore Styles
+    terms:
+      page_title: Terms of Service
