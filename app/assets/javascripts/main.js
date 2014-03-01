@@ -1,24 +1,36 @@
-$(document).on("page:change", function() {
+/*
+ * JS Module and Plugin Initalisation Scripts for PleaseIgnore
+ *
+ * Depends on Turbolinks for ready/page change event.
+ *
+ * DEPENDENCIES:
+ *   - jquery
+ *   - users.js
+ *
+ * @author Ben Morrall <bemo56@hotmail.com>
+ */
 
-  // Place JavaScript code here...
-  $('a[rel=external]').attr('target', '_blank');
+/*jslint browser: true*/
+/*global jQuery*/
+(function ($) {
+  "use strict";
 
-  $('a[disabled]').click(function(e) {
-    e.preventDefault() // Prevent disabled links from being clicked
+  var PleaseIgnore = window.PleaseIgnore || (window.PleaseIgnore = {});
+
+  // Update content on Turbolinks ready/change event
+  $(document).on("page:change", function () {
+
+    // Open External links in a new browser window
+    $('a[rel=external]').attr('target', '_blank');
+
+    // Prevent disabled links from being clicked
+    $('a[disabled]').click(function (e) {
+      e.preventDefault();
+    });
+
+    // Users
+    PleaseIgnore.Users.initSortableAccounts();
+
   });
 
-  // Linked Accounts are sortable
-  // http://farhadi.ir/projects/html5sortable/
-  $('.linked-accounts').sortable().bind('sortupdate', function() {
-    var sort_path = $(this).data('sort-path');
-
-    var account_ids = [];
-    $(this).find('[data-account-id]')
-      .each(function() {
-        var account_id = $(this).data('account-id');
-        account_ids.push(account_id);
-      });
-    $.post(sort_path, { account_ids: account_ids });
-  });;
-
-});
+}(jQuery));

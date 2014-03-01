@@ -19,3 +19,4 @@
 //= require jquery.sortable
 //= require turbolinks
 //= require main
+//= require users
