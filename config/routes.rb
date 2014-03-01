@@ -2,7 +2,9 @@ PleaseIgnore::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'users/registrations', :omniauth_callbacks => "users/omniauth_callbacks" }
 
   namespace :users do
-    resources :accounts, :only => :destroy
+    resources :accounts, :only => :destroy do
+      post :sort, on: :collection
+    end
   end
 
   resource :contact, :only => [:show, :create] do

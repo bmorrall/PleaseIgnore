@@ -24,6 +24,20 @@ a.form-control[disabled]:hover {
   }
 }
 
+// Sortable Linked Accounts List
+
+.linked-accounts {
+  label,
+  .form-group {
+    cursor: -webkit-grab;
+  }
+  .sortable-placeholder {
+    border: 1px $brand-primary dotted;
+    height: 53px;
+    margin: 0 -15px 15px -15px;
+  }
+}
+
 @media (max-width: $screen-xs-max) {
   // Change Login buttons to only show logo on mobile devices
   .btn-group-justified {

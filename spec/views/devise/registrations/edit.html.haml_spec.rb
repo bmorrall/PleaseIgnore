@@ -40,6 +40,19 @@ describe "devise/registrations/edit.html.haml" do
     end
 
     describe 'connected social media links' do
+
+      it 'renders a sortable list of accounts' do
+        facebook_account = FactoryGirl.build_stubbed(:facebook_account, user: user)
+        twitter_account = FactoryGirl.build_stubbed(:twitter_account, user: user)
+        user.stub(:accounts).and_return([facebook_account, twitter_account])
+        user.stub(:has_provider_account?).and_return(true)
+        render
+        assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path do
+          assert_select '.btn-facebook[data-account-id=?]', facebook_account.id
+          assert_select '.btn-twitter[data-account-id=?]', twitter_account.id
+        end
+      end
+
       context 'with a Facebook account' do
         let(:facebook_account) { FactoryGirl.build_stubbed(:facebook_account, user: user) }
         before(:each) do

@@ -33,6 +33,8 @@ gem 'jbuilder' # , '~> 1.2'
 # Use simple form to simplify forms
 gem 'simple_form'
 
+gem 'acts_as_list'
+
 # User authentication with Devise
 gem 'devise'
 

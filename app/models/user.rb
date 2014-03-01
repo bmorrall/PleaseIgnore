@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   # Associations
 
   has_many :accounts,
-    -> { order 'accounts.provider ASC' },
+    -> { order 'position ASC, accounts.provider ASC' },
     :dependent => :destroy
 
   # Class Methods

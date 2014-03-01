@@ -3,6 +3,7 @@ class Account < ActiveRecord::Base
   # Associations
 
   belongs_to :user
+  acts_as_list scope: :user
 
   # Class Methods
 

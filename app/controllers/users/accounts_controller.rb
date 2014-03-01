@@ -12,4 +12,12 @@ class Users::AccountsController < ::ApplicationController
     end
   end
 
+  def sort
+    @accounts = current_user.accounts
+    params[:account_ids].each_with_index do |account_id, index|
+      @accounts.where(id: account_id).update_all(position: index+1)
+    end
+    head :ok
+  end
+
 end

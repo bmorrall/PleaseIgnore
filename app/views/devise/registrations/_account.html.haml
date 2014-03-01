@@ -1,4 +1,4 @@
-.form-group{ class: "btn-#{provider_class(account.provider)}"}
+.form-group{ class: "btn-#{provider_class(account.provider)}", data: { :account_id => account.id } }
   %label.control-label.col-sm-3
     = account_icon(account)
     = account.provider_name

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218050239) do
+ActiveRecord::Schema.define(version: 20140228141015) do
 
   create_table "accounts", force: true do |t|
     t.string   "provider",         null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20140218050239) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "position"
   end
 
   add_index "accounts", ["provider", "uid"], name: "index_accounts_on_provider_and_uid", unique: true
