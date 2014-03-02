@@ -1,7 +1,8 @@
 ### UTILITY METHODS ###
 
 def destroy_session
-  page.driver.submit :delete, "/users/sign_out", {}
+  Capybara.reset_sessions!
+  # page.driver.submit :delete, "/users/sign_out", {}
 end
 
 def create_visitor
@@ -98,7 +99,11 @@ When /^I sign in with valid credentials$/ do
 end
 
 When /^I sign out$/ do
-  destroy_session
+  unless Capybara.current_session.server.nil?
+    # User must click name to trigger js dropdown menu
+    click_link @visitor[:name]
+  end
+  click_link "Logout"
 end
 
 When /^I sign up with valid user data$/ do
@@ -180,7 +185,7 @@ end
 
 ### THEN ###
 Then /^I should be signed in$/ do
-  page.should have_content "Logout"
+  page.has_selector?('li', :text => 'Logout', :visible => false)
   page.should_not have_content "Sign up"
   page.should_not have_content "Login"
 end
@@ -188,7 +193,7 @@ end
 Then /^I should be signed out$/ do
   page.should have_content "Create Account"
   page.should have_content "Login"
-  page.should_not have_content "Logout"
+  page.has_no_selector?('li', :text => 'Logout', :visible => false)
 end
 
 Then /^I see an unconfirmed account message$/ do
