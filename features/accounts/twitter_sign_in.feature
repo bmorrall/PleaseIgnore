@@ -3,6 +3,7 @@ Feature: Signing in with a linked Twitter account
   I want to sign in with my Twitter account
   So I don't have to enter in my login credentials
 
+  @javascript @csrf_protection
   Scenario: Logging in with a previously linked Twitter account
     Given I exist as a user linked to my Twitter account
     And I am not logged in

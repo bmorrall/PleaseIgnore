@@ -10,6 +10,7 @@ Feature: Twitter Registration
     And I should see a sign up form with my Twitter credentials
     And I should be signed out
 
+  @javascript @csrf_protection
   Scenario: Create a new profile linked to a Twitter account
     Given I do not exist as a user
     When I sign in using my Twitter account

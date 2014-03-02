@@ -3,6 +3,7 @@ Feature: Managing linked Google accounts
   I want to manage my connected Google accounts
   So I can control access to my Google accounts
 
+  @javascript @csrf_protection
   Scenario: Linking my profile with a new Google account
     Given I am logged in
     When I link my profile to my Google account
@@ -16,6 +17,7 @@ Feature: Managing linked Google accounts
     Then I should see a failed Google authentication message
     And I should not be linked to a Google account
 
+  @javascript @csrf_protection
   Scenario: Unlinking a previously linked Google account
     Given I exist as a user linked to my Google account
     And I am logged in

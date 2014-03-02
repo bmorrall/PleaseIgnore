@@ -3,6 +3,7 @@ Feature: Managing linked GitHub accounts
   I want to manage my connected GitHub accounts
   So I can control access to my GitHub accounts
 
+  @javascript @csrf_protection
   Scenario: Connecting with a new GitHub account
     Given I am logged in
     When I link my profile to my GitHub account
@@ -16,6 +17,7 @@ Feature: Managing linked GitHub accounts
     Then I should see a failed GitHub authentication message
     And I should not be linked to a GitHub account
 
+  @javascript @csrf_protection
   Scenario: Unlinking a previously linked GitHub account
     Given I exist as a user linked to my GitHub account
     And I am logged in

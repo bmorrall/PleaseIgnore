@@ -10,6 +10,7 @@ Feature: Google Registration
     And I should see a sign up form with my Google credentials
     And I should be signed out
 
+  @javascript @csrf_protection
   Scenario: Create a new profile linked to a Google account
     Given I do not exist as a user
     When I sign in using my Google account

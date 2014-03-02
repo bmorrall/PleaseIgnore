@@ -3,6 +3,7 @@ Feature: Managing linked Facebook accounts
   I want to manage my connected Facebook accounts
   So I can control access to my Facebook accounts
 
+  @javascript @csrf_protection
   Scenario: Linking my profile with a new Facebook account
     Given I am logged in
     When I link my profile to my Facebook account
@@ -16,6 +17,7 @@ Feature: Managing linked Facebook accounts
     Then I should see a failed Facebook authentication message
     And I should not be linked to a Facebook account
 
+  @javascript @csrf_protection
   Scenario: Unlinking a previously linked Facebook account
     Given I exist as a user linked to my Facebook account
     And I am logged in
