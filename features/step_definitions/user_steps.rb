@@ -52,6 +52,14 @@ def reset_password
   click_button 'Reset Password'
 end
 
+def visit_my_account
+  unless Capybara.current_session.server.nil?
+    # User must click name to trigger js dropdown menu
+    click_link @visitor[:name]
+  end
+  click_link "My Account"
+end
+
 ### GIVEN ###
 Given /^I am not logged in$/ do
   page.driver.submit :delete, "/users/sign_out", {}
@@ -133,13 +141,13 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I edit my account details$/ do
-  click_link "My Account"
+  visit_my_account
   fill_in "user_name", :with => "newname"
   click_button "Update"
 end
 
 When /^I edit my password details$/ do
-  click_link "My Account"
+  visit_my_account
   fill_in "user_password", :with => "newpassword1"
   fill_in "user_password_confirmation", :with => "newpassword1"
   fill_in "user_current_password", :with => @visitor[:password]
