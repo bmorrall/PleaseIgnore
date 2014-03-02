@@ -28,6 +28,10 @@
       e.preventDefault();
     });
 
+    // Refresh CSRF Tokens
+    console.log("refreshing token");
+    $.rails.refreshCSRFTokens();
+
     // Users
     PleaseIgnore.Users.initSortableAccounts();
 
