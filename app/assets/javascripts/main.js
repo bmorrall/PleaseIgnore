@@ -5,6 +5,7 @@
  *
  * DEPENDENCIES:
  *   - jquery
+ *   - jquery_ujs
  *   - users.js
  *
  * @author Ben Morrall <bemo56@hotmail.com>
@@ -29,7 +30,6 @@
     });
 
     // Refresh CSRF Tokens
-    console.log("refreshing token");
     $.rails.refreshCSRFTokens();
 
     // Users
