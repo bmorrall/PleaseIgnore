@@ -1,3 +1,4 @@
+@javascript @csrf_protection
 Feature: Contact Request pre-filled with User details
   In order to give support all the information it needs
   A visitor or user starting a contact request
