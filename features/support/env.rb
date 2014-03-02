@@ -58,3 +58,6 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 # Use capybara-webkit for JS Features
 Capybara.javascript_driver = :webkit
+
+# Turn the Cache on, ensure no cache leakage
+ActionController::Base.cache_store = :memory_store
