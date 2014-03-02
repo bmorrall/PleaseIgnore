@@ -1,3 +1,4 @@
+@javascript @csrf_protection
 Feature: Password Reset
   In order to recover from a lost password
   A user
