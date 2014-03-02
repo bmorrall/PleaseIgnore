@@ -24,7 +24,7 @@ en:
 
   contacts:
     show:
-      page_title: Contact form
+      page_title: Contact us
   devise:
     passwords:
       edit:

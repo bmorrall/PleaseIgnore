@@ -1,6 +1,6 @@
 - content_for(:page_title) { t('.page_title') }
 .page-header
-  %h3 Contact form
+  %h3 Contact us
 
 = simple_form_for(@contact, :url => contact_path, :html => { :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap_wide, :defaults => { :label_html => { class: 'col-sm-2' } }) do |f|
   = f.error_notification
