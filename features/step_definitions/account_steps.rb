@@ -57,6 +57,8 @@ When /^I sign in using my Facebook account$/ do
   set_oauth :facebook, facebook_auth_hash
   visit '/users/sign_in'
   click_link 'Facebook'
+
+  page.body # No-op as background operation may not be complete
 end
 
 When /^I link my profile to my Facebook account$/ do
@@ -70,12 +72,15 @@ When /^I unlink my Facebook account$/ do
   within('.btn-facebook') do
     find('a.unlink-account').click
   end
+  page.driver.browser.switch_to.alert.accept if page.driver.browser.respond_to? :switch_to
 end
 
 When /^I sign in using my GitHub account$/ do
   set_oauth :github, github_auth_hash
   visit '/users/sign_in'
   click_link 'GitHub'
+
+  page.body # No-op as background operation may not be complete
 end
 
 When /^I link my profile to my GitHub account$/ do
@@ -89,6 +94,7 @@ When /^I unlink my GitHub account$/ do
   within('.btn-github') do
     find('a.unlink-account').click
   end
+  page.driver.browser.switch_to.alert.accept if page.driver.browser.respond_to? :switch_to
 end
 
 When /^I link my profile to my Google account$/ do
@@ -101,6 +107,8 @@ When /^I sign in using my Google account$/ do
   set_oauth :google_oauth2, google_auth_hash
   visit '/users/sign_in'
   click_link 'Google'
+
+  page.body # No-op as background operation may not be complete
 end
 
 When /^I unlink my Google account$/ do
@@ -108,12 +116,15 @@ When /^I unlink my Google account$/ do
   within('.btn-google-plus') do
     find('a.unlink-account').click
   end
+  page.driver.browser.switch_to.alert.accept if page.driver.browser.respond_to? :switch_to
 end
 
 When /^I sign in using my Twitter account$/ do
   set_oauth :twitter, twitter_auth_hash
   visit '/users/sign_in'
   click_link 'Twitter'
+
+  page.body # No-op as background operation may not be complete
 end
 
 When /^I link my profile to my Twitter account$/ do
@@ -127,6 +138,7 @@ When /^I unlink my Twitter account$/ do
   within('.btn-twitter') do
     find('a.unlink-account').click
   end
+  page.driver.browser.switch_to.alert.accept if page.driver.browser.respond_to? :switch_to
 end
 
 ### THEN ###

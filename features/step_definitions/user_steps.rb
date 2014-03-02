@@ -64,6 +64,8 @@ def reset_password
   visit '/users/password/new'
   fill_in "user_email", :with => @visitor[:email]
   click_button 'Reset Password'
+
+  page.body # No-op as background operation may not be complete
 end
 
 def visit_my_account
