@@ -1,5 +1,9 @@
 ### UTILITY METHODS ###
 
+def destroy_session
+  page.driver.submit :delete, "/users/sign_out", {}
+end
+
 def create_visitor
   @visitor ||= { :name => "Testy McUserton", :email => "example@example.com",
     :password => "changeme", :password_confirmation => "changeme" }
@@ -13,7 +17,7 @@ def create_unconfirmed_user
   create_visitor
   delete_user
   sign_up
-  page.driver.submit :delete, "/users/sign_out", {}
+  destroy_session
 end
 
 def create_user
@@ -62,7 +66,7 @@ end
 
 ### GIVEN ###
 Given /^I am not logged in$/ do
-  page.driver.submit :delete, "/users/sign_out", {}
+  destroy_session
 end
 
 Given /^I am logged in$/ do
@@ -94,7 +98,7 @@ When /^I sign in with valid credentials$/ do
 end
 
 When /^I sign out$/ do
-  page.driver.submit :delete, "/users/sign_out", {}
+  destroy_session
 end
 
 When /^I sign up with valid user data$/ do
