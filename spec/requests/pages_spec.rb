@@ -1,18 +1,7 @@
 require 'spec_helper'
 
 describe "Pages" do
-
-  # http://pivotallabs.com/tdd-action-caching-in-rails-3/
-  around do |example|
-    store, ActionController::Base.cache_store = ActionController::Base.cache_store, :memory_store
-    silence_warnings { Object.const_set "RAILS_CACHE", ActionController::Base.cache_store }
-
-    example.run
-
-    silence_warnings { Object.const_set "RAILS_CACHE", store }
-    ActionController::Base.cache_store = store
-  end
-  before(:each) { Rails.cache.clear }
+  enable_rails_cache
 
   describe "GET /" do
     context "as a visitor" do

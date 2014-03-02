@@ -54,5 +54,6 @@ end
 RSpec.configure do |config|
   config.include Devise::TestHelpers, :type => :controller
   config.include ControllerMacros, :type => :controller
+  config.include CacheMacros, :type => :request
   config.include Devise::TestHelpers, :type => :view
 end
