@@ -49,7 +49,7 @@ end
 ### THEN
 
 Then /^I should be notified I am making a request from (.+)$/ do |page_name|
-  page.should have_content "Your message will mention you visited this page from http://www.example.com#{path_to(page_name)}"
+  page.should have_content "Your message will mention you visited this page from #{current_host_with_port}#{path_to(page_name)}"
 end
 
 Then /^I should see my name and email on the contact form$/ do

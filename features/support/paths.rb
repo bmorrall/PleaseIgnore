@@ -1,4 +1,14 @@
 module NavigationHelpers
+  def current_host_with_port
+    host = current_host
+    port = Capybara.current_session.server.nil? ? nil : Capybara.current_session.server.port
+    if host =~ /\:\d+$/ || port.nil? || port == '80'
+      host
+    else
+      "#{host}:#{port}"
+    end
+  end
+  
   # Maps a name to a path. Used by the
   #
   #   When /^I go to (.+)$/ do |page_name|
