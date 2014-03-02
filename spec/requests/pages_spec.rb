@@ -3,6 +3,14 @@ require 'spec_helper'
 describe "Pages" do
   enable_rails_cache
 
+  def page_titles
+    @page_titles ||= {
+      'privacy' => 'Privacy Policy',
+      'styles' => 'PleaseIgnore Styles',
+      'terms' => 'Terms of Service'
+    }
+  end
+
   describe "GET /" do
     context "as a visitor" do
       it "renders the home page" do
@@ -12,6 +20,16 @@ describe "Pages" do
       it "caches the home page" do
         get root_url
         ActionController::Base.cache_store.exist?("views/www.example.com/index").should be_true
+      end
+    end
+    describe 'Metadata' do
+      it 'includes the body class' do
+        get root_url
+        assert_select 'body.pages.pages-show.home-page'
+      end
+      it 'includes the page title' do
+        get root_url
+        assert_select 'title', 'PleaseIgnore'
       end
     end
   end
@@ -40,7 +58,18 @@ describe "Pages" do
           ActionController::Base.cache_store.exist?(cache_path).should be_true
         end
       end
+      describe 'Metadata' do
+        it 'includes the body class' do
+          get page_path(page)
+          assert_select "body.pages.pages-show.#{page}-page"
+        end
+        it 'includes the page title' do
+          get page_path(page)
+          assert_select 'title', "PleaseIgnore | #{page_titles[page]}"
+        end
+      end
     end
   end
+
 
 end
