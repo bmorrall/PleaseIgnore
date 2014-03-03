@@ -7,14 +7,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.find(current_user.id)
     account_update_params = devise_parameter_sanitizer.sanitize(:account_update)
 
-    successfully_updated = if needs_password?(@user, account_update_params)
-      if @user.encrypted_password.blank?
-        success_message = :updated_login
-        @user.update_attributes account_update_params
-      else
-        success_message = :updated_password
-        @user.update_with_password account_update_params
-      end
+    successfully_updated = if needs_password_param?(@user, account_update_params)
+      success_message = :updated_password
+      @user.update_with_password account_update_params
     else
       success_message = :updated
       account_update_params.delete(:current_password)
@@ -37,21 +32,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
     edit_user_registration_path
   end
 
+  # Only display password on #show or if update profile fails
   def display_profile?
     params[:user].nil? || !params[:user].has_key?(:password)
   end
 
+  # Only display password on #show or if change password fails
   def display_password_change?
     params[:user].nil? || params[:user].has_key?(:password)
   end
 
+  # Only display accounts on #show
   def display_accounts?
     params[:user].nil?
   end
 
   private
 
-  def needs_password?(user, params)
+  # Allow uses to update account without current_password
+  def needs_password_param?(user, params)
     params.has_key? :password
   end
 
