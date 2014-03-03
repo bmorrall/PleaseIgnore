@@ -244,7 +244,7 @@ Then /^I see an invalid login message$/ do
 end
 
 Then /^I should see an account edited message$/ do
-  page.should have_content "You updated your account successfully."
+  page.should have_content "You updated your profile successfully."
 end
 
 Then /^I should see a password changed message$/ do
