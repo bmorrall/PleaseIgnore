@@ -6,9 +6,10 @@ class Users::AccountsController < ::ApplicationController
     if account
       provider_name = account.provider_name
       account.destroy
-      redirect_to edit_user_registration_path, :notice => "Successfully unlinked your #{provider_name} account"
+      redirect_to edit_user_registration_path, :notice => "Successfully unlinked your #{provider_name} account."
     else
-      redirect_to edit_user_registration_path, :alert => "Your #{provider_name} account has already been removed"
+      # Redirect with generic no account to remove message
+      redirect_to edit_user_registration_path, :notice => "Your account has already been unlinked."
     end
   end
 
