@@ -78,6 +78,9 @@ gem 'responders'
 # Use CanCanCan for Authorization
 gem 'cancancan'
 
+# Use local time to parse time
+gem 'local_time'
+
 # Use Rolify to Mnnage User Roles
 gem 'rolify'
 

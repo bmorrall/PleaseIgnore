@@ -19,6 +19,7 @@
 //= require html5sortable/jquery.sortable
 //= require ladda-bootstrap/dist/spin
 //= require ladda-bootstrap/dist/ladda
+//= require local_time
 //= require turbolinks
 //= require turboboost
 //
