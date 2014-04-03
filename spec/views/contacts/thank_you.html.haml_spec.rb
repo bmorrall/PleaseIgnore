@@ -6,7 +6,7 @@ describe "contacts/thank_you.html.haml" do
     it "renders a thank you to the user" do
       render
 
-      rendered.should have_content('Thank you for Contacting PleaseIgnore')
+      expect(rendered).to have_content('Thank you for Contacting PleaseIgnore')
     end
   end
 

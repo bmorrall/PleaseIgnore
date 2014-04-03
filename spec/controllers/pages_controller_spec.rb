@@ -9,7 +9,7 @@ describe PagesController do
           before(:each) { get :show, id: page }
           it { should render_template(page) }
           it { should render_with_layout(:application) }
-          it { response.content_type.should eq('text/html') }
+          it { expect(response.content_type).to eq('text/html') }
           it { should_not set_the_flash }
         end
       end

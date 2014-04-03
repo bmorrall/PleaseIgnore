@@ -7,7 +7,7 @@ describe "Contact" do
     context "as a visitor" do
       it "renders the contact page" do
         get contact_path
-        response.status.should be(200)
+        expect(response.status).to be(200)
       end
     end
     describe 'Metadata' do

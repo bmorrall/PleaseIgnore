@@ -9,13 +9,13 @@ describe "devise/registrations/edit.html.haml" do
     let(:display_accounts) { true }
 
     before(:each) do
-      view.stub(:devise_mapping).and_return(Devise.mappings[:user])
-      view.stub(:resource).and_return(user)
-      view.stub(:resource_name).and_return('user')
+      allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
+      allow(view).to receive(:resource).and_return(user)
+      allow(view).to receive(:resource_name).and_return('user')
 
-      view.stub(:display_profile?).and_return(display_profile)
-      view.stub(:display_password_change?).and_return(display_password_change)
-      view.stub(:display_accounts?).and_return(display_accounts)
+      allow(view).to receive(:display_profile?).and_return(display_profile)
+      allow(view).to receive(:display_password_change?).and_return(display_password_change)
+      allow(view).to receive(:display_accounts?).and_return(display_accounts)
     end
 
     it "renders the update profile form" do
@@ -44,8 +44,8 @@ describe "devise/registrations/edit.html.haml" do
       it 'renders a sortable list of accounts' do
         facebook_account = FactoryGirl.build_stubbed(:facebook_account, user: user)
         twitter_account = FactoryGirl.build_stubbed(:twitter_account, user: user)
-        user.stub(:accounts).and_return([facebook_account, twitter_account])
-        user.stub(:has_provider_account?).and_return(true)
+        allow(user).to receive(:accounts).and_return([facebook_account, twitter_account])
+        allow(user).to receive(:has_provider_account?).and_return(true)
         render
         assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path do
           assert_select '.btn-facebook[data-account-id=?]', facebook_account.id
@@ -56,8 +56,8 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a Facebook account' do
         let(:facebook_account) { FactoryGirl.build_stubbed(:facebook_account, user: user) }
         before(:each) do
-          user.stub(:accounts).and_return([facebook_account])
-          user.stub(:has_provider_account?).and_return(true)
+          allow(user).to receive(:accounts).and_return([facebook_account])
+          allow(user).to receive(:has_provider_account?).and_return(true)
         end
 
         it 'renders a Facebook account summary' do
@@ -75,8 +75,8 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a Twitter account' do
         let(:twitter_account) { FactoryGirl.build_stubbed(:twitter_account, user: user) }
         before(:each) do
-          user.stub(:accounts).and_return([twitter_account])
-          user.stub(:has_provider_account?).and_return(true)
+          allow(user).to receive(:accounts).and_return([twitter_account])
+          allow(user).to receive(:has_provider_account?).and_return(true)
         end
         it 'renders a Twitter account summary' do
           render
@@ -93,8 +93,8 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a github account' do
         let(:github_account) { FactoryGirl.build_stubbed(:github_account, user: user) }
         before(:each) do
-          user.stub(:accounts).and_return([github_account])
-          user.stub(:has_provider_account?).and_return(true)
+          allow(user).to receive(:accounts).and_return([github_account])
+          allow(user).to receive(:has_provider_account?).and_return(true)
         end
 
         it 'renders a GitHub account summary' do
@@ -112,8 +112,8 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a Google account' do
         let(:google_account) { FactoryGirl.build_stubbed(:google_account, user: user, website: nil) }
         before(:each) do
-          user.stub(:accounts).and_return([google_account])
-          user.stub(:has_provider_account?).and_return(true)
+          allow(user).to receive(:accounts).and_return([google_account])
+          allow(user).to receive(:has_provider_account?).and_return(true)
         end
 
         it 'renders a Google account summary' do
@@ -132,7 +132,7 @@ describe "devise/registrations/edit.html.haml" do
 
     describe 'connect social media links' do
       context 'with no Facebook account' do
-        before(:each) { user.stub(:has_provider_account?).and_return(false) }
+        before(:each) { allow(user).to receive(:has_provider_account?).and_return(false) }
         it 'renders a "Link your Facebook account" link' do
           render
           assert_select '.btn-facebook' do
@@ -141,7 +141,7 @@ describe "devise/registrations/edit.html.haml" do
         end
       end
       context 'with no Twitter account' do
-        before(:each) { user.stub(:has_provider_account?).and_return(false) }
+        before(:each) { allow(user).to receive(:has_provider_account?).and_return(false) }
         it 'renders a "Link your Twitter account" link' do
           render
           assert_select '.btn-twitter' do
@@ -150,7 +150,7 @@ describe "devise/registrations/edit.html.haml" do
         end
       end
       context 'with no GitHub account' do
-        before(:each) { user.stub(:has_provider_account?).and_return(false) }
+        before(:each) { allow(user).to receive(:has_provider_account?).and_return(false) }
         it 'renders a "Link your GitHub account" link' do
           render
           assert_select '.btn-github' do
@@ -159,7 +159,7 @@ describe "devise/registrations/edit.html.haml" do
         end
       end
       context 'with no Google account' do
-        before(:each) { user.stub(:has_provider_account?).and_return(false) }
+        before(:each) { allow(user).to receive(:has_provider_account?).and_return(false) }
         it 'renders a "Link your Google account" link' do
           render
           assert_select '.btn-google-plus' do

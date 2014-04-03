@@ -30,9 +30,9 @@ describe Users::RegistrationsController do
           get :edit
         end
         it 'displays all forms' do
-          controller.send(:display_password_change?).should be_true
-          controller.send(:display_accounts?).should be_true
-          controller.send(:display_profile?).should be_true
+          expect(controller.send(:display_password_change?)).to be_true
+          expect(controller.send(:display_accounts?)).to be_true
+          expect(controller.send(:display_profile?)).to be_true
         end
       end
     end
@@ -46,12 +46,12 @@ describe Users::RegistrationsController do
         before(:each) do
           post :update, user: valid_profile_attributes
         end
-        it { response.should redirect_to edit_user_registration_path }
+        it { expect(response).to redirect_to edit_user_registration_path }
         it { should set_the_flash[:notice].to('You updated your profile successfully.') }
         it 'should update the User account' do
           @logged_in_user.reload
           valid_profile_attributes.each do |key, value|
-            @logged_in_user[key].should eq(value)
+            expect(@logged_in_user[key]).to eq(value)
           end
         end
       end
@@ -63,9 +63,9 @@ describe Users::RegistrationsController do
         it { should render_with_layout(:application) }
         it { should_not set_the_flash }
         it 'should only display the profile form' do
-          controller.send(:display_profile?).should be_true
-          controller.send(:display_accounts?).should be_false
-          controller.send(:display_password_change?).should be_false
+          expect(controller.send(:display_profile?)).to be_true
+          expect(controller.send(:display_accounts?)).to be_false
+          expect(controller.send(:display_password_change?)).to be_false
         end
       end
 
@@ -76,11 +76,11 @@ describe Users::RegistrationsController do
         before(:each) do
           post :update, user: valid_password_change_attributes
         end
-        it { response.should redirect_to edit_user_registration_path }
+        it { expect(response).to redirect_to edit_user_registration_path }
         it { should set_the_flash[:notice].to('You updated your password successfully.') }
         it 'should update the User password' do
           @logged_in_user.reload
-          @logged_in_user.should be_valid_password('newpassword')
+          expect(@logged_in_user).to be_valid_password('newpassword')
         end
       end
       context 'with a invalid password change request' do
@@ -91,13 +91,13 @@ describe Users::RegistrationsController do
         it { should render_with_layout(:application) }
         it { should_not set_the_flash }
         it 'should only display the password form' do
-          controller.send(:display_password_change?).should be_true
-          controller.send(:display_accounts?).should be_false
-          controller.send(:display_profile?).should be_false
+          expect(controller.send(:display_password_change?)).to be_true
+          expect(controller.send(:display_accounts?)).to be_false
+          expect(controller.send(:display_profile?)).to be_false
         end
         it 'should not update the User password' do
           @logged_in_user.reload
-          @logged_in_user.should be_valid_password('changeme')
+          expect(@logged_in_user).to be_valid_password('changeme')
         end
       end
     end

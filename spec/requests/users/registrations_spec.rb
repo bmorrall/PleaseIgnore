@@ -6,7 +6,7 @@ describe "Registrations" do
     context "as a visitor" do
       it "renders the new page" do
         get new_user_registration_path
-        response.status.should be(200)
+        expect(response.status).to be(200)
       end
     end
     describe 'Metadata' do

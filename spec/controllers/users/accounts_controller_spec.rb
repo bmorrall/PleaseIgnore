@@ -16,7 +16,7 @@ describe Users::AccountsController do
           before(:each) do
             delete :destroy, id: facebook_account.to_param
           end
-          it { response.should redirect_to edit_user_registration_path }
+          it { expect(response).to redirect_to edit_user_registration_path }
           it { should set_the_flash[:notice].to('Successfully unlinked your Facebook account.') }
         end
       end
@@ -31,7 +31,7 @@ describe Users::AccountsController do
           before(:each) do
             delete :destroy, id: facebook_account.to_param
           end
-          it { response.should redirect_to edit_user_registration_path }
+          it { expect(response).to redirect_to edit_user_registration_path }
           it { should set_the_flash[:notice].to('Your account has already been unlinked.') }
         end
       end
@@ -55,16 +55,16 @@ describe Users::AccountsController do
             [account_a, account_b, account_c].each { |a| a.reload }
 
             # Accounts should be in sort order
-            account_b.position.should eq(1)
-            account_c.position.should eq(2)
-            account_a.position.should eq(3)
+            expect(account_b.position).to eq(1)
+            expect(account_c.position).to eq(2)
+            expect(account_a.position).to eq(3)
           end
         end
         it 'only orders accounts belonging to the user' do
           account_extra = FactoryGirl.create(:account, position: 1)
           post :sort, { :account_ids => [ account_b.id, account_c.id, account_extra.id, account_a.id ] }
           account_extra.reload
-          account_extra.position.should eq(1) # Position is unchanged
+          expect(account_extra.position).to eq(1) # Position is unchanged
         end
       end
     end

@@ -13,18 +13,18 @@ describe SupportMailer do
     end
 
     it "renders the headers" do
-      mail.subject.should eq("PleaseIgnore Contact Email")
-      mail.to.should eq(["support@pleaseignore.com"])
-      mail.from.should eq(["contact@pleaseignore.com"])
+      expect(mail.subject).to eq("PleaseIgnore Contact Email")
+      expect(mail.to).to eq(["support@pleaseignore.com"])
+      expect(mail.from).to eq(["contact@pleaseignore.com"])
     end
 
     it "renders the body" do
       body = mail.body.encoded
-      body.should match("You have received a Contact Email from PleaseIgnore")
-      body.should match("Test User")
-      body.should match("test@example.com")
-      body.should match("This is the body")
-      body.should match('http://wavedigital.com.au')
+      expect(body).to match("You have received a Contact Email from PleaseIgnore")
+      expect(body).to match("Test User")
+      expect(body).to match("test@example.com")
+      expect(body).to match("This is the body")
+      expect(body).to match('http://wavedigital.com.au')
     end
   end
 

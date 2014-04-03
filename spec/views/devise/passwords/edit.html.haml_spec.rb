@@ -5,9 +5,9 @@ describe "devise/passwords/edit.html.haml" do
   context do # Within default nesting
     let(:user) { User.new }
     before(:each) do
-      view.stub(:devise_mapping).and_return(Devise.mappings[:user])
-      view.stub(:resource).and_return(user)
-      view.stub(:resource_name).and_return('user')
+      allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
+      allow(view).to receive(:resource).and_return(user)
+      allow(view).to receive(:resource_name).and_return('user')
       user.reset_password_token = 'token12345678'
     end
 

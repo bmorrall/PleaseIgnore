@@ -5,9 +5,9 @@ describe "devise/registrations/new.html.haml" do
   context do # Within default nesting
     let(:user) { User.new }
     before(:each) do
-      view.stub(:devise_mapping).and_return(Devise.mappings[:user])
-      view.stub(:resource).and_return(user)
-      view.stub(:resource_name).and_return('user')
+      allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
+      allow(view).to receive(:resource).and_return(user)
+      allow(view).to receive(:resource_name).and_return('user')
     end
 
     it "renders the new registration form" do
@@ -24,7 +24,7 @@ describe "devise/registrations/new.html.haml" do
     describe 'new account links' do
       it 'renders a pending facebook account' do
         facebook_account = FactoryGirl.build_stubbed(:facebook_account)
-        user.stub(:new_session_accounts).and_return([ facebook_account ])
+        allow(user).to receive(:new_session_accounts).and_return([ facebook_account ])
 
         render
         assert_select '.btn-facebook' do
@@ -34,7 +34,7 @@ describe "devise/registrations/new.html.haml" do
       end
       it 'renders a pending twitter account' do
         twitter_account = FactoryGirl.build_stubbed(:twitter_account)
-        user.stub(:new_session_accounts).and_return([ twitter_account ])
+        allow(user).to receive(:new_session_accounts).and_return([ twitter_account ])
 
         render
         assert_select '.btn-twitter' do
@@ -44,7 +44,7 @@ describe "devise/registrations/new.html.haml" do
       end
       it 'renders a pending github account' do
         github_account = FactoryGirl.build_stubbed(:github_account)
-        user.stub(:new_session_accounts).and_return([ github_account ])
+        allow(user).to receive(:new_session_accounts).and_return([ github_account ])
 
         render
         assert_select '.btn-github' do
@@ -54,7 +54,7 @@ describe "devise/registrations/new.html.haml" do
       end
       it 'renders a pending google account' do
         google_account = FactoryGirl.build_stubbed(:google_account, website: nil)
-        user.stub(:new_session_accounts).and_return([ google_account ])
+        allow(user).to receive(:new_session_accounts).and_return([ google_account ])
 
         render
         assert_select '.btn-google-plus' do

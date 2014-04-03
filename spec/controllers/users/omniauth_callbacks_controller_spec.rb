@@ -20,7 +20,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_registration_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Facebook account.') }
             it 'should set devise.facebook_data session data' do
-              session['devise.facebook_data'].should_not be_empty
+              expect(session['devise.facebook_data']).not_to be_empty
             end
           end
           it 'should not create a new Account' do
@@ -41,7 +41,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(root_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Facebook account.') }
             it 'should not set devise.facebook_data session data' do
-              session['devise.facebook_data'].should be_nil
+              expect(session['devise.facebook_data']).to be_nil
             end
           end
           it 'should not create a new Account' do
@@ -53,8 +53,8 @@ describe Users::OmniauthCallbacksController do
         context 'with a disabled account' do
           before(:each) do
             account = Account.new
-            account.stub(:enabled?).and_return(false)
-            Account.stub(:find_for_oauth).and_return(account)
+            allow(account).to receive(:enabled?).and_return(false)
+            allow(Account).to receive(:find_for_oauth).and_return(account)
           end
           context 'with a valid request' do
             before(:each) { get :facebook }
@@ -77,7 +77,7 @@ describe Users::OmniauthCallbacksController do
             expect {
               get :facebook
             }.to change(Account, :count).by(1)
-            Account.last.user.should eq(user)
+            expect(Account.last.user).to eq(user)
           end
         end
         context 'with a previously linked account' do
@@ -127,7 +127,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_registration_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from GitHub account.') }
             it 'should set devise.github_data session data' do
-              session['devise.github_data'].should_not be_empty
+              expect(session['devise.github_data']).not_to be_empty
             end
           end
           it 'should not create a new Account' do
@@ -148,7 +148,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(root_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from GitHub account.') }
             it 'should not set devise.github_data session data' do
-              session['devise.github_data'].should be_nil
+              expect(session['devise.github_data']).to be_nil
             end
           end
           it 'should not create a new Account' do
@@ -160,8 +160,8 @@ describe Users::OmniauthCallbacksController do
         context 'with a disabled account' do
           before(:each) do
             account = Account.new
-            account.stub(:enabled?).and_return(false)
-            Account.stub(:find_for_oauth).and_return(account)
+            allow(account).to receive(:enabled?).and_return(false)
+            allow(Account).to receive(:find_for_oauth).and_return(account)
           end
           context 'with a valid request' do
             before(:each) { get :github }
@@ -186,7 +186,7 @@ describe Users::OmniauthCallbacksController do
             expect {
               get :github
             }.to change(Account, :count).by(1)
-            Account.last.user.should eq(user)
+            expect(Account.last.user).to eq(user)
           end
         end
         context 'with a previously linked account' do
@@ -236,7 +236,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_registration_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Google account.') }
             it 'should set devise.google_oauth2_data session data' do
-              session['devise.google_oauth2_data'].should_not be_empty
+              expect(session['devise.google_oauth2_data']).not_to be_empty
             end
           end
           it 'should not create a new Account' do
@@ -257,7 +257,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(root_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Google account.') }
             it 'should not set devise.google_oauth2_data session data' do
-              session['devise.google_oauth2_data'].should be_nil
+              expect(session['devise.google_oauth2_data']).to be_nil
             end
           end
           it 'should not create a new Account' do
@@ -269,8 +269,8 @@ describe Users::OmniauthCallbacksController do
         context 'with a disabled account' do
           before(:each) do
             account = Account.new
-            account.stub(:enabled?).and_return(false)
-            Account.stub(:find_for_oauth).and_return(account)
+            allow(account).to receive(:enabled?).and_return(false)
+            allow(Account).to receive(:find_for_oauth).and_return(account)
           end
           context 'with a valid request' do
             before(:each) { get :google_oauth2 }
@@ -295,7 +295,7 @@ describe Users::OmniauthCallbacksController do
             expect {
               get :google_oauth2
             }.to change(Account, :count).by(1)
-            Account.last.user.should eq(user)
+            expect(Account.last.user).to eq(user)
           end
         end
         context 'with a previously linked account' do
@@ -345,7 +345,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_registration_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Twitter account.') }
             it 'should set devise.twitter_data session data' do
-              session['devise.twitter_data'].should_not be_empty
+              expect(session['devise.twitter_data']).not_to be_empty
             end
           end
           it 'should not create a new Account' do
@@ -366,7 +366,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(root_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Twitter account.') }
             it 'should not set devise.twitter_data session data' do
-              session['devise.twitter_data'].should be_nil
+              expect(session['devise.twitter_data']).to be_nil
             end
           end
           it 'should not create a new Account' do
@@ -378,8 +378,8 @@ describe Users::OmniauthCallbacksController do
         context 'with a disabled account' do
           before(:each) do
             account = Account.new
-            account.stub(:enabled?).and_return(false)
-            Account.stub(:find_for_oauth).and_return(account)
+            allow(account).to receive(:enabled?).and_return(false)
+            allow(Account).to receive(:find_for_oauth).and_return(account)
           end
           context 'with a valid request' do
             before(:each) { get :twitter }
@@ -404,7 +404,7 @@ describe Users::OmniauthCallbacksController do
             expect {
               get :twitter
             }.to change(Account, :count).by(1)
-            Account.last.user.should eq(user)
+            expect(Account.last.user).to eq(user)
           end
         end
         context 'with a previously linked account' do
@@ -454,7 +454,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_registration_path) }
             it { should set_the_flash[:notice].to('Successfully authenticated from Developer account.') }
             it 'should set devise.developer_data session data' do
-              session['devise.developer_data'].should_not be_empty
+              expect(session['devise.developer_data']).not_to be_empty
             end
           end
           it 'should not create a new Account' do
@@ -475,7 +475,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_session_path) }
             it { should set_the_flash[:alert].to('Could not authenticate you from Developer because "Authentication is disabled from this Provider".') }
             it 'should not set devise.developer_data session data' do
-              session['devise.developer_data'].should be_nil
+              expect(session['devise.developer_data']).to be_nil
             end
           end
           it 'should not create a new Account' do
@@ -501,7 +501,7 @@ describe Users::OmniauthCallbacksController do
             expect {
               get :developer
             }.to change(Account, :count).by(1)
-            Account.last.user.should eq(user)
+            expect(Account.last.user).to eq(user)
           end
         end
         context 'with a previously linked account' do

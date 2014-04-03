@@ -29,17 +29,17 @@ describe Account do
       context 'with an existing account' do
         let!(:existing_account) { FactoryGirl.create(:facebook_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
         it 'updates the existing account with the auth hash' do
-          existing_account.should_receive(:update_from_auth_hash).with(auth_hash)
-          existing_account.should_receive(:save)
-          Account.stub(:find_by_provider_and_uid).and_return(existing_account)
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(existing_account).to receive(:update_from_auth_hash).with(auth_hash)
+          expect(existing_account).to receive(:save)
+          allow(Account).to receive(:find_by_provider_and_uid).and_return(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
       end
       it 'returns nil with no existing Account' do
-        Account.find_for_oauth(auth_hash).should be_nil
+        expect(Account.find_for_oauth(auth_hash)).to be_nil
       end
     end
     context 'with a Twitter auth hash' do
@@ -47,17 +47,17 @@ describe Account do
       context 'with an existing account' do
         let!(:existing_account) { FactoryGirl.create(:twitter_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
         it 'updates the existing account with the auth hash' do
-          existing_account.should_receive(:update_from_auth_hash).with(auth_hash)
-          existing_account.should_receive(:save)
-          Account.stub(:find_by_provider_and_uid).and_return(existing_account)
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(existing_account).to receive(:update_from_auth_hash).with(auth_hash)
+          expect(existing_account).to receive(:save)
+          allow(Account).to receive(:find_by_provider_and_uid).and_return(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
       end
       it 'returns nil with no existing Account' do
-        Account.find_for_oauth(auth_hash).should be_nil
+        expect(Account.find_for_oauth(auth_hash)).to be_nil
       end
     end
     context 'with a GitHub auth hash' do
@@ -65,17 +65,17 @@ describe Account do
       context 'with an existing account' do
         let!(:existing_account) { FactoryGirl.create(:github_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
         it 'updates the existing account with the auth hash' do
-          existing_account.should_receive(:update_from_auth_hash).with(auth_hash)
-          existing_account.should_receive(:save)
-          Account.stub(:find_by_provider_and_uid).and_return(existing_account)
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(existing_account).to receive(:update_from_auth_hash).with(auth_hash)
+          expect(existing_account).to receive(:save)
+          allow(Account).to receive(:find_by_provider_and_uid).and_return(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
       end
       it 'returns nil with no existing Account' do
-        Account.find_for_oauth(auth_hash).should be_nil
+        expect(Account.find_for_oauth(auth_hash)).to be_nil
       end
     end
     context 'with a Google auth hash' do
@@ -83,17 +83,17 @@ describe Account do
       context 'with an existing account' do
         let!(:existing_account) { FactoryGirl.create(:google_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
         it 'updates the existing account with the auth hash' do
-          existing_account.should_receive(:update_from_auth_hash).with(auth_hash)
-          existing_account.should_receive(:save)
-          Account.stub(:find_by_provider_and_uid).and_return(existing_account)
-          Account.find_for_oauth(auth_hash).should eq(existing_account)
+          expect(existing_account).to receive(:update_from_auth_hash).with(auth_hash)
+          expect(existing_account).to receive(:save)
+          allow(Account).to receive(:find_by_provider_and_uid).and_return(existing_account)
+          expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
       end
       it 'returns nil with no existing Account' do
-        Account.find_for_oauth(auth_hash).should be_nil
+        expect(Account.find_for_oauth(auth_hash)).to be_nil
       end
     end
     it 'raises an exception if the provider does not match the expected value' do
@@ -104,28 +104,28 @@ describe Account do
   end
 
   describe '.omniauth_providers' do
-    it { Account.omniauth_providers.should include(:facebook) }
-    it { Account.omniauth_providers.should include(:twitter) }
-    it { Account.omniauth_providers.should include(:github) }
-    it { Account.omniauth_providers.should include(:google_oauth2) }
-    it { Account.omniauth_providers.should_not include(:developer) }
+    it { expect(Account.omniauth_providers).to include(:facebook) }
+    it { expect(Account.omniauth_providers).to include(:twitter) }
+    it { expect(Account.omniauth_providers).to include(:github) }
+    it { expect(Account.omniauth_providers).to include(:google_oauth2) }
+    it { expect(Account.omniauth_providers).not_to include(:developer) }
   end
 
   describe '.provider_name' do
     it 'should return Developer for developer' do
-      Account.provider_name('developer').should eq('Developer')
+      expect(Account.provider_name('developer')).to eq('Developer')
     end
     it 'should return Facebook for facebook' do
-      Account.provider_name('facebook').should eq('Facebook')
+      expect(Account.provider_name('facebook')).to eq('Facebook')
     end
     it 'should return Twitter for twitter' do
-      Account.provider_name('twitter').should eq('Twitter')
+      expect(Account.provider_name('twitter')).to eq('Twitter')
     end
     it 'should return GitHub for github' do
-      Account.provider_name('github').should eq('GitHub')
+      expect(Account.provider_name('github')).to eq('GitHub')
     end
     it 'should return Google for google_auth2' do
-      Account.provider_name('google_oauth2').should eq('Google')
+      expect(Account.provider_name('google_oauth2')).to eq('Google')
     end
   end
 
@@ -134,50 +134,50 @@ describe Account do
       subject { FactoryGirl.build_stubbed(:facebook_account) }
       it 'returns the name for Facebook' do
         subject.name = 'Test User'
-        subject.account_uid.should eq('Test User')
+        expect(subject.account_uid).to eq('Test User')
       end
     end
     describe 'with a Twitter account' do
       subject { FactoryGirl.build_stubbed(:twitter_account) }
       it 'returns the nickname for Twitter' do
         subject.nickname = '@testuser'
-        subject.account_uid.should eq('@testuser')
+        expect(subject.account_uid).to eq('@testuser')
       end
       it 'prepends an @ to the nickname' do
         subject.nickname = 'testuser'
-        subject.account_uid.should eq('@testuser')
+        expect(subject.account_uid).to eq('@testuser')
       end
     end
     describe 'with a GitHub account' do
       subject { FactoryGirl.build_stubbed(:github_account) }
       it 'returns the name for GitHub' do
         subject.nickname = 'testuser'
-        subject.account_uid.should eq('testuser')
+        expect(subject.account_uid).to eq('testuser')
       end
     end
     describe 'with a Google account' do
       subject { FactoryGirl.build_stubbed(:google_account) }
       it 'returns the name for Google' do
         subject.name = 'Test User'
-        subject.account_uid.should eq('Test User')
+        expect(subject.account_uid).to eq('Test User')
       end
     end
   end
 
   describe '#enabled?' do
     it 'should be true for a valid account' do
-      FactoryGirl.build_stubbed(:account).should be_enabled
+      expect(FactoryGirl.build_stubbed(:account)).to be_enabled
     end
     it 'returns false for an account without a user' do
-      FactoryGirl.build_stubbed(:account, user: nil).should_not be_enabled
+      expect(FactoryGirl.build_stubbed(:account, user: nil)).not_to be_enabled
     end
   end
 
   describe '#profile_picture' do
     it 'returns the image' do
       fake_image = Object.new
-      subject.should_receive(:image).and_return(fake_image)
-      subject.profile_picture.should be(fake_image)
+      expect(subject).to receive(:image).and_return(fake_image)
+      expect(subject.profile_picture).to be(fake_image)
     end
   end
 
@@ -186,8 +186,8 @@ describe Account do
       fake_provider = 'provider'
       fake_provider_name = 'ProVid3r'
       subject.provider = fake_provider
-      Account.should_receive(:provider_name).with(fake_provider).and_return(fake_provider_name)
-      subject.provider_name.should be(fake_provider_name)
+      expect(Account).to receive(:provider_name).with(fake_provider).and_return(fake_provider_name)
+      expect(subject.provider_name).to be(fake_provider_name)
     end
   end
 
@@ -198,17 +198,17 @@ describe Account do
       it 'should update the name from the auth hash' do
         info_params[:name] = 'Test User'
         subject.update_from_auth_hash(auth_hash)
-        subject.name.should eq('Test User')
+        expect(subject.name).to eq('Test User')
       end
       it 'should update the nickname from the auth hash' do
         info_params[:nickname] = 'nickname'
         subject.update_from_auth_hash(auth_hash)
-        subject.nickname.should eq('nickname')
+        expect(subject.nickname).to eq('nickname')
       end
       it 'should update the image from the auth hash' do
         info_params[:image] = 'http://graph.facebook.com/1234567/picture?type=square'
         subject.update_from_auth_hash(auth_hash)
-        subject.image.should eq('http://graph.facebook.com/1234567/picture?type=square')
+        expect(subject.image).to eq('http://graph.facebook.com/1234567/picture?type=square')
       end
     end
     context 'with a Facebook account' do
@@ -221,7 +221,7 @@ describe Account do
         website = 'http://www.facebook.com/jbloggs'
         info_params[:urls] = { Facebook: website }
         subject.update_from_auth_hash(auth_hash)
-        subject.website.should eq(website)
+        expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_expires values' do
         expires = 3.months.since
@@ -229,8 +229,8 @@ describe Account do
         credentials_params[:expires_at] = expires.to_i
         subject.update_from_auth_hash(auth_hash)
 
-        subject.oauth_token.should eq('example_token')
-        subject.oauth_expires_at.to_s.should eq(expires.to_s)
+        expect(subject.oauth_token).to eq('example_token')
+        expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)
       end
     end
     context 'with a Twitter auth hash' do
@@ -243,7 +243,7 @@ describe Account do
         website = 'https://twitter.com/johnqpublic'
         info_params[:urls] = { Twitter: website }
         subject.update_from_auth_hash(auth_hash)
-        subject.website.should eq(website)
+        expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_secret values' do
         expires = 3.months.since
@@ -251,8 +251,8 @@ describe Account do
         credentials_params[:secret] = 'example_secret'
         subject.update_from_auth_hash(auth_hash)
 
-        subject.oauth_token.should eq('example_token')
-        subject.oauth_secret.should eq('example_secret')
+        expect(subject.oauth_token).to eq('example_token')
+        expect(subject.oauth_secret).to eq('example_secret')
       end
     end
     context 'with a GitHub auth hash' do
@@ -265,7 +265,7 @@ describe Account do
         website = 'https://github.com/johnqpublic'
         info_params[:urls] = { Github: website }
         subject.update_from_auth_hash(auth_hash)
-        subject.website.should eq(website)
+        expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_expires values' do
         expires = 3.months.since
@@ -273,8 +273,8 @@ describe Account do
         credentials_params[:expires_at] = expires.to_i
         subject.update_from_auth_hash(auth_hash)
 
-        subject.oauth_token.should eq('example_token')
-        subject.oauth_expires_at.to_s.should eq(expires.to_s)
+        expect(subject.oauth_token).to eq('example_token')
+        expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)
       end
       it 'should set the oauth_token and oauth_secret values' do
         expires = 3.months.since
@@ -282,8 +282,8 @@ describe Account do
         credentials_params[:secret] = 'example_secret'
         subject.update_from_auth_hash(auth_hash)
 
-        subject.oauth_token.should eq('example_token')
-        subject.oauth_secret.should eq('example_secret')
+        expect(subject.oauth_token).to eq('example_token')
+        expect(subject.oauth_secret).to eq('example_secret')
       end
     end
     context 'with a Google auth hash' do
@@ -298,8 +298,8 @@ describe Account do
         credentials_params[:expires_at] = expires.to_i
         subject.update_from_auth_hash(auth_hash)
 
-        subject.oauth_token.should eq('example_token')
-        subject.oauth_expires_at.to_s.should eq(expires.to_s)
+        expect(subject.oauth_token).to eq('example_token')
+        expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)
       end
     end
   end
