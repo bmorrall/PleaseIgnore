@@ -43,6 +43,7 @@ class Account < ActiveRecord::Base
 
   # Humanizes Provider Name
   def self.provider_name(provider)
+    return nil if provider.blank?
     return "GitHub" if provider == 'github'
     return "Google" if provider =~ /google/
     provider.humanize
