@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
   include OmniauthHelpers
 
-  describe 'factories' do
+  describe 'Factories' do
     it 'creates a User with basic details' do
       user = FactoryGirl.create(:user)
       expect(user.name).not_to be_blank
@@ -16,7 +16,7 @@ describe User do
     it { should have_many(:accounts).dependent(:destroy) }
   end
 
-  describe 'validations' do
+  describe 'Validations' do
     it { should validate_presence_of(:name) }
     it { should validate_acceptance_of(:terms_and_conditions) }
   end
@@ -29,7 +29,7 @@ describe User do
         expect(user.name).to eq(auth_account[:name])
         expect(user.email).to eq(auth_account[:email])
       end
-      it 'creates a new developer account on save' do
+      it 'creates a new Developer account on save' do
         user_params = FactoryGirl.attributes_for(:user)
         user = User.new_with_session(user_params, session)
         user.save!
@@ -43,7 +43,7 @@ describe User do
         expect(user.name).to eq(facebook_credentials[:name])
         expect(user.email).to eq(auth_account[:email])
       end
-      it 'creates a new developer account on save' do
+      it 'creates a new Facebook account on save' do
         user_params = FactoryGirl.attributes_for(:user)
         user = User.new_with_session(user_params, session)
         user.save!
@@ -57,7 +57,7 @@ describe User do
         expect(user.name).to eq(twitter_credentials[:name])
         expect(user.email).to be_nil # Twitter doesn't include email
       end
-      it 'creates a new developer account on save' do
+      it 'creates a new Twitter account on save' do
         user_params = FactoryGirl.attributes_for(:user)
         user = User.new_with_session(user_params, session)
         user.save!
@@ -71,7 +71,7 @@ describe User do
         expect(user.name).to eq(github_credentials[:name])
         expect(user.email).to eq(auth_account[:email])
       end
-      it 'creates a new developer account on save' do
+      it 'creates a new GitHub account on save' do
         user_params = FactoryGirl.attributes_for(:user)
         user = User.new_with_session(user_params, session)
         user.save!
@@ -85,7 +85,7 @@ describe User do
         expect(user.name).to eq(google_credentials[:name])
         expect(user.email).to eq(auth_account[:email])
       end
-      it 'creates a new developer account on save' do
+      it 'creates a new Google account on save' do
         user_params = FactoryGirl.attributes_for(:user)
         user = User.new_with_session(user_params, session)
         user.save!
