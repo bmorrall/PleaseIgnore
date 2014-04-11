@@ -24,7 +24,7 @@ FactoryGirl.define do
       sequence(:oauth_secret) { |n| "twitter_secret_#{n}" }
       user
     end
-    factory :google_account do
+    factory :google_oauth2_account do
       provider 'google_oauth2'
       image 'https://lh3.googleusercontent.com/url/photo.jpg'
       sequence(:oauth_token) { |n| "twitter_auth_#{n}" }

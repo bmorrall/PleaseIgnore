@@ -110,17 +110,19 @@ describe "devise/registrations/edit.html.haml" do
         end
       end
       context 'with a Google account' do
-        let(:google_account) { FactoryGirl.build_stubbed(:google_account, user: user, website: nil) }
+        let(:google_oauth2_account) { FactoryGirl.build_stubbed(:google_oauth2_account, user: user, website: nil) }
         before(:each) do
-          allow(user).to receive(:accounts).and_return([google_account])
+          allow(user).to receive(:accounts).and_return([google_oauth2_account])
           allow(user).to receive(:has_provider_account?).and_return(true)
+          user.stub(:accounts).and_return([google_oauth2_account])
+          user.stub(:has_provider_account?).and_return(true)
         end
 
         it 'renders a Google account summary' do
           render
           assert_select '.btn-google-plus' do
             assert_select 'a[href="#"][disabled]' # Google has no website
-            assert_select 'a[href=?][data-method="delete"]', users_account_path(google_account)
+            assert_select 'a[href=?][data-method="delete"]', users_account_path(google_oauth2_account)
           end
         end
         it 'does not render a "Link your Google account" link' do

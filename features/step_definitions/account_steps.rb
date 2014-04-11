@@ -20,12 +20,12 @@ Given /^I exist as a user linked to my GitHub account$/ do
 end
 
 Given /^A user is already linked to my Google account$/ do
-  FactoryGirl.create(:google_account, google_credentials)
+  FactoryGirl.create(:google_oauth2_account, google_credentials)
 end
 
 Given /^I exist as a user linked to my Google account$/ do
   create_user
-  FactoryGirl.create(:google_account, google_credentials.merge({user: @user}))
+  FactoryGirl.create(:google_oauth2_account, google_credentials.merge({user: @user}))
 end
 
 Given /^A user is already linked to my Facebook account$/ do

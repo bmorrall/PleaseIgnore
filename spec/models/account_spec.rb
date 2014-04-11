@@ -81,7 +81,7 @@ describe Account do
     context 'with a Google auth hash' do
       let(:auth_hash) { google_auth_hash }
       context 'with an existing account' do
-        let!(:existing_account) { FactoryGirl.create(:google_account, uid: auth_hash.uid) }
+        let!(:existing_account) { FactoryGirl.create(:google_oauth2_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
           expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
@@ -156,7 +156,7 @@ describe Account do
       end
     end
     describe 'with a Google account' do
-      subject { FactoryGirl.build_stubbed(:google_account) }
+      subject { FactoryGirl.build_stubbed(:google_oauth2_account) }
       it 'returns the name for Google' do
         subject.name = 'Test User'
         expect(subject.account_uid).to eq('Test User')

@@ -248,7 +248,7 @@ describe Users::OmniauthCallbacksController do
         context 'with a previously linked account' do
           let(:existing_user) { FactoryGirl.create(:user) }
           before(:each) do
-            FactoryGirl.create(:google_account, uid: auth_hash.uid, user: existing_user)
+            FactoryGirl.create(:google_oauth2_account, uid: auth_hash.uid, user: existing_user)
           end
           context 'with a valid request' do
             before(:each) do
@@ -300,7 +300,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a previously linked account' do
           before(:each) do
-            FactoryGirl.create(:google_account, uid: auth_hash.uid, user: user)
+            FactoryGirl.create(:google_oauth2_account, uid: auth_hash.uid, user: user)
           end
           it 'should not create a new Account' do
             expect {
@@ -310,7 +310,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a account linked to another user' do
           before(:each) do
-            FactoryGirl.create(:google_account, uid: auth_hash.uid)
+            FactoryGirl.create(:google_oauth2_account, uid: auth_hash.uid)
           end
           context 'with a valid request' do
             before(:each) do

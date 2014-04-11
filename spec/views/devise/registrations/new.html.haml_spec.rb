@@ -53,13 +53,13 @@ describe "devise/registrations/new.html.haml" do
         end
       end
       it 'renders a pending google account' do
-        google_account = FactoryGirl.build_stubbed(:google_account, website: nil)
-        allow(user).to receive(:new_session_accounts).and_return([ google_account ])
+        google_oauth2_account = FactoryGirl.build_stubbed(:google_oauth2_account, website: nil)
+        allow(user).to receive(:new_session_accounts).and_return([ google_oauth2_account ])
 
         render
         assert_select '.btn-google-plus' do
           assert_select 'a[href="#"][disabled]' # Google has no website
-          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(google_account)
+          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(google_oauth2_account)
         end
       end
     end
