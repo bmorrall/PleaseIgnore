@@ -96,34 +96,24 @@ describe User do
 
   describe '#has_provider_account?' do
     subject { FactoryGirl.create(:user) }
-    it 'returns false with no accounts' do
-      expect(subject.has_provider_account?('facebook')).to be_false 
-      expect(subject.has_provider_account?('twitter')).to be_false 
-      expect(subject.has_provider_account?('github')).to be_false 
-      expect(subject.has_provider_account?('google_oauth2')).to be_false 
-    end
-    context 'with a Facebook account' do
-      before(:each) { FactoryGirl.create(:facebook_account, user: subject) }
-      it 'returns true for facebook' do
-        expect(subject.has_provider_account?('facebook')).to be_true
+    context 'with no Account' do
+      Account::PROVIDERS.each do |provider|
+        it "returns false for #{provider}" do
+          subject.has_provider_account?(provider)
+        end
       end
     end
-    context 'with a Twitter account' do
-      before(:each) { FactoryGirl.create(:twitter_account, user: subject) }
-      it 'returns true for twitter' do
-        expect(subject.has_provider_account?('twitter')).to be_true
-      end
-    end
-    context 'with a GitHub account' do
-      before(:each) { FactoryGirl.create(:github_account, user: subject) }
-      it 'returns true for github' do
-        expect(subject.has_provider_account?('github')).to be_true
-      end
-    end
-    context 'with a Google account' do
-      before(:each) { FactoryGirl.create(:google_account, user: subject) }
-      it 'returns true for google_oauth2' do
-        expect(subject.has_provider_account?('google_oauth2')).to be_true
+    Account::PROVIDERS.each do |provider|
+      context "with a #{Account.provider_name(provider)} Account" do
+        let!(:account) { FactoryGirl.create :"#{provider}_account", user: subject }
+        it "returns true for #{provider}" do
+          expect(subject.has_provider_account? provider).to be_true
+        end
+        Account::PROVIDERS.reject { |p| p == provider }.each do |p|
+          it "returns false for #{p}" do
+            expect(subject.has_provider_account? p).to be_false
+          end
+        end
       end
     end
   end

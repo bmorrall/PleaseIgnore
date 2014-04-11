@@ -7,6 +7,9 @@ FactoryGirl.define do
     name { Faker::Name.name }
     user
 
+    factory :developer_account do
+      provider 'developer'
+    end
     factory :facebook_account do
       provider 'facebook'
       image 'http://graph.facebook.com/1234567/picture?type=square'
