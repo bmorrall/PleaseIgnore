@@ -1,4 +1,5 @@
 class Account < ActiveRecord::Base
+  PROVIDERS = %w(developer facebook twitter github google_oauth2)
 
   # Associations
 
@@ -53,7 +54,7 @@ class Account < ActiveRecord::Base
 
   validates :provider,
     presence: true,
-    inclusion: { in: %w(developer facebook twitter github google_oauth2) }
+    inclusion: { in: PROVIDERS }
 
   validates :uid,
     presence: true,
