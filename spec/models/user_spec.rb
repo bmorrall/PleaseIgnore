@@ -126,19 +126,64 @@ describe User do
     end
   end
 
-  describe '#profile_picture' do
-    it 'returns the primary account image' do
-      account_image = 'http://graph.facebook.com/1234567/picture?type=square'
-      account = FactoryGirl.build_stubbed(:account)
-      allow(account).to receive(:profile_picture).and_return(account_image)
+  # Instance Methods (Pictures)
 
-      allow(subject).to receive(:primary_account).and_return(account)
-      expect(subject.profile_picture).to be(account_image)
+  describe '#gravatar_image' do
+    context 'with a email address' do
+      before(:each) { subject.email = 'bemo56@hotmail.com' }
+      context 'with no arguments' do
+        it 'returns a 128px gravatar image url' do
+          expect(subject.gravatar_image).to eq('http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128')
+        end
+      end
+      %w(16 32 64 128).each do |size|
+        context "with a size argument of #{size}" do
+          it "returns a #{size}px gravatar image url" do
+            expect(subject.gravatar_image(size)).to eq("http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}")
+          end
+        end
+      end
     end
-    it 'reverts back to a gravatar image unique to email' do
-      subject.email = 'bemo56@hotmail.com'
-       # Gravatar hash of bemo56@hotmail.com
-      expect(subject.profile_picture).to eq('http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128')
+    context 'with no email address' do
+      it 'returns nil' do
+        expect(subject.gravatar_image).to be_nil
+      end
+    end
+  end
+
+  describe '#profile_picture' do
+    context 'with a primary account' do
+      let(:account) { FactoryGirl.build_stubbed(:account) }
+      before(:each) do
+        # Stub the primary_account method
+        allow(subject).to receive(:primary_account).and_return(account)
+      end
+      context 'with a profile_picture' do
+        let(:account_image) { 'http://graph.facebook.com/1234567/picture?type=square' }
+        before(:each) { allow(account).to receive(:profile_picture).and_return(account_image) }
+
+        it 'returns the profile_picture from the primary account ' do
+          expect(subject.profile_picture).to be(account_image)
+        end
+      end
+      context 'without a profile picture' do
+        before(:each) { allow(account).to receive(:profile_picture).and_return(nil) }
+
+        it 'reverts back to the gravatar image' do
+          gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+          allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
+
+          expect(subject.profile_picture).to eq(gravatar_image)
+        end
+      end
+    end
+    context 'with no accounts' do
+      it 'returns the gravatar image for the user' do
+        gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+        allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
+
+        expect(subject.profile_picture).to eq(gravatar_image)
+      end
     end
   end
 

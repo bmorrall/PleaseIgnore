@@ -68,6 +68,15 @@ class User < ActiveRecord::Base
     accounts.first
   end
 
+  # Instance Methods (Images)
+
+  def gravatar_image(size=128)
+    unless email.blank?
+      gravatar_id = Digest::MD5.hexdigest(email.downcase)
+      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+    end
+  end
+
   # Picture representation of user
   def profile_picture(size=128)
     account = primary_account
@@ -76,14 +85,6 @@ class User < ActiveRecord::Base
   end
 
   protected
-
-  def gravatar_image(size)
-    if email.present?
-      # Fall back to Gravatar
-      gravatar_id = Digest::MD5.hexdigest(email.downcase)
-      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
-    end
-  end
 
   # Saves Accounts loaded with session on create
   def save_new_session_accounts!
