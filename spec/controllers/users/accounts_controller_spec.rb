@@ -5,7 +5,7 @@ describe Users::AccountsController do
   describe 'DELETE destroy' do
     context 'with a signed in User' do
       login_user
-      context 'with a facebook account' do
+      context 'with a facebook account belonging to the user' do
         let!(:facebook_account) { FactoryGirl.create(:facebook_account, user: logged_in_user) }
         it 'should delete the user account' do
           expect {
