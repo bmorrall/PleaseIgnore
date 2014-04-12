@@ -9,7 +9,8 @@ class Users::AccountsController < ::ApplicationController
       redirect_to edit_user_registration_path, :notice => "Successfully unlinked your #{provider_name} account."
     else
       # Redirect with generic no account to remove message
-      redirect_to edit_user_registration_path, :notice => "Your account has already been unlinked."
+      flash[:warning] = 'Your account has already been unlinked.'
+      redirect_to edit_user_registration_path
     end
   end
 

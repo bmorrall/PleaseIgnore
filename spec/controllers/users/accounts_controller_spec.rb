@@ -32,7 +32,7 @@ describe Users::AccountsController do
             delete :destroy, id: facebook_account.to_param
           end
           it { expect(response).to redirect_to edit_user_registration_path }
-          it { should set_the_flash[:notice].to('Your account has already been unlinked.') }
+          it { should set_the_flash[:warning].to('Your account has already been unlinked.') }
         end
       end
     end
