@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Users::Accounts' do
 
-  describe 'Deleting a Account' do
+  describe 'DELETE /users/accounts/1' do
     context 'as a user belonging to the account' do
       login_user
       let!(:account) { FactoryGirl.create(:facebook_account, user: logged_in_user) }
