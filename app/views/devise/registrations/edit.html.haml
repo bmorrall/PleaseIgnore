@@ -44,8 +44,9 @@
 
     .form-horizontal
       // Linked Accounts
-      .linked-accounts{ data: { sort_path: sort_users_accounts_path }}
-        = render partial: 'account', collection: resource.accounts
+      - if resource.accounts.any?
+        .linked-accounts{ data: { sort_path: sort_users_accounts_path }}
+          = render partial: 'account', collection: resource.accounts
 
       // Link Account Items
       - omniauth_providers.each do |provider|
