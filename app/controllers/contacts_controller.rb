@@ -1,5 +1,6 @@
 class ContactsController < ApplicationController
 
+  # GET /contact
   def show
     @contact = Contact.new
     if user_signed_in?
@@ -11,8 +12,10 @@ class ContactsController < ApplicationController
     if referer && !current_page?(referer)
       flash.now[:info] = "Your message will mention you visited this page from #{referer}"
     end
+    # show.html.haml
   end
 
+  # POST /contact
   def create
     @contact = Contact.new(params[:contact])
     if @contact.valid?
@@ -22,6 +25,11 @@ class ContactsController < ApplicationController
     else
       render :show
     end
+  end
+
+  # GET /contact/thank_you
+  def thank_you
+    # thank_you.html.haml
   end
 
   protected
