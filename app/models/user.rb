@@ -107,9 +107,9 @@ class User < ActiveRecord::Base
       provider_key = "devise.#{provider}_data"
 
       # Add Omniauth Params to User
-      if (data = session[provider_key]) && data["info"]
-        self.name = data.info["name"] if name.blank?
-        self.email = data.info["email"] if email.blank?
+      if (data = session[provider_key]) && (info = data["info"])
+        self.name = info["name"] if name.blank?
+        self.email = info["email"] if email.blank?
 
         # Add a new session
         self.new_session_accounts << Account.new_with_auth_hash(data, provider)
