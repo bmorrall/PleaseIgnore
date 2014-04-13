@@ -191,6 +191,30 @@ describe Account do
     end
   end
 
+  describe '#remove_oauth_credentials' do
+    context 'with an account with oauth credentials' do
+      subject do
+        FactoryGirl.build_stubbed(:account,
+          oauth_token: 'oauth_token',
+          oauth_secret: 'oauth_secret',
+          oauth_expires_at: DateTime.now
+        )
+      end
+      it 'sets oauth_token to nil' do
+        subject.remove_oauth_credentials
+        expect(subject.oauth_token).to be_nil
+      end
+      it 'sets oauth_secret to nil' do
+        subject.remove_oauth_credentials
+        expect(subject.oauth_secret).to be_nil
+      end
+      it 'sets oauth_expires_at to nil' do
+        subject.remove_oauth_credentials
+        expect(subject.oauth_expires_at).to be_nil
+      end
+    end
+  end
+
   describe '#update_from_auth_hash' do
     context 'with a generic auth hash containing info params' do
       let(:info_params) { {} }

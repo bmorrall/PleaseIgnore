@@ -17,24 +17,22 @@ class Account < ActiveRecord::Base
     end
 
     find_by_provider_and_uid(provider, auth_hash.uid).tap do |account|
-      unless account.nil?
-        account.update_from_auth_hash(auth_hash)
-        unless account.save
-          errors = account.errors.full_messages.join(', ')
-          logger.error "Unable to update account (#{account.uid}): #{errors}"
-        end
-      end
+      account.update_and_save_from_auth_hash(auth_hash) if account
     end
   end
 
   # Creates a New Account based off OmniAuth Hash
   def self.new_with_auth_hash(data, force_provider=nil)
-    provider = force_provider || data.provider
-    Account.new.tap do |account|
-      account.provider = provider
-      account.uid = data.uid
-      account.update_from_auth_hash(data)
+    provider = data.provider
+    if force_provider && provider != force_provider
+      # Provider from hash doesn't match expected values
+      raise "Provider (#{provider}) doesn't match expected value: #{force_provider}"
     end
+
+    Account.new(
+      provider: provider,
+      uid: data.uid
+    ).update_from_auth_hash(data)
   end
 
   # List of available OmniAuth Providers
@@ -90,24 +88,62 @@ class Account < ActiveRecord::Base
     Account::provider_name(provider)
   end
 
+  # Removes all oauth credentials from account
+  def remove_oauth_credentials
+    self.oauth_token = nil
+    self.oauth_secret = nil
+    self.oauth_expires_at = nil
+  end
+
   # Update Account properties from OAuth data
   def update_from_auth_hash(data)
-    self.name = data.info.name
-    self.nickname = data.info.nickname
-    self.image = data.info.image
-    if data.credentials.present?
-      self.oauth_token = data.credentials.token
-      self.oauth_secret = data.credentials.secret
-      if data.credentials.expires_at
-        self.oauth_expires_at = Time.at(data.credentials.expires_at)
-      end
+    update_account_info data.info
+    update_oauth_credentials data.credentials
+    update_provider_meta_data data
+    self
+  end
+
+  def update_and_save_from_auth_hash(auth_hash)
+    update_from_auth_hash(auth_hash)
+    unless save
+      error_messages = errors.full_messages.join(', ')
+      logger.error "Unable to update account (#{provider}##{uid}): #{error_messages}"
     end
-    if provider == 'facebook'
-      self.website = data.info.urls && data.info.urls['Facebook']
-    elsif provider == 'twitter'
-      self.website = data.info.urls && data.info.urls['Twitter']
-    elsif provider == 'github'
-      self.website = data.info.urls && data.info.urls['Github']
+    self
+  end
+
+  protected
+
+  # Updates Common Account information
+  def update_account_info(info)
+    self.name = info.name
+    self.nickname = info.nickname
+    self.image = info.image
+  end
+
+  # Updates Oauth Credentials
+  def update_oauth_credentials(credentials)
+    if credentials
+      self.oauth_token = credentials.token
+      self.oauth_secret = credentials.secret
+      self.oauth_expires_at = (expires_at = credentials.expires_at) ? Time.at(expires_at) : nil
+    else
+      remove_oauth_credentials
     end
   end
+
+  # Updates provider specific information
+  def update_provider_meta_data(data)
+    urls = data.info.urls
+    if provider == 'facebook'
+      self.website = urls && urls['Facebook']
+    elsif provider == 'twitter'
+      self.website = urls && urls['Twitter']
+    elsif provider == 'github'
+      self.website = urls && urls['Github']
+    else
+      self.website = nil
+    end
+  end
+
 end
