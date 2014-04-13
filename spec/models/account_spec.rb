@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: accounts
+#
+#  id               :integer          not null, primary key
+#  provider         :string(255)      not null
+#  uid              :string(255)      not null
+#  name             :string(255)
+#  nickname         :string(255)
+#  image            :string(255)
+#  website          :string(255)
+#  oauth_token      :string(255)
+#  oauth_secret     :string(255)
+#  oauth_expires_at :datetime
+#  user_id          :integer
+#  created_at       :datetime
+#  updated_at       :datetime
+#  position         :integer
+#
+
 require 'spec_helper'
 
 describe Account do
