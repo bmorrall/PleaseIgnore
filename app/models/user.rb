@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
 
   # Colllects auth hashes from all stored providers and adds them to the new_session_accounts temporary list
   def add_accounts_from_session(session)
-    %w(facebook twitter github google_oauth2 developer).each do |provider|
+    Account::PROVIDERS.each do |provider|
       provider_key = "devise.#{provider}_data"
 
       # Add Omniauth Params to User

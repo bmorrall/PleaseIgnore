@@ -19,7 +19,7 @@
 #
 
 class Account < ActiveRecord::Base
-  PROVIDERS = %w(developer facebook twitter github google_oauth2)
+  PROVIDERS = %w(facebook twitter github google_oauth2 developer)
 
   # Associations
 
