@@ -52,7 +52,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a disabled account' do
           before(:each) do
-            account = Account.new
+            account = FactoryGirl.build_stubbed(:facebook_account)
             allow(account).to receive(:enabled?).and_return(false)
             allow(Account).to receive(:find_for_oauth).and_return(account)
           end
@@ -159,7 +159,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a disabled account' do
           before(:each) do
-            account = Account.new
+            account = FactoryGirl.build_stubbed(:github_account)
             allow(account).to receive(:enabled?).and_return(false)
             allow(Account).to receive(:find_for_oauth).and_return(account)
           end
@@ -268,7 +268,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a disabled account' do
           before(:each) do
-            account = Account.new
+            account = FactoryGirl.build_stubbed(:google_oauth2_account)
             allow(account).to receive(:enabled?).and_return(false)
             allow(Account).to receive(:find_for_oauth).and_return(account)
           end
@@ -377,7 +377,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a disabled account' do
           before(:each) do
-            account = Account.new
+            account = FactoryGirl.build_stubbed(:twitter_account)
             allow(account).to receive(:enabled?).and_return(false)
             allow(Account).to receive(:find_for_oauth).and_return(account)
           end
