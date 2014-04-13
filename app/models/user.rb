@@ -43,20 +43,7 @@ class User < ActiveRecord::Base
 
   def self.new_with_session(params, session)
     super.tap do |user|
-
-      %w(facebook twitter github google_oauth2 developer).each do |provider|
-        provider_key = "devise.#{provider}_data"
-
-        # Add Omniauth Params to User
-        if (data = session[provider_key]) && session[provider_key]["info"]
-          user.name = data.info["name"] if user.name.blank?
-          user.email = data.info["email"] if user.email.blank?
-
-          # Add a new session
-          user.new_session_accounts << Account.new_with_auth_hash(data, provider)
-        end
-      end
-
+      user.send :add_accounts_from_session, session
     end
   end
 
@@ -111,6 +98,22 @@ class User < ActiveRecord::Base
     new_session_accounts.each do |account|
       account.user = self
       logger.error "Unable to save Account: #{account.provider}: #{account.uid}" unless account.save!
+    end
+  end
+
+  # Colllects auth hashes from all stored providers and adds them to the new_session_accounts temporary list
+  def add_accounts_from_session(session)
+    %w(facebook twitter github google_oauth2 developer).each do |provider|
+      provider_key = "devise.#{provider}_data"
+
+      # Add Omniauth Params to User
+      if (data = session[provider_key]) && data["info"]
+        self.name = data.info["name"] if name.blank?
+        self.email = data.info["email"] if email.blank?
+
+        # Add a new session
+        self.new_session_accounts << Account.new_with_auth_hash(data, provider)
+      end
     end
   end
 
