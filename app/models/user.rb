@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
   # Callbacks
 
-  after_create :save_new_session_accounts!
+  after_create :save_new_session_accounts
 
   # Instance Methods
 
@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
   protected
 
   # Saves Accounts loaded with session on create
-  def save_new_session_accounts!
+  def save_new_session_accounts
     new_session_accounts.each do |account|
       account.user = self
       logger.error "Unable to save Account: #{account.provider}: #{account.uid}" unless account.save!
