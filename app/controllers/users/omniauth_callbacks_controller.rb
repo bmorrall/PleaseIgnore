@@ -1,31 +1,41 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+
+  # Don't check CSRF for callbacks
   skip_before_filter :verify_authenticity_token
 
   # Fake Developer Authentication
+
+  # GET /users/developer/callback
   def developer
-    auth_hash = request.env["omniauth.auth"]
     if user_signed_in?
-      link_account_with_current_user auth_hash, 'developer'
+      link_account_with_current_user 'developer'
     else
-      deny_sign_in_or_register_account auth_hash, 'developer'
+      deny_sign_in_or_register_account 'developer'
     end
   end
 
-  # Available OAuth Authentication
+  # Enabled OAuth Authentication
+
   %w(facebook github google_oauth2 twitter).each do |provider|
+    # GET /users/#[provider]/callback
     define_method provider do
-      auth_hash = request.env["omniauth.auth"]
       if user_signed_in?
-        link_account_with_current_user auth_hash, provider
+        link_account_with_current_user provider
       else
-        sign_in_or_register_account auth_hash, provider
+        sign_in_or_register_account provider
       end
     end
   end
 
   protected
 
-  def link_account_with_current_user(auth_hash, provider)
+  # Auth Hash provided by Omniauth
+  def auth_hash
+    @auth_hash ||= request.env["omniauth.auth"]
+  end
+
+  # Create a new account and link it with the current user
+  def link_account_with_current_user(provider)
     account = Account.new_with_auth_hash(auth_hash, provider)
     account.user = current_user
     if account.save
@@ -38,28 +48,33 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     redirect_to edit_user_registration_path
   end
 
-  def sign_in_or_register_account(auth_hash, provider)
+  # Attempt to find existing account, or register a new account
+  def sign_in_or_register_account(provider)
     account = Account.find_for_oauth(auth_hash, provider)
     if account.present?
-      sign_user_into_account account, provider
+      sign_in_with_exiting_account account
     else
       # Redirect to User Registration with auth hash
-      redirect_user_to_registration_page auth_hash, provider
+      redirect_user_to_registration_page provider
     end
   end
 
-  def sign_user_into_account(account, provider)
+  # Attempt to sign in with account if it is enabled
+  def sign_in_with_exiting_account(account)
+    provider = account.provider
     if account.enabled?
       # Sign in to profile owning linked account
       display_authenticated_flash_message provider
       sign_in_and_redirect account.user, :event => :authentication
     else
+      # Prevent users from logging in with banned accounts
       display_failure_flash_message 'This account has been disabled', provider
       redirect_to new_user_session_path
     end
   end
 
-  def deny_sign_in_or_register_account(auth_hash, provider)
+  # Attempt to find account or register, but do not allow user to sign in
+  def deny_sign_in_or_register_account(provider)
     account = Account.find_for_oauth(auth_hash, provider)
     if account.present?
       # Deny Authentication from this Provider
@@ -67,19 +82,20 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_session_path
     else
       # Redirect to User Registration with auth hash
-      redirect_user_to_registration_page auth_hash, provider
+      redirect_user_to_registration_page provider
     end
   end
 
-  def redirect_user_to_registration_page(auth_hash, provider)
+  private
+
+  def redirect_user_to_registration_page(provider)
     display_registration_flash_message provider
-    save_auth_hash_to_session auth_hash, provider
+    save_auth_hash_to_session provider
     redirect_to new_user_registration_path
   end
 
-  private
-  
-  def save_auth_hash_to_session(auth_hash, provider)
+  # Store the auth_hash for registration
+  def save_auth_hash_to_session(provider)
     # Save the auth hash without raw info
     session["devise.#{provider}_data"] = auth_hash.reject{ |key| key.to_sym == :raw_info }
   end
@@ -95,6 +111,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     set_flash_message(:notice, :success, :kind => Account::provider_name(provider)) if is_navigational_format?
   end
 
+  # Unable to sign in user due to `reason`
   def display_failure_flash_message(reason, provider)
     set_flash_message(:alert, :failure, :kind => Account::provider_name(provider), :reason => reason) if is_navigational_format?
   end
