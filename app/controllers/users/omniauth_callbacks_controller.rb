@@ -40,7 +40,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_or_register_account(auth_hash, provider)
     account = Account.find_for_oauth(auth_hash, provider)
-    if account.present? 
+    if account.present?
       if account.enabled?
         # Sign in to profile owning linked account
         set_flash_message(:notice, :success, :kind => Account::provider_name(provider)) if is_navigational_format?
@@ -59,7 +59,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def deny_sign_in_or_register_account(auth_hash, provider)
     account = Account.find_for_oauth(auth_hash, provider)
-    if account.present? 
+    if account.present?
       # Deny Authentication from this Provider
       set_flash_message(:alert, :failure, :kind => Account::provider_name(provider), :reason => 'Authentication is disabled from this Provider') if is_navigational_format?
       redirect_to new_user_session_path

@@ -8,7 +8,7 @@ module NavigationHelpers
       "#{host}:#{port}"
     end
   end
-  
+
   # Maps a name to a path. Used by the
   #
   #   When /^I go to (.+)$/ do |page_name|

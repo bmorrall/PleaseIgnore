@@ -9,7 +9,7 @@ class Account < ActiveRecord::Base
   # Class Methods
 
   # Finds a existing Account from an OmniAuth hash, and updates from latest details
-  def self.find_for_oauth(auth_hash, force_provider = nil) 
+  def self.find_for_oauth(auth_hash, force_provider = nil)
     provider = auth_hash.provider
     if force_provider && provider != force_provider
       # Provider from hash doesn't match expected values
