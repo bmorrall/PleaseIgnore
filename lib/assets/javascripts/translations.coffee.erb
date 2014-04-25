@@ -1,0 +1,23 @@
+#
+# I18n Translations in JS
+#
+# Allows JS files to use Translations provided by Rails
+#
+# App.t 'hello' => 'Hello World' # en.javascript.hello
+#
+# Based off code from http://eng.joingrouper.com/blog/2014/04/03/rails-internationalization-translation/
+#
+# @author Ben Morrall <bemo56@hotmail.com>
+
+App = (window.App ||= {})
+
+App.translations = <%= I18n.t('javascript').to_json %>
+
+# Returns a translated string with `key`.
+App.t = (key) ->
+  current_scope = App.translations
+  $.each key.split("."), (i, key_part) ->
+    current_scope = current_scope[key_part]
+    unless current_scope?
+      return false
+  return current_scope || "missing translation: <%= I18n.locale %>.javascript." + key

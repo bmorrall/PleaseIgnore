@@ -11,12 +11,15 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery_ujs
 //= require bootstrap/alert
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/transition
-//= require jquery_ujs
 //= require html5sortable/jquery.sortable
 //= require turbolinks
+//
+//= require translations
+//
 //= require main
 //= require users
