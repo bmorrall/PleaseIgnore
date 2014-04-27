@@ -62,6 +62,9 @@ gem 'redcarpet'
 # Use sendgrid to send emails
 gem 'sendgrid'
 
+# Fix assets for Bower
+gem "non-stupid-digest-assets"
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

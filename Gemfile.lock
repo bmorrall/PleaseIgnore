@@ -123,6 +123,7 @@ GEM
     multipart-post (2.0.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    non-stupid-digest-assets (1.0.4)
     oauth (0.4.7)
     oauth2 (0.9.3)
       faraday (>= 0.8, < 0.10)
@@ -263,6 +264,7 @@ DEPENDENCIES
   high_voltage
   jbuilder
   jquery-rails
+  non-stupid-digest-assets
   omniauth-facebook
   omniauth-github
   omniauth-google-oauth2

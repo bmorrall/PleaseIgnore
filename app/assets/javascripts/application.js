@@ -16,7 +16,7 @@
 //= require bootstrap/dropdown
 //= require bootstrap/transition
 //= require jquery_ujs
-//= require jquery.sortable
+//= require html5sortable/jquery.sortable
 //= require turbolinks
 //= require main
 //= require users
