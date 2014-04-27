@@ -13,6 +13,15 @@ Ruby version
 System dependencies
 -------------------
 
+Assuming you have installed `nodejs`, run the following to install Bower and download all required frontend assets.
+
+```
+npm install -g bower
+bower install
+```
+
+More details can be found at: https://gist.github.com/afeld/5704079
+
 SendGrid Configuration
 ----------------------
 <img src="http://assets3.sendgrid.com/mkt/assets/logos_brands/small/logo_full_color_flat-198f020c78782e28250e0ec40fcee652.jpg">

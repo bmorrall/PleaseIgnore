@@ -1,0 +1,21 @@
+{
+  "name": "PleaseIgnore",
+  "version": "0.0.1",
+  "homepage": "https://github.com/bmorrall/PleaseIgnore",
+  "description": "PleaseIgnore",
+  "authors": [
+    "Ben Morrall <bemo56@hotmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

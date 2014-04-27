@@ -22,6 +22,9 @@ module PleaseIgnore
     # config.i18n.default_locale = :de
     config.i18n.enforce_available_locales = true
 
+    # include Bower components in compiled assets
+    config.assets.append_path 'components'
+
     # Update Generators to use factory girl
     config.generators do |g|
       g.test_framework :rspec, fixture: true
