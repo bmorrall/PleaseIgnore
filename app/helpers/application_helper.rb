@@ -12,20 +12,6 @@ module ApplicationHelper
     content_tag :i, nil, class: "fa fa-#{icon_name}"
   end
 
-  # Alerts
-
-  def message_alert_class(name)
-    if name == :notice
-      'success'
-    elsif name == :warning
-      'warning'
-    elsif name == :info
-      'info'
-    else
-      'danger'
-    end
-  end
-
   # Links
 
   # Link is external and should not be linked
