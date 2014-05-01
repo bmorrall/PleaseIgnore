@@ -43,7 +43,7 @@ class Account < ActiveRecord::Base
 
   # Creates a New Account based off OmniAuth Hash
   def self.new_with_auth_hash(data, force_provider=nil)
-    provider = data.provider
+    provider = data['provider']
     if force_provider && provider != force_provider
       # Provider from hash doesn't match expected values
       raise "Provider (#{provider}) doesn't match expected value: #{force_provider}"
@@ -51,7 +51,7 @@ class Account < ActiveRecord::Base
 
     Account.new(
       provider: provider,
-      uid: data.uid
+      uid: data['uid']
     ).update_from_auth_hash(data)
   end
 
@@ -117,8 +117,8 @@ class Account < ActiveRecord::Base
 
   # Update Account properties from OAuth data
   def update_from_auth_hash(data)
-    update_account_info data.info
-    update_oauth_credentials data.credentials
+    update_account_info data['info']
+    update_oauth_credentials data['credentials']
     update_provider_meta_data data
     self
   end
@@ -136,17 +136,17 @@ class Account < ActiveRecord::Base
 
   # Updates Common Account information
   def update_account_info(info)
-    self.name = info.name
-    self.nickname = info.nickname
-    self.image = info.image
+    self.name = info['name']
+    self.nickname = info['nickname']
+    self.image = info['image']
   end
 
   # Updates Oauth Credentials
   def update_oauth_credentials(credentials)
     if credentials
-      self.oauth_token = credentials.token
-      self.oauth_secret = credentials.secret
-      self.oauth_expires_at = (expires_at = credentials.expires_at) ? Time.at(expires_at) : nil
+      self.oauth_token = credentials['token']
+      self.oauth_secret = credentials['secret']
+      self.oauth_expires_at = (expires_at = credentials['expires_at']) ? Time.at(expires_at) : nil
     else
       remove_oauth_credentials
     end
@@ -154,7 +154,8 @@ class Account < ActiveRecord::Base
 
   # Updates provider specific information
   def update_provider_meta_data(data)
-    urls = data.info.urls
+    info = data['info']
+    urls = info['urls']
     if provider == 'facebook'
       self.website = urls && urls['Facebook']
     elsif provider == 'twitter'
