@@ -11,7 +11,7 @@ Feature: Password Reset
       Given I exist as a user
       When I enter a valid password reset request
       Then I should see a password reset email has been sent notice
-      And I should receive an email with subject "Reset password instructions"
+      And I should receive an email with Reset password instructions
 
     Scenario: User requests password reset without an account
       Given I do not exist as a user

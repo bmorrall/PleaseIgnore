@@ -264,3 +264,14 @@ Then /^I should see a password was reset message$/ do
   page.should have_content "Your password was changed successfully"
 end
 
+Then /^(?:I|they) should receive an email with Reset password instructions$/ do
+  unread_emails_for(@visitor[:email]).size.should == 1
+
+  # this call will store the email and you can access it with current_email
+  open_last_email_for(@visitor[:email])
+  expect(current_email).to have_subject(/Reset password instructions/)
+  expect(current_email).to be_delivered_from('accounts@pleaseignore.com')
+
+  expect(current_email).to have_body_text(@visitor[:name])
+  expect(current_email).to have_link('Change my password')
+end
