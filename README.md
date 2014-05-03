@@ -22,6 +22,17 @@ bower install
 
 More details can be found at: https://gist.github.com/afeld/5704079
 
+Email Configuration
+-------------------
+
+Set the following env vars in order to use email addresses.
+
+Address                  | Purpose                                                                 |
+-------------------------|-------------------------------------------------------------------------|
+`ACCOUNTS_EMAIL_ADDRESS` | Email for handling user accounts (registration, password reset, etc...) |
+`SUPPORT_EMAIL_ADDRESS`  | Email for receiving any support issues (contact request, etc...)        |
+`CONTACT_EMAIL_ADDRESS`  | Email sent from the Contact Request form.                               |
+
 SendGrid Configuration
 ----------------------
 <img src="http://assets3.sendgrid.com/mkt/assets/logos_brands/small/logo_full_color_flat-198f020c78782e28250e0ec40fcee652.jpg">
