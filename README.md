@@ -119,3 +119,14 @@ Services (job queues, cache servers, search engines, etc.)
 
 Deployment instructions
 -----------------------
+
+Deployment on Heroku
+====================
+
+Heroku requires a custom buildpack in order to install `Bower` components via NodeJS.
+
+`heroku config:set BUILDPACK_URL='git://github.com/qnyp/heroku-buildpack-ruby-bower.git#run-bower'`
+
+Initial installation requires the Postgres addon to be added to the dyno.
+
+`heroku addons:add heroku-postgresql`

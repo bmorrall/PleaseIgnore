@@ -65,6 +65,11 @@ gem 'sendgrid'
 # Fix assets for Bower
 gem "non-stupid-digest-assets"
 
+group :production do
+  # Integration with heroku
+  gem 'rails_12factor'
+end
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

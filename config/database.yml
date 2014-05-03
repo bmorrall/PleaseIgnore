@@ -83,6 +83,4 @@ cucumber:
 #
 production:
   <<: *default
-  database: please_ignore_production
-  username: please_ignore
-  password: <%= ENV['PLEASE_IGNORE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
