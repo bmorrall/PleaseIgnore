@@ -1,4 +1,13 @@
 module Users
+  # Users OmniAuth Callbacks Controller
+  # Allows for OmniAuth accounts to added to User accounts
+  #
+  # With a logged in User:
+  # - Attempts to add Account to current_user
+  #
+  # With a guest:
+  # - If account if previously connected, attempts to sign user in
+  # - Otherwise, Redirects to registration, and links account on successful registration.
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Don't check CSRF for callbacks
     skip_before_filter :verify_authenticity_token

@@ -1,3 +1,7 @@
+# Support Mailer
+# Mailer used to contact support for various issues
+#
+# - Sends Contact Request email
 class SupportMailer < ActionMailer::Base
   include SendGrid
   sendgrid_category :use_subject_lines

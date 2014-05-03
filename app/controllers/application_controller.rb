@@ -1,3 +1,8 @@
+# Base Application Controller
+#
+# - Enables CSRF Protection with exception throwing.
+# - Filters extra params for Devise (name)
+#
 class ApplicationController < ActionController::Base
   # Add common responders to Application
   self.responder = ApplicationResponder
@@ -9,7 +14,7 @@ class ApplicationController < ActionController::Base
   # Ensure CanCan(Can) authorizes all actions
   # check_authorization :unless => :devise_controller?
 
-  # Add Parameters for Devise Controllers
+  # Add extra parameters for Devise Controllers
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
   protected

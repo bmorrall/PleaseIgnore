@@ -1,3 +1,5 @@
+# Contact Model
+# Contains validations for submitting a Contact Request
 class Contact
   include ActiveModel::Model
 
@@ -28,5 +30,11 @@ class Contact
       body: body,
       referer: referer
     }
+  end
+
+  # Assigns Properties from `user`
+  def user=(user)
+    self.email = user.email
+    self.name = user.name
   end
 end

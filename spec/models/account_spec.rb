@@ -174,7 +174,7 @@ describe Account do
     end
     describe 'with a GitHub account' do
       subject { FactoryGirl.build_stubbed(:github_account) }
-      it 'returns the name for GitHub' do
+      it 'returns the nickname for GitHub' do
         subject.nickname = 'testuser'
         expect(subject.account_uid).to eq('testuser')
       end
@@ -264,19 +264,19 @@ describe Account do
       end
       let(:auth_hash) { OmniAuth::AuthHash.new(info: info_params) }
       it 'should update the name from the auth hash' do
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.name).to eq('Test User')
       end
       it 'should update the email from the auth hash' do
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.email).to eq('test@example.com')
       end
       it 'should update the nickname from the auth hash' do
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.nickname).to eq('nickname')
       end
       it 'should update the image from the auth hash' do
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.image).to eq('http://graph.facebook.com/1234567/picture?type=square')
       end
     end
@@ -295,14 +295,14 @@ describe Account do
       it 'should set the website from the Facebook url' do
         website = 'http://www.facebook.com/jbloggs'
         info_params[:urls] = { Facebook: website }
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_expires values' do
         expires = 3.months.since
         credentials_params[:token] = 'example_token'
         credentials_params[:expires_at] = expires.to_i
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
 
         expect(subject.oauth_token).to eq('example_token')
         expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)
@@ -323,13 +323,13 @@ describe Account do
       it 'should set the website from the Facebook url' do
         website = 'https://twitter.com/johnqpublic'
         info_params[:urls] = { Twitter: website }
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_secret values' do
         credentials_params[:token] = 'example_token'
         credentials_params[:secret] = 'example_secret'
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
 
         expect(subject.oauth_token).to eq('example_token')
         expect(subject.oauth_secret).to eq('example_secret')
@@ -350,14 +350,14 @@ describe Account do
       it 'should set the website from the Facebook url' do
         website = 'https://github.com/johnqpublic'
         info_params[:urls] = { Github: website }
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_expires values' do
         expires = 3.months.since
         credentials_params[:token] = 'example_token'
         credentials_params[:expires_at] = expires.to_i
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
 
         expect(subject.oauth_token).to eq('example_token')
         expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)
@@ -365,7 +365,7 @@ describe Account do
       it 'should set the oauth_token and oauth_secret values' do
         credentials_params[:token] = 'example_token'
         credentials_params[:secret] = 'example_secret'
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
 
         expect(subject.oauth_token).to eq('example_token')
         expect(subject.oauth_secret).to eq('example_secret')
@@ -387,7 +387,7 @@ describe Account do
         expires = 3.months.since
         credentials_params[:token] = 'example_token'
         credentials_params[:expires_at] = expires.to_i
-        subject.update_from_auth_hash(auth_hash)
+        subject.send(:update_from_auth_hash, auth_hash)
 
         expect(subject.oauth_token).to eq('example_token')
         expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)

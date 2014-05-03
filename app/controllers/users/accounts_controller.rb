@@ -1,4 +1,6 @@
 module Users
+  # Users Accounts Controller
+  # Allows users to Delete and Sort connected OmniAuth accounts
   class AccountsController < ::ApplicationController
     before_filter :authenticate_user!
 

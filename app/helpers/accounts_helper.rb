@@ -1,3 +1,5 @@
+# Accounts Helper
+# Provides methods to help with rendering accounts in views
 module AccountsHelper
   # Decorate an array of accounts with AccountDecorator
   def decorate_account_collection(accounts, &block)
@@ -19,16 +21,19 @@ module AccountsHelper
     @omniauth_providers ||= Account.omniauth_providers.map { |provider| provider.to_s }
   end
 
+  # Icon of the Account provider
   def provider_icon(provider)
     icon_name = provider_class(provider)
     icon_name = 'user' if provider == 'developer'
     fa(icon_name)
   end
 
+  # Display name for Provider
   def provider_name(provider)
     Account.provider_name(provider)
   end
 
+  # Wrapper class for Provider
   def provider_class(provider)
     return 'google-plus' if provider =~ /google/
     provider

@@ -1,4 +1,6 @@
+# Provides `enable_rails_cache` which enables rails caching for the single test
 module CacheMacros
+  # Class Methods methods can be called directly from the class
   module ClassMethods
     def enable_rails_cache
       # http://pivotallabs.com/tdd-action-caching-in-rails-3/

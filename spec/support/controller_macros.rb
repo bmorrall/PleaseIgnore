@@ -1,4 +1,6 @@
+# Provides common macros for controller specs
 module ControllerMacros
+  # Class Methods methods can be called directly from the class
   module ClassMethods
     def login_user
       before(:each) do

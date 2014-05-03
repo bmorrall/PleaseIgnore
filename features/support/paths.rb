@@ -1,3 +1,4 @@
+# Provides helper methods for evaluating paths
 module NavigationHelpers
   def current_host_with_port
     host = current_host

@@ -1,3 +1,8 @@
+# Pages Controller
+# Uses HighVoltage to render static pages.
+#
+# - Adds metadata for the application layout
+# - Pages are cached by HighVoltage
 class PagesController < ApplicationController
   include HighVoltage::StaticPage
   include Concerns::ContentForLayout
@@ -11,6 +16,7 @@ class PagesController < ApplicationController
 
   protected
 
+  # Adds Metadata based on the current page
   def set_page_metadata
     params[:id].tap do |page|
       if %w(home privacy styles terms).include? page

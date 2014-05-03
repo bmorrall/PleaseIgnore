@@ -182,5 +182,4 @@ describe 'devise/registrations/edit.html.haml' do
       end
     end
   end
-
 end

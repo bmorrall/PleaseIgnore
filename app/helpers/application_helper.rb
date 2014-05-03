@@ -1,3 +1,6 @@
+# Application Helper
+#
+# Provides common helpers for layout
 module ApplicationHelper
   # Cache
 
@@ -8,12 +11,14 @@ module ApplicationHelper
 
   # Header
 
+  # Renders current page if relevant
   def header_nav_class(path)
     current_page?(path) ? 'active' : nil
   end
 
   # Icons
 
+  # Displays a Font Awesome icon with `icon_name`
   def fa(icon_name)
     content_tag :i, nil, class: "fa fa-#{icon_name}"
   end
@@ -31,7 +36,7 @@ module ApplicationHelper
     link_to(name, options, html_options, &block)
   end
 
-  # Link is to a critical tasks and should not be turbolinked or followed by robots
+  # Link is to a critical task and should not be turbolinked or followed by robots
   def system_link(name = nil, options = nil, html_options = nil, &block)
     extra_options = { rel: 'nofollow', 'data-no-turbolink' => true }
     if block_given?

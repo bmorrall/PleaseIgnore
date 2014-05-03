@@ -1,3 +1,9 @@
+# Contacts Controller
+# Allows Visitors and Users to send Contact requests to Support
+#
+# - Prepopulates Contact if the current user is signed in
+# - Keeps track of the Referring page to assist support
+#
 class ContactsController < ApplicationController
   include Concerns::BetterTurboboostErrors
   include Concerns::ControllerURIHelpers
@@ -40,10 +46,7 @@ class ContactsController < ApplicationController
   # Sets default values for contact based on current_user and refererr
   def update_contact_default_values(contact)
     # Preset User Detaisl
-    if user_signed_in?
-      contact.name = current_user.name
-      contact.email = current_user.email
-    end
+    contact.user = current_user if user_signed_in?
 
     # Preset Referrer
     referer = request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']

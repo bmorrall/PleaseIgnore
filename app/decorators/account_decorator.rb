@@ -1,9 +1,17 @@
+# Decorates Accounts
+# Provides:
+#  - Basic Account display methods
+#  - Helpers for displaying a alert banner
 class AccountDecorator < Draper::Decorator
   delegate_all
+
+  # Alert Display Helpers
 
   def account_icon
     h.provider_icon object.provider
   end
+
+  # Alert Banner Helpers
 
   # Returns a button for removing a account
   def summary_delete_button
@@ -16,7 +24,7 @@ class AccountDecorator < Draper::Decorator
 
   # Displays a summary link / label of the account
   def summary_field
-    if object.website
+    if object.website?
       h.external_link object.website, class: 'form-control' do
         object.account_uid
       end
@@ -29,15 +37,17 @@ class AccountDecorator < Draper::Decorator
 
   # Renders the account image as an addon for summary_field
   def summary_image
-    if object.image
+    account_image = object.image
+    if account_image
       h.content_tag :span, class: 'input-group-addon account-image' do
-        h.image_tag object.image, size: '32x32'
+        h.image_tag account_image, size: '32x32'
       end
     end
   end
 
   protected
 
+  # Renders a button for cancelling registration (hence removing a session account)
   def cancel_registration_button
     # Display link to cancel registration
     h.system_link(
@@ -51,6 +61,7 @@ class AccountDecorator < Draper::Decorator
     )
   end
 
+  # Renders a button for destroying a account
   def destroy_account_button
     # Display link to remove account
     provider_class = h.provider_class(object.provider)

@@ -1,8 +1,16 @@
+require 'base_error_notification'
 
 module SimpleForm
+  # Monkey Patches for Simple Form
   class FormBuilder < ActionView::Helpers::FormBuilder
+    # Monkey Patch Simple form to use custom error Notification
+    def error_notification(options = {})
+      BaseErrorNotification.new(self, options).render
+    end
+
     alias_method :input_without_error_prefix, :input
 
+    # Monkey Path input to display error messages with Name
     def input(attribute_name, options = {}, &block)
       options = options.dup
 
@@ -93,15 +101,4 @@ SimpleForm.setup do |config|
   # to learn about the different styles for forms and inputs,
   # buttons and other elements.
   config.default_wrapper = :bootstrap
-end
-
-require 'base_error_notification'
-
-module SimpleForm
-  class FormBuilder
-    # Monkey Patch Simple form to use custom error Notification
-    def error_notification(options = {})
-      BaseErrorNotification.new(self, options).render
-    end
-  end
 end

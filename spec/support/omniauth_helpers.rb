@@ -1,8 +1,11 @@
+# Provides helpers for handling Omniauth
 module OmniauthHelpers
+  # Common auth account credentials
   def auth_account
     @auth_account ||= { name: 'Testy McSocial', email: 'testy@socialexample.com' }
   end
 
+  # Credential used for a Facebook Account
   def facebook_credentials
     @facebook_credentials ||= {
       uid: '12345',
@@ -14,6 +17,7 @@ module OmniauthHelpers
     }
   end
 
+  # Credential used for a GitHub Account
   def github_credentials
     @github_credentials ||= {
       uid: 'jonqpublic',
@@ -26,6 +30,7 @@ module OmniauthHelpers
     }
   end
 
+  # Credential used for a Google Account
   def google_credentials
     @google_credentials ||= {
       uid: 'jonqpublic',
@@ -37,6 +42,7 @@ module OmniauthHelpers
     }
   end
 
+  # Credential used for a Twitter Account
   def twitter_credentials
     @twitter_credentials ||= {
       uid: 'jonqpublic',

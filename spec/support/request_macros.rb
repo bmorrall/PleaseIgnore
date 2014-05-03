@@ -1,5 +1,8 @@
+# Provides common macros for request specs
 module RequestMacros
+  # Class Methods methods can be called directly from the class
   module ClassMethods
+    # Logs a user in for request specs
     def login_user
       before(:each) do
         @logged_in_user = FactoryGirl.create(:user)
@@ -8,6 +11,7 @@ module RequestMacros
     end
   end
 
+  # Accessor for logged in user
   def logged_in_user
     fail 'No user logged in' if @logged_in_user.nil?
     @logged_in_user

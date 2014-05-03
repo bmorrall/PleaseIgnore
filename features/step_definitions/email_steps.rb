@@ -23,9 +23,6 @@
 #   - interact with the email (e.g. click links)
 #
 # The Cucumber steps below are setup in this order.
-
-# rubocop:disable LineLength
-
 module EmailHelpers
   def current_email_address
     # Replace with your a way to find your current email. e.g @current_user.email
@@ -34,6 +31,8 @@ module EmailHelpers
     last_email_address || 'example@example.com'
   end
 end
+
+# rubocop:disable LineLength
 
 World(EmailHelpers)
 

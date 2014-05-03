@@ -1,3 +1,6 @@
+# User Model
+# Contains details of all Users of the Application
+#
 # == Schema Information
 #
 # Table name: users
@@ -17,7 +20,6 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #
-
 class User < ActiveRecord::Base
   rolify
 
@@ -95,7 +97,8 @@ class User < ActiveRecord::Base
 
   protected
 
-  # Saves Accounts loaded with session on create
+  # Collects auth hashes from all stored providers and adds them to the new_session_accounts
+  # temporary list.
   def save_new_session_accounts
     new_session_accounts.each do |account|
       account.user = self
@@ -109,8 +112,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # Collects auth hashes from all stored providers and adds them to the new_session_accounts
-  # temporary list.
+  # Collections auth hashes from all stored providers and adds them to
+  # the `new_session_accounts` temporary list
   def add_accounts_from_session(session)
     Account::PROVIDERS.each do |provider|
       provider_key = "devise.#{provider}_data"

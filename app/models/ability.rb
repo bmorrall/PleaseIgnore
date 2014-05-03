@@ -1,3 +1,5 @@
+# Ability file for CanCan(Can)
+# Defines permissions for Users of the front end system
 class Ability
   include CanCan::Ability
 

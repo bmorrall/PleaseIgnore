@@ -16,6 +16,10 @@
 
 # Ignore Yardstick reports
 /measurements
+/.yardoc
+
+# Ignore generated documentation
+/doc
 
 # Ingnore Environment config
 /.ruby-version

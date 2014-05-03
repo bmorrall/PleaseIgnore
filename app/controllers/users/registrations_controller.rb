@@ -1,4 +1,11 @@
 module Users
+  # Users Registrations Controller
+  # Allows Guests to register a new User account
+  #
+  # Overrides Devise::RegistrationsController to allow for:
+  # - Showing/Hiding elements of edit user page
+  # - Allows user to edit their details without providing a password
+  # - Provides separate profile update and password change forms
   class RegistrationsController < Devise::RegistrationsController
     helper_method :display_accounts?
     helper_method :display_profile?
@@ -43,6 +50,7 @@ module Users
       params[:user].nil?
     end
 
+    # Updates Account or Changes Password depending on params
     def save_account_or_password
       if needs_password_param?(@user, account_update_params)
         @success_message = :updated_password
@@ -56,7 +64,7 @@ module Users
 
     private
 
-    # Allow uses to update account without current_password
+    # [Devise] Returns true if new password param is included
     def needs_password_param?(_user, params)
       params.key? :password
     end

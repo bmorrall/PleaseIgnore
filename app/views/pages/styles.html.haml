@@ -641,30 +641,26 @@
       .col-lg-12
         %h3 Alerts
         .bs-example
-          .alert.alert-dismissable.alert-warning
-            %button.close{"data-dismiss" => "alert", type: "button"} ×
-            %h4 Warning!
+          = display_alert 'warning' do
+            %strong Warning!
             %p
               Best check yo self, you're not looking too good. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna,
               = succeed "." do
                 %a.alert-link{href: "#"} vel scelerisque nisl consectetur et
     .row
       .col-lg-4
-        .alert.alert-dismissable.alert-danger
-          %button.close{"data-dismiss" => "alert", type: "button"} ×
+        = display_alert 'danger' do
           %strong Oh snap!
           %a.alert-link{href: "#"} Change a few things up
           and try submitting again.
       .col-lg-4
-        .alert.alert-dismissable.alert-success
-          %button.close{"data-dismiss" => "alert", type: "button"} ×
+        = display_alert 'notice' do
           %strong Well done!
           You successfully read
           = succeed "." do
             %a.alert-link{href: "#"} this important alert message
       .col-lg-4
-        .alert.alert-dismissable.alert-info
-          %button.close{"data-dismiss" => "alert", type: "button"} ×
+        = display_alert 'info' do
           %strong Heads up!
           This
           = succeed "," do
