@@ -2,6 +2,7 @@ language: ruby
 bundler_args: --without development
 cache: bundler
 rvm:
+  - 1.9.3
   - 2.1.1
 before_install:
   - npm install -g bower
@@ -10,6 +11,5 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 script:
   - RAILS_ENV=test bundle exec rake db:create db:migrate --trace
-  - bundle exec rake db:test:prepare
   - bundle exec rake travis
 
