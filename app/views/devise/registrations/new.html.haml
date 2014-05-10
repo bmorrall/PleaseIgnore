@@ -5,7 +5,8 @@
   = f.error_notification
 
   / Pending Linked Accounts
-  = render partial: 'account', collection: resource.new_session_accounts
+  - decorate_account_collection resource.new_session_accounts do |accounts|
+    = render partial: 'account', collection: accounts
 
   / Registration Details
   = f.input :name, :input_html => { autofocus: true }

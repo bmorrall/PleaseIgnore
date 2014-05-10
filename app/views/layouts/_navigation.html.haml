@@ -20,9 +20,9 @@
         - if user_signed_in?
           %li.dropdown{class:page_title=~/Account Management/i?'active':nil}
             %a.dropdown-toggle(href='#' data-toggle='dropdown')
-              - if current_user.profile_picture
-                %img.profile-image{src: current_user.profile_picture(32)}
-              #{current_user.name || current_user.id}
+              - decorate current_user do |user|
+                = user.profile_image
+                = user.display_name
               &nbsp;
               %i.caret
             %ul.dropdown-menu

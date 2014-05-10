@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe "devise/registrations/new.html.haml" do
 
+  def stub_user_new_session_accounts(user, *accounts)
+    allow(user).to receive(:new_session_accounts).and_return(accounts)
+  end
+  # before(:each) { stub_user_new_session_accounts user }
+
   context do # Within default nesting
     let(:user) { User.new }
     before(:each) do
@@ -24,7 +29,7 @@ describe "devise/registrations/new.html.haml" do
     describe 'new account links' do
       it 'renders a pending facebook account' do
         facebook_account = FactoryGirl.build_stubbed(:facebook_account)
-        allow(user).to receive(:new_session_accounts).and_return([ facebook_account ])
+        stub_user_new_session_accounts(user, facebook_account)
 
         render
         assert_select '.btn-facebook' do
@@ -34,7 +39,7 @@ describe "devise/registrations/new.html.haml" do
       end
       it 'renders a pending twitter account' do
         twitter_account = FactoryGirl.build_stubbed(:twitter_account)
-        allow(user).to receive(:new_session_accounts).and_return([ twitter_account ])
+        stub_user_new_session_accounts(user, twitter_account)
 
         render
         assert_select '.btn-twitter' do
@@ -44,7 +49,7 @@ describe "devise/registrations/new.html.haml" do
       end
       it 'renders a pending github account' do
         github_account = FactoryGirl.build_stubbed(:github_account)
-        allow(user).to receive(:new_session_accounts).and_return([ github_account ])
+        stub_user_new_session_accounts(user, github_account)
 
         render
         assert_select '.btn-github' do
@@ -54,7 +59,7 @@ describe "devise/registrations/new.html.haml" do
       end
       it 'renders a pending google account' do
         google_oauth2_account = FactoryGirl.build_stubbed(:google_oauth2_account, website: nil)
-        allow(user).to receive(:new_session_accounts).and_return([ google_oauth2_account ])
+        stub_user_new_session_accounts(user, google_oauth2_account)
 
         render
         assert_select '.btn-google-plus' do

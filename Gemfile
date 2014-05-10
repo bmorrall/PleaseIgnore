@@ -65,6 +65,9 @@ gem 'sendgrid'
 # Fix assets for Bower
 gem "non-stupid-digest-assets"
 
+# Use Draper for Decorators
+gem 'draper', '~> 1.3'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'

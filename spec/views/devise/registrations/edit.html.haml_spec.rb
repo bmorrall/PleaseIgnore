@@ -2,6 +2,12 @@ require 'spec_helper'
 
 describe "devise/registrations/edit.html.haml" do
 
+  def stub_user_accounts(user, *accounts)
+    accounts.stub(:decorate).and_return(AccountDecorator.decorate_collection(accounts))
+    allow(user).to receive(:accounts).and_return(accounts)
+    allow(user).to receive(:has_provider_account?).and_return(true)
+  end
+
   context do # Within default nesting
     let(:user) { FactoryGirl.build_stubbed(:user) }
     let(:display_profile) { true }
@@ -44,8 +50,7 @@ describe "devise/registrations/edit.html.haml" do
       it 'renders a sortable list of accounts' do
         facebook_account = FactoryGirl.build_stubbed(:facebook_account, user: user)
         twitter_account = FactoryGirl.build_stubbed(:twitter_account, user: user)
-        allow(user).to receive(:accounts).and_return([facebook_account, twitter_account])
-        allow(user).to receive(:has_provider_account?).and_return(true)
+        stub_user_accounts(user, facebook_account, twitter_account)
         render
         assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path do
           assert_select '.btn-facebook[data-account-id=?]', facebook_account.id
@@ -56,8 +61,7 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a Facebook account' do
         let(:facebook_account) { FactoryGirl.build_stubbed(:facebook_account, user: user) }
         before(:each) do
-          allow(user).to receive(:accounts).and_return([facebook_account])
-          allow(user).to receive(:has_provider_account?).and_return(true)
+          stub_user_accounts(user, facebook_account)
         end
 
         it 'renders a Facebook account summary' do
@@ -75,8 +79,7 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a Twitter account' do
         let(:twitter_account) { FactoryGirl.build_stubbed(:twitter_account, user: user) }
         before(:each) do
-          allow(user).to receive(:accounts).and_return([twitter_account])
-          allow(user).to receive(:has_provider_account?).and_return(true)
+          stub_user_accounts(user, twitter_account)
         end
         it 'renders a Twitter account summary' do
           render
@@ -93,8 +96,7 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a github account' do
         let(:github_account) { FactoryGirl.build_stubbed(:github_account, user: user) }
         before(:each) do
-          allow(user).to receive(:accounts).and_return([github_account])
-          allow(user).to receive(:has_provider_account?).and_return(true)
+          stub_user_accounts(user, github_account)
         end
 
         it 'renders a GitHub account summary' do
@@ -112,10 +114,7 @@ describe "devise/registrations/edit.html.haml" do
       context 'with a Google account' do
         let(:google_oauth2_account) { FactoryGirl.build_stubbed(:google_oauth2_account, user: user, website: nil) }
         before(:each) do
-          allow(user).to receive(:accounts).and_return([google_oauth2_account])
-          allow(user).to receive(:has_provider_account?).and_return(true)
-          user.stub(:accounts).and_return([google_oauth2_account])
-          user.stub(:has_provider_account?).and_return(true)
+          stub_user_accounts(user, google_oauth2_account)
         end
 
         it 'renders a Google account summary' do

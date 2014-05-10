@@ -1,12 +1,13 @@
 module AccountsHelper
 
+  # Decorate an array of accounts with AccountDecorator
+  def decorate_account_collection(accounts, &block)
+    decorate_collection accounts, AccountDecorator, &block
+  end
+
   # List of enabled providers
   def omniauth_providers
     @omniauth_providers ||= Account::omniauth_providers.map { |provider| provider.to_s }
-  end
-
-  def account_icon(account)
-    provider_icon account.provider
   end
 
   def provider_icon(provider)
