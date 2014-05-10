@@ -1,6 +1,9 @@
 language: ruby
-bundler_args: --without development
-cache: bundler
+bundler_args: --without development --deployment
+cache:
+  directories:
+    - vendor/bundle
+    - vendor/assets/components
 rvm:
   - 1.9.3
   - 2.1.1
