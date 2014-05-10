@@ -63,6 +63,21 @@ module OmniauthHelpers
     })
   end
 
+  def provider_auth_hash(provider)
+    case provider
+    when :facebook
+      facebook_auth_hash
+    when :twitter
+      twitter_auth_hash
+    when :github
+      github_auth_hash
+    when :google_oauth2
+      google_oauth2_hash
+    else
+      raise "Unkown provider: #{provider}"
+    end
+  end
+
   # Facebook Auth Hash includes oauth credentials
   def facebook_auth_hash
     auth_account
@@ -112,7 +127,7 @@ module OmniauthHelpers
   end
 
   # Google Auth Hash includes oauth credentials
-  def google_auth_hash
+  def google_oauth2_hash
     auth_account
     google_credentials
 

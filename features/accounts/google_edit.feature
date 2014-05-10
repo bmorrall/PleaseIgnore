@@ -7,7 +7,7 @@ Feature: Managing linked Google accounts
   Scenario: Linking my profile with a new Google account
     Given I am logged in
     When I link my profile to my Google account
-    Then I should see a successful Google authentication message
+    Then I should see a successful Google linked message
     And I should be linked to my Google account
 
   Scenario: Linking my profile with a previously linked Google account

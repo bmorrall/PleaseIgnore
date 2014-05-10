@@ -1,0 +1,13 @@
+en:
+  account:
+    provider_name:
+      developer: Developer
+      facebook: Facebook
+      github: GitHub
+      google_oauth2: Google
+      twitter: Twitter
+    reasons:
+      failure:
+        account_disabled: 'This account has been disabled'
+        previously_linked: 'Someone has already linked to this account'
+        provider_disabled: 'Authentication is disabled from this Provider'

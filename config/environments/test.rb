@@ -40,3 +40,6 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { :host => 'www.example.com' }
 end
+
+# Raise Translation Exception
+I18n.exception_handler = lambda { |exception, locale, key, options| raise exception.message } 

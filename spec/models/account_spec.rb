@@ -99,7 +99,7 @@ describe Account do
       end
     end
     context 'with a Google auth hash' do
-      let(:auth_hash) { google_auth_hash }
+      let(:auth_hash) { google_oauth2_hash }
       context 'with an existing account' do
         let!(:existing_account) { FactoryGirl.create(:google_oauth2_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
@@ -149,24 +149,6 @@ describe Account do
     it { expect(Account.omniauth_providers).to include(:github) }
     it { expect(Account.omniauth_providers).to include(:google_oauth2) }
     it { expect(Account.omniauth_providers).not_to include(:developer) }
-  end
-
-  describe '.provider_name' do
-    it 'should return Developer for developer' do
-      expect(Account.provider_name('developer')).to eq('Developer')
-    end
-    it 'should return Facebook for facebook' do
-      expect(Account.provider_name('facebook')).to eq('Facebook')
-    end
-    it 'should return Twitter for twitter' do
-      expect(Account.provider_name('twitter')).to eq('Twitter')
-    end
-    it 'should return GitHub for github' do
-      expect(Account.provider_name('github')).to eq('GitHub')
-    end
-    it 'should return Google for google_auth2' do
-      expect(Account.provider_name('google_oauth2')).to eq('Google')
-    end
   end
 
   describe '#account_uid' do
@@ -222,12 +204,25 @@ describe Account do
   end
 
   describe '#provider_name' do
-    it 'returns Account.provider_name with the provider' do
-      fake_provider = 'provider'
-      fake_provider_name = 'ProVid3r'
-      subject.provider = fake_provider
-      expect(Account).to receive(:provider_name).with(fake_provider).and_return(fake_provider_name)
-      expect(subject.provider_name).to be(fake_provider_name)
+    it 'should return Developer for developer account' do
+      account = FactoryGirl.create(:developer_account)
+      expect(account.provider_name).to eq('Developer')
+    end
+    it 'should return Facebook for facebook account' do
+      account = FactoryGirl.create(:facebook_account)
+      expect(account.provider_name).to eq('Facebook')
+    end
+    it 'should return Twitter for twitter account' do
+      account = FactoryGirl.create(:twitter_account)
+      expect(account.provider_name).to eq('Twitter')
+    end
+    it 'should return GitHub for github account' do
+      account = FactoryGirl.create(:github_account)
+      expect(account.provider_name).to eq('GitHub')
+    end
+    it 'should return Google for google_auth2 account' do
+      account = FactoryGirl.create(:google_oauth2_account)
+      expect(account.provider_name).to eq('Google')
     end
   end
 

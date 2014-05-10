@@ -99,7 +99,7 @@ describe User do
       end
     end
     context 'with Google auth session data' do
-      let(:session) {{ 'devise.google_oauth2_data' => google_auth_hash }}
+      let(:session) {{ 'devise.google_oauth2_data' => google_oauth2_hash }}
       it 'builds a new user using values from the auth hash' do
         user = User.new_with_session({}, session)
         expect(user.name).to eq(google_credentials[:name])

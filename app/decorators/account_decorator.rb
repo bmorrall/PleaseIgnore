@@ -14,7 +14,9 @@ class AccountDecorator < Draper::Decorator
         h.users_account_path(account),
         method: 'delete',
         class: "input-group-addon unlink-account unlink-#{provider_class}",
-        data: { confirm: "Are you sure you want to unlink your #{object.provider_name} account?" }
+        data: {
+          confirm: I18n.t('decorators.account.prompts.unlink_account', object.provider_name)
+        }
       )
     else
       # Display link to cancel registration
@@ -23,7 +25,9 @@ class AccountDecorator < Draper::Decorator
         h.cancel_user_registration_path,
         method: 'get',
         class: 'input-group-addon cancel-signup',
-        data: { confirm: 'Are you sure you want to cancel sign in?' }
+        data: {
+          confirm: I18n.t('decorators.account.prompts.cancel_registration')
+        }
       )
     end
   end

@@ -1,0 +1,6 @@
+en:
+  decorators:
+    account:
+      prompts:
+        cancel_registration: "Are you sure you want to cancel sign in?"
+        unlink_account: "Are you sure you want to unlink your %{provider} account"

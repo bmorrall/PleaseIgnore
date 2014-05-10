@@ -193,6 +193,8 @@ GEM
       json (~> 1.4)
     redcarpet (3.1.1)
     request_store (1.0.5)
+    responders (1.0.0)
+      railties (>= 3.2, < 5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec-core (2.14.8)
@@ -291,6 +293,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rails_12factor
   redcarpet
+  responders
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc

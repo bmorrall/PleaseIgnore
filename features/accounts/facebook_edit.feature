@@ -7,7 +7,7 @@ Feature: Managing linked Facebook accounts
   Scenario: Linking my profile with a new Facebook account
     Given I am logged in
     When I link my profile to my Facebook account
-    Then I should see a successful Facebook authentication message
+    Then I should see a successful Facebook linked message
     And I should be linked to my Facebook account
 
   Scenario: Linking my profile with a previously linked Facebook account

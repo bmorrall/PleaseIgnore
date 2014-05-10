@@ -7,7 +7,7 @@ Feature: Managing linked GitHub accounts
   Scenario: Connecting with a new GitHub account
     Given I am logged in
     When I link my profile to my GitHub account
-    Then I should see a successful GitHub authentication message
+    Then I should see a successful GitHub linked message
     And I should be linked to my GitHub account
 
   Scenario: Connecting with a previously linked GitHub account

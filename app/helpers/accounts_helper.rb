@@ -17,7 +17,7 @@ module AccountsHelper
   end
 
   def provider_name(provider)
-    Account::provider_name(provider)
+    t(provider, scope: 'account.provider_name')
   end
 
   def provider_class(provider)

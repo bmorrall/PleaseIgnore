@@ -40,10 +40,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     account.user = current_user
     if account.save
       # Account has been linked to profile
-      display_authenticated_flash_message provider
+      display_linked_success_flash_message provider
     else
       # Account has been linked to another profile
-      display_failure_flash_message 'Someone has already linked to this account', provider
+      display_failure_flash_message 'previously_linked', provider
     end
     redirect_to edit_user_registration_path
   end
@@ -64,11 +64,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     provider = account.provider
     if account.enabled?
       # Sign in to profile owning linked account
-      display_authenticated_flash_message provider
+      display_authentication_success_flash_message provider
       sign_in_and_redirect account.user, :event => :authentication
     else
       # Prevent users from logging in with banned accounts
-      display_failure_flash_message 'This account has been disabled', provider
+      display_failure_flash_message 'account_disabled', provider
       redirect_to new_user_session_path
     end
   end
@@ -78,7 +78,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     account = Account.find_for_oauth(auth_hash, provider)
     if account.present?
       # Deny Authentication from this Provider
-      display_failure_flash_message 'Authentication is disabled from this Provider', provider
+      display_failure_flash_message 'provider_disabled', provider
       redirect_to new_user_session_path
     else
       # Redirect to User Registration with auth hash
@@ -89,7 +89,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def redirect_user_to_registration_page(provider)
-    display_registration_flash_message provider
+    display_registration_success_flash_message provider
     save_auth_hash_to_session provider
     redirect_to new_user_registration_path
   end
@@ -101,19 +101,36 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   # Successful authentication, but registration is required
-  def display_registration_flash_message(provider)
-    # TODO: Registration message
-    display_authenticated_flash_message provider
+  def display_registration_success_flash_message(provider)
+    if is_navigational_format?
+      provider_name = t(provider, scope: 'account.provider_name')
+      set_flash_message(:notice, :success_registered, :kind => provider_name)
+    end
   end
 
-  # Successful authentication with the user being logged in
-  def display_authenticated_flash_message(provider)
-    set_flash_message(:notice, :success, :kind => Account::provider_name(provider)) if is_navigational_format?
+  # Successfully logged in user from account
+  def display_authentication_success_flash_message(provider)
+    if is_navigational_format?
+      provider_name = t(provider, scope: 'account.provider_name')
+      set_flash_message(:notice, :success_authenticated, :kind => provider_name)
+    end
+  end
+
+  # Successfully added account to existing user
+  def display_linked_success_flash_message(provider)
+    if is_navigational_format?
+      provider_name = t(provider, scope: 'account.provider_name')
+      set_flash_message(:notice, :success_linked, :kind => provider_name)
+    end
   end
 
   # Unable to sign in user due to `reason`
   def display_failure_flash_message(reason, provider)
-    set_flash_message(:alert, :failure, :kind => Account::provider_name(provider), :reason => reason) if is_navigational_format?
+    if is_navigational_format?
+      provider_name = t(provider, scope: 'account.provider_name')
+      reason = t(reason, scope: 'account.reasons.failure')
+      set_flash_message(:alert, :failure, :kind => provider_name, :reason => reason)
+    end
   end
 
 end

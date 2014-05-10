@@ -68,6 +68,9 @@ gem "non-stupid-digest-assets"
 # Use Draper for Decorators
 gem 'draper', '~> 1.3'
 
+# Use Responders for Dry-ing up responses
+gem 'responders'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'

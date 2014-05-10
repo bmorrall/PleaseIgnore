@@ -98,13 +98,13 @@ When /^I unlink my GitHub account$/ do
 end
 
 When /^I link my profile to my Google account$/ do
-  set_oauth :google_oauth2, google_auth_hash
+  set_oauth :google_oauth2, google_oauth2_hash
   visit '/users/edit'
   click_link 'Link your Google account'
 end
 
 When /^I sign in using my Google account$/ do
-  set_oauth :google_oauth2, google_auth_hash
+  set_oauth :google_oauth2, google_oauth2_hash
   visit '/users/sign_in'
   click_link 'Google'
 
@@ -143,15 +143,31 @@ end
 
 ### THEN ###
 
+Then /^I should see a successful (.+) authentication message$/ do |provider|
+  page.should have_content "Successfully authenticated from your #{provider} account."
+end
+
+Then /^I should see a successful (.+) linked message$/ do |provider|
+  page.should have_content "Successfully connected to your #{provider} account."
+end
+
+Then /^I should see a successful (.+) registration message$/ do |provider|
+  page.should have_content "Successfully connected to your #{provider} account. Please review your details."
+end
+
+Then /^I should see a failed (.+) authentication message$/ do |provider|
+  page.should have_content "Could not authenticate you from #{provider} because \"Someone has already linked to this account\"."
+end
+
+Then /^I should see a (.+) successfully unlinked message$/ do |provider|
+  page.should have_content("Successfully unlinked your #{provider} account")
+end
+
 Then /^I should see a sign up form with my Developer credentials$/ do
   find_field('Name').value.should eq(@auth_account[:name])
   find_field('Email').value.should eq(@auth_account[:email])
   page.should have_content('Developer account')
   find('a[disabled=disabled]').text.should eq(@auth_account[:email])
-end
-
-Then /^I should see a successful Developer authentication message$/ do
-  page.should have_content "Successfully authenticated from Developer account."
 end
 
 Then /^I should see a failed Developer sign in message$/ do
@@ -172,14 +188,6 @@ Then /^I should see a sign up form with my Facebook credentials$/ do
   end
 end
 
-Then /^I should see a successful Facebook authentication message$/ do
-  page.should have_content "Successfully authenticated from Facebook account."
-end
-
-Then /^I should see a failed Facebook authentication message$/ do
-  page.should have_content 'Could not authenticate you from Facebook because "Someone has already linked to this account".'
-end
-
 Then /^I should be linked to my Facebook account$/ do
   visit '/users/edit'
   page.should have_css('a.unlink-facebook')
@@ -192,10 +200,6 @@ Then /^I should not be linked to a Facebook account$/ do
   find_link('Link your Facebook account').should be_visible
 end
 
-Then /^I should see a Facebook successfully unlinked message$/ do
-  page.should have_content('Successfully unlinked your Facebook account')
-end
-
 Then /^I should see a sign up form with my GitHub credentials$/ do
   find_field('Name').value.should eq(@auth_account[:name])
   find_field('Email').value.should eq(@auth_account[:email])
@@ -203,14 +207,6 @@ Then /^I should see a sign up form with my GitHub credentials$/ do
     page.should have_content('GitHub account')
     find_link(@github_credentials[:nickname])[:href].should eq(@github_credentials[:website])
   end
-end
-
-Then /^I should see a successful GitHub authentication message$/ do
-  page.should have_content "Successfully authenticated from GitHub account."
-end
-
-Then /^I should see a failed GitHub authentication message$/ do
-  page.should have_content 'Could not authenticate you from GitHub because "Someone has already linked to this account".'
 end
 
 Then /^I should be linked to my GitHub account$/ do
@@ -225,10 +221,6 @@ Then /^I should not be linked to a GitHub account$/ do
   find_link('Link your GitHub account').should be_visible
 end
 
-Then /^I should see a GitHub successfully unlinked message$/ do
-  page.should have_content('Successfully unlinked your GitHub account')
-end
-
 Then /^I should see a sign up form with my Google credentials$/ do
   find_field('Name').value.should eq(@auth_account[:name])
   find_field('Email').value.should eq(@auth_account[:email])
@@ -236,14 +228,6 @@ Then /^I should see a sign up form with my Google credentials$/ do
     page.should have_content('Google account')
     find_link(@auth_account[:name])
   end
-end
-
-Then /^I should see a successful Google authentication message$/ do
-  page.should have_content "Successfully authenticated from Google account."
-end
-
-Then /^I should see a failed Google authentication message$/ do
-  page.should have_content 'Could not authenticate you from Google because "Someone has already linked to this account".'
 end
 
 Then /^I should be linked to my Google account$/ do
@@ -258,24 +242,12 @@ Then /^I should not be linked to a Google account$/ do
   find_link('Link your Google account').should be_visible
 end
 
-Then /^I should see a Google successfully unlinked message$/ do
-  page.should have_content('Successfully unlinked your Google account')
-end
-
 Then /^I should see a sign up form with my Twitter credentials$/ do
   find_field('Name').value.should eq(@auth_account[:name])
   within('.btn-twitter') do
     page.should have_content('Twitter account')
     find_link("@#{@twitter_credentials[:nickname]}")[:href].should eq(@twitter_credentials[:website])
   end
-end
-
-Then /^I should see a successful Twitter authentication message$/ do
-  page.should have_content "Successfully authenticated from Twitter account."
-end
-
-Then /^I should see a failed Twitter authentication message$/ do
-  page.should have_content 'Could not authenticate you from Twitter because "Someone has already linked to this account".'
 end
 
 Then /^I should be linked to my Twitter account$/ do
@@ -288,8 +260,4 @@ Then /^I should not be linked to a Twitter account$/ do
   visit '/users/edit'
   page.should_not have_css('a.unlink-twitter')
   find_link('Link your Twitter account').should be_visible
-end
-
-Then /^I should see a Twitter successfully unlinked message$/ do
-  page.should have_content('Successfully unlinked your Twitter account')
 end

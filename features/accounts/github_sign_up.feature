@@ -6,7 +6,7 @@ Feature: GitHub Registration
   Scenario: Fill in the sign up form using GitHub account details
     Given I do not exist as a user
     When I sign in using my GitHub account
-    Then I should see a successful GitHub authentication message
+    Then I should see a successful GitHub registration message
     And I should see a sign up form with my GitHub credentials
     And I should be signed out
 

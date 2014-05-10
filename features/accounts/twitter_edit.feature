@@ -7,7 +7,7 @@ Feature: Managing linked Twitter accounts
   Scenario: Linking my profile with a new Twitter account
     Given I am logged in
     When I link my profile to my Twitter account
-    Then I should see a successful Twitter authentication message
+    Then I should see a successful Twitter linked message
     And I should be linked to my Twitter account
 
   Scenario: Linking my profile with a previously linked Twitter account

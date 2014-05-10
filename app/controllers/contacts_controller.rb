@@ -11,7 +11,7 @@ class ContactsController < ApplicationController
     referer = request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']
     @contact.referer = referer
     if referer && !current_page?(referer)
-      flash.now[:info] = "Your message will mention you visited this page from #{referer}"
+      flash.now[:info] = t('flash.contacts.show.info', referer: referer)
     end
     # show.html.haml
   end
@@ -21,11 +21,8 @@ class ContactsController < ApplicationController
     @contact = Contact.new(params[:contact])
     if @contact.valid?
       SupportMailer.contact_email(@contact.attributes).deliver
-      flash[:notice] = 'Your contact request has been sent'
-      redirect_to thank_you_contact_path
-    else
-      render :show
     end
+    respond_with(@contact, action: :show, location: thank_you_contact_path)
   end
 
   # GET /contact/thank_you

@@ -60,14 +60,6 @@ class Account < ActiveRecord::Base
     Devise.omniauth_configs.keys.keep_if { |provider| provider != :developer }
   end
 
-  # Humanizes Provider Name
-  def self.provider_name(provider)
-    return nil if provider.blank?
-    return "GitHub" if provider == 'github'
-    return "Google" if provider =~ /google/
-    provider.humanize
-  end
-
   # Validations
 
   validates :provider,
@@ -105,7 +97,8 @@ class Account < ActiveRecord::Base
   end
 
   def provider_name
-    Account::provider_name(provider)
+    # Use Translated Provider name
+    I18n.t(provider, scope: 'account.provider_name')
   end
 
   # Removes all oauth credentials from account

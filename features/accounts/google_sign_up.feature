@@ -6,7 +6,7 @@ Feature: Google Registration
   Scenario: Fill in the sign up form using Google account details
     Given I do not exist as a user
     When I sign in using my Google account
-    Then I should see a successful Google authentication message
+    Then I should see a successful Google registration message
     And I should see a sign up form with my Google credentials
     And I should be signed out
 

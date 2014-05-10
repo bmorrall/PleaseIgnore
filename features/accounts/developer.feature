@@ -6,7 +6,7 @@ Feature: Developer Auth Integration
   Scenario: User attempts to register with Developer account
     Given I am not logged in
     When I sign in using Developer auth
-    Then I should see a successful Developer authentication message
+    Then I should see a successful Developer registration message
     And I should see a sign up form with my Developer credentials
 
   Scenario: User attempts to sign in with a prevously linked Developer auth account
@@ -19,6 +19,6 @@ Feature: Developer Auth Integration
   Scenario: User connects with Developer auth while signed in
     Given I am logged in
     When I sign in using Developer auth
-    Then I should see a successful Developer authentication message
+    Then I should see a successful Developer linked message
     And I should be linked to my Developer account
 
