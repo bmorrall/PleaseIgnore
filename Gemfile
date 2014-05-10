@@ -95,7 +95,7 @@ group :test, :development do
   gem 'rspec-rails'
 end
 group :test do
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 1.1.1'
   gem 'coveralls', require: false
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
