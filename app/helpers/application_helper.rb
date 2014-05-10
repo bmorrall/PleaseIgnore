@@ -1,5 +1,12 @@
 module ApplicationHelper
 
+  # Cache
+
+  # Ensure cache is cleared after an hour (to prevent issues)
+  def default_cache_params
+    { :expires_in => 1.hour }
+  end
+
   # Header
 
   def header_nav_class(path)

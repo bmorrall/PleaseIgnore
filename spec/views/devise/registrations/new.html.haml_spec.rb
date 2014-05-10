@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe "devise/registrations/new.html.haml" do
 
-  def stub_user_new_session_accounts(user, *accounts)
-    allow(user).to receive(:new_session_accounts).and_return(accounts)
-  end
-  # before(:each) { stub_user_new_session_accounts user }
-
   context do # Within default nesting
     let(:user) { User.new }
     before(:each) do
@@ -27,44 +22,31 @@ describe "devise/registrations/new.html.haml" do
     end
 
     describe 'new account links' do
-      it 'renders a pending facebook account' do
-        facebook_account = FactoryGirl.build_stubbed(:facebook_account)
-        stub_user_new_session_accounts(user, facebook_account)
+      {
+        facebook: 'facebook',
+        twitter: 'twitter',
+        github: 'github',
+      }.each do |provider, display_class|
+        it "renders a pending #{provider} account" do
+          account = FactoryGirl.build(:"#{provider}_account")
+          allow(user).to receive(:new_session_accounts).and_return([account])
 
-        render
-        assert_select '.btn-facebook' do
-          assert_select 'a[href=?][rel="external"]', facebook_account.website
-          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(facebook_account)
+          render
+          assert_select ".btn-#{display_class}" do
+            assert_select 'a[href=?][rel="external"]', account.website
+            assert_select 'a[href=?][data-method="get"][rel="nofollow"]', cancel_user_registration_path
+          end
         end
       end
-      it 'renders a pending twitter account' do
-        twitter_account = FactoryGirl.build_stubbed(:twitter_account)
-        stub_user_new_session_accounts(user, twitter_account)
 
-        render
-        assert_select '.btn-twitter' do
-          assert_select 'a[href=?][rel="external"]', twitter_account.website
-          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(twitter_account)
-        end
-      end
-      it 'renders a pending github account' do
-        github_account = FactoryGirl.build_stubbed(:github_account)
-        stub_user_new_session_accounts(user, github_account)
-
-        render
-        assert_select '.btn-github' do
-          assert_select 'a[href=?][rel="external"]', github_account.website
-          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(github_account)
-        end
-      end
       it 'renders a pending google account' do
-        google_oauth2_account = FactoryGirl.build_stubbed(:google_oauth2_account, website: nil)
-        stub_user_new_session_accounts(user, google_oauth2_account)
+        google_oauth2_account = FactoryGirl.build(:google_oauth2_account, website: nil)
+        allow(user).to receive(:new_session_accounts).and_return([google_oauth2_account])
 
         render
         assert_select '.btn-google-plus' do
           assert_select 'a[href="#"][disabled]' # Google has no website
-          assert_select 'a[href=?][data-method="delete"][rel="nofollow"]', users_account_path(google_oauth2_account)
+          assert_select 'a[href=?][data-method="get"][rel="nofollow"]', cancel_user_registration_path
         end
       end
     end

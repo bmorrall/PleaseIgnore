@@ -42,16 +42,17 @@
     %header.page-header
       %h3 Linked Accounts
 
-    .form-horizontal
-      // Linked Accounts
-      - decorate resource.accounts do |accounts|
-        .linked-accounts{ data: { sort_path: sort_users_accounts_path }}
-          = render partial: 'account', collection: accounts
+    - cache [:v1, resource, :profile_accounts], default_cache_params do
+      .form-horizontal
+        // Linked Accounts
+        - decorate resource.accounts do |accounts|
+          .linked-accounts{ data: { sort_path: sort_users_accounts_path }}
+            = render partial: 'account', collection: accounts
 
-      // Link Account Items
-      - omniauth_providers.each do |provider|
-        - unless resource.has_provider_account? provider
-          = render partial: 'new_account', locals: { provider: provider }
+        // Link Account Items
+        - omniauth_providers.each do |provider|
+          - unless resource.has_provider_account? provider
+            = render partial: 'new_account', locals: { provider: provider }
 
 - if display_accounts?
   %section

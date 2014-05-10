@@ -23,7 +23,7 @@ class Account < ActiveRecord::Base
 
   # Associations
 
-  belongs_to :user
+  belongs_to :user, touch: true
   acts_as_list scope: :user
 
   # Class Methods

@@ -20,9 +20,10 @@
         - if user_signed_in?
           %li.dropdown{class:page_title=~/Account Management/i?'active':nil}
             %a.dropdown-toggle(href='#' data-toggle='dropdown')
-              - decorate current_user do |user|
-                = user.profile_image
-                = user.display_name
+              - cache [:v1, current_user, :navbar_tag], default_cache_params do
+                - decorate current_user do |user|
+                  = user.profile_image
+                  = user.display_name
               &nbsp;
               %i.caret
             %ul.dropdown-menu
