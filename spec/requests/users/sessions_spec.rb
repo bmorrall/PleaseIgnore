@@ -21,4 +21,18 @@ describe "Sessions" do
     end
   end
 
+  describe 'POST create' do
+    context 'as a visitor' do
+      context 'with a failed login attempt' do
+        before(:each) do
+          post user_session_path, { user: { email: 'test@example.com', password: 'wrong' }}
+        end
+
+        it 'displays a generic alert to the user' do
+          assert_select '.alert-danger strong', 'Invalid email or password.'
+        end
+      end
+    end
+  end
+
 end

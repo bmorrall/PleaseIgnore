@@ -124,7 +124,7 @@ describe User do
       end
     end
     Account::PROVIDERS.each do |provider|
-      context "with a #{Account.provider_name(provider)} Account" do
+      context "with a #{provider} account" do
         let!(:account) { FactoryGirl.create :"#{provider}_account", user: subject }
         it "returns true for #{provider}" do
           expect(subject.has_provider_account? provider).to be_true

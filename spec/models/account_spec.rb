@@ -123,6 +123,26 @@ describe Account do
     end
   end
 
+  describe '.new_with_auth_hash' do
+    it 'builds a new Account from a auth hash' do
+      account = Account.new_with_auth_hash(twitter_auth_hash)
+      expect(account).to_not be_persisted
+
+      expect(account.name).to eq(twitter_auth_hash['info']['name'])
+      expect(account.provider).to eq(twitter_auth_hash.provider)
+    end
+    it 'invokes #update_from_auth_hash on the new Account' do
+      expect_any_instance_of(Account).to receive(:update_from_auth_hash)
+
+      Account.new_with_auth_hash(twitter_auth_hash)
+    end
+    it 'raises an exception if the provider does not match the expected value' do
+      expect {
+        Account.new_with_auth_hash(twitter_auth_hash, 'not_matching_provider')
+      }.to raise_error(Exception, "Provider (twitter) doesn't match expected value: not_matching_provider")
+    end
+  end
+
   describe '.omniauth_providers' do
     it { expect(Account.omniauth_providers).to include(:facebook) }
     it { expect(Account.omniauth_providers).to include(:twitter) }
