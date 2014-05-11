@@ -10,7 +10,7 @@ describe Users::OmniauthCallbacksController do
     :github,
     :google_oauth2,
   ].each do |provider|
-    provider_name = I18n.t(provider, scope: 'account.provider_name')
+    provider_name = Account.provider_name(provider)
     session_key = "devise.#{provider}_data"
 
     describe "GET #{provider}" do

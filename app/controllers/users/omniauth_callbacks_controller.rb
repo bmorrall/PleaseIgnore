@@ -103,7 +103,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Successful authentication, but registration is required
   def display_registration_success_flash_message(provider)
     if is_navigational_format?
-      provider_name = t(provider, scope: 'account.provider_name')
+      provider_name = Account.provider_name(provider)
       set_flash_message(:notice, :success_registered, :kind => provider_name)
     end
   end
@@ -111,7 +111,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Successfully logged in user from account
   def display_authentication_success_flash_message(provider)
     if is_navigational_format?
-      provider_name = t(provider, scope: 'account.provider_name')
+      provider_name = Account.provider_name(provider)
       set_flash_message(:notice, :success_authenticated, :kind => provider_name)
     end
   end
@@ -119,7 +119,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Successfully added account to existing user
   def display_linked_success_flash_message(provider)
     if is_navigational_format?
-      provider_name = t(provider, scope: 'account.provider_name')
+      provider_name = Account.provider_name(provider)
       set_flash_message(:notice, :success_linked, :kind => provider_name)
     end
   end
@@ -127,7 +127,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Unable to sign in user due to `reason`
   def display_failure_flash_message(reason, provider)
     if is_navigational_format?
-      provider_name = t(provider, scope: 'account.provider_name')
+      provider_name = Account.provider_name(provider)
       reason = t(reason, scope: 'account.reasons.failure')
       set_flash_message(:alert, :failure, :kind => provider_name, :reason => reason)
     end

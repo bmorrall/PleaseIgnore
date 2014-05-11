@@ -60,6 +60,11 @@ class Account < ActiveRecord::Base
     Devise.omniauth_configs.keys.keep_if { |provider| provider != :developer }
   end
 
+  # Helper for localized provider name
+  def self.provider_name(provider)
+    I18n.t(provider, scope: 'account.provider_name')
+  end
+
   # Validations
 
   validates :provider,
@@ -98,7 +103,7 @@ class Account < ActiveRecord::Base
 
   def provider_name
     # Use Translated Provider name
-    I18n.t(provider, scope: 'account.provider_name')
+    Account.provider_name(provider)
   end
 
   # Removes all oauth credentials from account
