@@ -92,3 +92,15 @@ SimpleForm.setup do |config|
   # buttons and other elements.
   config.default_wrapper = :bootstrap
 end
+
+require 'base_error_notification'
+
+module SimpleForm
+  class FormBuilder
+    # Monkey Patch Simple form to use custom error Notification
+    def error_notification(options = {})
+      BaseErrorNotification.new(self, options).render
+    end
+  end
+end
+
