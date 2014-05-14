@@ -97,7 +97,14 @@ class User < ActiveRecord::Base
   def save_new_session_accounts
     new_session_accounts.each do |account|
       account.user = self
-      logger.error "Unable to save Account: #{account.provider}: #{account.uid}" unless account.save!
+      unless account.save
+        logger.error "Unable to save Account: #{account.provider}: #{account.uid}"
+
+        # Add errors to model and raise exception
+        error_message = "Unable to add your #{Account.provider_name(account.provider)} account"
+        errors.add :base, error_message
+        raise ActiveRecord::RecordInvalid, account
+      end
     end
   end
 

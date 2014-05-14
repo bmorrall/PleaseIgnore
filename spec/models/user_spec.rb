@@ -42,74 +42,66 @@ describe User do
   end
 
   describe '.new_with_session' do
-    context 'with developer auth session data' do
-      let(:session) {{ 'devise.developer_data' => developer_auth_hash }}
-      it 'builds a new user using values from the auth hash' do
-        user = User.new_with_session({}, session)
-        expect(user.name).to eq(auth_account[:name])
-        expect(user.email).to eq(auth_account[:email])
-      end
-      it 'creates a new Developer account on save' do
-        user_params = FactoryGirl.attributes_for(:user)
-        user = User.new_with_session(user_params, session)
-        user.save!
-        expect(user.has_provider_account?('developer')).to be_true
-      end
-    end
-    context 'with Facebook auth session data' do
-      let(:session) {{ 'devise.facebook_data' => facebook_auth_hash }}
-      it 'builds a new user using values from the auth hash' do
-        user = User.new_with_session({}, session)
-        expect(user.name).to eq(facebook_credentials[:name])
-        expect(user.email).to eq(auth_account[:email])
-      end
-      it 'creates a new Facebook account on save' do
-        user_params = FactoryGirl.attributes_for(:user)
-        user = User.new_with_session(user_params, session)
-        user.save!
-        expect(user.has_provider_account?('facebook')).to be_true
-      end
-    end
-    context 'with Twitter auth session data' do
-      let(:session) {{ 'devise.twitter_data' => twitter_auth_hash }}
-      it 'builds a new user using values from the auth hash' do
-        user = User.new_with_session({}, session)
-        expect(user.name).to eq(twitter_credentials[:name])
-        expect(user.email).to be_nil # Twitter doesn't include email
-      end
-      it 'creates a new Twitter account on save' do
-        user_params = FactoryGirl.attributes_for(:user)
-        user = User.new_with_session(user_params, session)
-        user.save!
-        expect(user.has_provider_account?('twitter')).to be_true
-      end
-    end
-    context 'with GitHub auth session data' do
-      let(:session) {{ 'devise.github_data' => github_auth_hash }}
-      it 'builds a new user using values from the auth hash' do
-        user = User.new_with_session({}, session)
-        expect(user.name).to eq(github_credentials[:name])
-        expect(user.email).to eq(auth_account[:email])
-      end
-      it 'creates a new GitHub account on save' do
-        user_params = FactoryGirl.attributes_for(:user)
-        user = User.new_with_session(user_params, session)
-        user.save!
-        expect(user.has_provider_account?('github')).to be_true
-      end
-    end
-    context 'with Google auth session data' do
-      let(:session) {{ 'devise.google_oauth2_data' => google_oauth2_hash }}
-      it 'builds a new user using values from the auth hash' do
-        user = User.new_with_session({}, session)
-        expect(user.name).to eq(google_credentials[:name])
-        expect(user.email).to eq(auth_account[:email])
-      end
-      it 'creates a new Google account on save' do
-        user_params = FactoryGirl.attributes_for(:user)
-        user = User.new_with_session(user_params, session)
-        user.save!
-        expect(user.has_provider_account?('google_oauth2')).to be_true
+    Account.omniauth_providers.each do |provider|
+      provider_name = Account.provider_name(provider)
+
+      context "with #{provider_name} auth_session_data" do
+        let(:session) {{ "devise.#{provider}_data" => provider_auth_hash(provider) }}
+        it 'builds a new user using values from the auth hash' do
+          user = User.new_with_session({}, session)
+          expect(user.name).to eq(auth_account[:name])
+          expect(user.email).to eq(auth_account[:email]) unless provider == :twitter
+        end
+        context 'with valid user params' do
+          let(:user_params) { FactoryGirl.attributes_for(:user) }
+
+          it 'builds a valid user' do
+            user = User.new_with_session(user_params, session)
+            expect(user).to be_valid
+          end
+
+          it 'populates #new_session_accounts with a new account' do
+            user = User.new_with_session(user_params, session)
+            new_sessions = user.new_session_accounts
+            expect(new_sessions.count).to eq(1)
+            expect(new_sessions.first).to be_kind_of(Account)
+          end
+
+          it "creates a new #{provider_name} account on save" do
+            expect {
+              user = User.new_with_session(user_params, session)
+              user.save!
+            }.to change(Account, :count).by(1)
+
+            expect(Account.last.provider).to eq provider.to_s
+          end
+        end
+        context 'with invalid account data' do
+          let(:user) do
+            user_params = FactoryGirl.attributes_for(:user)
+            user = User.new_with_session(user_params, session)
+          end
+          before(:each) do
+            expect_any_instance_of(Account).to receive(:valid?).and_return(false)
+          end
+
+          it 'does not create a new Account on save' do
+            expect {
+              user.save
+            }.to_not change(Account, :count)
+          end
+          it 'does not create a new User on save' do
+            expect {
+              user.save
+            }.to_not change(User, :count)
+          end
+          it 'adds an error to the User on save' do
+            user_params = FactoryGirl.attributes_for(:user)
+            user = User.new_with_session(user_params, session)
+            user.save
+            expect(user.errors.messages[:base]).to include "Unable to add your #{provider_name} account"
+          end
+        end
       end
     end
   end
