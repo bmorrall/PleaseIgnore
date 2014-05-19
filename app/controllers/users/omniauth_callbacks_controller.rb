@@ -3,6 +3,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   # Don't check CSRF for callbacks
   skip_before_filter :verify_authenticity_token
 
+  # Ensure User can create accounts
+  before_filter do
+    authorize! :create, Account
+  end
+
   # Fake Developer Authentication
 
   # GET /users/developer/callback

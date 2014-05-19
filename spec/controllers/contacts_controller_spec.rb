@@ -8,6 +8,8 @@ describe ContactsController do
 
   describe 'GET show' do
     context 'as a vistor' do
+      grant_ability :create, Contact
+
       context 'with a valid request' do
         before(:each) { get :show }
         it { should render_template(:show) }
@@ -51,6 +53,8 @@ describe ContactsController do
     end
     context 'as a logged in user' do
       login_user
+      grant_ability :create, Contact
+
       context 'with a valid request' do
         before(:each) { get :show }
         it 'should set the contact name' do
@@ -67,6 +71,8 @@ describe ContactsController do
 
   describe 'POST create' do
     context 'as a visitor' do
+      grant_ability :create, Contact
+
       context 'with a valid request' do
         before(:each) { post :create, :contact => valid_create_attributes }
         it { should redirect_to thank_you_contact_path }
@@ -95,6 +101,8 @@ describe ContactsController do
   end
 
   describe 'GET thank_you' do
+    grant_ability :create, Contact
+
     context 'as a visitor' do
       context 'with a valid request' do
         before(:each) { get :thank_you }

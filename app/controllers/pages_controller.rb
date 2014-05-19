@@ -2,6 +2,8 @@ class PagesController < ApplicationController
   include HighVoltage::StaticPage
   include Concerns::ContentForLayout
 
+  skip_authorization_check # Pages are available for all
+
   before_filter :set_page_metadata
 
   # Fix HighVoltage/pjax layout conflict

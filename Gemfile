@@ -71,6 +71,9 @@ gem 'draper', '~> 1.3'
 # Use Responders for Dry-ing up responses
 gem 'responders'
 
+# Use CanCanCan for Authorization
+gem 'cancancan'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'

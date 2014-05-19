@@ -1,6 +1,10 @@
 class ContactsController < ApplicationController
   include Concerns::ControllerURIHelpers
 
+  before_filter do
+    authorize! :create, Contact
+  end
+
   # GET /contact
   def show
     @contact = Contact.new

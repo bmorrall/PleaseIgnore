@@ -21,6 +21,8 @@ describe Users::OmniauthCallbacksController do
           request.env['omniauth.auth'] = auth_hash
         end
         context 'as a visitor' do
+          grant_ability :create, Account
+
           context 'with no existing account' do
             context 'with a valid request' do
               before(:each) do
@@ -75,6 +77,7 @@ describe Users::OmniauthCallbacksController do
         context 'as a user' do
           let(:user) { FactoryGirl.create(:user) }
           before(:each) { sign_in user }
+          grant_ability :create, Account
 
           context 'with no existing account' do
             context 'with a valid request' do
@@ -129,6 +132,8 @@ describe Users::OmniauthCallbacksController do
         request.env['omniauth.auth'] = auth_hash
       end
       context 'as a visitor' do
+        grant_ability :create, Account
+
         context 'with no existing account' do
           context 'with a valid request' do
             before(:each) do
@@ -171,6 +176,7 @@ describe Users::OmniauthCallbacksController do
       context 'as a user' do
         let(:user) { FactoryGirl.create(:user) }
         before(:each) { sign_in user }
+        grant_ability :create, Account
 
         context 'with no existing account' do
           context 'with a valid request' do
