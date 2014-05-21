@@ -26,5 +26,13 @@ FactoryGirl.define do
     name { Faker::Name.name }
     password 'changeme'
     password_confirmation 'changeme'
+
+    # Role Traits
+    trait(:admin) do
+      after(:create) { |user| user.add_role :admin }
+    end
+    trait(:banned) do
+      after(:create) { |user| user.add_role :banned }
+    end
   end
 end

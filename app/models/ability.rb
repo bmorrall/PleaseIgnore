@@ -7,6 +7,8 @@ class Ability
     # TODO: Basic User Abilities
     can :create, Contact
 
+    return if user.has_role? :banned
+
     # Restrictable Visitor Abilities
     can :create, Account
 

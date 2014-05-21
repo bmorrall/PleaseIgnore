@@ -30,6 +30,16 @@ describe User do
       expect(user.email).not_to be_blank
       expect(user.encrypted_password).not_to be_nil
     end
+    describe 'role traits' do
+      it 'creates a admin user' do
+        user = FactoryGirl.create(:user, :admin)
+        expect(user).to have_role(:admin)
+      end
+      it 'creates a banned user' do
+        user = FactoryGirl.create(:user, :banned)
+        expect(user).to have_role(:banned)
+      end
+    end
   end
 
   describe 'Associations' do

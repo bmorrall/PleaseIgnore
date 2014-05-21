@@ -74,6 +74,9 @@ gem 'responders'
 # Use CanCanCan for Authorization
 gem 'cancancan'
 
+# Use Rolify to Mnnage User Roles
+gem 'rolify'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
