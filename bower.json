@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "animate.css": "3.1.1",
-    "font-awesome": "4.0.3",
+    "font-awesome": "4.1.0",
     "html5sortable": "git+https://github.com/farhadi/html5sortable.git"
   }
 }
