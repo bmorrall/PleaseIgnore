@@ -7,20 +7,40 @@ Status](https://coveralls.io/repos/bmorrall/PleaseIgnore/badge.png)](https://cov
 PleaseIgnore README
 ===================
 
+Rails version
+-------------
+
+PleaseIgnore currently runs on `Rails 4.1.1`.
+
 Ruby version
 ------------
 
-System dependencies
--------------------
+In order to main compatability with Heroku, PleaseIgnore is designed to run on `MRI Ruby 1.9.3` as a minimum. Compatability with the latest version of MRI Ruby (`2.1.2`) is required, to ensure ease of upgrading the app; as the need may arise in the future.
 
-Assuming you have installed `nodejs`, run the following to install Bower and download all required frontend assets.
+PleaseIgnore should not make any assumptions, nor have any dependencies on how Ruby is installed on its host system, however the development environment has been configured to use [rbenv](https://github.com/sstephenson/rbenv).
 
-```
-npm install -g bower
-bower install
-```
+Dependencies
+============
 
-More details can be found at: https://gist.github.com/afeld/5704079
+JavaScript runtime
+------------------
+
+JavaScript asset compilation in Rails 4 requires a JavaScript runtime to be installed on the host system.
+
+[Node.js](http://nodejs.org/) is currently the most popular one available, and comes with various tools that PleaseIgnore makes use of.
+
+Front-end package management
+----------------------------
+
+Front-end libraries are managed using [Bower](http://bower.io/). Bower downloads libraries; configured in `bower.json`, and saves them to `vendor/assets/components`.
+
+Assuming you have installed `Node.js`, run the following to install Bower and download all required frontend assets.
+
+    npm install -g bower
+    bower install
+
+Configuration
+=============
 
 Email Configuration
 -------------------
@@ -104,28 +124,55 @@ need to go through each provider to generate new credentials.
 
 :exclamation: **Note**: When you ready to deploy to production don't forget to add your new url to *Authorized Javascript origins* and *Authorized redirect URI*, e.g. `http://pleaseignore.com` and `http://pleaseignore.com/auth/google_oauth2/callback` respectively. The same goes for other providers.
 
+Development setup
+=================
 
 Database creation
 -----------------
 
+Running `rake db:reset` will build the database, based on the stored `db/schema.rb`.
+
+Rails 4.1 automatically migrates and clears the test database whenever the test suite is run.
+
 Database initialization
 -----------------------
+
+Currently, nothing needs to be setup in order to start using PleaseIgnore.
+
+Sign up a new account using the registration form with your name, email address and password.
+
+You may wish to promote your account to an admin account by running the following command in the rails console `bin/rails c`
+
+    User.find_by(email: '<your email address>').add_role(:admin)
 
 How to run the test suite
 -------------------------
 
-Services (job queues, cache servers, search engines, etc.)
-----------------------------------------------------------
+Unit tests are provided with [RSpec](http://rspec.info/). Integration tests are provided with [Cucumber](http://cukes.info/), running [capybara-webkit](https://github.com/thoughtbot/capybara-webkit).
+
+Both can be run by running `bundle exec rake travis`, or can be individually run with `bin/rspec` and `bin/cucumber` respectively.
+
+Services
+========
+
+(job queues, cache servers, search engines, etc.)
+-------------------------------------------------
 
 Deployment instructions
------------------------
+=======================
 
 Deployment on Heroku
-====================
+--------------------
+
+### Initial setup
 
 Heroku requires a custom buildpack in order to install `Bower` components via NodeJS.
 
 `heroku config:set BUILDPACK_URL='git://github.com/qnyp/heroku-buildpack-ruby-bower.git#run-bower'`
+
+More details can be found at: https://gist.github.com/afeld/5704079.
+
+### Required addons
 
 Initial installation requires the Postgres addon to be added to the dyno.
 
