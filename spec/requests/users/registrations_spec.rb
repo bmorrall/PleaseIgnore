@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe "Registrations" do
+describe 'Registrations' do
 
-  describe "GET new" do
-    context "as a visitor" do
-      it "renders the new page" do
+  describe 'GET new' do
+    context 'as a visitor' do
+      it 'renders the new page' do
         get new_user_registration_path
         expect(response.status).to be(200)
       end
     end
     describe 'Metadata' do
-      it "includes the body class" do
+      it 'includes the body class' do
         get new_user_registration_path
         assert_select 'body.users-registrations.users-registrations-new'
       end
-      it "includes the page title" do
+      it 'includes the page title' do
         get new_user_registration_path
         assert_select 'title', 'PleaseIgnore | Create Account'
       end
@@ -36,7 +36,7 @@ describe "Registrations" do
           follow_redirect! # to callback path
           follow_redirect! # to user registration
 
-          post user_registration_path, { user: FactoryGirl.attributes_for(:user) }
+          post user_registration_path,  user: FactoryGirl.attributes_for(:user)
         end
 
         it 'displays a failed login attempt to the user' do

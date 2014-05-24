@@ -22,7 +22,7 @@
 
 FactoryGirl.define do
   factory :account do
-    provider "developer"
+    provider 'developer'
     sequence(:uid) { |n| "uid_#{n}" }
     name { Faker::Name.name }
     user
@@ -35,7 +35,7 @@ FactoryGirl.define do
       image 'http://graph.facebook.com/1234567/picture?type=square'
       website 'http://www.facebook.com/jbloggs'
       sequence(:oauth_token) { |n| "facebook_auth_#{n}" }
-      oauth_expires_at "2014-02-18 16:02:39"
+      oauth_expires_at '2014-02-18 16:02:39'
       user
     end
     factory :github_account do
@@ -51,7 +51,7 @@ FactoryGirl.define do
       provider 'google_oauth2'
       image 'https://lh3.googleusercontent.com/url/photo.jpg'
       sequence(:oauth_token) { |n| "twitter_auth_#{n}" }
-      oauth_expires_at "2014-02-18 16:02:39"
+      oauth_expires_at '2014-02-18 16:02:39'
       user
     end
     factory :twitter_account do

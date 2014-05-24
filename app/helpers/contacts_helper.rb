@@ -1,5 +1,4 @@
 module ContactsHelper
-
   def contact_autofocus(param)
     case param
     when :name
@@ -10,5 +9,4 @@ module ContactsHelper
       !@contact.name.blank? && !@contact.email.blank?
     end
   end
-
 end

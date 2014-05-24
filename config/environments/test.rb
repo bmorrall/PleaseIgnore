@@ -38,8 +38,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.action_mailer.default_url_options = { :host => 'www.example.com' }
+  config.action_mailer.default_url_options = { host: 'www.example.com' }
 end
 
-# Raise Translation Exception
-I18n.exception_handler = lambda { |exception, locale, key, options| raise exception.message } 
+# Raise Translation Exceptions
+I18n.exception_handler = ->(exception, _locale, _key, _options) { fail exception.message }

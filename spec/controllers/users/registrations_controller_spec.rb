@@ -69,7 +69,6 @@ describe Users::RegistrationsController do
         end
       end
 
-
       # Password Change
 
       context 'with a valid password change request' do

@@ -27,10 +27,14 @@ describe ContactsController do
           get :show
         end
         it 'should set the contact referrer' do
-         contact = assigns(:contact)
-         expect(contact.referer).to eq('http://pleaseignore.com/terms')
+          contact = assigns(:contact)
+          expect(contact.referer).to eq('http://pleaseignore.com/terms')
         end
-        it { should set_the_flash.now[:info].to 'Your message will mention you visited this page from http://pleaseignore.com/terms' }
+        it do
+          should set_the_flash.now[:info].to(
+            'Your message will mention you visited this page from http://pleaseignore.com/terms'
+          )
+        end
       end
       context 'with a request containg a HTTP_X_XHR_REFERER header' do
         before(:each) do
@@ -38,10 +42,14 @@ describe ContactsController do
           get :show
         end
         it 'should set the contact referrer' do
-         contact = assigns(:contact)
-         expect(contact.referer).to eq('http://pleaseignore.com/about')
+          contact = assigns(:contact)
+          expect(contact.referer).to eq('http://pleaseignore.com/about')
         end
-        it { should set_the_flash.now[:info].to 'Your message will mention you visited this page from http://pleaseignore.com/about' }
+        it do
+          should set_the_flash.now[:info].to(
+            'Your message will mention you visited this page from http://pleaseignore.com/about'
+          )
+        end
       end
       context 'with a HTTP_REFERER header from the contact form' do
         before(:each) do
@@ -74,7 +82,7 @@ describe ContactsController do
       grant_ability :create, Contact
 
       context 'with a valid request' do
-        before(:each) { post :create, :contact => valid_create_attributes }
+        before(:each) { post :create, contact: valid_create_attributes }
         it { should redirect_to thank_you_contact_path }
         it { should set_the_flash[:notice].to 'Your contact request has been sent' }
         it 'should send a contact email to support' do
@@ -85,7 +93,7 @@ describe ContactsController do
         end
       end
       context 'with a invalid request' do
-        before(:each) { post :create, :contact => [] }
+        before(:each) { post :create, contact: [] }
         it { should render_template(:show) }
         it { should render_with_layout(:application) }
         it { should_not set_the_flash }
@@ -95,7 +103,7 @@ describe ContactsController do
         end
       end
       it 'should not send any emails with an invalid request' do
-        expect { post :create, :contact => [] }.to_not change(ActionMailer::Base.deliveries, :count)
+        expect { post :create, contact: [] }.to_not change(ActionMailer::Base.deliveries, :count)
       end
     end
   end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "devise/passwords/edit.html.haml" do
+describe 'devise/passwords/edit.html.haml' do
 
   context do # Within default nesting
     let(:user) { User.new }
@@ -11,13 +11,15 @@ describe "devise/passwords/edit.html.haml" do
       user.reset_password_token = 'token12345678'
     end
 
-    it "renders the change password form" do
+    it 'renders the change password form' do
       render
 
-      assert_select "form[action=?][method=?]", user_password_path, "post" do
-        assert_select "input#user_password[name=?]", "user[password]"
-        assert_select "input#user_password_confirmation[name=?]", "user[password_confirmation]"
-        assert_select "input#user_reset_password_token[type=hidden][name=?][value=?]", "user[reset_password_token]", "token12345678"
+      assert_select 'form[action=?][method=?]', user_password_path, 'post' do
+        assert_select 'input#user_password[name=?]', 'user[password]'
+        assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
+        assert_select 'input#user_reset_password_token[type=hidden][name=?][value=?]',
+                      'user[reset_password_token]',
+                      'token12345678'
       end
     end
   end

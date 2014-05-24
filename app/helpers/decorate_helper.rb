@@ -1,7 +1,6 @@
 # Decorator Helper
 # Allows for decorating of models using draper
 module DecorateHelper
-
   # Decorates a model using the decorate function
   # Can accept a block which yields the decorated model as a param.
   def decorate(model)

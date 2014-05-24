@@ -6,11 +6,12 @@ module SimpleForm
     def input(attribute_name, options = {}, &block)
       options = options.dup
 
-      options[:error_prefix] ||= if object.class.respond_to?(:human_attribute_name)
-        object.class.human_attribute_name(attribute_name.to_s)
-      else
-        attribute_name.to_s.humanize
-      end
+      options[:error_prefix] ||=
+        if object.class.respond_to?(:human_attribute_name)
+          object.class.human_attribute_name(attribute_name.to_s)
+        else
+          attribute_name.to_s.humanize
+        end
 
       input_without_error_prefix(attribute_name, options, &block)
     end
@@ -28,7 +29,8 @@ SimpleForm.setup do |config|
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
-  config.wrappers :horizontal_bootstrap, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_bootstrap,
+                  tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -39,7 +41,8 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_bootstrap_wide, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_bootstrap_wide,
+                  tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -50,7 +53,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :prepend, tag: 'div', class: "control-group", error_class: 'error' do |b|
+  config.wrappers :prepend, tag: 'div', class: 'control-group', error_class: 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -63,7 +66,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :append, tag: 'div', class: "control-group", error_class: 'error' do |b|
+  config.wrappers :append, tag: 'div', class: 'control-group', error_class: 'error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -76,12 +79,11 @@ SimpleForm.setup do |config|
     end
   end
 
-
   config.input_class = 'form-control'
   config.label_class = 'control-label'
 
   # Don't display required start for forms
-  config.label_text = lambda { |label, required| label }
+  config.label_text = ->(label, _required) { label }
 
   # Add Animated Error Classes
   config.error_notification_class = 'alert alert-danger animated fadeInDown'
@@ -103,4 +105,3 @@ module SimpleForm
     end
   end
 end
-

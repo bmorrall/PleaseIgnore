@@ -117,9 +117,10 @@ describe Account do
       end
     end
     it 'raises an exception if the provider does not match the expected value' do
-      expect {
+      expected_message = "Provider (twitter) doesn't match expected value: not_matching_provider"
+      expect do
         Account.find_for_oauth(twitter_auth_hash, 'not_matching_provider')
-      }.to raise_error(Exception, "Provider (twitter) doesn't match expected value: not_matching_provider")
+      end.to raise_error(Exception, expected_message)
     end
   end
 
@@ -137,9 +138,10 @@ describe Account do
       Account.new_with_auth_hash(twitter_auth_hash)
     end
     it 'raises an exception if the provider does not match the expected value' do
-      expect {
+      expected_message = "Provider (twitter) doesn't match expected value: not_matching_provider"
+      expect do
         Account.new_with_auth_hash(twitter_auth_hash, 'not_matching_provider')
-      }.to raise_error(Exception, "Provider (twitter) doesn't match expected value: not_matching_provider")
+      end.to raise_error(Exception, expected_message)
     end
   end
 
@@ -230,9 +232,9 @@ describe Account do
     context 'with an account with oauth credentials' do
       subject do
         FactoryGirl.build_stubbed(:account,
-          oauth_token: 'oauth_token',
-          oauth_secret: 'oauth_secret',
-          oauth_expires_at: DateTime.now
+                                  oauth_token: 'oauth_token',
+                                  oauth_secret: 'oauth_secret',
+                                  oauth_expires_at: DateTime.now
         )
       end
       it 'sets oauth_token to nil' do
@@ -260,7 +262,7 @@ describe Account do
           image: 'http://graph.facebook.com/1234567/picture?type=square'
         }
       end
-      let(:auth_hash) { OmniAuth::AuthHash.new({info: info_params}) }
+      let(:auth_hash) { OmniAuth::AuthHash.new(info: info_params) }
       it 'should update the name from the auth hash' do
         subject.update_from_auth_hash(auth_hash)
         expect(subject.name).to eq('Test User')
@@ -282,7 +284,13 @@ describe Account do
       before(:each) { subject.provider = 'facebook' }
       let(:info_params) { {} }
       let(:credentials_params) { {} }
-      let(:auth_hash) { OmniAuth::AuthHash.new({provider: 'facebook', info: info_params, credentials: credentials_params}) }
+      let(:auth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: 'facebook',
+          info: info_params,
+          credentials: credentials_params
+        )
+      end
 
       it 'should set the website from the Facebook url' do
         website = 'http://www.facebook.com/jbloggs'
@@ -304,7 +312,13 @@ describe Account do
       before(:each) { subject.provider = 'twitter' }
       let(:info_params) { {} }
       let(:credentials_params) { {} }
-      let(:auth_hash) { OmniAuth::AuthHash.new({provider: 'twitter', info: info_params, credentials: credentials_params}) }
+      let(:auth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: 'twitter',
+          info: info_params,
+          credentials: credentials_params
+        )
+      end
 
       it 'should set the website from the Facebook url' do
         website = 'https://twitter.com/johnqpublic'
@@ -313,7 +327,6 @@ describe Account do
         expect(subject.website).to eq(website)
       end
       it 'should set the oauth_token and oauth_secret values' do
-        expires = 3.months.since
         credentials_params[:token] = 'example_token'
         credentials_params[:secret] = 'example_secret'
         subject.update_from_auth_hash(auth_hash)
@@ -326,7 +339,13 @@ describe Account do
       before(:each) { subject.provider = 'github' }
       let(:info_params) { {} }
       let(:credentials_params) { {} }
-      let(:auth_hash) { OmniAuth::AuthHash.new({provider: 'github', info: info_params, credentials: credentials_params}) }
+      let(:auth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: 'github',
+          info: info_params,
+          credentials: credentials_params
+        )
+      end
 
       it 'should set the website from the Facebook url' do
         website = 'https://github.com/johnqpublic'
@@ -344,7 +363,6 @@ describe Account do
         expect(subject.oauth_expires_at.to_s).to eq(expires.to_s)
       end
       it 'should set the oauth_token and oauth_secret values' do
-        expires = 3.months.since
         credentials_params[:token] = 'example_token'
         credentials_params[:secret] = 'example_secret'
         subject.update_from_auth_hash(auth_hash)
@@ -357,7 +375,13 @@ describe Account do
       before(:each) { subject.provider = 'google_oauth2' }
       let(:info_params) { {} }
       let(:credentials_params) { {} }
-      let(:auth_hash) { OmniAuth::AuthHash.new({provider: 'google_oauth2', info: info_params, credentials: credentials_params}) }
+      let(:auth_hash) do
+        OmniAuth::AuthHash.new(
+          provider: 'google_oauth2',
+          info: info_params,
+          credentials: credentials_params
+        )
+      end
 
       it 'should set the oauth_token and oauth_expires values' do
         expires = 3.months.since

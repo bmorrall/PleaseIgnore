@@ -1,10 +1,8 @@
 module ControllerMacros
-
   module ClassMethods
-
     def login_user
       before(:each) do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        @request.env['devise.mapping'] = Devise.mappings[:user]
         @logged_in_user = FactoryGirl.create(:user)
         sign_in @logged_in_user
       end
@@ -18,14 +16,12 @@ module ControllerMacros
   # Authentication Methods
 
   def logged_in_user
-    @logged_in_user || raise('No user logged in')
+    @logged_in_user || fail('No user logged in')
   end
 
   # Authorization Methods
 
-  def ability
-    @ability
-  end
+  attr_reader :ability
 
   def self.included(controller_spec)
     controller_spec.extend(ClassMethods)
@@ -37,5 +33,4 @@ module ControllerMacros
       controller.stub(:current_ability).and_return(@ability)
     end
   end
-
 end

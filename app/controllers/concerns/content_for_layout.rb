@@ -11,7 +11,7 @@ module Concerns
       # FORCE to implement content_for in controller
       def view_context
         super.tap do |view|
-          (@_content_for_layout || {}).each do |name,content|
+          (@_content_for_layout || {}).each do |name, content|
             view.content_for name, content
           end
         end
@@ -26,6 +26,7 @@ module Concerns
           @_content_for_layout[name] = content
         end
       end
+
       def content_for_layout?(name)
         @_content_for_layout[name].present?
       end

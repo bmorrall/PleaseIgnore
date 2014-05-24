@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "devise/passwords/new.html.haml" do
+describe 'devise/passwords/new.html.haml' do
 
   context do # Within default nesting
     let(:user) { User.new }
@@ -10,11 +10,11 @@ describe "devise/passwords/new.html.haml" do
       allow(view).to receive(:resource_name).and_return('user')
     end
 
-    it "renders the new password reset request form" do
+    it 'renders the new password reset request form' do
       render
 
-      assert_select "form[action=?][method=?]", user_password_path, "post" do
-        assert_select "input#user_email[name=?]", "user[email]"
+      assert_select 'form[action=?][method=?]', user_password_path, 'post' do
+        assert_select 'input#user_email[name=?]', 'user[email]'
       end
     end
   end

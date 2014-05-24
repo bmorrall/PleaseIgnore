@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  devise :omniauthable, :omniauth_providers => [
+  devise :omniauthable, omniauth_providers: [
     :developer,
     :facebook,
     :twitter,
@@ -37,8 +37,8 @@ class User < ActiveRecord::Base
   # Associations
 
   has_many :accounts,
-    -> { order 'position ASC, accounts.provider ASC' },
-    :dependent => :destroy
+           -> { order 'position ASC, accounts.provider ASC' },
+           dependent: :destroy
 
   # Class Methods
 
@@ -51,10 +51,10 @@ class User < ActiveRecord::Base
   # Validations
 
   validates :name,
-    presence: true
+            presence: true
 
   validates :terms_and_conditions,
-    acceptance: true
+            acceptance: true
 
   # Callbacks
 
@@ -62,7 +62,7 @@ class User < ActiveRecord::Base
 
   # Instance Methods
 
-  def has_provider_account?(provider)
+  def provider_account?(provider)
     accounts.where(provider: provider.to_s).any?
   end
 
@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
 
   # Instance Methods (Images)
 
-  def gravatar_image(size=128)
+  def gravatar_image(size = 128)
     unless email.blank?
       gravatar_id = Digest::MD5.hexdigest(email.downcase)
       "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
@@ -86,10 +86,10 @@ class User < ActiveRecord::Base
   end
 
   # Picture representation of user
-  def profile_picture(size=128)
+  def profile_picture(size = 128)
     account = primary_account
     image ||= account && account.profile_picture(size)
-    image ||= gravatar_image(size)
+    image || gravatar_image(size)
   end
 
   protected
@@ -98,18 +98,18 @@ class User < ActiveRecord::Base
   def save_new_session_accounts
     new_session_accounts.each do |account|
       account.user = self
-      unless account.save
-        logger.error "Unable to save Account: #{account.provider}: #{account.uid}"
+      next if account.save
 
-        # Add errors to model and raise exception
-        error_message = "Unable to add your #{Account.provider_name(account.provider)} account"
-        errors.add :base, error_message
-        raise ActiveRecord::RecordInvalid, account
-      end
+      # Add errors to model and raise exception
+      logger.error "Unable to save Account: #{account.provider}: #{account.uid}"
+      error_message = "Unable to add your #{Account.provider_name(account.provider)} account"
+      errors.add :base, error_message
+      fail ActiveRecord::RecordInvalid, account
     end
   end
 
-  # Colllects auth hashes from all stored providers and adds them to the new_session_accounts temporary list
+  # Collects auth hashes from all stored providers and adds them to the new_session_accounts
+  # temporary list.
   def add_accounts_from_session(session)
     Account::PROVIDERS.each do |provider|
       provider_key = "devise.#{provider}_data"

@@ -9,5 +9,4 @@ class UserDecorator < Draper::Decorator
     image_source = object.profile_picture(32)
     h.image_tag image_source, class: 'profile-image' if image_source
   end
-
 end

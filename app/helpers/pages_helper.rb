@@ -1,5 +1,4 @@
 module PagesHelper
-
   def tos_header(title, options = {})
     tag = options.delete(:tag) || :h3
     options[:id] ||= title.downcase.gsub(/\W/, '-')
@@ -7,5 +6,4 @@ module PagesHelper
       content_tag tag, title, options
     end
   end
-
 end

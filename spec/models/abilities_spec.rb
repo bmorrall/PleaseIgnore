@@ -1,5 +1,5 @@
 require 'spec_helper'
-require "cancan/matchers"
+require 'cancan/matchers'
 
 describe User do
 

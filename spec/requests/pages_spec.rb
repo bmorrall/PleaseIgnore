@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Pages" do
+describe 'Pages' do
   enable_rails_cache
 
   def page_titles
@@ -11,15 +11,15 @@ describe "Pages" do
     }
   end
 
-  describe "GET /" do
-    context "as a visitor" do
-      it "renders the home page" do
+  describe 'GET /' do
+    context 'as a visitor' do
+      it 'renders the home page' do
         get root_url
         expect(response.status).to be(200)
       end
-      it "caches the home page" do
+      it 'caches the home page' do
         get root_url
-        expect(ActionController::Base.cache_store.exist?("views/www.example.com/index")).to be_true
+        expect(ActionController::Base.cache_store.exist?('views/www.example.com/index')).to be_true
       end
     end
     describe 'Metadata' do
@@ -34,7 +34,7 @@ describe "Pages" do
     end
   end
 
-  describe "GET /home" do
+  describe 'GET /home' do
     context 'as a visitor' do
       it 'redirects to the root_url' do
         get page_path('home')
@@ -47,7 +47,7 @@ describe "Pages" do
 
   %w(styles privacy terms).each do |page|
     describe "GET /#{page}" do
-      context "as a visitor" do
+      context 'as a visitor' do
         it "renders the #{page} page" do
           get page_path(page)
           expect(response.status).to be(200)
@@ -70,6 +70,5 @@ describe "Pages" do
       end
     end
   end
-
 
 end

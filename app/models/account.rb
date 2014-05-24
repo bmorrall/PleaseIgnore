@@ -37,7 +37,7 @@ class Account < ActiveRecord::Base
     provider = auth_hash.provider
     if force_provider && provider != force_provider
       # Provider from hash doesn't match expected values
-      raise "Provider (#{provider}) doesn't match expected value: #{force_provider}"
+      fail "Provider (#{provider}) doesn't match expected value: #{force_provider}"
     end
 
     find_by_provider_and_uid(provider, auth_hash.uid).tap do |account|
@@ -46,11 +46,11 @@ class Account < ActiveRecord::Base
   end
 
   # Creates a New Account based off OmniAuth Hash
-  def self.new_with_auth_hash(data, force_provider=nil)
+  def self.new_with_auth_hash(data, force_provider = nil)
     provider = data['provider']
     if force_provider && provider != force_provider
       # Provider from hash doesn't match expected values
-      raise "Provider (#{provider}) doesn't match expected value: #{force_provider}"
+      fail "Provider (#{provider}) doesn't match expected value: #{force_provider}"
     end
 
     Account.new(
@@ -72,15 +72,15 @@ class Account < ActiveRecord::Base
   # Validations
 
   validates :provider,
-    presence: true,
-    inclusion: { in: PROVIDERS }
+            presence: true,
+            inclusion: { in: PROVIDERS }
 
   validates :uid,
-    presence: true,
-    uniqueness: { :scope => :provider }
+            presence: true,
+            uniqueness: { scope: :provider }
 
   validates :user_id,
-    presence: true
+            presence: true
 
   # Instance Methods
 
@@ -88,12 +88,14 @@ class Account < ActiveRecord::Base
   def account_uid
     # Display Name for Facebook and Google - Test User
     account_uid ||= name if provider == 'facebook' || provider =~ /google/
-    # Display Handle for Twitter - @testuser
-    account_uid ||= nickname =~ /\A@/ ? nickname : "@#{nickname}" if nickname && provider == 'twitter'
+    if nickname && provider == 'twitter'
+      # Display Handle for Twitter - @testuser
+      account_uid ||= nickname =~ /\A@/ ? nickname : "@#{nickname}"
+    end
     # Display Nickname for GitHub - testuser
     account_uid ||= nickname if provider == 'github'
     # Display Generic UID as fallback
-    account_uid ||= uid
+    account_uid || uid
   end
 
   # Accounts can be orphaned to prevent sign in
@@ -101,7 +103,7 @@ class Account < ActiveRecord::Base
     user.present?
   end
 
-  def profile_picture(size=128)
+  def profile_picture(_size = 128)
     image
   end
 
@@ -156,6 +158,7 @@ class Account < ActiveRecord::Base
   end
 
   # Updates provider specific information
+  # FIXME: Separate Accounts
   def update_provider_meta_data(data)
     info = data['info']
     urls = info['urls']
@@ -169,5 +172,4 @@ class Account < ActiveRecord::Base
       self.website = nil
     end
   end
-
 end

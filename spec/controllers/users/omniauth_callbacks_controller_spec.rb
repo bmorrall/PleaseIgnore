@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe Users::OmniauthCallbacksController do
   include OmniauthHelpers
-  before(:each) { @request.env["devise.mapping"] = Devise.mappings[:user] }
+  before(:each) { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
   [
     :facebook,
     :twitter,
     :github,
-    :google_oauth2,
+    :google_oauth2
   ].each do |provider|
     provider_name = Account.provider_name(provider)
     session_key = "devise.#{provider}_data"
@@ -29,15 +29,19 @@ describe Users::OmniauthCallbacksController do
                 get provider
               end
               it { should redirect_to(new_user_registration_path) }
-              it { should set_the_flash[:notice].to("Successfully connected to your #{provider_name} account. Please review your details.") }
+              it do
+                expected = "Successfully connected to your #{provider_name} account. "\
+                           'Please review your details.'
+                should set_the_flash[:notice].to(expected)
+              end
               it "should set #{session_key} session data" do
                 expect(session[session_key]).not_to be_empty
               end
             end
             it 'should not create a new Account' do
-              expect {
+              expect do
                 get provider
-              }.to_not change(Account, :count)
+              end.to_not change(Account, :count)
             end
           end
           context 'with a previously linked account' do
@@ -50,15 +54,19 @@ describe Users::OmniauthCallbacksController do
                 get provider
               end
               it { should redirect_to(root_path) }
-              it { should set_the_flash[:notice].to("Successfully authenticated from your #{provider_name} account.") }
+              it do
+                should set_the_flash[:notice].to(
+                  "Successfully authenticated from your #{provider_name} account."
+                )
+              end
               it "should not set #{session_key} session data" do
                 expect(session[session_key]).to be_nil
               end
             end
             it 'should not create a new Account' do
-              expect {
+              expect do
                 get provider
-              }.to_not change(Account, :count)
+              end.to_not change(Account, :count)
             end
           end
           context 'with a disabled account' do
@@ -70,7 +78,11 @@ describe Users::OmniauthCallbacksController do
             context 'with a valid request' do
               before(:each) { get provider }
               it { should redirect_to(new_user_session_path) }
-              it { should set_the_flash[:alert].to("Could not authenticate you from #{provider_name} because \"This account has been disabled\".") }
+              it do
+                expected = "Could not authenticate you from #{provider_name} "\
+                           "because \"This account has been disabled\"."
+                should set_the_flash[:alert].to(expected)
+              end
             end
           end
         end
@@ -83,12 +95,16 @@ describe Users::OmniauthCallbacksController do
             context 'with a valid request' do
               before(:each) { get provider }
               it { should redirect_to(edit_user_registration_path) }
-              it { should set_the_flash[:notice].to("Successfully connected to your #{provider_name} account.") }
+              it do
+                should set_the_flash[:notice].to(
+                  "Successfully connected to your #{provider_name} account."
+                )
+              end
             end
             it 'should create a Account belonging to the user' do
-              expect {
+              expect do
                 get provider
-              }.to change(Account, :count).by(1)
+              end.to change(Account, :count).by(1)
               expect(Account.last.user).to eq(user)
             end
           end
@@ -97,9 +113,9 @@ describe Users::OmniauthCallbacksController do
               FactoryGirl.create(:"#{provider}_account", uid: auth_hash.uid, user: user)
             end
             it 'should not create a new Account' do
-              expect {
+              expect do
                 get provider
-              }.to_not change(Account, :count)
+              end.to_not change(Account, :count)
             end
           end
           context 'with a account linked to another user' do
@@ -111,12 +127,17 @@ describe Users::OmniauthCallbacksController do
                 get provider
               end
               it { should redirect_to(edit_user_registration_path) }
-              it { should set_the_flash[:alert].to("Could not authenticate you from #{provider_name} because \"Someone has already linked to this account\".") }
+              it do
+                should set_the_flash[:alert].to(
+                  "Could not authenticate you from #{provider_name} because "\
+                  '"Someone has already linked to this account".'
+                )
+              end
             end
             it 'should not create a new Account' do
-              expect {
+              expect do
                 get provider
-              }.to_not change(Account, :count)
+              end.to_not change(Account, :count)
             end
           end
         end
@@ -140,15 +161,19 @@ describe Users::OmniauthCallbacksController do
               get :developer
             end
             it { should redirect_to(new_user_registration_path) }
-            it { should set_the_flash[:notice].to('Successfully connected to your Developer account. Please review your details.') }
+            it do
+              should set_the_flash[:notice].to(
+                'Successfully connected to your Developer account. Please review your details.'
+              )
+            end
             it 'should set devise.developer_data session data' do
               expect(session['devise.developer_data']).not_to be_empty
             end
           end
           it 'should not create a new Account' do
-            expect {
+            expect do
               get :developer
-            }.to_not change(Account, :count)
+            end.to_not change(Account, :count)
           end
         end
         context 'with a previously linked account' do
@@ -161,15 +186,20 @@ describe Users::OmniauthCallbacksController do
               get :developer
             end
             it { should redirect_to(new_user_session_path) }
-            it { should set_the_flash[:alert].to('Could not authenticate you from Developer because "Authentication is disabled from this Provider".') }
+            it do
+              should set_the_flash[:alert].to(
+                'Could not authenticate you from Developer because '\
+                '"Authentication is disabled from this Provider".'
+              )
+            end
             it 'should not set devise.developer_data session data' do
               expect(session['devise.developer_data']).to be_nil
             end
           end
           it 'should not create a new Account' do
-            expect {
+            expect do
               get :developer
-            }.to_not change(Account, :count)
+            end.to_not change(Account, :count)
           end
         end
       end
@@ -184,12 +214,16 @@ describe Users::OmniauthCallbacksController do
               get :developer
             end
             it { should redirect_to(edit_user_registration_path) }
-            it { should set_the_flash[:notice].to('Successfully connected to your Developer account.') }
+            it do
+              should set_the_flash[:notice].to(
+                'Successfully connected to your Developer account.'
+              )
+            end
           end
           it 'should create a Account belonging to the user' do
-            expect {
+            expect do
               get :developer
-            }.to change(Account, :count).by(1)
+            end.to change(Account, :count).by(1)
             expect(Account.last.user).to eq(user)
           end
         end
@@ -198,9 +232,9 @@ describe Users::OmniauthCallbacksController do
             FactoryGirl.create(:account, uid: auth_hash.uid, user: user)
           end
           it 'should not create a new Account' do
-            expect {
+            expect do
               get :developer
-            }.to_not change(Account, :count)
+            end.to_not change(Account, :count)
           end
         end
         context 'with a account linked to another user' do
@@ -212,12 +246,17 @@ describe Users::OmniauthCallbacksController do
               get :developer
             end
             it { should redirect_to(edit_user_registration_path) }
-            it { should set_the_flash[:alert].to('Could not authenticate you from Developer because "Someone has already linked to this account".') }
+            it do
+              should set_the_flash[:alert].to(
+                'Could not authenticate you from Developer because '\
+                '"Someone has already linked to this account".'
+              )
+            end
           end
           it 'should not create a new Account' do
-            expect {
+            expect do
               get :developer
-            }.to_not change(Account, :count)
+            end.to_not change(Account, :count)
           end
         end
       end
@@ -225,4 +264,3 @@ describe Users::OmniauthCallbacksController do
   end
 
 end
-

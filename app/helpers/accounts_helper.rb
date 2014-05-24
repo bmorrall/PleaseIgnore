@@ -1,5 +1,4 @@
 module AccountsHelper
-
   # Decorate an array of accounts with AccountDecorator
   def decorate_account_collection(accounts, &block)
     decorate_collection accounts, AccountDecorator, &block
@@ -7,12 +6,12 @@ module AccountsHelper
 
   # List of enabled providers
   def omniauth_providers
-    @omniauth_providers ||= Account::omniauth_providers.map { |provider| provider.to_s }
+    @omniauth_providers ||= Account.omniauth_providers.map { |provider| provider.to_s }
   end
 
   def provider_icon(provider)
     icon_name = provider_class(provider)
-    icon_name = "user" if provider == 'developer'
+    icon_name = 'user' if provider == 'developer'
     fa(icon_name)
   end
 
@@ -24,5 +23,4 @@ module AccountsHelper
     return 'google-plus' if provider =~ /google/
     provider
   end
-
 end

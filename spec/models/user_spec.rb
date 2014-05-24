@@ -56,7 +56,7 @@ describe User do
       provider_name = Account.provider_name(provider)
 
       context "with #{provider_name} auth_session_data" do
-        let(:session) {{ "devise.#{provider}_data" => provider_auth_hash(provider) }}
+        let(:session) { { "devise.#{provider}_data" => provider_auth_hash(provider) } }
         it 'builds a new user using values from the auth hash' do
           user = User.new_with_session({}, session)
           expect(user.name).to eq(auth_account[:name])
@@ -78,10 +78,10 @@ describe User do
           end
 
           it "creates a new #{provider_name} account on save" do
-            expect {
+            expect do
               user = User.new_with_session(user_params, session)
               user.save!
-            }.to change(Account, :count).by(1)
+            end.to change(Account, :count).by(1)
 
             expect(Account.last.provider).to eq provider.to_s
           end
@@ -89,39 +89,41 @@ describe User do
         context 'with invalid account data' do
           let(:user) do
             user_params = FactoryGirl.attributes_for(:user)
-            user = User.new_with_session(user_params, session)
+            User.new_with_session(user_params, session)
           end
           before(:each) do
             expect_any_instance_of(Account).to receive(:valid?).and_return(false)
           end
 
           it 'does not create a new Account on save' do
-            expect {
+            expect do
               user.save
-            }.to_not change(Account, :count)
+            end.to_not change(Account, :count)
           end
           it 'does not create a new User on save' do
-            expect {
+            expect do
               user.save
-            }.to_not change(User, :count)
+            end.to_not change(User, :count)
           end
           it 'adds an error to the User on save' do
             user_params = FactoryGirl.attributes_for(:user)
             user = User.new_with_session(user_params, session)
             user.save
-            expect(user.errors.messages[:base]).to include "Unable to add your #{provider_name} account"
+
+            expected = "Unable to add your #{provider_name} account"
+            expect(user.errors.messages[:base]).to include expected
           end
         end
       end
     end
   end
 
-  describe '#has_provider_account?' do
+  describe '#provider_account?' do
     subject { FactoryGirl.create(:user) }
     context 'with no Account' do
       Account::PROVIDERS.each do |provider|
         it "returns false for #{provider}" do
-          subject.has_provider_account?(provider)
+          subject.provider_account?(provider)
         end
       end
     end
@@ -129,11 +131,11 @@ describe User do
       context "with a #{provider} account" do
         let!(:account) { FactoryGirl.create :"#{provider}_account", user: subject }
         it "returns true for #{provider}" do
-          expect(subject.has_provider_account? provider).to be_true
+          expect(subject.provider_account? provider).to be_true
         end
         Account::PROVIDERS.reject { |p| p == provider }.each do |p|
           it "returns false for #{p}" do
-            expect(subject.has_provider_account? p).to be_false
+            expect(subject.provider_account? p).to be_false
           end
         end
       end
@@ -143,7 +145,10 @@ describe User do
   describe '#primary_account' do
     it 'returns the first account' do
       first_account = FactoryGirl.build_stubbed(:account)
-      allow(subject).to receive(:accounts).and_return([first_account, FactoryGirl.build_stubbed(:account)])
+      allow(subject).to receive(:accounts).and_return([
+        first_account,
+        FactoryGirl.build_stubbed(:account)
+      ])
       expect(subject.primary_account).to be(first_account)
     end
   end
@@ -155,13 +160,15 @@ describe User do
       before(:each) { subject.email = 'bemo56@hotmail.com' }
       context 'with no arguments' do
         it 'returns a 128px gravatar image url' do
-          expect(subject.gravatar_image).to eq('http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128')
+          expected = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+          expect(subject.gravatar_image).to eq(expected)
         end
       end
       %w(16 32 64 128).each do |size|
         context "with a size argument of #{size}" do
           it "returns a #{size}px gravatar image url" do
-            expect(subject.gravatar_image(size)).to eq("http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}")
+            expected = "http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}"
+            expect(subject.gravatar_image(size)).to eq(expected)
           end
         end
       end

@@ -1,6 +1,6 @@
 
 # Enables CSRF for a test spec
-Around('@csrf_protection') do |scenario, block|
+Around('@csrf_protection') do |_scenario, block|
   current_protection = ApplicationController.allow_forgery_protection
   ApplicationController.allow_forgery_protection = true
   block.call

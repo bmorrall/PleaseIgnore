@@ -1,7 +1,6 @@
 require 'app_responder'
 
 class ApplicationController < ActionController::Base
-
   # Add common responders to Application
   self.responder = AppResponder
   respond_to :html
@@ -20,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
-    raise exception
+    fail exception
   end
 
   def configure_permitted_parameters

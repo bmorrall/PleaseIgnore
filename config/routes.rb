@@ -1,24 +1,24 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {
-    :passwords => 'users/passwords',
-    :sessions => 'users/sessions',
-    :registrations => 'users/registrations',
-    :omniauth_callbacks => "users/omniauth_callbacks"
+  devise_for :users, controllers: {
+    passwords: 'users/passwords',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   namespace :users do
-    resources :accounts, :only => :destroy do
+    resources :accounts, only: :destroy do
       post :sort, on: :collection
     end
   end
 
-  resource :contact, :only => [:show, :create] do
+  resource :contact, only: [:show, :create] do
     get :thank_you
   end
 
   # HighVoltage Pages
-  get "/home", to: redirect('/')
-  get "/*id" => 'pages#show', as: :page, format: false
+  get '/home', to: redirect('/')
+  get '/*id' => 'pages#show', as: :page, format: false
   root to: 'pages#show', id: 'home'
 
   # The priority is based upon order of creation: first created -> highest priority.

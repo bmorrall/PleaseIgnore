@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe SupportMailer do
-  describe "contact_email" do
+  describe 'contact_email' do
     let(:mail) { SupportMailer.contact_email(contact_email_attributes) }
     let(:contact_email_attributes) do
       {
@@ -12,18 +12,18 @@ describe SupportMailer do
       }
     end
 
-    it "renders the headers" do
-      expect(mail.subject).to eq("PleaseIgnore Contact Email")
-      expect(mail.to).to eq(["support@pleaseignore.com"])
-      expect(mail.from).to eq(["contact@pleaseignore.com"])
+    it 'renders the headers' do
+      expect(mail.subject).to eq('PleaseIgnore Contact Email')
+      expect(mail.to).to eq(['support@pleaseignore.com'])
+      expect(mail.from).to eq(['contact@pleaseignore.com'])
     end
 
-    it "renders the body" do
+    it 'renders the body' do
       body = mail.body.encoded
-      expect(body).to match("You have received a Contact Email from PleaseIgnore")
-      expect(body).to match("Test User")
-      expect(body).to match("test@example.com")
-      expect(body).to match("This is the body")
+      expect(body).to match('You have received a Contact Email from PleaseIgnore')
+      expect(body).to match('Test User')
+      expect(body).to match('test@example.com')
+      expect(body).to match('This is the body')
       expect(body).to match('http://wavedigital.com.au')
     end
   end

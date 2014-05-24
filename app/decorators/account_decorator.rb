@@ -5,30 +5,12 @@ class AccountDecorator < Draper::Decorator
     h.provider_icon object.provider
   end
 
+  # Returns a button for removing a account
   def summary_delete_button
     if object.persisted?
-      # Display link to remove account
-      provider_class = h.provider_class(object.provider)
-      h.system_link(
-        '&times;'.html_safe,
-        h.users_account_path(account),
-        method: 'delete',
-        class: "input-group-addon unlink-account unlink-#{provider_class}",
-        data: {
-          confirm: I18n.t('decorators.account.prompts.unlink_account', object.provider_name)
-        }
-      )
+      destroy_account_button
     else
-      # Display link to cancel registration
-      h.system_link(
-        '&times;'.html_safe,
-        h.cancel_user_registration_path,
-        method: 'get',
-        class: 'input-group-addon cancel-signup',
-        data: {
-          confirm: I18n.t('decorators.account.prompts.cancel_registration')
-        }
-      )
+      cancel_registration_button
     end
   end
 
@@ -52,5 +34,34 @@ class AccountDecorator < Draper::Decorator
         h.image_tag object.image, size: '32x32'
       end
     end
+  end
+
+  protected
+
+  def cancel_registration_button
+    # Display link to cancel registration
+    h.system_link(
+      '&times;'.html_safe,
+      h.cancel_user_registration_path,
+      method: 'get',
+      class: 'input-group-addon cancel-signup',
+      data: {
+        confirm: I18n.t('decorators.account.prompts.cancel_registration')
+      }
+    )
+  end
+
+  def destroy_account_button
+    # Display link to remove account
+    provider_class = h.provider_class(object.provider)
+    h.system_link(
+      '&times;'.html_safe,
+      h.users_account_path(account),
+      method: 'delete',
+      class: "input-group-addon unlink-account unlink-#{provider_class}",
+      data: {
+        confirm: I18n.t('decorators.account.prompts.unlink_account', object.provider_name)
+      }
+    )
   end
 end

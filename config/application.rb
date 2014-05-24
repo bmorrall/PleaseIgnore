@@ -26,7 +26,7 @@ module PleaseIgnore
     config.assets.append_path 'components'
 
     # Explicitly add required files into assets
-    config.assets.precompile.push(Proc.new do |path|
+    config.assets.precompile.push(proc do |path|
       [
         /\Afont-awesome\/fonts/, # include font-awesome fonts
       ].any? { |pattern| path =~ pattern }

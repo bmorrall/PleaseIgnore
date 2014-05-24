@@ -110,6 +110,9 @@ end
 
 group :test, :development do
   gem 'rspec-rails'
+
+  # Code Quality Metrics
+  gem 'rubocop', require: false
 end
 group :test do
   gem 'capybara-webkit', '~> 1.1.1'

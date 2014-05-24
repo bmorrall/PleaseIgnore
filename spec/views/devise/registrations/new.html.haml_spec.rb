@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "devise/registrations/new.html.haml" do
+describe 'devise/registrations/new.html.haml' do
 
   context do # Within default nesting
     let(:user) { User.new }
@@ -10,14 +10,14 @@ describe "devise/registrations/new.html.haml" do
       allow(view).to receive(:resource_name).and_return('user')
     end
 
-    it "renders the new registration form" do
+    it 'renders the new registration form' do
       render
 
-      assert_select "form[action=?][method=?]", user_registration_path, "post" do
-        assert_select "input#user_name[name=?]", "user[name]"
-        assert_select "input#user_email[name=?]", "user[email]"
-        assert_select "input#user_password[name=?]", "user[password]"
-        assert_select "input#user_password_confirmation[name=?]", "user[password_confirmation]"
+      assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+        assert_select 'input#user_name[name=?]', 'user[name]'
+        assert_select 'input#user_email[name=?]', 'user[email]'
+        assert_select 'input#user_password[name=?]', 'user[password]'
+        assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
       end
     end
 
@@ -25,7 +25,7 @@ describe "devise/registrations/new.html.haml" do
       {
         facebook: 'facebook',
         twitter: 'twitter',
-        github: 'github',
+        github: 'github'
       }.each do |provider, display_class|
         it "renders a pending #{provider} account" do
           account = FactoryGirl.build(:"#{provider}_account")
@@ -34,7 +34,8 @@ describe "devise/registrations/new.html.haml" do
           render
           assert_select ".btn-#{display_class}" do
             assert_select 'a[href=?][rel="external"]', account.website
-            assert_select 'a[href=?][data-method="get"][rel="nofollow"]', cancel_user_registration_path
+            assert_select 'a[href=?][data-method="get"][rel="nofollow"]',
+                          cancel_user_registration_path
           end
         end
       end
@@ -46,12 +47,13 @@ describe "devise/registrations/new.html.haml" do
         render
         assert_select '.btn-google-plus' do
           assert_select 'a[href="#"][disabled]' # Google has no website
-          assert_select 'a[href=?][data-method="get"][rel="nofollow"]', cancel_user_registration_path
+          assert_select 'a[href=?][data-method="get"][rel="nofollow"]',
+                        cancel_user_registration_path
         end
       end
     end
 
-    it "renders a link to the tos and privacy policy" do
+    it 'renders a link to the tos and privacy policy' do
       render
 
       assert_select 'a[href=?][rel="external"]', page_path('privacy')

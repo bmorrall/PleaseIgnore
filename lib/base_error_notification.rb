@@ -1,8 +1,7 @@
 # Adds Base Error Messages to Simple Form ErrorNotifcation
 class BaseErrorNotification < SimpleForm::ErrorNotification
-
   def error_message
-    messages = [ template.content_tag(:strong, super) ]
+    messages = [template.content_tag(:strong, super)]
     base_errors = object.errors[:base]
     if base_errors.any?
       error_items = base_errors.map { |error| template.content_tag :li, error }
@@ -11,4 +10,3 @@ class BaseErrorNotification < SimpleForm::ErrorNotification
     messages.join.html_safe
   end
 end
-
