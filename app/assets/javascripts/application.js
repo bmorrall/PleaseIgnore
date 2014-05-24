@@ -20,6 +20,7 @@
 //= require turbolinks
 //
 //= require translations
+//= require jquery.formerrors
 //
 //= require main
 //= require users
