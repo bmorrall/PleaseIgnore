@@ -1,3 +1,7 @@
 en:
   javascript:
     hello: "Hello world"
+
+    # Turboboost Translations
+    turboboost:
+      default_errors: 'Please review the problems below:'

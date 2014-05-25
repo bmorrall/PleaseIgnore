@@ -22,6 +22,7 @@
 //
 //= require translations
 //= require jquery.formerrors
+//= require turboboost_events
 //
 //= require main
 //= require users
