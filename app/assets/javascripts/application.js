@@ -18,6 +18,7 @@
 //= require bootstrap/transition
 //= require html5sortable/jquery.sortable
 //= require turbolinks
+//= require turboboost
 //
 //= require translations
 //= require jquery.formerrors
