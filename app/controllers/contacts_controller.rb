@@ -1,6 +1,8 @@
 class ContactsController < ApplicationController
   include Concerns::ControllerURIHelpers
 
+  respond_to :html
+
   before_filter do
     authorize! :create, Contact
   end

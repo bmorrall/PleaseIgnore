@@ -1,9 +1,10 @@
 module Users
-  require 'responders/user_profile_resource_responder'
-
   class AccountsController < ::ApplicationController
     before_filter :authenticate_user!
-    responders :flash, :user_profile_resource
+
+    # Setup responders
+    self.responder = UsersResponder
+    respond_to :html
 
     def destroy
       @account = current_user.accounts.find_by_id(params[:id])

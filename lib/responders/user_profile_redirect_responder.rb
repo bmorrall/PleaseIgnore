@@ -1,7 +1,7 @@
 module Responders
   # This responder modifies your current responder to redirect
   # to edit_user_registration_path on POST/PUT/DELETE.
-  module UserProfileResourceResponder
+  module UserProfileRedirectResponder
     protected
 
     def navigation_location
