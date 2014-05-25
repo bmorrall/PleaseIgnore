@@ -1,4 +1,5 @@
 class ContactsController < ApplicationController
+  include Concerns::BetterTurboboostErrors
   include Concerns::ControllerURIHelpers
 
   respond_to :html
@@ -16,7 +17,7 @@ class ContactsController < ApplicationController
 
   # POST /contact
   def create
-    @contact = Contact.new(params[:contact])
+    @contact = Contact.new(contact_params)
     if @contact.valid?
       # Send the contact mail
       SupportMailer.contact_email(@contact.attributes).deliver
@@ -30,6 +31,11 @@ class ContactsController < ApplicationController
   end
 
   protected
+
+  # Strong parameters for Contact
+  def contact_params
+    params.require(:contact).permit(:name, :email, :body, :referer)
+  end
 
   # Sets default values for contact based on current_user and refererr
   def update_contact_default_values(contact)

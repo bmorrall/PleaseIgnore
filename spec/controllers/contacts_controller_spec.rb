@@ -81,8 +81,8 @@ describe ContactsController do
     context 'as a visitor' do
       grant_ability :create, Contact
 
-      context 'with a valid request' do
-        before(:each) { post :create, contact: valid_create_attributes }
+      context 'with a valid xhr request' do
+        before(:each) { xhr :post, :create, contact: valid_create_attributes }
         it { should redirect_to thank_you_contact_path }
         it { should set_the_flash[:notice].to 'Your contact request has been sent' }
         it 'should send a contact email to support' do
@@ -92,18 +92,25 @@ describe ContactsController do
           expect(email.subject).to eq('PleaseIgnore Contact Email')
         end
       end
-      context 'with a invalid request' do
-        before(:each) { post :create, contact: [] }
-        it { should render_template(:show) }
-        it { should render_with_layout(:application) }
+      context 'with a xhr request with errors' do
+        before(:each) { xhr :post, :create, contact: { name: 'not-valid' } }
+        it { should respond_with(:unprocessable_entity) }
+        it { should_not render_with_layout }
         it { should_not set_the_flash }
         it 'should assign a contact with errors' do
           contact = assigns(:contact)
           expect(contact.errors).to_not be_empty
         end
+        it 'should render valid JSON' do
+          expect do
+            JSON.parse(response.body)
+          end.to_not raise_error
+        end
       end
       it 'should not send any emails with an invalid request' do
-        expect { post :create, contact: [] }.to_not change(ActionMailer::Base.deliveries, :count)
+        expect do
+          xhr :post, :create, contact: { name: 'not-valid' }
+        end.to_not change(ActionMailer::Base.deliveries, :count)
       end
     end
   end

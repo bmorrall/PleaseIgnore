@@ -31,19 +31,26 @@ describe 'Contact' do
     end
   end
 
-  describe 'POST /contact' do
+  describe 'POST /contact AS xhr' do
     context 'as a visitor' do
       it 'redirects the user to a thank you page' do
-        post contact_path(contact: valid_create_attributes)
+        xhr :post, contact_path, contact: valid_create_attributes
         expect(response).to redirect_to thank_you_contact_path
       end
       it 'notifies the user that their contact request was sent' do
-        post contact_path(contact: valid_create_attributes)
+        xhr :post, contact_path, contact: valid_create_attributes
         follow_redirect!
 
         assert_select '.alert.alert-success strong', 'Your contact request has been sent'
       end
+      it 'renders Turboboost errors for invalid request' do
+        xhr :post, contact_path, contact: { name: 'Test User' }
+
+        expect(response.status).to be(422)
+        turboboost_errors = JSON.parse(response.body)
+        expect(turboboost_errors['contact_email']).to include('Email can\'t be blank')
+        expect(turboboost_errors['contact_body']).to include('Body can\'t be blank')
+      end
     end
   end
-
 end
