@@ -1,4 +1,19 @@
 namespace :quality do
+  # Cane Rake Task
+  begin
+    require 'cane/rake_task'
+  rescue LoadError
+    warn "cane not available, cane task not provided."
+  else
+    desc "Run cane to check quality metrics"
+    Cane::RakeTask.new(:cane) do |cane|
+      cane.abc_max       = 16
+      cane.no_doc        = true
+      cane.style_glob    = './{app,config,feature,lib,spec}/**/*.rb'
+      cane.style_measure = 100
+    end
+  end
+
   # Rubocop Rake Task
   begin
     require 'rubocop/rake_task'
@@ -45,4 +60,4 @@ namespace :quality do
 end
 
 desc "Run code quality metrics on project"
-task quality: %w(quality:rubocop quality:yardstick)
+task quality: %w(quality:cane quality:rubocop quality:yardstick)

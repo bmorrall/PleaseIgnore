@@ -113,6 +113,7 @@ group :test, :development do
   gem 'rspec-rails'
 
   # Code Quality Metrics
+  gem 'cane', require: false
   gem 'rubocop', require: false
   gem 'yardstick', require: false
 end
