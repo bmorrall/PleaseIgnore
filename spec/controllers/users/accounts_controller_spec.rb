@@ -9,30 +9,34 @@ describe Users::AccountsController do
 
       context 'with a facebook account belonging to the user' do
         let!(:facebook_account) { FactoryGirl.create(:facebook_account, user: logged_in_user) }
+
         it 'should delete the user account' do
           expect do
-            delete :destroy, id: facebook_account.to_param
+            xhr :delete, :destroy, id: facebook_account.to_param
           end.to change(Account, :count).by(-1)
         end
-        context 'with a valid request' do
+        context 'with a valid xhr request' do
           before(:each) do
-            delete :destroy, id: facebook_account.to_param
+            xhr :delete, :destroy, id: facebook_account.to_param
           end
+
           it { expect(response).to redirect_to edit_user_registration_path }
           it { should set_the_flash[:notice].to('Successfully unlinked your Facebook account.') }
         end
       end
       context 'with a facebook account belonging to another user' do
         let!(:facebook_account) { FactoryGirl.create(:facebook_account) }
+
         it 'should not delete the user account' do
           expect do
-            delete :destroy, id: facebook_account.to_param
+            xhr :delete, :destroy, id: facebook_account.to_param
           end.to_not change(Account, :count)
         end
-        context 'with a valid request' do
+        context 'with a valid xhr request' do
           before(:each) do
-            delete :destroy, id: facebook_account.to_param
+            xhr :delete, :destroy, id: facebook_account.to_param
           end
+
           it { expect(response).to redirect_to edit_user_registration_path }
           it { should set_the_flash[:warning].to('Your account has already been unlinked.') }
         end
@@ -50,10 +54,11 @@ describe Users::AccountsController do
         let!(:account_b) { FactoryGirl.create(:account, position: 2, user: logged_in_user) }
         let!(:account_c) { FactoryGirl.create(:account, position: 3, user: logged_in_user) }
 
-        context 'with a valid request' do
+        context 'with a valid xhr request' do
           before(:each) do
-            post :sort,  account_ids: [account_b.id, account_c.id, account_a.id]
+            xhr :post, :sort, account_ids: [account_b.id, account_c.id, account_a.id]
           end
+
           it { should respond_with(:success) }
           it 'reorders the accounts' do
             # Reload the accounts
@@ -67,7 +72,13 @@ describe Users::AccountsController do
         end
         it 'only orders accounts belonging to the user' do
           account_extra = FactoryGirl.create(:account, position: 1)
-          post :sort,  account_ids: [account_b.id, account_c.id, account_extra.id, account_a.id]
+          account_ids = [
+            account_b.id,
+            account_c.id,
+            account_extra.id,
+            account_a.id
+          ]
+          xhr :post, :sort, account_ids: account_ids
           account_extra.reload
           expect(account_extra.position).to eq(1) # Position is unchanged
         end

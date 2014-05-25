@@ -6,6 +6,7 @@ module Users
     self.responder = UsersResponder
     respond_to :html
 
+    # DELETE /users/accounts/1 [xhr]
     def destroy
       @account = current_user.accounts.find_by_id(params[:id])
       # Ensure User is not prevented from destroying Account (banned)
@@ -21,6 +22,7 @@ module Users
       respond_with(@account, flash: @account.present?)
     end
 
+    # POST /users/accounts/sort [xhr]
     def sort
       # Ensure User is not prevented from updating Account (banned)
       authorize! :update, Account
