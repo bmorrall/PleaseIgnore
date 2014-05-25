@@ -252,20 +252,28 @@ describe Account do
 
   describe '#update_from_auth_hash' do
     context 'with a generic auth hash containing info params' do
-      let(:info_params) { {} }
+      let(:info_params) do
+        {
+          name: 'Test User',
+          email: 'test@example.com',
+          nickname: 'nickname',
+          image: 'http://graph.facebook.com/1234567/picture?type=square'
+        }
+      end
       let(:auth_hash) { OmniAuth::AuthHash.new({info: info_params}) }
       it 'should update the name from the auth hash' do
-        info_params[:name] = 'Test User'
         subject.update_from_auth_hash(auth_hash)
         expect(subject.name).to eq('Test User')
       end
+      it 'should update the email from the auth hash' do
+        subject.update_from_auth_hash(auth_hash)
+        expect(subject.email).to eq('test@example.com')
+      end
       it 'should update the nickname from the auth hash' do
-        info_params[:nickname] = 'nickname'
         subject.update_from_auth_hash(auth_hash)
         expect(subject.nickname).to eq('nickname')
       end
       it 'should update the image from the auth hash' do
-        info_params[:image] = 'http://graph.facebook.com/1234567/picture?type=square'
         subject.update_from_auth_hash(auth_hash)
         expect(subject.image).to eq('http://graph.facebook.com/1234567/picture?type=square')
       end

@@ -113,16 +113,18 @@ class User < ActiveRecord::Base
   def add_accounts_from_session(session)
     Account::PROVIDERS.each do |provider|
       provider_key = "devise.#{provider}_data"
+      next unless (data = session[provider_key])
 
-      # Add Omniauth Params to User
-      if (data = session[provider_key]) && (info = data["info"])
-        self.name = info["name"] if name.blank?
-        self.email = info["email"] if email.blank?
-
-        # Add a new session
-        self.new_session_accounts << Account.new_with_auth_hash(data, provider)
-      end
+      # Add account to new session accounts
+      account = Account.new_with_auth_hash(data, provider)
+      update_defaults_from_account account
+      new_session_accounts << account
     end
   end
 
+  # Updates default properties from account
+  def update_defaults_from_account(account)
+    self.name = account.name if name.blank?
+    self.email = account.email if email.blank?
+  end
 end

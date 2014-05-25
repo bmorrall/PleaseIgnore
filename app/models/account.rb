@@ -26,6 +26,10 @@ class Account < ActiveRecord::Base
   belongs_to :user, touch: true
   acts_as_list scope: :user
 
+  # Attributes
+
+  attr_accessor :email
+
   # Class Methods
 
   # Finds a existing Account from an OmniAuth hash, and updates from latest details
@@ -135,6 +139,7 @@ class Account < ActiveRecord::Base
   # Updates Common Account information
   def update_account_info(info)
     self.name = info['name']
+    self.email = info['email']
     self.nickname = info['nickname']
     self.image = info['image']
   end
