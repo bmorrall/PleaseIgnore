@@ -5,22 +5,29 @@ threshold: 53
 rules:
   ApiTag::Presence:
     enabled: true
-    exclude: []
+    exclude: &controller_actions
+      - 'ContactsController#show'
+      - 'ContactsController#create'
+      - 'ContactsController#thank_you'
+      - 'Users::AccountsController#destroy'
+      - 'Users::AccountsController#sort'
+      - 'Users::OmniauthCallbacksController#developer'
+      - 'Users::RegistrationsController#update'
   ApiTag::Inclusion:
     enabled: true
-    exclude: []
+    exclude: *controller_actions
   ApiTag::ProtectedMethod:
     enabled: true
     exclude: []
   ApiTag::PrivateMethod:
-    enabled: true
+    enabled: false
     exclude: []
   ExampleTag:
     enabled: true
-    exclude: []
+    exclude: *controller_actions
   ReturnTag:
     enabled: true
-    exclude: []
+    exclude: *controller_actions
   Summary::Presence:
     enabled: true
     exclude: []
