@@ -40,7 +40,7 @@ jQuery.fn.displayErrors = (errors, alert_message = '') ->
     for message in messages
       if $form_group.length
         # Append error to form group
-        message_help_block = '<p class="help-block">' + message + '</p>'
+        message_help_block = '<p class="help-block animated fadeIn">' + message + '</p>'
         $form_group.find('[class^=col-]').append message_help_block
       else
         # Add base error message to alert

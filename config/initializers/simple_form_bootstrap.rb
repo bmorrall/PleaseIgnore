@@ -25,7 +25,7 @@ SimpleForm.setup do |config|
     b.use :placeholder
     b.use :label
     b.use :input
-    b.use :error, wrap_with: { tag: 'p', class: 'help-block' }
+    b.use :error, wrap_with: { tag: 'p', class: 'help-block fadeIn' }
     b.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
   end
 
@@ -36,7 +36,7 @@ SimpleForm.setup do |config|
     b.use :label
     b.wrapper tag: 'div', class: 'col-sm-7' do |ba|
       ba.use :input
-      ba.use :error, full: true, wrap_with: { tag: 'p', class: 'help-block' }
+      ba.use :error, full: true, wrap_with: { tag: 'p', class: 'help-block animated fadeIn' }
       ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
     end
   end
@@ -48,7 +48,7 @@ SimpleForm.setup do |config|
     b.use :label
     b.wrapper tag: 'div', class: 'col-sm-8' do |ba|
       ba.use :input
-      ba.use :error, wrap_with: { tag: 'p', class: 'help-block' }
+      ba.use :error, wrap_with: { tag: 'p', class: 'help-block animated fadeIn' }
       ba.use :hint,  wrap_with: { tag: 'p', class: 'help-block' }
     end
   end
