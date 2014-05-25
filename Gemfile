@@ -113,6 +113,7 @@ group :test, :development do
 
   # Code Quality Metrics
   gem 'rubocop', require: false
+  gem 'yardstick', require: false
 end
 group :test do
   gem 'capybara-webkit', '~> 1.1.1'
