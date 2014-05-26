@@ -3,6 +3,10 @@
 class Ability
   include CanCan::Ability
 
+  # Initialises Abilties available to `user`.
+  # Abilities anr enabled/disabled based on User#roles.
+  #
+  # @param user [User, nil] user to be interrogated for allowed roles
   def initialize(user)
     user ||= User.new
 

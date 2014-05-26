@@ -1,7 +1,7 @@
 ---
 path: ['app/**/*.rb', 'features/**/*.rb', 'lib/**/*.rb', 'spec/**/*.rb']
 require_exact_threshold: false
-threshold: 58
+threshold: 65
 rules:
   ApiTag::Presence:
     enabled: true

@@ -1,3 +1,4 @@
+# Classes for Managing the Current User Session
 module Users
   # Users Accounts Controller
   # Allows users to Delete and Sort connected OmniAuth accounts

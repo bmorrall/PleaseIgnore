@@ -5,12 +5,17 @@ class Contact
 
   # Associations
 
-  attr_accessor(
-    :name,
-    :email,
-    :body,
-    :referer
-  )
+  # @return [String] name of contact making request
+  attr_accessor :name
+
+  # @return [String] email of contact making request
+  attr_accessor :email
+
+  # @return [String] message body
+  attr_accessor :body
+
+  # @return [String] referer url used to visit contact page
+  attr_accessor :referer
 
   # Validations
 
@@ -23,6 +28,7 @@ class Contact
 
   # Instance Methods
 
+  # @return [Hash] attributes to be sent to SupportMailer
   def attributes
     {
       name: name,
@@ -32,7 +38,9 @@ class Contact
     }
   end
 
-  # Assigns Properties from `user`
+  # Assigns default values based on `user`
+  #
+  # @param user [User] User to be included with contact request
   def user=(user)
     self.email = user.email
     self.name = user.name

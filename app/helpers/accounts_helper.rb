@@ -2,6 +2,9 @@
 # Provides methods to help with rendering accounts in views
 module AccountsHelper
   # Decorate an array of accounts with AccountDecorator
+  #
+  # @param accounts [Array] Account objects to be decorated
+  # @yield [accounts] yields a hash of decorated Account objects
   def decorate_account_collection(accounts, &block)
     decorate_collection accounts, AccountDecorator, &block
   end
@@ -22,6 +25,8 @@ module AccountsHelper
   end
 
   # Icon of the Account provider
+  #
+  # @param provider [String] provider to provide icon for
   def provider_icon(provider)
     icon_name =
       if provider.to_s =~ /developer/
@@ -33,11 +38,15 @@ module AccountsHelper
   end
 
   # Display name for Provider
+  #
+  # @param provider [String] provider to return name for
   def provider_name(provider)
     Account.provider_name(provider)
   end
 
   # Wrapper class for Provider
+  #
+  # @param provider [String] provider to return display class for
   def provider_class(provider)
     if provider.to_s =~ /google/
       'google-plus'
@@ -47,6 +56,9 @@ module AccountsHelper
   end
 
   # Allows Users to sort a list of accounts
+  #
+  # @param user [User] user to render accounts list for
+  # @yield [] block is passed to a div content tag
   def sortable_accounts_list(user, &block)
     sortable_data = user.accounts.count > 1 ? { sort_path: sort_users_accounts_path } : {}
     content_tag :div, class: 'linked-accounts', data: sortable_data, &block

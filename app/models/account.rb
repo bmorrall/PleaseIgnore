@@ -20,6 +20,7 @@
 #  type             :string(255)
 #
 class Account < ActiveRecord::Base
+  # All available account provider types
   PROVIDERS = %w(facebook twitter github google_oauth2 developer).freeze
 
   self.inheritance_column = :type
@@ -32,6 +33,7 @@ class Account < ActiveRecord::Base
   # Attributes
 
   # Email is not saved to database, but stored locally where possible
+  # @return [String] email address loaded from OmniAuth
   attr_accessor :email
 
   # Class Methods
@@ -42,7 +44,7 @@ class Account < ActiveRecord::Base
     # @param auth_hash [Hash] Hash containg payload from Omniauth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] Account matching `auth_hash` or nil
-    # @raise [ArgumentErrorhash` is not from `expected_provider`
+    # @raise [ArgumentError] if the `expected_provider` doesn't match the `auth_hash` provider
     def find_for_oauth(auth_hash, expected_provider = nil)
       provider = auth_hash.provider
       if expected_provider && provider != expected_provider
@@ -61,7 +63,7 @@ class Account < ActiveRecord::Base
     # @param auth_hash [Hash] Hash containg payload from Omniauth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] a new Account containing extracted data from `auth_hash`
-    # @raise [ArgumentErrArgumentErrort from `expected_provider`
+    # @raise [ArgumentError] if the `expected_provider` doesn't match the `auth_hash` provider
     def new_with_auth_hash(auth_hash, expected_provider = nil)
       provider = auth_hash['provider']
       if expected_provider && provider != expected_provider
@@ -75,8 +77,7 @@ class Account < ActiveRecord::Base
       ).send(:update_from_auth_hash, auth_hash)
     end
 
-    # Lists all available OmniAuth Providers
-    # @return [Array] Array of OmniAuth provider symbols
+    # @return [Array] Array of all enabled OmniAuth providers as symbols
     def omniauth_providers
       Devise.omniauth_configs.keys.keep_if do |provider|
         provider != :developer || Rails.env.development?
@@ -84,6 +85,7 @@ class Account < ActiveRecord::Base
     end
 
     # Returns provider name as a human readable string
+    #
     # @param [String, Symbol] provider Name of Provider
     # @return [String] Provider name localized to `account.provider_name` scope
     def provider_name(provider)
@@ -93,7 +95,7 @@ class Account < ActiveRecord::Base
     # Returns the Class used for Accounts beloning to `provider
     #
     # @api private
-    # @param proivder [String] name of provider that Account belongs to
+    # @param provider [String] name of provider that Account belongs to
     # @return [Class] Account class used to represent provider accounts
     def provider_account_class(provider)
       @provider_account_class ||= {}
@@ -115,7 +117,7 @@ class Account < ActiveRecord::Base
 
   # Instance Methods
 
-  # Personal UID display, based off provider
+  # @return [String] unique id of account, scoped to provider
   def account_uid
     fail NotImplementedError
   end
@@ -133,32 +135,29 @@ class Account < ActiveRecord::Base
     image # use default image attribute
   end
 
-  # Common name for Account Provider
+  # @return [String] Common name for Account Provider
   def provider
     fail NotImplementedError
   end
 
-  # Human Readable Account Profile Name
-  # @return [String] Account.provider_name return value with current provider
+  # @return [String] Human Readable Account Profile Name
   def provider_name
     Account.provider_name(provider)
   end
 
   # Removes all oauth credentials from account
-  # @return self
   def remove_oauth_credentials
     self.oauth_token = nil
     self.oauth_secret = nil
     self.oauth_expires_at = nil
-    self
   end
 
   protected
 
   # Update Account properties from OAuth data
+  #
   # @api private
   # @param auth_hash [Hash] Hash containg payload from Omniauth
-  # @return self
   def update_from_auth_hash(auth_hash)
     update_account_info auth_hash['info']
     update_oauth_credentials auth_hash['credentials']
@@ -167,11 +166,10 @@ class Account < ActiveRecord::Base
 
   # Attempts to update Account from Auth has and Save.
   #
-  # Logs any failed attempts to save
+  # Logs any failed attempts to save.
   #
   # @api private
   # @param auth_hash [Hash] Hash containg payload from Omniauth
-  # @return self
   def update_and_save_from_auth_hash(auth_hash)
     update_from_auth_hash(auth_hash)
     unless save
@@ -182,6 +180,8 @@ class Account < ActiveRecord::Base
   end
 
   # Updates Common Account information
+  #
+  # @param info [Hash] OAuth Account Info from OmniAuth
   def update_account_info(info)
     self.name     = info['name']
     self.email    = info['email']
@@ -192,6 +192,8 @@ class Account < ActiveRecord::Base
   end
 
   # Updates Oauth Credentials
+  #
+  # @param credentials [Hash] OAuth Credentials from OmniAuth
   def update_oauth_credentials(credentials)
     if credentials
       self.oauth_token = credentials['token']

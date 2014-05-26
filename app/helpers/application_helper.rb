@@ -11,26 +11,46 @@ module ApplicationHelper
 
   # Header
 
-  # Renders current page if relevant
+  # returns active class if navigation item is a link to the current page.
+  #
+  # @param path [String] Path of Navigation Item
+  #
   def header_nav_class(path)
     current_page?(path) ? 'active' : nil
   end
 
-  # Renders header meta tag
+  # Renders header meta tag.
+  #
+  # @param name [String] name of the meta tag
+  # @param content [String] content value of the string
+  # @return meta tag with name and content, or an empty string if content is not provided
   def meta_tag(name, content)
     tag :meta, name: name, content: content unless content.blank?
   end
 
   # Icons
 
-  # Displays a Font Awesome icon with `icon_name`
+  # Displays a Font Awesome icon in a non semantic tag.
+  #
+  # @param icon_name [String] icon name without the fa- previx
+  # @see http://fortawesome.github.io/Font-Awesome/icons/
   def fa(icon_name)
     content_tag :i, nil, class: "fa fa-#{icon_name}"
   end
 
   # Links
 
-  # Link is external and should not be linked
+  # Renders a external link that should not be followed by TurboLinks
+  #
+  #   link_to "Google", 'http://www.google.com'
+  #   # => <a href=http://www.google.com" rel="external">Google</a>
+  #
+  # @param name [String] UrlHelper#link_to name param
+  # @param options [Hash, String] UrlHelper#link_to options param
+  # @param html_options [Hash, nil] UrlHelper#link_to html_options param
+  # @yield block is passed to UrlHelper#link_to
+  # @see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to
+  # @return a link with rel=external attributes
   def external_link(name = nil, options = nil, html_options = nil, &block)
     extra_options = { rel: 'external' }
     if block_given?
@@ -41,7 +61,17 @@ module ApplicationHelper
     link_to(name, options, html_options, &block)
   end
 
-  # Link is to a critical task and should not be turbolinked or followed by robots
+  # Renders a link to a critical task and should not be followed by TurboLinks or robots
+  #
+  #   link_to "My Profile", edit_user_registration_path
+  #   # => <a href=/user/edit" rel="nofollow" data-no-turbolink>My Profile</a>
+  #
+  # @param name [String] UrlHelper#link_to name param
+  # @param options [Hash, String] UrlHelper#link_to options param
+  # @param html_options [Hash, nil] UrlHelper#link_to html_options param
+  # @yield block is passed to UrlHelper#link_to
+  # @return a link with rel=nofollow and data-no-turbolink attributes
+  # @see http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to
   def system_link(name = nil, options = nil, html_options = nil, &block)
     extra_options = { rel: 'nofollow', 'data-no-turbolink' => true }
     if block_given?

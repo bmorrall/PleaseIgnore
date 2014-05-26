@@ -1,3 +1,4 @@
+# Common Controller Concerns
 module Concerns
   # Overrides Turboboost errors with a hash that includes form wrapper values.
   module BetterTurboboostErrors

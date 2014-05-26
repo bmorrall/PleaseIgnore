@@ -1,3 +1,4 @@
+# Classes for Managing the Current User Session
 module Users
   # Users Registrations Controller
   # Allows Guests to register a new User account
@@ -11,6 +12,13 @@ module Users
     helper_method :display_profile?
     helper_method :display_password_change?
 
+    # PUT /users
+    #
+    # Attempts to save the Password or the Profile for the `current_user`.
+    #
+    # Keeps the User signed in upon a successful update.
+    #
+    # Renders the edit form for any errors.
     def update
       @user = User.find(current_user.id)
 
@@ -26,11 +34,14 @@ module Users
 
     protected
 
+    # [Rails] Params for updating a user profile
     def account_update_params
       devise_parameter_sanitizer.sanitize(:account_update)
     end
 
     # [Devise] Redirect Users back to the profile page after updates
+    #
+    # @param _resource [User] resource requiring redirect
     def after_update_path_for(_resource)
       edit_user_registration_path
     end

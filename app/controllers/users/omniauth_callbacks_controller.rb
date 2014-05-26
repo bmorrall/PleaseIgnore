@@ -1,3 +1,4 @@
+# Classes for Managing the Current User Session
 module Users
   # Users OmniAuth Callbacks Controller
   # Allows for OmniAuth accounts to added to User accounts
@@ -49,6 +50,8 @@ module Users
     end
 
     # Create a new account and link it with the current user
+    #
+    # @param provider [String] name of the provider responsible for Account
     def link_account_with_current_user(provider)
       account = Account.new_with_auth_hash(auth_hash, provider)
       account.user = current_user
@@ -63,6 +66,8 @@ module Users
     end
 
     # Attempt to find existing account, or register a new account
+    #
+    # @param provider [String] name of the provider responsible for Account
     def sign_in_or_register_account(provider)
       account = Account.find_for_oauth(auth_hash, provider)
       if account.present?
@@ -74,6 +79,7 @@ module Users
     end
 
     # Attempt to sign in with account if it is enabled
+    # @param account [Account] Existing Account used to sign user in
     def sign_in_with_exiting_account(account)
       provider = account.provider
       if account.enabled?
@@ -88,6 +94,8 @@ module Users
     end
 
     # Attempt to find account or register, but do not allow user to sign in
+    #
+    # @param provider [String] name of the provider responsible for Account
     def deny_sign_in_or_register_account(provider)
       account = Account.find_for_oauth(auth_hash, provider)
       if account.present?
@@ -102,6 +110,10 @@ module Users
 
     private
 
+    # Redirects user to the new account registration page.
+    # Saves the auth hash for the provider to the Session.
+    #
+    # @param provider [String] name of the provider to save attributes for
     def redirect_user_to_registration_page(provider)
       display_registration_success_flash_message provider
       save_auth_hash_to_session provider
@@ -109,12 +121,14 @@ module Users
     end
 
     # Store the auth_hash for registration
+    # @param provider [String] name of the provider to store session for
     def save_auth_hash_to_session(provider)
       # Save the auth hash without raw info
       session["devise.#{provider}_data"] = auth_hash.reject { |key| key.to_sym == :raw_info }
     end
 
     # Successful authentication, but registration is required
+    # @param provider [String] changes variant of alert message
     def display_registration_success_flash_message(provider)
       return unless is_navigational_format?
 
@@ -123,6 +137,7 @@ module Users
     end
 
     # Successfully logged in user from account
+    # @param provider [String] changes variant of alert message
     def display_authentication_success_flash_message(provider)
       return unless is_navigational_format?
 
@@ -131,6 +146,7 @@ module Users
     end
 
     # Successfully added account to existing user
+    # @param provider [String] changes variant of alert message
     def display_linked_success_flash_message(provider)
       return unless is_navigational_format?
 
@@ -139,6 +155,7 @@ module Users
     end
 
     # Unable to sign in user due to `reason`
+    # @param provider [String] changes variant of alert message
     def display_failure_flash_message(reason, provider)
       return unless is_navigational_format?
 

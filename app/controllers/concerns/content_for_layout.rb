@@ -1,3 +1,4 @@
+# Common Controller Concerns
 module Concerns
   # Allows Content For to be used in Controllers
   # Allows complex params to be set by controllers, and action caching without layout to work

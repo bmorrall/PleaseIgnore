@@ -44,6 +44,8 @@ class ContactsController < ApplicationController
   end
 
   # Sets default values for contact based on current_user and refererr
+  #
+  # @param contact [Contact] Contact to be updated based
   def update_contact_default_values(contact)
     # Preset User Detaisl
     contact.user = current_user if user_signed_in?

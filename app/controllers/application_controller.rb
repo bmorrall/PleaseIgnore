@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
     fail exception
   end
 
+  # [Devise] Adds extra User params to Devise param sanitiser
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]
     devise_parameter_sanitizer.for(:account_update) << :name
