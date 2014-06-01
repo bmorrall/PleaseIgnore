@@ -255,9 +255,40 @@ Devise.setup do |config|
   silence_warnings do
     OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
   end if Rails.env.development?
-  config.omniauth :developer unless Rails.env.production?
-  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET']
-  config.omniauth :twitter, ENV['TWITTER_CONSUMER_KEY'], ENV['TWITTER_CONSUMER_SECRET']
-  config.omniauth :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET']
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
+
+  unless Rails.env.production?
+    # omniauth-developer
+    config.omniauth :developer
+  end
+
+  # Enable providers based on config
+  omniauth_secrets = Rails.application.secrets.omniauth
+
+  # omniauth-facebook
+  unless omniauth_secrets['facebook_app_id'].blank?
+    config.omniauth :facebook,
+                    omniauth_secrets['facebook_app_id'],
+                    omniauth_secrets['facebook_app_secret']
+  end
+
+  # omniauth-twitter
+  unless omniauth_secrets['twitter_consumer_key'].blank?
+    config.omniauth :twitter,
+                    omniauth_secrets['twitter_consumer_key'],
+                    omniauth_secrets['twitter_consumer_secret']
+  end
+
+  # omniauth-github
+  unless omniauth_secrets['github_client_id'].blank?
+    config.omniauth :github,
+                    omniauth_secrets['github_client_id'],
+                    omniauth_secrets['github_cient_secret']
+  end
+
+  # omniauth-google-oauth2
+  unless omniauth_secrets['google_client_id'].blank?
+    config.omniauth :google_oauth2,
+                    omniauth_secrets['google_client_id'],
+                    omniauth_secrets['google_client_secret']
+  end
 end
