@@ -4,6 +4,16 @@ module AccountsHelper
     decorate_collection accounts, AccountDecorator, &block
   end
 
+  # Returns Omniauth providers in even groups
+  def omniauth_provider_groups(&block)
+    # Find the most even number of groups
+    groups = [5, 4].find { |g| omniauth_providers.count % g == 0 }
+    groups ||= 3 # Fall back to 3 per line (yuck)
+
+    # Return providers in groups
+    omniauth_providers.in_groups_of groups, false, &block
+  end
+
   # List of enabled providers
   def omniauth_providers
     @omniauth_providers ||= Account.omniauth_providers.map { |provider| provider.to_s }
