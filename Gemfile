@@ -81,6 +81,9 @@ gem 'rolify'
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
+
+  # Use unicorn as the app server
+  gem 'unicorn'
 end
 
 group :doc do
@@ -99,9 +102,6 @@ end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
