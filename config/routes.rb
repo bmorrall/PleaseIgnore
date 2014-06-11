@@ -16,6 +16,12 @@ Rails.application.routes.draw do
     get :thank_you
   end
 
+  # Admin Engines
+  authenticate :user, ->(u) { u.has_role? :admin } do
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   # HighVoltage Pages
   get '/home', to: redirect('/')
   get '/*id' => 'pages#show', as: :page, format: false

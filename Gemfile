@@ -78,6 +78,10 @@ gem 'cancancan'
 # Use Rolify to Mnnage User Roles
 gem 'rolify'
 
+# Use Sidekiq for background jobs
+gem 'sinatra', require: false # required by Sidekiq::Web
+gem 'sidekiq'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
