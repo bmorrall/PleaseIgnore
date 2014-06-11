@@ -110,7 +110,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :test, :development do
-  gem 'rspec-rails'
+  gem 'rspec-rails', '< 3.0.0'
 
   # Code Quality Metrics
   gem 'cane', require: false

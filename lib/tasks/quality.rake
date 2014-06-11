@@ -21,7 +21,7 @@ namespace :quality do
     warn "rubocop not available, rubocop task not provided."
   else
     desc 'Run rubocop static code analyser'
-    Rubocop::RakeTask.new(:rubocop) do |task|
+    RuboCop::RakeTask.new(:rubocop) do |task|
       task.patterns = %w(app config features lib spec)
       task.fail_on_error = true
     end
