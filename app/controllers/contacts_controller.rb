@@ -20,7 +20,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
     if @contact.valid?
       # Send the contact mail
-      SupportMailer.contact_email(@contact.attributes).deliver
+      SupportMailer.delay(queue: :mailer).contact_email(@contact.attributes)
     end
     respond_with(@contact, action: :show, location: thank_you_contact_path)
   end

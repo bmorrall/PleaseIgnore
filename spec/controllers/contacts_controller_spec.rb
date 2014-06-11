@@ -107,6 +107,17 @@ describe ContactsController do
           end.to_not raise_error
         end
       end
+
+      it 'should send contact emails through Sidekiq mailer queue' do
+        Sidekiq::Testing.fake! do
+          expect do
+            xhr :post, :create, contact: valid_create_attributes
+          end.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1)
+
+          mailer_job = Sidekiq::Extensions::DelayedMailer.jobs.last
+          expect(mailer_job['queue']).to eq('mailer')
+        end
+      end
       it 'should not send any emails with an invalid request' do
         expect do
           xhr :post, :create, contact: { name: 'not-valid' }

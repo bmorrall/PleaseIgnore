@@ -82,6 +82,9 @@ gem 'rolify'
 gem 'sinatra', require: false # required by Sidekiq::Web
 gem 'sidekiq'
 
+# Send Devise mail through Sidekiq
+gem 'devise-async'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
