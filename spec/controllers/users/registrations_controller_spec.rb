@@ -30,9 +30,9 @@ describe Users::RegistrationsController do
           get :edit
         end
         it 'displays all forms' do
-          expect(controller.send(:display_password_change?)).to be_true
-          expect(controller.send(:display_accounts?)).to be_true
-          expect(controller.send(:display_profile?)).to be_true
+          expect(controller.send(:display_password_change?)).to be(true)
+          expect(controller.send(:display_accounts?)).to be(true)
+          expect(controller.send(:display_profile?)).to be(true)
         end
       end
     end
@@ -63,9 +63,9 @@ describe Users::RegistrationsController do
         it { should render_with_layout(:application) }
         it { should_not set_the_flash }
         it 'should only display the profile form' do
-          expect(controller.send(:display_profile?)).to be_true
-          expect(controller.send(:display_accounts?)).to be_false
-          expect(controller.send(:display_password_change?)).to be_false
+          expect(controller.send(:display_profile?)).to be(true)
+          expect(controller.send(:display_accounts?)).to be(false)
+          expect(controller.send(:display_password_change?)).to be(false)
         end
       end
 
@@ -90,9 +90,9 @@ describe Users::RegistrationsController do
         it { should render_with_layout(:application) }
         it { should_not set_the_flash }
         it 'should only display the password form' do
-          expect(controller.send(:display_password_change?)).to be_true
-          expect(controller.send(:display_accounts?)).to be_false
-          expect(controller.send(:display_profile?)).to be_false
+          expect(controller.send(:display_password_change?)).to be(true)
+          expect(controller.send(:display_accounts?)).to be(false)
+          expect(controller.send(:display_profile?)).to be(false)
         end
         it 'should not update the User password' do
           @logged_in_user.reload

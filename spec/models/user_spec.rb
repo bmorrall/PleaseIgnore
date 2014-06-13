@@ -131,11 +131,11 @@ describe User do
       context "with a #{provider} account" do
         let!(:account) { FactoryGirl.create :"#{provider}_account", user: subject }
         it "returns true for #{provider}" do
-          expect(subject.provider_account? provider).to be_true
+          expect(subject.provider_account? provider).to be(true)
         end
         Account::PROVIDERS.reject { |p| p == provider }.each do |p|
           it "returns false for #{p}" do
-            expect(subject.provider_account? p).to be_false
+            expect(subject.provider_account? p).to be(false)
           end
         end
       end

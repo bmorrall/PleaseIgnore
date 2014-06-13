@@ -19,7 +19,7 @@ describe 'Pages' do
       end
       it 'caches the home page' do
         get root_url
-        expect(ActionController::Base.cache_store.exist?('views/www.example.com/index')).to be_true
+        expect(ActionController::Base.cache_store.exist?('views/www.example.com/index')).to be(true)
       end
     end
     describe 'Metadata' do
@@ -55,7 +55,7 @@ describe 'Pages' do
         it "caches the #{page} page" do
           cache_path = "views/www.example.com#{page_path(page)}"
           get page_path(page)
-          expect(ActionController::Base.cache_store.exist?(cache_path)).to be_true
+          expect(ActionController::Base.cache_store.exist?(cache_path)).to be(true)
         end
       end
       describe 'Metadata' do
