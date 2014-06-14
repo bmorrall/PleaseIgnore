@@ -5,7 +5,12 @@
     %header.page-header
       %h3 Profile Information
 
-    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+    = simple_form_for(resource,
+                      as: resource_name,
+                      url: registration_path(resource_name),
+                      html: { method: :put, role: 'form', class: 'form-horizontal' },
+                      wrapper: :horizontal_bootstrap,
+                      defaults: { label_html: { class: 'col-sm-3' } }) do |f|
       = f.error_notification
       = f.input :name
       = f.input :email
@@ -22,11 +27,16 @@
     %header.page-header
       %h3 Change Password
 
-    = simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :role => 'form', :class => 'form-horizontal' }, :wrapper => :horizontal_bootstrap, :defaults => { :label_html => { class: 'col-sm-3' } }) do |f|
+    = simple_form_for(resource,
+                      as: resource_name,
+                      url: registration_path(resource_name),
+                      html: { method: :put, role: 'form', class: 'form-horizontal' },
+                      wrapper: :horizontal_bootstrap,
+                      defaults: { label_html: { class: 'col-sm-3' } }) do |f|
       = f.error_notification
       - if resource.encrypted_password.blank?
         = f.input :email
-      = f.input :password, :label => 'New Password'
+      = f.input :password, label: 'New Password'
       = f.input :password_confirmation
       = f.input :current_password
       .form-group
@@ -61,6 +71,6 @@
 
     .col-sm-offset-3.col-sm-7
       %p You can delete your account, but keep in mind this action is irreversiable.
-      = button_to registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-danger' do
+      = button_to registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' do
         = fa 'trash-o'
         Delete my account

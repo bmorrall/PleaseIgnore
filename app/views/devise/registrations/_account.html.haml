@@ -1,5 +1,5 @@
 = cache_if account.persisted?, [:v1, account], default_cache_params do # cache saved accounts only
-  .form-group{ class: "btn-#{provider_class(account.provider)}", data: { :account_id => account.id } }
+  .form-group{ class: "btn-#{provider_class(account.provider)}", data: { account_id: account.id } }
     %label.control-label.col-sm-3
       = account.account_icon
       = account.provider_name

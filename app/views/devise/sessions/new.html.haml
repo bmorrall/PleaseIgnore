@@ -1,6 +1,9 @@
 - content_for(:page_title) { t('.page_title') }
 .col-sm-8.col-sm-offset-2.col-mobile-single
-  = simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'}) do |f|
+  = simple_form_for(resource,
+                    as: resource_name,
+                    url: session_path(resource_name),
+                    html: { role: 'form'}) do |f|
     %legend Login
     .form-group
       - omniauth_provider_groups.each do |providers|
