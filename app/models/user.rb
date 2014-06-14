@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   # Associations
 
   has_many :accounts,
-           -> { order 'position ASC, accounts.provider ASC' },
+           -> { order 'position ASC, accounts.type ASC' },
            dependent: :destroy
 
   # Class Methods
@@ -66,7 +66,8 @@ class User < ActiveRecord::Base
   # Instance Methods
 
   def provider_account?(provider)
-    accounts.where(provider: provider.to_s).any?
+    account_type = Account.provider_class_name(provider)
+    accounts.where(type: account_type).any?
   end
 
   # List of Accounts that will be saved on create

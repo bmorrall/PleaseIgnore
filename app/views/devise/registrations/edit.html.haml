@@ -45,7 +45,7 @@
     - cache [:v1, resource, :profile_accounts], default_cache_params do
       .form-horizontal
         // Linked Accounts
-        - decorate resource.accounts do |accounts|
+        - decorate_account_collection resource.accounts do |accounts|
           .linked-accounts{ data: { sort_path: sort_users_accounts_path }}
             = render partial: 'account', collection: accounts
 

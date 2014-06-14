@@ -5,14 +5,8 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Configuration parameters: CountComments.
 ClassLength:
-  Max: 114
-
-# Offense count: 2
-CyclomaticComplexity:
-  Max: 8
+  Max: 101
 
 Encoding:
   Enabled: false
@@ -23,8 +17,3 @@ GuardClause:
 # Offense count: 172
 LineLength:
   Max: 100
-
-# Offense count: 10
-# Configuration parameters: CountComments.
-MethodLength:
-  Max: 11

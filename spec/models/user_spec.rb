@@ -83,7 +83,7 @@ describe User do
               user.save!
             end.to change(Account, :count).by(1)
 
-            expect(Account.last.provider).to eq provider.to_s
+            expect(Account.last.provider).to eq provider
           end
         end
         context 'with invalid account data' do
@@ -144,10 +144,10 @@ describe User do
 
   describe '#primary_account' do
     it 'returns the first account' do
-      first_account = build_stubbed(:account)
+      first_account = build_stubbed(:developer_account)
       allow(subject).to receive(:accounts).and_return([
         first_account,
-        build_stubbed(:account)
+        build_stubbed(:developer_account)
       ])
       expect(subject.primary_account).to be(first_account)
     end
@@ -182,7 +182,7 @@ describe User do
 
   describe '#profile_picture' do
     context 'with a primary account' do
-      let(:account) { build_stubbed(:account) }
+      let(:account) { build_stubbed(:developer_account) }
       before(:each) do
         # Stub the primary_account method
         allow(subject).to receive(:primary_account).and_return(account)

@@ -50,9 +50,9 @@ describe Users::AccountsController do
       grant_ability :update, Account
 
       context 'with multiple accounts' do
-        let!(:account_a) { create(:account, position: 1, user: logged_in_user) }
-        let!(:account_b) { create(:account, position: 2, user: logged_in_user) }
-        let!(:account_c) { create(:account, position: 3, user: logged_in_user) }
+        let!(:account_a) { create(:developer_account, position: 1, user: logged_in_user) }
+        let!(:account_b) { create(:facebook_account, position: 2, user: logged_in_user) }
+        let!(:account_c) { create(:twitter_account, position: 3, user: logged_in_user) }
 
         context 'with a valid xhr request' do
           before(:each) do
@@ -71,7 +71,7 @@ describe Users::AccountsController do
           end
         end
         it 'only orders accounts belonging to the user' do
-          account_extra = create(:account, position: 1)
+          account_extra = create(:developer_account, position: 1)
           account_ids = [
             account_b.id,
             account_c.id,

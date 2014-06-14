@@ -11,12 +11,13 @@ module ContactsHelper
 
   # @return [Symbol] returns the field that should have autofocus
   def autofocus_field
-    if @contact.name.blank?
-      :name
-    elsif @contact.email.blank?
-      :email
-    else
-      :body
-    end
+    @autofocus_field ||=
+      if @contact.name.blank?
+        :name
+      elsif @contact.email.blank?
+        :email
+      else
+        :body
+      end
   end
 end

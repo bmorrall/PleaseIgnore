@@ -5,7 +5,6 @@
 # Table name: accounts
 #
 #  id               :integer          not null, primary key
-#  provider         :string(255)      not null
 #  uid              :string(255)      not null
 #  name             :string(255)
 #  nickname         :string(255)
@@ -18,9 +17,12 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  position         :integer
+#  type             :string(255)
 #
 class Account < ActiveRecord::Base
-  PROVIDERS = %w(facebook twitter github google_oauth2 developer)
+  PROVIDERS = %w(facebook twitter github google_oauth2 developer).freeze
+
+  self.inheritance_column = :type
 
   # Associations
 
@@ -40,7 +42,7 @@ class Account < ActiveRecord::Base
     # @param auth_hash [Hash] Hash containg payload from Omniauth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] Account matching `auth_hash` or nil
-    # @raise [IllegalArgumentException] if `auth_hash` is not from `expected_provider`
+    # @raise [ArgumentErrorhash` is not from `expected_provider`
     def find_for_oauth(auth_hash, expected_provider = nil)
       provider = auth_hash.provider
       if expected_provider && provider != expected_provider
@@ -49,7 +51,7 @@ class Account < ActiveRecord::Base
              "Provider (#{provider}) doesn't match expected value: #{expected_provider}"
       end
 
-      find_by_provider_and_uid(provider, auth_hash.uid).tap do |account|
+      provider_account_class(provider).find_by_uid(auth_hash.uid).tap do |account|
         account.send(:update_and_save_from_auth_hash, auth_hash) if account
       end
     end
@@ -59,7 +61,7 @@ class Account < ActiveRecord::Base
     # @param auth_hash [Hash] Hash containg payload from Omniauth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] a new Account containing extracted data from `auth_hash`
-    # @raise [IllegalArgumentException] if `auth_hash` is not from `expected_provider`
+    # @raise [ArgumentErrArgumentErrort from `expected_provider`
     def new_with_auth_hash(auth_hash, expected_provider = nil)
       provider = auth_hash['provider']
       if expected_provider && provider != expected_provider
@@ -68,8 +70,7 @@ class Account < ActiveRecord::Base
              "Provider (#{provider}) doesn't match expected value: #{expected_provider}"
       end
 
-      Account.new(
-        provider: provider,
+      provider_account_class(provider).new(
         uid: auth_hash['uid']
       ).send(:update_from_auth_hash, auth_hash)
     end
@@ -88,17 +89,26 @@ class Account < ActiveRecord::Base
     def provider_name(provider)
       I18n.t(provider, scope: 'account.provider_name')
     end
+
+    # @return [String] name of Account class used to represent provider
+    def provider_class_name(provider)
+      fail ArgumentError, "Unknown provider: #{provider}" unless PROVIDERS.include? provider
+      "Accounts::#{provider.classify}"
+    end
+
+    private
+
+    # Returns account sub class based off `provider`
+    def provider_account_class(provider)
+      provider_class_name(provider).constantize
+    end
   end
 
   # Validations
 
-  validates :provider,
-            presence: true,
-            inclusion: { in: PROVIDERS }
-
   validates :uid,
             presence: true,
-            uniqueness: { scope: :provider }
+            uniqueness: { scope: :type }
 
   validates :user_id,
             presence: true
@@ -107,16 +117,7 @@ class Account < ActiveRecord::Base
 
   # Personal UID display, based off provider
   def account_uid
-    # Display Name for Facebook and Google - Test User
-    account_uid ||= name if provider == 'facebook' || provider =~ /google/
-    if nickname && provider == 'twitter'
-      # Display Handle for Twitter - @testuser
-      account_uid ||= twitter_account_uid
-    end
-    # Display Nickname for GitHub - testuser
-    account_uid ||= nickname if provider == 'github'
-    # Display Generic UID as fallback
-    account_uid || uid
+    fail NotImplementedError
   end
 
   # Accounts can be disabled to prevent sign in
@@ -129,13 +130,17 @@ class Account < ActiveRecord::Base
   # @param [Fixnum] _size Preferred size of the image
   # @return [String] Path to Account Profile Picture or nil
   def profile_picture(_size = 128)
-    image
+    image # use default image attribute
+  end
+
+  # Common name for Account Provider
+  def provider
+    fail NotImplementedError
   end
 
   # Human Readable Account Profile Name
   # @return [String] Account.provider_name return value with current provider
   def provider_name
-    # Use Translated Provider name
     Account.provider_name(provider)
   end
 
@@ -157,7 +162,6 @@ class Account < ActiveRecord::Base
   def update_from_auth_hash(auth_hash)
     update_account_info auth_hash['info']
     update_oauth_credentials auth_hash['credentials']
-    update_provider_meta_data auth_hash
     self
   end
 
@@ -177,18 +181,14 @@ class Account < ActiveRecord::Base
     self
   end
 
-  # Returns nickname, ensuring it starts with a '@'
-  def twitter_account_uid
-    nickname =~ /\A@/ ? nickname : "@#{nickname}" if nickname?
-  end
-
   # Updates Common Account information
   def update_account_info(info)
-    self.name = info['name']
-    self.email = info['email']
+    self.name     = info['name']
+    self.email    = info['email']
     self.nickname = info['nickname']
-    self.image = info['image']
-    self.email = info['email']
+    self.image    = info['image']
+    self.email    = info['email']
+    self.website  = nil # Override to define
   end
 
   # Updates Oauth Credentials
@@ -201,22 +201,6 @@ class Account < ActiveRecord::Base
       self.oauth_expires_at = expires_at ? Time.at(expires_at) : nil
     else
       remove_oauth_credentials
-    end
-  end
-
-  # Updates provider specific information
-  # FIXME: Separate Accounts
-  def update_provider_meta_data(data)
-    info = data['info']
-    urls = info['urls']
-    if provider == 'facebook'
-      self.website = urls && urls['Facebook']
-    elsif provider == 'twitter'
-      self.website = urls && urls['Twitter']
-    elsif provider == 'github'
-      self.website = urls && urls['Github']
-    else
-      self.website = nil
     end
   end
 end

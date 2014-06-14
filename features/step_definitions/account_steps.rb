@@ -7,7 +7,7 @@ include OmniauthHelpers
 ### GIVEN ###
 
 Given(/^A user is already linked to a Developer account$/) do
-  create(:account, uid: developer_auth_hash.uid, provider: 'developer')
+  create(:developer_account, uid: developer_auth_hash.uid)
 end
 
 Given(/^A user is already linked to my GitHub account$/) do
@@ -184,7 +184,7 @@ end
 
 Then(/^I should be linked to my Developer account$/) do
   visit '/users/edit'
-  Account.last.provider.should eq('developer')
+  Account.last.provider.should eq(:developer)
 end
 
 Then(/^I should see a sign up form with my Facebook credentials$/) do

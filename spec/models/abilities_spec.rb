@@ -10,10 +10,10 @@ describe User do
     shared_examples 'a standard user' do
       # Accounts
       it { should be_able_to(:create, Account) }
-      it { should be_able_to(:update, build_stubbed(:account, user: user)) }
-      it { should be_able_to(:destroy, build_stubbed(:account, user: user)) }
-      it { should_not be_able_to(:update, build_stubbed(:account)) }
-      it { should_not be_able_to(:destroy, build_stubbed(:account)) }
+      it { should be_able_to(:update, build_stubbed(:developer_account, user: user)) }
+      it { should be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
+      it { should_not be_able_to(:update, build_stubbed(:developer_account)) }
+      it { should_not be_able_to(:destroy, build_stubbed(:developer_account)) }
 
       # Contacts
       it { should be_able_to(:create, Contact) }
@@ -44,8 +44,8 @@ describe User do
 
       # Accounts
       it { should_not be_able_to(:create, Account) }
-      it { should_not be_able_to(:update, build_stubbed(:account, user: user)) }
-      it { should_not be_able_to(:destroy, build_stubbed(:account, user: user)) }
+      it { should_not be_able_to(:update, build_stubbed(:developer_account, user: user)) }
+      it { should_not be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
       it { should_not be_able_to(:update, Account) }
       it { should_not be_able_to(:destroy, Account) }
     end
