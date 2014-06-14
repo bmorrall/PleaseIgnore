@@ -2,6 +2,7 @@
 Status](https://travis-ci.org/bmorrall/PleaseIgnore.png?branch=master)](https://travis-ci.org/bmorrall/PleaseIgnore)
 [![Coverage
 Status](https://coveralls.io/repos/bmorrall/PleaseIgnore/badge.png)](https://coveralls.io/r/bmorrall/PleaseIgnore)
+[![Code Climate](https://codeclimate.com/github/bmorrall/PleaseIgnore.png)](https://codeclimate.com/github/bmorrall/PleaseIgnore)
 [![Dependency Status](https://gemnasium.com/bmorrall/PleaseIgnore.png)](https://gemnasium.com/bmorrall/PleaseIgnore)
 
 PleaseIgnore README
