@@ -6,7 +6,7 @@
 #
 class ContactsController < ApplicationController
   include Concerns::BetterTurboboostErrors
-  include Concerns::ControllerURIHelpers
+  include ActionView::Helpers::UrlHelper
 
   respond_to :html
 
