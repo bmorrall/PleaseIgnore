@@ -8,7 +8,7 @@
 # Offense count: 1
 # Configuration parameters: CountComments.
 ClassLength:
-  Max: 113
+  Max: 114
 
 # Offense count: 2
 CyclomaticComplexity:

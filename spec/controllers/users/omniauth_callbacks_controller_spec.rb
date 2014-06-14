@@ -45,9 +45,9 @@ describe Users::OmniauthCallbacksController do
             end
           end
           context 'with a previously linked account' do
-            let(:existing_user) { FactoryGirl.create(:user) }
+            let(:existing_user) { create(:user) }
             before(:each) do
-              FactoryGirl.create(:"#{provider}_account", uid: auth_hash.uid, user: existing_user)
+              create(:"#{provider}_account", uid: auth_hash.uid, user: existing_user)
             end
             context 'with a valid request' do
               before(:each) do
@@ -71,7 +71,7 @@ describe Users::OmniauthCallbacksController do
           end
           context 'with a disabled account' do
             before(:each) do
-              account = FactoryGirl.build_stubbed(:"#{provider}_account")
+              account = build_stubbed(:"#{provider}_account")
               allow(account).to receive(:enabled?).and_return(false)
               allow(Account).to receive(:find_for_oauth).and_return(account)
             end
@@ -87,7 +87,7 @@ describe Users::OmniauthCallbacksController do
           end
         end
         context 'as a user' do
-          let(:user) { FactoryGirl.create(:user) }
+          let(:user) { create(:user) }
           before(:each) { sign_in user }
           grant_ability :create, Account
 
@@ -110,7 +110,7 @@ describe Users::OmniauthCallbacksController do
           end
           context 'with a previously linked account' do
             before(:each) do
-              FactoryGirl.create(:"#{provider}_account", uid: auth_hash.uid, user: user)
+              create(:"#{provider}_account", uid: auth_hash.uid, user: user)
             end
             it 'should not create a new Account' do
               expect do
@@ -120,7 +120,7 @@ describe Users::OmniauthCallbacksController do
           end
           context 'with a account linked to another user' do
             before(:each) do
-              FactoryGirl.create(:"#{provider}_account", uid: auth_hash.uid)
+              create(:"#{provider}_account", uid: auth_hash.uid)
             end
             context 'with a valid request' do
               before(:each) do
@@ -177,9 +177,9 @@ describe Users::OmniauthCallbacksController do
           end
         end
         context 'with a previously linked account' do
-          let(:existing_user) { FactoryGirl.create(:user) }
+          let(:existing_user) { create(:user) }
           before(:each) do
-            FactoryGirl.create(:account, uid: auth_hash.uid, user: existing_user)
+            create(:account, uid: auth_hash.uid, user: existing_user)
           end
           context 'with a valid request' do
             before(:each) do
@@ -204,7 +204,7 @@ describe Users::OmniauthCallbacksController do
         end
       end
       context 'as a user' do
-        let(:user) { FactoryGirl.create(:user) }
+        let(:user) { create(:user) }
         before(:each) { sign_in user }
         grant_ability :create, Account
 
@@ -229,7 +229,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a previously linked account' do
           before(:each) do
-            FactoryGirl.create(:account, uid: auth_hash.uid, user: user)
+            create(:account, uid: auth_hash.uid, user: user)
           end
           it 'should not create a new Account' do
             expect do
@@ -239,7 +239,7 @@ describe Users::OmniauthCallbacksController do
         end
         context 'with a account linked to another user' do
           before(:each) do
-            FactoryGirl.create(:account, uid: auth_hash.uid)
+            create(:account, uid: auth_hash.uid)
           end
           context 'with a valid request' do
             before(:each) do

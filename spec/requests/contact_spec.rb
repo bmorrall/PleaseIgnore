@@ -4,7 +4,7 @@ describe 'Contact' do
   enable_rails_cache
 
   def valid_create_attributes
-    FactoryGirl.attributes_for(:contact)
+    attributes_for(:contact)
   end
 
   describe 'GET /contact' do

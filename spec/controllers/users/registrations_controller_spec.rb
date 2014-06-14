@@ -16,7 +16,7 @@ describe Users::RegistrationsController do
   end
 
   let(:valid_profile_attributes) do
-    FactoryGirl.attributes_for(:user).keep_if { |attribute| attribute !~ /password/ }
+    attributes_for(:user).keep_if { |attribute| attribute !~ /password/ }
   end
   let(:invalid_profile_attributes) do
     { name: nil, email: nil }

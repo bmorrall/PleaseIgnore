@@ -7,43 +7,43 @@ include OmniauthHelpers
 ### GIVEN ###
 
 Given(/^A user is already linked to a Developer account$/) do
-  FactoryGirl.create(:account, uid: developer_auth_hash.uid, provider: 'developer')
+  create(:account, uid: developer_auth_hash.uid, provider: 'developer')
 end
 
 Given(/^A user is already linked to my GitHub account$/) do
-  FactoryGirl.create(:github_account, github_credentials)
+  create(:github_account, github_credentials)
 end
 
 Given(/^I exist as a user linked to my GitHub account$/) do
   create_user
-  FactoryGirl.create(:github_account, github_credentials.merge(user: @user))
+  create(:github_account, github_credentials.merge(user: @user))
 end
 
 Given(/^A user is already linked to my Google account$/) do
-  FactoryGirl.create(:google_oauth2_account, google_credentials)
+  create(:google_oauth2_account, google_credentials)
 end
 
 Given(/^I exist as a user linked to my Google account$/) do
   create_user
-  FactoryGirl.create(:google_oauth2_account, google_credentials.merge(user: @user))
+  create(:google_oauth2_account, google_credentials.merge(user: @user))
 end
 
 Given(/^A user is already linked to my Facebook account$/) do
-  FactoryGirl.create(:facebook_account, facebook_credentials)
+  create(:facebook_account, facebook_credentials)
 end
 
 Given(/^I exist as a user linked to my Facebook account$/) do
   create_user
-  FactoryGirl.create(:facebook_account, facebook_credentials.merge(user: @user))
+  create(:facebook_account, facebook_credentials.merge(user: @user))
 end
 
 Given(/^A user is already linked to my Twitter account$/) do
-  FactoryGirl.create(:twitter_account, twitter_credentials)
+  create(:twitter_account, twitter_credentials)
 end
 
 Given(/^I exist as a user linked to my Twitter account$/) do
   create_user
-  FactoryGirl.create(:twitter_account, twitter_credentials.merge(user: @user))
+  create(:twitter_account, twitter_credentials.merge(user: @user))
 end
 
 ### WHEN ###

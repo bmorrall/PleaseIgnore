@@ -42,6 +42,9 @@ end
 require 'sidekiq/testing'
 Sidekiq::Testing.inline!
 
+# Use FactoryGirl syntax methods (create, build, build_stubbed)
+World(FactoryGirl::Syntax::Methods)
+
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:
 #

@@ -28,7 +28,7 @@ describe 'devise/registrations/new.html.haml' do
         github: 'github'
       }.each do |provider, display_class|
         it "renders a pending #{provider} account" do
-          account = FactoryGirl.build(:"#{provider}_account")
+          account = build(:"#{provider}_account")
           allow(user).to receive(:new_session_accounts).and_return([account])
 
           render
@@ -41,7 +41,7 @@ describe 'devise/registrations/new.html.haml' do
       end
 
       it 'renders a pending google account' do
-        google_oauth2_account = FactoryGirl.build(:google_oauth2_account, website: nil)
+        google_oauth2_account = build(:google_oauth2_account, website: nil)
         allow(user).to receive(:new_session_accounts).and_return([google_oauth2_account])
 
         render

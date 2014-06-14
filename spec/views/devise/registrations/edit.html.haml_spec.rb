@@ -9,7 +9,7 @@ describe 'devise/registrations/edit.html.haml' do
   end
 
   context do # Within default nesting
-    let(:user) { FactoryGirl.build_stubbed(:user) }
+    let(:user) { build_stubbed(:user) }
     let(:display_profile) { true }
     let(:display_password_change) { true }
     let(:display_accounts) { true }
@@ -48,8 +48,8 @@ describe 'devise/registrations/edit.html.haml' do
     describe 'connected social media links' do
 
       it 'renders a sortable list of accounts' do
-        facebook_account = FactoryGirl.build_stubbed(:facebook_account, user: user)
-        twitter_account = FactoryGirl.build_stubbed(:twitter_account, user: user)
+        facebook_account = build_stubbed(:facebook_account, user: user)
+        twitter_account = build_stubbed(:twitter_account, user: user)
         stub_user_accounts(user, facebook_account, twitter_account)
         render
         assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path do
@@ -59,7 +59,7 @@ describe 'devise/registrations/edit.html.haml' do
       end
 
       context 'with a Facebook account' do
-        let(:facebook_account) { FactoryGirl.build_stubbed(:facebook_account, user: user) }
+        let(:facebook_account) { build_stubbed(:facebook_account, user: user) }
         before(:each) do
           stub_user_accounts(user, facebook_account)
         end
@@ -79,7 +79,7 @@ describe 'devise/registrations/edit.html.haml' do
         end
       end
       context 'with a Twitter account' do
-        let(:twitter_account) { FactoryGirl.build_stubbed(:twitter_account, user: user) }
+        let(:twitter_account) { build_stubbed(:twitter_account, user: user) }
         before(:each) do
           stub_user_accounts(user, twitter_account)
         end
@@ -98,7 +98,7 @@ describe 'devise/registrations/edit.html.haml' do
         end
       end
       context 'with a github account' do
-        let(:github_account) { FactoryGirl.build_stubbed(:github_account, user: user) }
+        let(:github_account) { build_stubbed(:github_account, user: user) }
         before(:each) do
           stub_user_accounts(user, github_account)
         end
@@ -119,7 +119,7 @@ describe 'devise/registrations/edit.html.haml' do
       end
       context 'with a Google account' do
         let(:google_oauth2_account) do
-          FactoryGirl.build_stubbed(:google_oauth2_account, user: user, website: nil)
+          build_stubbed(:google_oauth2_account, user: user, website: nil)
         end
         before(:each) do
           stub_user_accounts(user, google_oauth2_account)

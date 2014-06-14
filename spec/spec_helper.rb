@@ -65,8 +65,17 @@ RSpec.configure do |config|
 end
 
 RSpec.configure do |config|
+  # Use RSpec expect syntax
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  # Use FactoryGirl syntax methods (create, build, build_stubbed)
+  config.include FactoryGirl::Syntax::Methods
+
+  config.before(:suite) do
+    # Ensure Factories are all valid
+    FactoryGirl.lint
   end
 
   config.include Devise::TestHelpers, type: :controller

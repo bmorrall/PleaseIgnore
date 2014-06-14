@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ContactsController do
 
   def valid_create_attributes
-    FactoryGirl.attributes_for(:contact)
+    attributes_for(:contact)
   end
 
   describe 'GET show' do

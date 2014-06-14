@@ -7,7 +7,7 @@ end
 
 def create_visitor
   @visitor ||= begin
-    visitor_attributes = FactoryGirl.attributes_for(:user)
+    visitor_attributes = attributes_for(:user)
     {
       name: visitor_attributes[:name],
       email: 'example@example.com',
@@ -30,7 +30,7 @@ end
 
 def create_user
   delete_user
-  @user = FactoryGirl.create(:user, create_visitor)
+  @user = create(:user, create_visitor)
 end
 
 def delete_user

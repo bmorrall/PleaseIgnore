@@ -5,7 +5,7 @@ describe 'Users::Accounts' do
   describe 'DELETE /users/accounts/1 AS xhr' do
     context 'as a user belonging to the account' do
       login_user
-      let!(:account) { FactoryGirl.create(:facebook_account, user: logged_in_user) }
+      let!(:account) { create(:facebook_account, user: logged_in_user) }
       it 'redirects back to the users profile' do
         xhr :delete, users_account_path(account)
         expect(response).to redirect_to edit_user_registration_path
@@ -19,7 +19,7 @@ describe 'Users::Accounts' do
     end
     context 'as a user not belonging to the account' do
       login_user
-      let!(:account) { FactoryGirl.create(:facebook_account) }
+      let!(:account) { create(:facebook_account) }
       it 'redirects back to the users profile' do
         xhr :delete, users_account_path(account)
         expect(response).to redirect_to edit_user_registration_path

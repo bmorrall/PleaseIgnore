@@ -25,18 +25,18 @@ describe User do
 
   describe 'Factories' do
     it 'creates a User with basic details' do
-      user = FactoryGirl.create(:user)
+      user = create(:user)
       expect(user.name).not_to be_blank
       expect(user.email).not_to be_blank
       expect(user.encrypted_password).not_to be_nil
     end
     describe 'role traits' do
       it 'creates a admin user' do
-        user = FactoryGirl.create(:user, :admin)
+        user = create(:user, :admin)
         expect(user).to have_role(:admin)
       end
       it 'creates a banned user' do
-        user = FactoryGirl.create(:user, :banned)
+        user = create(:user, :banned)
         expect(user).to have_role(:banned)
       end
     end
@@ -63,7 +63,7 @@ describe User do
           expect(user.email).to eq(auth_account[:email]) unless provider == :twitter
         end
         context 'with valid user params' do
-          let(:user_params) { FactoryGirl.attributes_for(:user) }
+          let(:user_params) { attributes_for(:user) }
 
           it 'builds a valid user' do
             user = User.new_with_session(user_params, session)
@@ -88,7 +88,7 @@ describe User do
         end
         context 'with invalid account data' do
           let(:user) do
-            user_params = FactoryGirl.attributes_for(:user)
+            user_params = attributes_for(:user)
             User.new_with_session(user_params, session)
           end
           before(:each) do
@@ -106,7 +106,7 @@ describe User do
             end.to_not change(User, :count)
           end
           it 'adds an error to the User on save' do
-            user_params = FactoryGirl.attributes_for(:user)
+            user_params = attributes_for(:user)
             user = User.new_with_session(user_params, session)
             user.save
 
@@ -119,7 +119,7 @@ describe User do
   end
 
   describe '#provider_account?' do
-    subject { FactoryGirl.create(:user) }
+    subject { create(:user) }
     context 'with no Account' do
       Account::PROVIDERS.each do |provider|
         it "returns false for #{provider}" do
@@ -129,7 +129,7 @@ describe User do
     end
     Account::PROVIDERS.each do |provider|
       context "with a #{provider} account" do
-        let!(:account) { FactoryGirl.create :"#{provider}_account", user: subject }
+        let!(:account) { create :"#{provider}_account", user: subject }
         it "returns true for #{provider}" do
           expect(subject.provider_account? provider).to be(true)
         end
@@ -144,10 +144,10 @@ describe User do
 
   describe '#primary_account' do
     it 'returns the first account' do
-      first_account = FactoryGirl.build_stubbed(:account)
+      first_account = build_stubbed(:account)
       allow(subject).to receive(:accounts).and_return([
         first_account,
-        FactoryGirl.build_stubbed(:account)
+        build_stubbed(:account)
       ])
       expect(subject.primary_account).to be(first_account)
     end
@@ -182,7 +182,7 @@ describe User do
 
   describe '#profile_picture' do
     context 'with a primary account' do
-      let(:account) { FactoryGirl.build_stubbed(:account) }
+      let(:account) { build_stubbed(:account) }
       before(:each) do
         # Stub the primary_account method
         allow(subject).to receive(:primary_account).and_return(account)

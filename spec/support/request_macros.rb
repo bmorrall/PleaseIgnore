@@ -5,7 +5,7 @@ module RequestMacros
     # Logs a user in for request specs
     def login_user
       before(:each) do
-        @logged_in_user = FactoryGirl.create(:user)
+        @logged_in_user = create(:user)
         post new_user_session_path, user: { email: @logged_in_user.email, password: 'changeme' }
       end
     end

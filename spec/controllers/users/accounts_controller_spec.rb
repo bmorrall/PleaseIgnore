@@ -8,7 +8,7 @@ describe Users::AccountsController do
       grant_ability :destroy, Account
 
       context 'with a facebook account belonging to the user' do
-        let!(:facebook_account) { FactoryGirl.create(:facebook_account, user: logged_in_user) }
+        let!(:facebook_account) { create(:facebook_account, user: logged_in_user) }
 
         it 'should delete the user account' do
           expect do
@@ -25,7 +25,7 @@ describe Users::AccountsController do
         end
       end
       context 'with a facebook account belonging to another user' do
-        let!(:facebook_account) { FactoryGirl.create(:facebook_account) }
+        let!(:facebook_account) { create(:facebook_account) }
 
         it 'should not delete the user account' do
           expect do
@@ -50,9 +50,9 @@ describe Users::AccountsController do
       grant_ability :update, Account
 
       context 'with multiple accounts' do
-        let!(:account_a) { FactoryGirl.create(:account, position: 1, user: logged_in_user) }
-        let!(:account_b) { FactoryGirl.create(:account, position: 2, user: logged_in_user) }
-        let!(:account_c) { FactoryGirl.create(:account, position: 3, user: logged_in_user) }
+        let!(:account_a) { create(:account, position: 1, user: logged_in_user) }
+        let!(:account_b) { create(:account, position: 2, user: logged_in_user) }
+        let!(:account_c) { create(:account, position: 3, user: logged_in_user) }
 
         context 'with a valid xhr request' do
           before(:each) do
@@ -71,7 +71,7 @@ describe Users::AccountsController do
           end
         end
         it 'only orders accounts belonging to the user' do
-          account_extra = FactoryGirl.create(:account, position: 1)
+          account_extra = create(:account, position: 1)
           account_ids = [
             account_b.id,
             account_c.id,

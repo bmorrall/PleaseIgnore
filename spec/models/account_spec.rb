@@ -31,7 +31,7 @@ describe Account do
     it { should validate_presence_of(:provider) }
     it { should validate_presence_of(:uid) }
     it 'should validate uniqueness of uid scoped to provider' do
-      FactoryGirl.create(:account)
+      create(:account)
       should validate_uniqueness_of(:uid).scoped_to(:provider)
     end
     it { should validate_presence_of(:user_id) }
@@ -47,7 +47,7 @@ describe Account do
     context 'with a Facebook auth hash' do
       let(:auth_hash) { facebook_auth_hash }
       context 'with an existing account' do
-        let!(:existing_account) { FactoryGirl.create(:facebook_account, uid: auth_hash.uid) }
+        let!(:existing_account) { create(:facebook_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
           expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
@@ -65,7 +65,7 @@ describe Account do
     context 'with a Twitter auth hash' do
       let(:auth_hash) { twitter_auth_hash }
       context 'with an existing account' do
-        let!(:existing_account) { FactoryGirl.create(:twitter_account, uid: auth_hash.uid) }
+        let!(:existing_account) { create(:twitter_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
           expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
@@ -83,7 +83,7 @@ describe Account do
     context 'with a GitHub auth hash' do
       let(:auth_hash) { github_auth_hash }
       context 'with an existing account' do
-        let!(:existing_account) { FactoryGirl.create(:github_account, uid: auth_hash.uid) }
+        let!(:existing_account) { create(:github_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
           expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
@@ -101,7 +101,7 @@ describe Account do
     context 'with a Google auth hash' do
       let(:auth_hash) { google_oauth2_hash }
       context 'with an existing account' do
-        let!(:existing_account) { FactoryGirl.create(:google_oauth2_account, uid: auth_hash.uid) }
+        let!(:existing_account) { create(:google_oauth2_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
           expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
         end
@@ -155,14 +155,14 @@ describe Account do
 
   describe '#account_uid' do
     describe 'with a Facebook account' do
-      subject { FactoryGirl.build_stubbed(:facebook_account) }
+      subject { build_stubbed(:facebook_account) }
       it 'returns the name for Facebook' do
         subject.name = 'Test User'
         expect(subject.account_uid).to eq('Test User')
       end
     end
     describe 'with a Twitter account' do
-      subject { FactoryGirl.build_stubbed(:twitter_account) }
+      subject { build_stubbed(:twitter_account) }
       it 'returns the nickname for Twitter' do
         subject.nickname = '@testuser'
         expect(subject.account_uid).to eq('@testuser')
@@ -173,14 +173,14 @@ describe Account do
       end
     end
     describe 'with a GitHub account' do
-      subject { FactoryGirl.build_stubbed(:github_account) }
+      subject { build_stubbed(:github_account) }
       it 'returns the nickname for GitHub' do
         subject.nickname = 'testuser'
         expect(subject.account_uid).to eq('testuser')
       end
     end
     describe 'with a Google account' do
-      subject { FactoryGirl.build_stubbed(:google_oauth2_account) }
+      subject { build_stubbed(:google_oauth2_account) }
       it 'returns the name for Google' do
         subject.name = 'Test User'
         expect(subject.account_uid).to eq('Test User')
@@ -190,10 +190,10 @@ describe Account do
 
   describe '#enabled?' do
     it 'should be true for a valid account' do
-      expect(FactoryGirl.build_stubbed(:account)).to be_enabled
+      expect(build_stubbed(:account)).to be_enabled
     end
     it 'returns false for an account without a user' do
-      expect(FactoryGirl.build_stubbed(:account, user: nil)).not_to be_enabled
+      expect(build_stubbed(:account, user: nil)).not_to be_enabled
     end
   end
 
@@ -207,23 +207,23 @@ describe Account do
 
   describe '#provider_name' do
     it 'should return Developer for developer account' do
-      account = FactoryGirl.create(:developer_account)
+      account = create(:developer_account)
       expect(account.provider_name).to eq('Developer')
     end
     it 'should return Facebook for facebook account' do
-      account = FactoryGirl.create(:facebook_account)
+      account = create(:facebook_account)
       expect(account.provider_name).to eq('Facebook')
     end
     it 'should return Twitter for twitter account' do
-      account = FactoryGirl.create(:twitter_account)
+      account = create(:twitter_account)
       expect(account.provider_name).to eq('Twitter')
     end
     it 'should return GitHub for github account' do
-      account = FactoryGirl.create(:github_account)
+      account = create(:github_account)
       expect(account.provider_name).to eq('GitHub')
     end
     it 'should return Google for google_auth2 account' do
-      account = FactoryGirl.create(:google_oauth2_account)
+      account = create(:google_oauth2_account)
       expect(account.provider_name).to eq('Google')
     end
   end
@@ -231,10 +231,10 @@ describe Account do
   describe '#remove_oauth_credentials' do
     context 'with an account with oauth credentials' do
       subject do
-        FactoryGirl.build_stubbed(:account,
-                                  oauth_token: 'oauth_token',
-                                  oauth_secret: 'oauth_secret',
-                                  oauth_expires_at: DateTime.now
+        build_stubbed(:account,
+                      oauth_token: 'oauth_token',
+                      oauth_secret: 'oauth_secret',
+                      oauth_expires_at: DateTime.now
         )
       end
       it 'sets oauth_token to nil' do
