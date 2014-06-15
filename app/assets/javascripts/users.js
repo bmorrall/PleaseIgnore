@@ -27,7 +27,7 @@ PleaseIgnore.Users = (function ($) {
      * see: http://farhadi.ir/projects/html5sortable/
      */
     initSortableAccounts: function () {
-      $('.linked-accounts').sortable().bind('sortupdate', function () {
+      $('.linked-accounts[data-sort-path]').sortable().bind('sortupdate', function () {
         var sort_path = $(this).data('sort-path');
 
         var account_ids = [];

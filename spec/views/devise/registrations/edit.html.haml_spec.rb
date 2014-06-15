@@ -47,14 +47,25 @@ describe 'devise/registrations/edit.html.haml' do
 
     describe 'connected social media links' do
 
-      it 'renders a sortable list of accounts' do
-        facebook_account = build_stubbed(:facebook_account, user: user)
-        twitter_account = build_stubbed(:twitter_account, user: user)
-        stub_user_accounts(user, facebook_account, twitter_account)
-        render
-        assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path do
-          assert_select '.btn-facebook[data-account-id=?]', facebook_account.id
-          assert_select '.btn-twitter[data-account-id=?]', twitter_account.id
+      describe 'sortable accounts list' do
+        it 'renders the sortable list for multiple accounts' do
+          facebook_account = build_stubbed(:facebook_account, user: user)
+          twitter_account = build_stubbed(:twitter_account, user: user)
+          stub_user_accounts(user, facebook_account, twitter_account)
+          render
+
+          assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path, count: 1 do
+            assert_select '.btn-facebook[data-account-id=?]', facebook_account.id
+            assert_select '.btn-twitter[data-account-id=?]', twitter_account.id
+          end
+        end
+
+        it 'the list is not sortable if the user has only one account' do
+          twitter_account = build_stubbed(:twitter_account, user: user)
+          stub_user_accounts(user, twitter_account)
+          render
+
+          assert_select '.linked-accounts:not([data-sort-path])', count: 1
         end
       end
 

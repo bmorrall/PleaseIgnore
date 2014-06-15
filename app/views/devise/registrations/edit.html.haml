@@ -56,7 +56,7 @@
       .form-horizontal
         // Linked Accounts
         - decorate_account_collection resource.accounts do |accounts|
-          .linked-accounts{ data: { sort_path: sort_users_accounts_path }}
+          = sortable_accounts_list resource do
             = render partial: 'account', collection: accounts
 
         // Link Account Items

@@ -45,4 +45,10 @@ module AccountsHelper
       provider
     end
   end
+
+  # Allows Users to sort a list of accounts
+  def sortable_accounts_list(user, &block)
+    sortable_data = user.accounts.count > 1 ? { sort_path: sort_users_accounts_path } : {}
+    content_tag :div, class: 'linked-accounts', data: sortable_data, &block
+  end
 end
