@@ -214,6 +214,8 @@ GEM
     redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
+    redis-store (1.1.4)
+      redis (>= 2.2)
     request_store (1.0.6)
     responders (1.1.0)
       railties (>= 3.2, < 5)
@@ -358,6 +360,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rails_12factor
   redcarpet
+  redis-store
   responders
   rolify
   rspec-rails (< 3.0.0)

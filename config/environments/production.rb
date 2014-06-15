@@ -65,6 +65,9 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  if ENV['REDIS_CACHE_URL'] # redis://localhost:6379/0/cache
+    config.cache_store = :redis_store, ENV['REDIS_CACHE_URL'], { expires_in: 90.minutes }
+  end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"

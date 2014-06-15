@@ -91,6 +91,9 @@ group :production do
 
   # Use unicorn as the app server
   gem 'unicorn'
+
+  # Use Redis as a cache
+  gem 'redis-store'
 end
 
 group :doc do
