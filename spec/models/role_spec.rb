@@ -19,4 +19,8 @@ describe Role do
     it { should belong_to(:resource) }
   end
 
+  describe 'validations' do
+    it { should allow_value('admin').for(:name) }
+    it { should allow_value('banned').for(:name) }
+  end
 end

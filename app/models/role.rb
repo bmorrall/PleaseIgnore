@@ -12,8 +12,12 @@
 #  updated_at    :datetime
 #
 class Role < ActiveRecord::Base
+  ROLES = %w(admin banned)
+
   has_and_belongs_to_many :users, join_table: :users_roles
   belongs_to :resource, polymorphic: true
+
+  validates :name, inclusion: { in: ROLES }
 
   scopify
 end
