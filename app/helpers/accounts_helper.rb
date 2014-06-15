@@ -24,7 +24,7 @@ module AccountsHelper
   # Icon of the Account provider
   def provider_icon(provider)
     icon_name =
-      if provider == :developer
+      if provider.to_s =~ /developer/
         'user'  # Generic user icon
       else
         provider_class(provider)
