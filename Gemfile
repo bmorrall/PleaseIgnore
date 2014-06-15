@@ -93,7 +93,7 @@ group :production do
   gem 'unicorn'
 
   # Use Redis as a cache
-  gem 'redis-store'
+  gem 'redis-rails'
 end
 
 group :doc do
