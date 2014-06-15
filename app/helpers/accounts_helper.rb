@@ -23,8 +23,12 @@ module AccountsHelper
 
   # Icon of the Account provider
   def provider_icon(provider)
-    icon_name = provider_class(provider)
-    icon_name = 'user' if provider == 'developer'
+    icon_name =
+      if provider == :developer
+        'user'  # Generic user icon
+      else
+        provider_class(provider)
+      end
     fa(icon_name)
   end
 
@@ -35,7 +39,10 @@ module AccountsHelper
 
   # Wrapper class for Provider
   def provider_class(provider)
-    return 'google-plus' if provider =~ /google/
-    provider
+    if provider.to_s =~ /google/
+      'google-plus'
+    else
+      provider
+    end
   end
 end

@@ -58,6 +58,21 @@ describe 'devise/registrations/edit.html.haml' do
         end
       end
 
+      context 'with a Developer account' do
+        let(:developer_account) { build_stubbed(:developer_account, user: user) }
+        before(:each) do
+          stub_user_accounts(user, developer_account)
+        end
+
+        it 'renders a Developer account summary' do
+          render
+          assert_select '.btn-developer' do
+            assert_select 'a[disabled]', developer_account.uid
+            assert_select 'a[href=?][data-method="delete"]', users_account_path(developer_account)
+            assert_select 'i.fa.fa-user' # Generic FontAwesome icon
+          end
+        end
+      end
       context 'with a Facebook account' do
         let(:facebook_account) { build_stubbed(:facebook_account, user: user) }
         before(:each) do
@@ -69,6 +84,7 @@ describe 'devise/registrations/edit.html.haml' do
           assert_select '.btn-facebook' do
             assert_select 'a[href=?][rel="external"]', facebook_account.website
             assert_select 'a[href=?][data-method="delete"]', users_account_path(facebook_account)
+            assert_select 'i.fa.fa-facebook' # FontAwesome icon
           end
         end
         it 'does not render a "Link your Facebook account" link' do
@@ -88,6 +104,7 @@ describe 'devise/registrations/edit.html.haml' do
           assert_select '.btn-twitter' do
             assert_select 'a[href=?][rel="external"]', twitter_account.website
             assert_select 'a[href=?][data-method="delete"]', users_account_path(twitter_account)
+            assert_select 'i.fa.fa-twitter' # FontAwesome icon
           end
         end
         it 'does not render a "Link your Twitter account" link' do
@@ -97,7 +114,7 @@ describe 'devise/registrations/edit.html.haml' do
                         count: 0
         end
       end
-      context 'with a github account' do
+      context 'with a GitHub account' do
         let(:github_account) { build_stubbed(:github_account, user: user) }
         before(:each) do
           stub_user_accounts(user, github_account)
@@ -108,6 +125,7 @@ describe 'devise/registrations/edit.html.haml' do
           assert_select '.btn-github' do
             assert_select 'a[href=?][rel="external"]', github_account.website
             assert_select 'a[href=?][data-method="delete"]', users_account_path(github_account)
+            assert_select 'i.fa.fa-github' # FontAwesome icon
           end
         end
         it 'does not render a "Link your GitHub account" link' do
@@ -131,6 +149,7 @@ describe 'devise/registrations/edit.html.haml' do
             assert_select 'a[href="#"][disabled]' # Google has no website
             assert_select 'a[href=?][data-method="delete"]',
                           users_account_path(google_oauth2_account)
+            assert_select 'i.fa.fa-google-plus' # FontAwesome icon
           end
         end
         it 'does not render a "Link your Google account" link' do
