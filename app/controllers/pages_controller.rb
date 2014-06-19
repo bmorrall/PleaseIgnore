@@ -20,8 +20,10 @@ class PagesController < ApplicationController
   def set_page_metadata
     params[:id].tap do |page|
       if %w(home privacy styles terms).include? page
-        content_for_layout :page_title, t("pages.#{page}.page_title") unless page == 'home'
-        content_for_layout :extra_body_classes, "#{page}-page"
+        page_title t("pages.#{page}.page_title") unless page == 'home'
+        page_author t("pages.#{page}.page_author", default: '')
+        page_description t("pages.#{page}.page_description", default: '')
+        extra_body_classes "#{page}-page"
       end
     end
   end

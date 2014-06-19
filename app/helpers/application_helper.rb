@@ -16,6 +16,11 @@ module ApplicationHelper
     current_page?(path) ? 'active' : nil
   end
 
+  # Renders header meta tag
+  def meta_tag(name, content)
+    tag :meta, name: name, content: content unless content.blank?
+  end
+
   # Icons
 
   # Displays a Font Awesome icon with `icon_name`
