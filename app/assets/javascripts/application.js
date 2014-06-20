@@ -22,7 +22,7 @@
 //= require turbolinks
 //= require turboboost
 //
-//= require translations
+//= require i18n
 //= require jquery.formerrors
 //= require turboboost_events
 //

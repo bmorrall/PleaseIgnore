@@ -10,7 +10,7 @@
 # Copyright 2014, Ben Morrall
 # Released under the MIT license.
 
-Turboboost.defaultError = App.t('turboboost.default_errors')
+Turboboost.defaultError = I18n.t('turboboost.default_errors')
 Turboboost.insertErrors = false # Don't allow Turboboost to render errors
 
 tryJSONParse = (str) ->
