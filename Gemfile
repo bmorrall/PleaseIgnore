@@ -120,7 +120,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :test, :development do
-  gem 'rspec-rails', '< 3.0.0'
+  gem 'rspec-rails', '3.0.1'
 
   # Code Quality Metrics
   gem 'cane', require: false
@@ -128,7 +128,8 @@ group :test, :development do
   gem 'yardstick', require: false
 end
 group :test do
-  gem 'capybara-webkit', '~> 1.1.1'
+  gem 'capybara-webkit'
+  gem 'capybara', '~> 2.3.0'
   gem 'coveralls', require: false
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'

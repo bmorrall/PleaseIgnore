@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'devise/registrations/edit.html.haml' do
 
   def stub_user_accounts(user, *accounts)
-    accounts.stub(:decorate).and_return(AccountDecorator.decorate_collection(accounts))
+    allow(accounts).to receive(:decorate).and_return(AccountDecorator.decorate_collection(accounts))
     allow(user).to receive(:accounts).and_return(accounts)
     allow(user).to receive(:provider_account?).and_return(true)
   end
