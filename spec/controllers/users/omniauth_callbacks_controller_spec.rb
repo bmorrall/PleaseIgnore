@@ -30,9 +30,9 @@ describe Users::OmniauthCallbacksController do
               end
               it { should redirect_to(new_user_registration_path) }
               it do
-                expected = "Successfully connected to your #{provider_name} account. "\
-                           'Please review your details.'
-                should set_the_flash[:notice].to(expected)
+                should set_the_flash[:notice].to(
+                  t('devise.omniauth_callbacks.success_registered', kind: provider_name)
+                )
               end
               it "should set #{session_key} session data" do
                 expect(session[session_key]).not_to be_empty
@@ -56,7 +56,7 @@ describe Users::OmniauthCallbacksController do
               it { should redirect_to(root_path) }
               it do
                 should set_the_flash[:notice].to(
-                  "Successfully authenticated from your #{provider_name} account."
+                  t('devise.omniauth_callbacks.success_authenticated', kind: provider_name)
                 )
               end
               it "should not set #{session_key} session data" do
@@ -79,9 +79,12 @@ describe Users::OmniauthCallbacksController do
               before(:each) { get provider }
               it { should redirect_to(new_user_session_path) }
               it do
-                expected = "Could not authenticate you from #{provider_name} "\
-                           "because \"This account has been disabled\"."
-                should set_the_flash[:alert].to(expected)
+                should set_the_flash[:alert].to(
+                  t('devise.omniauth_callbacks.failure',
+                    kind: provider_name,
+                    reason: t('account.reasons.failure.account_disabled')
+                  )
+                )
               end
             end
           end
@@ -97,7 +100,7 @@ describe Users::OmniauthCallbacksController do
               it { should redirect_to(edit_user_registration_path) }
               it do
                 should set_the_flash[:notice].to(
-                  "Successfully connected to your #{provider_name} account."
+                  t('devise.omniauth_callbacks.success_linked', kind: provider_name)
                 )
               end
             end
@@ -129,8 +132,10 @@ describe Users::OmniauthCallbacksController do
               it { should redirect_to(edit_user_registration_path) }
               it do
                 should set_the_flash[:alert].to(
-                  "Could not authenticate you from #{provider_name} because "\
-                  '"Someone has already linked to this account".'
+                  t('devise.omniauth_callbacks.failure',
+                    kind: provider_name,
+                    reason: t('account.reasons.failure.previously_linked')
+                  )
                 )
               end
             end
@@ -163,7 +168,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_registration_path) }
             it do
               should set_the_flash[:notice].to(
-                'Successfully connected to your Developer account. Please review your details.'
+                t('devise.omniauth_callbacks.success_registered', kind: 'Developer')
               )
             end
             it 'should set devise.developer_data session data' do
@@ -188,8 +193,10 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(new_user_session_path) }
             it do
               should set_the_flash[:alert].to(
-                'Could not authenticate you from Developer because '\
-                '"Authentication is disabled from this Provider".'
+                t('devise.omniauth_callbacks.failure',
+                  kind: 'Developer',
+                  reason: t('account.reasons.failure.provider_disabled')
+                )
               )
             end
             it 'should not set devise.developer_data session data' do
@@ -216,7 +223,7 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(edit_user_registration_path) }
             it do
               should set_the_flash[:notice].to(
-                'Successfully connected to your Developer account.'
+                t('devise.omniauth_callbacks.success_linked', kind: 'Developer')
               )
             end
           end
@@ -248,8 +255,10 @@ describe Users::OmniauthCallbacksController do
             it { should redirect_to(edit_user_registration_path) }
             it do
               should set_the_flash[:alert].to(
-                'Could not authenticate you from Developer because '\
-                '"Someone has already linked to this account".'
+                t('devise.omniauth_callbacks.failure',
+                  kind: 'Developer',
+                  reason: t('account.reasons.failure.previously_linked')
+                )
               )
             end
           end

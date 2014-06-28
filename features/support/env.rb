@@ -71,4 +71,6 @@ Capybara.javascript_driver = :webkit
 # Turn the Cache on, ensure no cache leakage
 ActionController::Base.cache_store = :memory_store
 
+World(AbstractController::Translation) # Add t() translation helper
+
 # rubocop:enable LineLength

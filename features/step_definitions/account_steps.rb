@@ -64,7 +64,7 @@ end
 When(/^I link my profile to my Facebook account$/) do
   set_oauth :facebook, facebook_auth_hash
   visit '/users/edit'
-  click_link 'Link your Facebook account'
+  click_link t('users.accounts.buttons.link_account', provider_name: 'Facebook')
 end
 
 When(/^I unlink my Facebook account$/) do
@@ -86,7 +86,7 @@ end
 When(/^I link my profile to my GitHub account$/) do
   set_oauth :github, github_auth_hash
   visit '/users/edit'
-  click_link 'Link your GitHub account'
+  click_link t('users.accounts.buttons.link_account', provider_name: 'GitHub')
 end
 
 When(/^I unlink my GitHub account$/) do
@@ -100,7 +100,7 @@ end
 When(/^I link my profile to my Google account$/) do
   set_oauth :google_oauth2, google_oauth2_hash
   visit '/users/edit'
-  click_link 'Link your Google account'
+  click_link t('users.accounts.buttons.link_account', provider_name: 'Google')
 end
 
 When(/^I sign in using my Google account$/) do
@@ -130,7 +130,7 @@ end
 When(/^I link my profile to my Twitter account$/) do
   set_oauth :twitter, twitter_auth_hash
   visit '/users/edit'
-  click_link 'Link your Twitter account'
+  click_link t('users.accounts.buttons.link_account', provider_name: 'Twitter')
 end
 
 When(/^I unlink my Twitter account$/) do
@@ -144,28 +144,30 @@ end
 ### THEN ###
 
 Then(/^I should see a successful (.+) authentication message$/) do |provider|
-  page.should have_content "Successfully authenticated from your #{provider} account."
+  page.should have_content t('devise.omniauth_callbacks.success_authenticated', kind: provider)
 end
 
 Then(/^I should see a successful (.+) linked message$/) do |provider|
-  page.should have_content "Successfully connected to your #{provider} account."
+  page.should have_content t('devise.omniauth_callbacks.success_linked', kind: provider)
 end
 
 Then(/^I should see a successful (.+) registration message$/) do |provider|
   page.should have_content(
-    "Successfully connected to your #{provider} account. Please review your details."
+    t('devise.omniauth_callbacks.success_registered', kind: provider)
   )
 end
 
 Then(/^I should see a failed (.+) authentication message$/) do |provider|
   page.should have_content(
-    "Could not authenticate you from #{provider} because "\
-    '"Someone has already linked to this account".'
+    t('devise.omniauth_callbacks.failure',
+      kind: provider,
+      reason: t('account.reasons.failure.previously_linked')
+    )
   )
 end
 
 Then(/^I should see a (.+) successfully unlinked message$/) do |provider|
-  page.should have_content("Successfully unlinked your #{provider} account")
+  page.should have_content(t('flash.users.accounts.destroy.notice', provider_name: provider))
 end
 
 Then(/^I should see a sign up form with my Developer credentials$/) do
@@ -177,8 +179,10 @@ end
 
 Then(/^I should see a failed Developer sign in message$/) do
   page.should have_content(
-    'Could not authenticate you from Developer because '\
-    '"Authentication is disabled from this Provider".'
+    t('devise.omniauth_callbacks.failure',
+      kind: 'Developer',
+      reason: t('account.reasons.failure.provider_disabled')
+    )
   )
 end
 
@@ -205,7 +209,7 @@ end
 Then(/^I should not be linked to a Facebook account$/) do
   visit '/users/edit'
   page.should_not have_css('a.unlink-facebook')
-  find_link('Link your Facebook account').should be_visible
+  find_link(t('users.accounts.buttons.link_account', provider_name: 'Facebook')).should be_visible
 end
 
 Then(/^I should see a sign up form with my GitHub credentials$/) do
@@ -226,7 +230,7 @@ end
 Then(/^I should not be linked to a GitHub account$/) do
   visit '/users/edit'
   page.should_not have_css('a.unlink-github')
-  find_link('Link your GitHub account').should be_visible
+  find_link(t('users.accounts.buttons.link_account', provider_name: 'GitHub')).should be_visible
 end
 
 Then(/^I should see a sign up form with my Google credentials$/) do
@@ -247,7 +251,7 @@ end
 Then(/^I should not be linked to a Google account$/) do
   visit '/users/edit'
   page.should_not have_css('a.unlink-google-plus')
-  find_link('Link your Google account').should be_visible
+  find_link(t('users.accounts.buttons.link_account', provider_name: 'Google')).should be_visible
 end
 
 Then(/^I should see a sign up form with my Twitter credentials$/) do
@@ -269,5 +273,5 @@ end
 Then(/^I should not be linked to a Twitter account$/) do
   visit '/users/edit'
   page.should_not have_css('a.unlink-twitter')
-  find_link('Link your Twitter account').should be_visible
+  find_link(t('users.accounts.buttons.link_account', provider_name: 'Twitter')).should be_visible
 end

@@ -32,7 +32,7 @@ describe ContactsController do
         end
         it do
           should set_the_flash.now[:info].to(
-            'Your message will mention you visited this page from http://pleaseignore.com/terms'
+            t('flash.contacts.show.info', referer: 'http://pleaseignore.com/terms')
           )
         end
       end
@@ -47,7 +47,7 @@ describe ContactsController do
         end
         it do
           should set_the_flash.now[:info].to(
-            'Your message will mention you visited this page from http://pleaseignore.com/about'
+            t('flash.contacts.show.info', referer: 'http://pleaseignore.com/about')
           )
         end
       end
@@ -84,7 +84,7 @@ describe ContactsController do
       context 'with a valid xhr request' do
         before(:each) { xhr :post, :create, contact: valid_create_attributes }
         it { should redirect_to thank_you_contact_path }
-        it { should set_the_flash[:notice].to 'Your contact request has been sent' }
+        it { should set_the_flash[:notice].to t('flash.contacts.create.notice') }
         it 'should send a contact email to support' do
           email = ActionMailer::Base.deliveries.last
           expect(email.to).to eq(['support@pleaseignore.com'])

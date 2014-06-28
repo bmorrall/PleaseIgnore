@@ -49,9 +49,9 @@ end
 ### THEN
 
 Then(/^I should be notified I am making a request from (.+)$/) do |page_name|
-  referrer_path = "#{current_host_with_port}#{path_to(page_name)}"
+  referer_path = "#{current_host_with_port}#{path_to(page_name)}"
   page.should have_content(
-    "Your message will mention you visited this page from #{referrer_path}"
+    t('flash.contacts.show.info', referer: referer_path)
   )
 end
 
@@ -61,11 +61,11 @@ Then(/^I should see my name and email on the contact form$/) do
 end
 
 Then(/^I should see a thank you message$/) do
-  page.should have_content 'Thank you for Contacting PleaseIgnore'
+  page.should have_content t('contacts.thank_you.page_title')
 end
 
 Then(/^I see an invalid contact request message$/) do
-  page.should have_content 'Please review the problems below'
+  page.should have_content t('simple_form.error_notification.default_message')
 end
 
 Then(/^I should see the full contact request message$/) do

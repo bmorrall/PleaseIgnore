@@ -77,6 +77,7 @@ RSpec.configure do |config|
     FactoryGirl.lint
   end
 
+  config.include AbstractController::Translation # Add t() translation helper
   config.include Devise::TestHelpers, type: :controller
   config.include ControllerMacros, type: :controller
   config.include CacheMacros, type: :request

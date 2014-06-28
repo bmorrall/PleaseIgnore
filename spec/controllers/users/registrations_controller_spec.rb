@@ -47,7 +47,7 @@ describe Users::RegistrationsController do
           post :update, user: valid_profile_attributes
         end
         it { expect(response).to redirect_to edit_user_registration_path }
-        it { should set_the_flash[:notice].to('You updated your profile successfully.') }
+        it { should set_the_flash[:notice].to(t('devise.registrations.updated')) }
         it 'should update the User account' do
           @logged_in_user.reload
           valid_profile_attributes.each do |key, value|
@@ -76,7 +76,7 @@ describe Users::RegistrationsController do
           post :update, user: valid_password_change_attributes
         end
         it { expect(response).to redirect_to edit_user_registration_path }
-        it { should set_the_flash[:notice].to('You updated your password successfully.') }
+        it { should set_the_flash[:notice].to(t('devise.registrations.updated_password')) }
         it 'should update the User password' do
           @logged_in_user.reload
           expect(@logged_in_user).to be_valid_password('newpassword')

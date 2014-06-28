@@ -1,7 +1,10 @@
+- provider_name = provider_name(provider)
 .form-group{ class: "btn-#{provider_class(provider)}"}
   %label.control-label.col-sm-3
     = provider_icon(provider)
-    = provider_name(provider)
+    = provider_name
     account
   .col-sm-7
-    = system_link "Link your #{provider_name(provider)} account", user_omniauth_authorize_path(provider), class: 'form-control btn btn-primary'
+    = system_link t('users.accounts.buttons.link_account', provider_name: provider_name),
+                  user_omniauth_authorize_path(provider),
+                  class: 'form-control btn btn-primary'

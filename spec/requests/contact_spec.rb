@@ -15,8 +15,8 @@ describe 'Contact' do
       end
       it 'notifies the user their previously visited url will be included' do
         get contact_path, nil,  'HTTP_REFERER' => 'http://example.com/privacy'
-        expected = 'Your message will mention you visited this page from http://example.com/privacy'
-        assert_select '.alert.alert-info strong', expected
+        assert_select '.alert.alert-info strong',
+                      t('flash.contacts.show.info', referer: 'http://example.com/privacy')
       end
     end
     describe 'Metadata' do

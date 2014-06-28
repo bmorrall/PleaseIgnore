@@ -6,7 +6,7 @@ describe 'contacts/thank_you.html.haml' do
     it 'renders a thank you to the user' do
       render
 
-      expect(rendered).to have_content('Thank you for Contacting PleaseIgnore')
+      assert_select 'h3', t('contacts.thank_you.page_title')
     end
   end
 

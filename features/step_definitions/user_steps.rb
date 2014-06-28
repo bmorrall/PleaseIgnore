@@ -244,11 +244,11 @@ Then(/^I see an invalid login message$/) do
 end
 
 Then(/^I should see an account edited message$/) do
-  page.should have_content 'You updated your profile successfully.'
+  page.should have_content t('devise.registrations.updated')
 end
 
 Then(/^I should see a password changed message$/) do
-  page.should have_content 'You updated your password successfully.'
+  page.should have_content t('devise.registrations.updated_password')
 end
 
 Then(/^I should see my name$/) do

@@ -40,7 +40,8 @@ describe 'Registrations' do
         end
 
         it 'displays a failed login attempt to the user' do
-          assert_select '.alert.alert-danger strong', 'Please review the problems below:'
+          assert_select '.alert.alert-danger strong',
+                        t('simple_form.error_notification.default_message')
           assert_select '.alert li', 'Unable to add your Facebook account'
         end
       end

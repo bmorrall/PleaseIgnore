@@ -14,7 +14,8 @@ describe 'Users::Accounts' do
         xhr :delete, users_account_path(account)
         follow_redirect!
 
-        assert_select '.alert.alert-success strong', 'Successfully unlinked your Facebook account.'
+        assert_select '.alert.alert-success strong',
+                      t('flash.users.accounts.destroy.notice', provider_name: 'Facebook')
       end
     end
     context 'as a user not belonging to the account' do
@@ -28,7 +29,7 @@ describe 'Users::Accounts' do
         xhr :delete, users_account_path(account)
         follow_redirect!
 
-        assert_select '.alert.alert-warning strong', 'Your account has already been unlinked.'
+        assert_select '.alert.alert-warning strong', t('flash.users.accounts.destroy.warning')
       end
     end
   end

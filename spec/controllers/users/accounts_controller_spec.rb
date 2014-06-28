@@ -21,7 +21,11 @@ describe Users::AccountsController do
           end
 
           it { expect(response).to redirect_to edit_user_registration_path }
-          it { should set_the_flash[:notice].to('Successfully unlinked your Facebook account.') }
+          it do
+            should set_the_flash[:notice].to(
+              t('flash.users.accounts.destroy.notice', provider_name: 'Facebook')
+            )
+          end
         end
       end
       context 'with a facebook account belonging to another user' do
@@ -38,7 +42,7 @@ describe Users::AccountsController do
           end
 
           it { expect(response).to redirect_to edit_user_registration_path }
-          it { should set_the_flash[:warning].to('Your account has already been unlinked.') }
+          it { should set_the_flash[:warning].to(t('flash.users.accounts.destroy.warning')) }
         end
       end
     end
