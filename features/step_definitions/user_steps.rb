@@ -197,74 +197,74 @@ end
 ### THEN ###
 Then(/^I should be signed in$/) do
   page.has_selector?('li', text: 'Logout', visible: false)
-  page.should_not have_content 'Sign up'
-  page.should_not have_content 'Login'
+  expect(page).to_not have_content 'Sign up'
+  expect(page).to_not have_content 'Login'
 end
 
 Then(/^I should be signed out$/) do
-  page.should have_content 'Create Account'
-  page.should have_content 'Login'
+  expect(page).to have_content 'Create Account'
+  expect(page).to have_content 'Login'
   page.has_no_selector?('li', text: 'Logout', visible: false)
 end
 
 Then(/^I see an unconfirmed account message$/) do
-  page.should have_content 'You have to confirm your account before continuing.'
+  expect(page).to have_content 'You have to confirm your account before continuing.'
 end
 
 Then(/^I see a successful sign in message$/) do
-  page.should have_content 'Signed in successfully.'
+  expect(page).to have_content 'Signed in successfully.'
 end
 
 Then(/^I should see a successful sign up message$/) do
-  page.should have_content 'Welcome! You have signed up successfully.'
+  expect(page).to have_content 'Welcome! You have signed up successfully.'
 end
 
 Then(/^I should see an invalid email message$/) do
-  page.should have_content 'Email is invalid'
+  expect(page).to have_content 'Email is invalid'
 end
 
 Then(/^I should see a missing password message$/) do
-  page.should have_content "Password can't be blank"
+  expect(page).to have_content "Password can't be blank"
 end
 
 Then(/^I should see a missing password confirmation message$/) do
-  page.should have_content "Password confirmation doesn't match"
+  expect(page).to have_content "Password confirmation doesn't match"
 end
 
 Then(/^I should see a mismatched password message$/) do
-  page.should have_content "Password confirmation doesn't match"
+  expect(page).to have_content "Password confirmation doesn't match"
 end
 
 Then(/^I should see a signed out message$/) do
-  page.should have_content 'Signed out successfully.'
+  expect(page).to have_content 'Signed out successfully.'
 end
 
 Then(/^I see an invalid login message$/) do
-  page.should have_content 'Invalid email or password.'
+  expect(page).to have_content 'Invalid email or password.'
 end
 
 Then(/^I should see an account edited message$/) do
-  page.should have_content t('devise.registrations.updated')
+  expect(page).to have_content t('devise.registrations.updated')
 end
 
 Then(/^I should see a password changed message$/) do
-  page.should have_content t('devise.registrations.updated_password')
+  expect(page).to have_content t('devise.registrations.updated_password')
 end
 
 Then(/^I should see my name$/) do
   create_user
-  page.should have_content @user[:name]
+  expect(page).to have_content @user[:name]
 end
 
 Then(/^I should see a password reset email has been sent notice$/) do
-  page.should have_content(
+  expect(page).to have_content(
     'If your email address exists in our database, '\
     'you will receive a password recovery link at your email address in a few minutes.'
   )
 end
 
 Then(/^I should see a password was reset message$/) do
-  page.should have_content 'Your password was changed successfully'
+  expect(page).to have_content 'Your password was changed successfully'
 end
 
 Then(/^(?:I|they) should receive an email with Reset password instructions$/) do

@@ -50,31 +50,31 @@ end
 
 Then(/^I should be notified I am making a request from (.+)$/) do |page_name|
   referer_path = "#{current_host_with_port}#{path_to(page_name)}"
-  page.should have_content(
+  expect(page).to have_content(
     t('flash.contacts.show.info', referer: referer_path)
   )
 end
 
 Then(/^I should see my name and email on the contact form$/) do
-  find_field('contact_name').value.should eq(@visitor[:name])
-  find_field('contact_email').value.should eq(@visitor[:email])
+  expect(find_field('contact_name').value).to eq(@visitor[:name])
+  expect(find_field('contact_email').value).to eq(@visitor[:email])
 end
 
 Then(/^I should see a thank you message$/) do
-  page.should have_content t('contacts.thank_you.page_title')
+  expect(page).to have_content t('contacts.thank_you.page_title')
 end
 
 Then(/^I see an invalid contact request message$/) do
-  page.should have_content t('simple_form.error_notification.default_message')
+  expect(page).to have_content t('simple_form.error_notification.default_message')
 end
 
 Then(/^I should see the full contact request message$/) do
-  current_email.default_part_body.to_s.should include(@contact_request[:name])
-  current_email.default_part_body.to_s.should include(@contact_request[:email])
-  current_email.default_part_body.to_s.should include(@contact_request[:body])
+  expect(current_email.default_part_body.to_s).to include(@contact_request[:name])
+  expect(current_email.default_part_body.to_s).to include(@contact_request[:email])
+  expect(current_email.default_part_body.to_s).to include(@contact_request[:body])
 end
 
 Then(/^I should see it was sent from (.*)$/) do |page_name|
   referrer = "http://www.example.com#{path_to(page_name)}"
-  current_email.default_part_body.to_s.should include(referrer)
+  expect(current_email.default_part_body.to_s).to include(referrer)
 end

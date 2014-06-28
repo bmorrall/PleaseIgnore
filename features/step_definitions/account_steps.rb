@@ -144,21 +144,21 @@ end
 ### THEN ###
 
 Then(/^I should see a successful (.+) authentication message$/) do |provider|
-  page.should have_content t('devise.omniauth_callbacks.success_authenticated', kind: provider)
+  expect(page).to have_content t('devise.omniauth_callbacks.success_authenticated', kind: provider)
 end
 
 Then(/^I should see a successful (.+) linked message$/) do |provider|
-  page.should have_content t('devise.omniauth_callbacks.success_linked', kind: provider)
+  expect(page).to have_content t('devise.omniauth_callbacks.success_linked', kind: provider)
 end
 
 Then(/^I should see a successful (.+) registration message$/) do |provider|
-  page.should have_content(
+  expect(page).to have_content(
     t('devise.omniauth_callbacks.success_registered', kind: provider)
   )
 end
 
 Then(/^I should see a failed (.+) authentication message$/) do |provider|
-  page.should have_content(
+  expect(page).to have_content(
     t('devise.omniauth_callbacks.failure',
       kind: provider,
       reason: t('account.reasons.failure.previously_linked')
@@ -167,18 +167,18 @@ Then(/^I should see a failed (.+) authentication message$/) do |provider|
 end
 
 Then(/^I should see a (.+) successfully unlinked message$/) do |provider|
-  page.should have_content(t('flash.users.accounts.destroy.notice', provider_name: provider))
+  expect(page).to have_content(t('flash.users.accounts.destroy.notice', provider_name: provider))
 end
 
 Then(/^I should see a sign up form with my Developer credentials$/) do
-  find_field('Name').value.should eq(@auth_account[:name])
-  find_field('Email').value.should eq(@auth_account[:email])
-  page.should have_content('Developer account')
-  find('a[disabled=disabled]').text.should eq(@auth_account[:email])
+  expect(find_field('Name').value).to eq(@auth_account[:name])
+  expect(find_field('Email').value).to eq(@auth_account[:email])
+  expect(page).to have_content('Developer account')
+  expect(find('a[disabled=disabled]').text).to eq(@auth_account[:email])
 end
 
 Then(/^I should see a failed Developer sign in message$/) do
-  page.should have_content(
+  expect(page).to have_content(
     t('devise.omniauth_callbacks.failure',
       kind: 'Developer',
       reason: t('account.reasons.failure.provider_disabled')
@@ -188,90 +188,98 @@ end
 
 Then(/^I should be linked to my Developer account$/) do
   visit '/users/edit'
-  Account.last.provider.should eq(:developer)
+  expect(Account.last.provider).to eq(:developer)
 end
 
 Then(/^I should see a sign up form with my Facebook credentials$/) do
-  find_field('Name').value.should eq(@auth_account[:name])
-  find_field('Email').value.should eq(@auth_account[:email])
+  expect(find_field('Name').value).to eq(@auth_account[:name])
+  expect(find_field('Email').value).to eq(@auth_account[:email])
   within('.btn-facebook') do
-    page.should have_content('Facebook account')
-    find_link(@auth_account[:name])[:href].should eq(@facebook_credentials[:website])
+    expect(page).to have_content('Facebook account')
+    expect(find_link(@auth_account[:name])[:href]).to eq(@facebook_credentials[:website])
   end
 end
 
 Then(/^I should be linked to my Facebook account$/) do
   visit '/users/edit'
-  page.should have_css('a.unlink-facebook')
-  find_link(@auth_account[:name])[:href].should eq(@facebook_credentials[:website])
+  expect(page).to have_css('a.unlink-facebook')
+  expect(find_link(@auth_account[:name])[:href]).to eq(@facebook_credentials[:website])
 end
 
 Then(/^I should not be linked to a Facebook account$/) do
   visit '/users/edit'
-  page.should_not have_css('a.unlink-facebook')
-  find_link(t('users.accounts.buttons.link_account', provider_name: 'Facebook')).should be_visible
+  expect(page).to_not have_css('a.unlink-facebook')
+  expect(
+    find_link(t('users.accounts.buttons.link_account', provider_name: 'Facebook'))
+  ).to be_visible
 end
 
 Then(/^I should see a sign up form with my GitHub credentials$/) do
-  find_field('Name').value.should eq(@auth_account[:name])
-  find_field('Email').value.should eq(@auth_account[:email])
+  expect(find_field('Name').value).to eq(@auth_account[:name])
+  expect(find_field('Email').value).to eq(@auth_account[:email])
   within('.btn-github') do
-    page.should have_content('GitHub account')
-    find_link(@github_credentials[:nickname])[:href].should eq(@github_credentials[:website])
+    expect(page).to have_content('GitHub account')
+    expect(find_link(@github_credentials[:nickname])[:href]).to eq(@github_credentials[:website])
   end
 end
 
 Then(/^I should be linked to my GitHub account$/) do
   visit '/users/edit'
-  page.should have_css('a.unlink-github')
-  find_link(@github_credentials[:nickname])[:href].should eq(@github_credentials[:website])
+  expect(page).to have_css('a.unlink-github')
+  expect(find_link(@github_credentials[:nickname])[:href]).to eq(@github_credentials[:website])
 end
 
 Then(/^I should not be linked to a GitHub account$/) do
   visit '/users/edit'
-  page.should_not have_css('a.unlink-github')
-  find_link(t('users.accounts.buttons.link_account', provider_name: 'GitHub')).should be_visible
+  expect(page).to_not have_css('a.unlink-github')
+  expect(
+    find_link(t('users.accounts.buttons.link_account', provider_name: 'GitHub'))
+  ).to be_visible
 end
 
 Then(/^I should see a sign up form with my Google credentials$/) do
-  find_field('Name').value.should eq(@auth_account[:name])
-  find_field('Email').value.should eq(@auth_account[:email])
+  expect(find_field('Name').value).to eq(@auth_account[:name])
+  expect(find_field('Email').value).to eq(@auth_account[:email])
   within('.btn-google-plus') do
-    page.should have_content('Google account')
+    expect(page).to have_content('Google account')
     find_link(@auth_account[:name])
   end
 end
 
 Then(/^I should be linked to my Google account$/) do
   visit '/users/edit'
-  page.should have_css('a.unlink-google-plus')
+  expect(page).to have_css('a.unlink-google-plus')
   find_link(@auth_account[:name])
 end
 
 Then(/^I should not be linked to a Google account$/) do
   visit '/users/edit'
-  page.should_not have_css('a.unlink-google-plus')
-  find_link(t('users.accounts.buttons.link_account', provider_name: 'Google')).should be_visible
+  expect(page).to_not have_css('a.unlink-google-plus')
+  expect(
+    find_link(t('users.accounts.buttons.link_account', provider_name: 'Google'))
+  ).to be_visible
 end
 
 Then(/^I should see a sign up form with my Twitter credentials$/) do
-  find_field('Name').value.should eq(@auth_account[:name])
+  expect(find_field('Name').value).to eq(@auth_account[:name])
   within('.btn-twitter') do
-    page.should have_content('Twitter account')
-    find_link(
-      "@#{@twitter_credentials[:nickname]}")[:href].should eq(@twitter_credentials[:website]
-    )
+    expect(page).to have_content('Twitter account')
+    expect(
+      find_link("@#{@twitter_credentials[:nickname]}")[:href]
+    ).to eq(@twitter_credentials[:website])
   end
 end
 
 Then(/^I should be linked to my Twitter account$/) do
   visit '/users/edit'
-  page.should have_css('a.unlink-twitter')
-  find_link("@#{@auth_account[:nickname]}")[:href].should eq(@twitter_credentials[:website])
+  expect(page).to have_css('a.unlink-twitter')
+  expect(find_link("@#{@auth_account[:nickname]}")[:href]).to eq(@twitter_credentials[:website])
 end
 
 Then(/^I should not be linked to a Twitter account$/) do
   visit '/users/edit'
-  page.should_not have_css('a.unlink-twitter')
-  find_link(t('users.accounts.buttons.link_account', provider_name: 'Twitter')).should be_visible
+  expect(page).to_not have_css('a.unlink-twitter')
+  expect(
+    find_link(t('users.accounts.buttons.link_account', provider_name: 'Twitter'))
+  ).to be_visible
 end
