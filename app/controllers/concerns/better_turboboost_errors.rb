@@ -20,7 +20,7 @@ module Concerns
 
       # Adds full error messages array
       def full_error_messages_array(record, field, errors)
-        if errors.kind_of? Array
+        if errors.is_a? Array
           errors.map { |attribute, message| record.errors.full_message(attribute, message) }
         else
           [record.errors.full_message(field, errors)]
