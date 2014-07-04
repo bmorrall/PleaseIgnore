@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   # Instance Methods
 
   def provider_account?(provider)
-    account_type = Account.provider_class_name(provider)
+    account_type = Account.provider_account_class(provider).name
     accounts.where(type: account_type).any?
   end
 

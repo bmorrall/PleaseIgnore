@@ -90,17 +90,17 @@ class Account < ActiveRecord::Base
       I18n.t(provider, scope: 'account.provider_name')
     end
 
-    # @return [String] name of Account class used to represent provider
-    def provider_class_name(provider)
-      fail ArgumentError, "Unknown provider: #{provider}" unless PROVIDERS.include? provider
-      "Accounts::#{provider.classify}"
-    end
-
-    private
-
-    # Returns account sub class based off `provider`
+    # Returns the Class used for Accounts beloning to `provider
+    #
+    # @api private
+    # @param proivder [String] name of provider that Account belongs to
+    # @return [Class] Account class used to represent provider accounts
     def provider_account_class(provider)
-      provider_class_name(provider).constantize
+      @provider_account_class ||= {}
+      @provider_account_class[provider] ||= begin
+        fail ArgumentError, "Unknown provider: #{provider}" unless PROVIDERS.include? provider
+        "Accounts::#{provider.classify}".constantize
+      end
     end
   end
 
