@@ -181,7 +181,7 @@ Then(/^I should see a failed Developer sign in message$/) do
   expect(page).to have_content(
     t('devise.omniauth_callbacks.failure',
       kind: 'Developer',
-      reason: t('account.reasons.failure.provider_disabled')
+      reason: t('account.reasons.failure.account_disabled')
     )
   )
 end

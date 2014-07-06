@@ -108,12 +108,15 @@ class Account < ActiveRecord::Base
 
   # Validations
 
+  # UID is unique to each account type (provider)
   validates :uid,
             presence: true,
             uniqueness: { scope: :type }
 
+  # Users can only have one account per account type (provider)
   validates :user_id,
-            presence: true
+            presence: true,
+            uniqueness: { scope: :type }
 
   # Instance Methods
 

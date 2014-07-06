@@ -110,8 +110,31 @@ describe Users::OmniauthCallbacksController do
               end.to change(Account, :count).by(1)
               expect(Account.last.user).to eq(user)
             end
+            context 'with an invalid account' do
+              before(:each) do
+                expect_any_instance_of(Account).to receive(:save).and_return(false)
+              end
+
+              context 'with a valid request' do
+                before(:each) { get provider }
+                it { should redirect_to(edit_user_registration_path) }
+                it do
+                  should set_the_flash[:alert].to(
+                    t('devise.omniauth_callbacks.failure',
+                      kind: provider_name,
+                      reason: t('account.reasons.failure.account_invalid')
+                    )
+                  )
+                end
+              end
+              it 'should not create a new Account' do
+                expect do
+                  get provider
+                end.to_not change(Account, :count)
+              end
+            end
           end
-          context 'with a previously linked account' do
+          context 'with the account linked to the user' do
             before(:each) do
               create(:"#{provider}_account", uid: auth_hash.uid, user: user)
             end
@@ -119,6 +142,41 @@ describe Users::OmniauthCallbacksController do
               expect do
                 get provider
               end.to_not change(Account, :count)
+            end
+            context 'with a valid request' do
+              before(:each) do
+                get provider
+              end
+              it { should redirect_to(edit_user_registration_path) }
+              it do
+                should set_the_flash[:notice].to(
+                  t('devise.omniauth_callbacks.success_linked', kind: provider_name)
+                )
+              end
+            end
+          end
+          context "with another #{provider} account linked to the user" do
+            before(:each) do
+              create(:"#{provider}_account", user: user)
+            end
+            it 'should not create a new Account' do
+              expect do
+                get provider
+              end.to_not change(Account, :count)
+            end
+            context 'with a valid request' do
+              before(:each) do
+                get provider
+              end
+              it { should redirect_to(edit_user_registration_path) }
+              it do
+                should set_the_flash[:alert].to(
+                  t('devise.omniauth_callbacks.failure',
+                    kind: provider_name,
+                    reason: t('account.reasons.failure.account_limit', kind: provider_name)
+                  )
+                )
+              end
             end
           end
           context 'with a account linked to another user' do
@@ -195,7 +253,7 @@ describe Users::OmniauthCallbacksController do
               should set_the_flash[:alert].to(
                 t('devise.omniauth_callbacks.failure',
                   kind: 'Developer',
-                  reason: t('account.reasons.failure.provider_disabled')
+                  reason: t('account.reasons.failure.account_disabled')
                 )
               )
             end

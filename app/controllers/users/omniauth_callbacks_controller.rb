@@ -18,20 +18,9 @@ module Users
       authorize! :create, Account
     end
 
-    # Fake Developer Authentication
+    # OAuth Authentication
 
-    # GET /users/developer/callback
-    def developer
-      if user_signed_in?
-        link_account_with_current_user 'developer'
-      else
-        deny_sign_in_or_register_account 'developer'
-      end
-    end
-
-    # Enabled OAuth Authentication
-
-    %w(facebook github google_oauth2 twitter).each do |provider|
+    Account::PROVIDERS.each do |provider|
       # GET /users/#[provider]/callback
       define_method provider do
         if user_signed_in?
@@ -53,14 +42,14 @@ module Users
     #
     # @param provider [String] name of the provider responsible for Account
     def link_account_with_current_user(provider)
-      account = Account.new_with_auth_hash(auth_hash, provider)
-      account.user = current_user
-      if account.save
-        # Account has been linked to profile
-        display_linked_success_flash_message provider
+      account = Account.find_for_oauth(auth_hash, provider)
+      if account.present?
+        display_account_linked_message(provider, account)
+      elsif current_user.provider_account? provider
+        # User already has account linked to profile
+        display_failure_flash_message 'account_limit', provider
       else
-        # Account has been linked to another profile
-        display_failure_flash_message 'previously_linked', provider
+        link_account_to_current_user(provider)
       end
       redirect_to edit_user_registration_path
     end
@@ -93,22 +82,21 @@ module Users
       end
     end
 
-    # Attempt to find account or register, but do not allow user to sign in
+    private
+
+    # Links account the the current user
     #
-    # @param provider [String] name of the provider responsible for Account
-    def deny_sign_in_or_register_account(provider)
-      account = Account.find_for_oauth(auth_hash, provider)
-      if account.present?
-        # Deny Authentication from this Provider
-        display_failure_flash_message 'provider_disabled', provider
-        redirect_to new_user_session_path
+    # @param provider [String] provider auth has belongs to
+    def link_account_to_current_user(provider)
+      account = current_user.accounts.new_with_auth_hash(auth_hash, provider)
+      if account.save
+        # Account has been linked to profile
+        display_linked_success_flash_message provider
       else
-        # Redirect to User Registration with auth hash
-        redirect_user_to_registration_page provider
+        # Account is not valid and cannot be saved
+        display_failure_flash_message 'account_invalid', provider
       end
     end
-
-    private
 
     # Redirects user to the new account registration page.
     # Saves the auth hash for the provider to the Session.
@@ -125,6 +113,15 @@ module Users
     def save_auth_hash_to_session(provider)
       # Save the auth hash without raw info
       session["devise.#{provider}_data"] = auth_hash.reject { |key| key.to_sym == :raw_info }
+    end
+
+    # Account has previously been linked, display success or alert
+    def display_account_linked_message(provider, account)
+      if account.user_id == current_user.id
+        display_linked_success_flash_message provider
+      else
+        display_failure_flash_message 'previously_linked', provider
+      end
     end
 
     # Successful authentication, but registration is required
@@ -160,7 +157,7 @@ module Users
       return unless is_navigational_format?
 
       provider_name = Account.provider_name(provider)
-      reason = t(reason, scope: 'account.reasons.failure')
+      reason = t(reason, scope: 'account.reasons.failure', kind: provider_name)
       set_flash_message(:alert, :failure, kind: provider_name, reason: reason)
     end
   end

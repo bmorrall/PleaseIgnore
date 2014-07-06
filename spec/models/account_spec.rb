@@ -33,7 +33,12 @@ describe Account do
       create(:developer_account)
       should validate_uniqueness_of(:uid).scoped_to(:type)
     end
+
     it { should validate_presence_of(:user_id) }
+    it 'should validate uniqueness of user_id scoped to provider' do
+      create(:developer_account)
+      should validate_uniqueness_of(:user_id).scoped_to(:type)
+    end
   end
 
   describe '.find_for_oauth' do

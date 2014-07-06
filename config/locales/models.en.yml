@@ -8,6 +8,7 @@ en:
       twitter: Twitter
     reasons:
       failure:
-        account_disabled: 'This account has been disabled'
+        account_disabled: 'Authentication has been disabled from this account'
+        account_invalid: 'We were unable to save this account'
+        account_limit: 'You have already been linked to a %{kind} account'
         previously_linked: 'Someone has already linked to this account'
-        provider_disabled: 'Authentication is disabled from this Provider'
