@@ -11,7 +11,7 @@ Feature: Managing linked Twitter accounts
     And I should be linked to my Twitter account
 
   Scenario: Linking my profile with a previously linked Twitter account
-    Given A user is already linked to my Twitter account
+    Given I am already linked to my Twitter account
     And I am logged in
     When I link my profile to my Twitter account
     Then I should see a failed Twitter authentication message

@@ -11,7 +11,7 @@ Feature: Managing linked Google accounts
     And I should be linked to my Google account
 
   Scenario: Linking my profile with a previously linked Google account
-    Given A user is already linked to my Google account
+    Given I am already linked to my Google account
     And I am logged in
     When I link my profile to my Google account
     Then I should see a failed Google authentication message

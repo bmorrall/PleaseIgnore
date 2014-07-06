@@ -11,7 +11,7 @@ Feature: Managing linked GitHub accounts
     And I should be linked to my GitHub account
 
   Scenario: Connecting with a previously linked GitHub account
-    Given A user is already linked to my GitHub account
+    Given I am already linked to my GitHub account
     And I am logged in
     When I link my profile to my GitHub account
     Then I should see a failed GitHub authentication message

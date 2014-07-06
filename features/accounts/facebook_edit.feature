@@ -11,7 +11,7 @@ Feature: Managing linked Facebook accounts
     And I should be linked to my Facebook account
 
   Scenario: Linking my profile with a previously linked Facebook account
-    Given A user is already linked to my Facebook account
+    Given I am already linked to my Facebook account
     And I am logged in
     When I link my profile to my Facebook account
     Then I should see a failed Facebook authentication message
