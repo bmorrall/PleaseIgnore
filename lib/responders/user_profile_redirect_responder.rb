@@ -17,7 +17,7 @@ module Responders
   module UserProfileRedirectResponder
     protected
 
-    # Changes redirect url to /user/edit used by successful POST/PUT/DELETE response.
+    # Changes redirect url to /users/edit used by successful POST/PUT/DELETE response.
     # Can be overridden by the :location option flag.
     def navigation_location
       return options[:location] if options[:location]

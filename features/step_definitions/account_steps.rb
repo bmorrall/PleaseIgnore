@@ -31,7 +31,7 @@ When(/^I sign in using my (.+) account$/) do |provider_name|
   auth_hash = provider_auth_hash(provider)
 
   set_oauth provider, auth_hash
-  visit '/users/sign_in'
+  navigate_to 'the sign in page'
   click_link provider_name
 
   page.body # No-op as background operation may not be complete
@@ -42,7 +42,7 @@ When(/^I link my profile to my (.+) account$/) do |provider_name|
   auth_hash = provider_auth_hash(provider)
 
   set_oauth provider, auth_hash
-  visit '/users/edit'
+  navigate_to 'my profile page'
   click_link t('users.accounts.buttons.link_account', provider_name: provider_name)
 end
 
@@ -50,7 +50,7 @@ When(/^I unlink my (.+) account$/) do |provider_name|
   provider = provider_from_name(provider_name)
   provider_class = provider == :google_oauth2 ? 'google-plus' : provider.to_s
 
-  visit '/users/edit'
+  navigate_to 'my profile page'
   within(".btn-#{provider_class}") do
     find('a.unlink-account').click
   end
@@ -99,7 +99,7 @@ Then(/^I should be linked to my (.+) account$/) do |provider_name|
   provider = provider_from_name(provider_name)
   provider_class = provider == :google_oauth2 ? 'google-plus' : provider.to_s
 
-  visit '/users/edit'
+  navigate_to 'my profile page'
   expect(page).to have_css("a.unlink-#{provider_class}")
 
   account = Account.last
@@ -120,7 +120,7 @@ Then(/^I should not be linked to a (.+) account$/) do |provider_name|
   provider = provider_from_name(provider_name)
   provider_class = provider == :google_oauth2 ? 'google-plus' : provider.to_s
 
-  visit '/users/edit'
+  navigate_to 'my profile page'
   expect(page).to_not have_css("a.unlink-#{provider_class}")
   expect(
     find_link(t('users.accounts.buttons.link_account', provider_name: provider_name))

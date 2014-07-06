@@ -25,9 +25,13 @@ end
 
 Given(/^A visitor has sent a contact request from (.*)$/) do |page_name|
   visit path_to(page_name)
+
+  # Send the contact request
   begin_contact_request
   fill_in_and_send_contact_request
-  page.driver.submit :delete, '/users/sign_out', {}
+
+  # Sign out
+  destroy_session
 end
 
 ### WHEN

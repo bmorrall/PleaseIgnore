@@ -64,7 +64,7 @@ module ApplicationHelper
   # Renders a link to a critical task and should not be followed by TurboLinks or robots
   #
   #   link_to "My Profile", edit_user_registration_path
-  #   # => <a href=/user/edit" rel="nofollow" data-no-turbolink>My Profile</a>
+  #   # => <a href=/users/edit" rel="nofollow" data-no-turbolink>My Profile</a>
   #
   # @param name [String] UrlHelper#link_to name param
   # @param options [Hash, String] UrlHelper#link_to options param

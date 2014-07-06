@@ -2,6 +2,7 @@
 
 def destroy_session
   Capybara.reset_sessions!
+  @current_page = nil
   # page.driver.submit :delete, "/users/sign_out", {}
 end
 
@@ -41,7 +42,8 @@ end
 
 def sign_up
   create_visitor
-  visit '/users/sign_up'
+
+  navigate_to 'the sign up page'
   fill_in 'user_name', with: @visitor[:name]
   fill_in 'user_email', with: @visitor[:email]
   fill_in 'user_password', with: @visitor[:password]
@@ -53,7 +55,8 @@ end
 
 def sign_in
   create_visitor
-  visit '/users/sign_in'
+
+  navigate_to 'the sign in page'
   fill_in 'user_email', with: @visitor[:email]
   fill_in 'user_password', with: @visitor[:password]
   click_button 'Sign in'
@@ -61,7 +64,8 @@ end
 
 def reset_password
   create_visitor
-  visit '/users/password/new'
+
+  navigate_to 'the reset password page'
   fill_in 'user_email', with: @visitor[:email]
   click_button 'Reset Password'
 
@@ -147,7 +151,7 @@ When(/^I sign up with a mismatched password confirmation$/) do
 end
 
 When(/^I return to the site$/) do
-  visit '/'
+  navigate_to 'the home page'
 end
 
 When(/^I sign in with a wrong email$/) do
@@ -175,7 +179,7 @@ When(/^I edit my password details$/) do
 end
 
 When(/^I look at the list of users$/) do
-  visit '/'
+  pending 'TODO: Display list of users'
 end
 
 When(/^I enter a valid password reset request$/) do

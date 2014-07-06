@@ -19,39 +19,46 @@ module NavigationHelpers
   # step definition in web_steps.rb
   #
   def path_to(page_name)
-    case page_name
+    @current_page =
+      case page_name
 
-    when /the home\s?page/
-      '/'
+      when /the home\s?page/
+        '/'
 
-    when /the sign up page/
-      '/users/sign_up'
+      when /the sign up page/
+        '/users/sign_up'
 
-    when /the sign in page/
-      '/users/sign_in'
+      when /the sign in page/
+        '/users/sign_in'
 
-    when /the privacy policy page/
-      '/privacy'
+      when /the reset password page/
+        '/users/password/new'
 
-    when /the terms of service page/
-      '/terms'
+      when /my profile page/
+        '/users/edit'
 
-    # Add more mappings here.
-    # Here is an example that pulls values out of the Regexp:
-    #
-    #   when /^(.*)'s profile page$/i
-    #     user_profile_path(User.find_by_login($1))
+      when /the privacy policy page/
+        '/privacy'
 
-    else
-      begin
-        page_name =~ /the (?<page>.*) page/
-        path_components = page.split(/\s+/)
-        send(path_components.push('path').join('_').to_sym)
-      rescue Object
-        raise "Can't find mapping from \"#{page_name}\" to a path.\n"\
-              "Now, go and add a mapping in #{__FILE__}"
+      when /the terms of service page/
+        '/terms'
+
+      # Add more mappings here.
+      # Here is an example that pulls values out of the Regexp:
+      #
+      #   when /^(.*)'s profile page$/i
+      #     user_profile_path(User.find_by_login($1))
+
+      else
+        begin
+          page_name =~ /the (?<page>.*) page/
+          path_components = page.split(/\s+/)
+          send(path_components.push('path').join('_').to_sym)
+        rescue Object
+          raise "Can't find mapping from \"#{page_name}\" to a path.\n"\
+                "Now, go and add a mapping in #{__FILE__}"
+        end
       end
-    end
   end
   # rubocop:enable CyclomaticComplexity, MethodLength
 end
