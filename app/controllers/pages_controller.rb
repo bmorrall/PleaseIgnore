@@ -11,6 +11,9 @@ class PagesController < ApplicationController
 
   before_filter :set_page_metadata
 
+  # Cache the show action
+  caches_action :show, layout: false
+
   # Fix HighVoltage/pjax layout conflict
   # layout proc { |c| pjax_request? ? pjax_layout : HighVoltage.layout }
 
