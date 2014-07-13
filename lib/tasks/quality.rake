@@ -60,4 +60,4 @@ namespace :quality do
 end
 
 desc "Run code quality metrics on project"
-task quality: %w(quality:cane quality:rubocop quality:yardstick)
+task quality: %w(quality:cane quality:rubocop quality:yardstick brakeman:run)

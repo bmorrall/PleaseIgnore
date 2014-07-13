@@ -124,6 +124,7 @@ group :test, :development do
   gem 'rspec-rails', '3.0.1'
 
   # Code Quality Metrics
+  gem 'brakeman', require: false
   gem 'cane', require: false
   gem 'rubocop', require: false
   gem 'yardstick', require: false
