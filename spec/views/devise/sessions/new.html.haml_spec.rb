@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'devise/sessions/new.html.haml' do
 
-  context do # Within default nesting
+  context 'with a new user resource' do
     let(:user) { User.new }
     before(:each) do
       allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
@@ -10,12 +10,28 @@ describe 'devise/sessions/new.html.haml' do
       allow(view).to receive(:resource_name).and_return('user')
     end
 
-    it 'renders the new session form' do
-      render
+    describe 'the new session form' do
+      it 'renders the form' do
+        render
 
-      assert_select 'form[action=?][method=?]', user_session_path, 'post' do
-        assert_select 'input#user_email[name=?]', 'user[email]'
-        assert_select 'input#user_password[name=?]', 'user[password]'
+        assert_select 'form[action=?][method=?]', user_session_path, 'post' do
+          assert_select 'input#user_email[name=?]', 'user[email]'
+          assert_select 'input#user_password[name=?]', 'user[password]'
+        end
+      end
+      it 'renders all form labels' do
+        render
+
+        assert_select 'label[for=?]', 'user_email', 'Email'
+        assert_select 'label[for=?]', 'user_password', 'Password'
+      end
+      it 'renders all form placeholders' do
+        render
+
+        assert_select '#user_email[placeholder=?]',
+                      t('simple_form.placeholders.defaults.email')
+        assert_select '#user_password[placeholder=?]',
+                      t('simple_form.placeholders.defaults.password')
       end
     end
 

@@ -8,7 +8,7 @@ describe 'devise/registrations/edit.html.haml' do
     allow(user).to receive(:provider_account?).and_return(true)
   end
 
-  context do # Within default nesting
+  context 'with a user resource' do
     let(:user) { build_stubbed(:user) }
     let(:display_profile) { true }
     let(:display_password_change) { true }
@@ -24,24 +24,65 @@ describe 'devise/registrations/edit.html.haml' do
       allow(view).to receive(:display_accounts?).and_return(display_accounts)
     end
 
-    it 'renders the update profile form' do
-      render
+    describe 'update profile form' do
+      it 'renders the form' do
+        render
 
-      assert_select 'h3', 'Profile Information'
-      assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-        assert_select 'input#user_name[name=?]', 'user[name]'
-        assert_select 'input#user_email[name=?]', 'user[email]'
+        assert_select 'h3', 'Profile Information'
+        assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+          assert_select 'input#user_name[name=?]', 'user[name]'
+          assert_select 'input#user_email[name=?]', 'user[email]'
+        end
+      end
+      it 'renders all form labels' do
+        render
+
+        assert_select 'label[for=?]', 'user_name', 'Name'
+        assert_select 'label[for=?]', 'user_email', 'Email'
+      end
+      it 'renders all form placeholders' do
+        render
+
+        assert_select '#user_name[placeholder=?]',
+                      t('simple_form.placeholders.defaults.name')
+        assert_select '#user_email[placeholder=?]',
+                      t('simple_form.placeholders.defaults.email')
       end
     end
 
-    it 'renders the change password form' do
-      render
+    describe 'the change password form' do
+      it 'renders the change password form' do
+        render
 
-      assert_select 'h3', 'Change Password'
-      assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-        assert_select 'input#user_password[name=?]', 'user[password]'
-        assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
-        assert_select 'input#user_current_password[name=?]', 'user[current_password]'
+        assert_select 'h3', 'Change Password'
+        assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+          assert_select 'input#user_password[name=?]', 'user[password]'
+          assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
+          assert_select 'input#user_current_password[name=?]', 'user[current_password]'
+        end
+      end
+      it 'renders all form labels' do
+        render
+
+        assert_select 'label[for=?]', 'user_password', 'New Password'
+        assert_select 'label[for=?]', 'user_password_confirmation',
+                      t('simple_form.labels.user.password_confirmation')
+        assert_select 'label[for=?]', 'user_current_password', 'Current password'
+      end
+      it 'renders all form placeholders' do
+        render
+
+        assert_select '#user_password[placeholder=?]',
+                      t('simple_form.placeholders.defaults.password')
+        assert_select '#user_password_confirmation[placeholder=?]',
+                      t('simple_form.placeholders.defaults.password_confirmation')
+        assert_select '#user_current_password[placeholder=?]',
+                      t('simple_form.placeholders.defaults.current_password')
+      end
+      it 'renders all hints' do
+        render
+
+        assert_select '.help-block', t('simple_form.hints.user.current_password')
       end
     end
 

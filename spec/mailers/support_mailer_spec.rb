@@ -13,7 +13,7 @@ describe SupportMailer do
     end
 
     it 'renders the headers' do
-      expect(mail.subject).to eq('PleaseIgnore Contact Email')
+      expect(mail.subject).to eq t('support_mailer.contact_email.subject')
       expect(mail.to).to eq(['support@pleaseignore.com'])
       expect(mail.from).to eq(['contact@pleaseignore.com'])
     end

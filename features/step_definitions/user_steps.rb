@@ -244,7 +244,7 @@ Then(/^I should see a signed out message$/) do
 end
 
 Then(/^I see an invalid login message$/) do
-  expect(page).to have_content 'Invalid email or password.'
+  expect(page).to have_content t('devise.failure.invalid')
 end
 
 Then(/^I should see an account edited message$/) do

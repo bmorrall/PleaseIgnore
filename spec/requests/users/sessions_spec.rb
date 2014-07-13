@@ -23,13 +23,33 @@ describe 'Sessions' do
 
   describe 'POST create' do
     context 'as a visitor' do
+      context 'with a successful login attempt' do
+        let(:user) { create(:user) }
+        before(:each) do
+          post user_session_path,  user: { email: user.email, password: user.password }
+        end
+
+        it 'redirects to the root url' do
+          expect(response).to redirect_to root_url
+        end
+      end
       context 'with a failed login attempt' do
         before(:each) do
           post user_session_path,  user: { email: 'test@example.com', password: 'wrong' }
         end
 
         it 'displays a generic alert to the user' do
-          assert_select '.alert-danger strong', 'Invalid email or password.'
+          assert_select '.alert-danger strong', t('devise.failure.not_found_in_database')
+        end
+      end
+      context 'with a invalid login attempt' do
+        before(:each) do
+          create :user, email: 'test@example.com'
+          post user_session_path,  user: { email: 'test@example.com', password: 'wrong' }
+        end
+
+        it 'displays a generic alert to the user' do
+          assert_select '.alert-danger strong', t('devise.failure.invalid')
         end
       end
     end

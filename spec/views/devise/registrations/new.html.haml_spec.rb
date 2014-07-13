@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'devise/registrations/new.html.haml' do
 
-  context do # Within default nesting
+  context 'with a new user resource' do
     let(:user) { User.new }
     before(:each) do
       allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
@@ -10,14 +10,37 @@ describe 'devise/registrations/new.html.haml' do
       allow(view).to receive(:resource_name).and_return('user')
     end
 
-    it 'renders the new registration form' do
-      render
+    describe 'the new registration form' do
+      it 'renders the form' do
+        render
 
-      assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-        assert_select 'input#user_name[name=?]', 'user[name]'
-        assert_select 'input#user_email[name=?]', 'user[email]'
-        assert_select 'input#user_password[name=?]', 'user[password]'
-        assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
+        assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+          assert_select 'input#user_name[name=?]', 'user[name]'
+          assert_select 'input#user_email[name=?]', 'user[email]'
+          assert_select 'input#user_password[name=?]', 'user[password]'
+          assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
+        end
+      end
+      it 'renders all form labels' do
+        render
+
+        assert_select 'label[for=?]', 'user_name', 'Name'
+        assert_select 'label[for=?]', 'user_email', 'Email'
+        assert_select 'label[for=?]', 'user_password', 'Password'
+        assert_select 'label[for=?]', 'user_password_confirmation',
+                      t('simple_form.labels.user.password_confirmation')
+      end
+      it 'renders all form placeholders' do
+        render
+
+        assert_select '#user_name[placeholder=?]',
+                      t('simple_form.placeholders.defaults.name')
+        assert_select '#user_email[placeholder=?]',
+                      t('simple_form.placeholders.defaults.email')
+        assert_select '#user_password[placeholder=?]',
+                      t('simple_form.placeholders.defaults.password')
+        assert_select '#user_password_confirmation[placeholder=?]',
+                      t('simple_form.placeholders.defaults.password_confirmation')
       end
     end
 
