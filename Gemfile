@@ -122,6 +122,7 @@ end
 
 group :test, :development do
   gem 'rspec-rails', '3.0.1'
+  gem 'pry-rails'
 
   # Code Quality Metrics
   gem 'brakeman', require: false
