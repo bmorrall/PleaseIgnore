@@ -303,7 +303,7 @@ GEM
     sendgrid (1.2.0)
       json
       json
-    sexp_processor (4.4.1)
+    sexp_processor (4.4.3)
     shoulda-matchers (2.6.1)
       activesupport (>= 3.0.0)
     sidekiq (3.2.1)
