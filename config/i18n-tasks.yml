@@ -1,0 +1,12 @@
+data:
+  read:
+    # read from namespaced files, e.g. simple_form.en.yml
+    - 'config/locales/*.%{locale}.yml'
+    # read from a gem (config is parsed
+search:
+  # search these directories (relative to your Rails.root directory, default: 'app/')
+  paths:
+    - 'app/'
+    - 'features/'
+    - 'spec/'
+    - 'vendor/'
