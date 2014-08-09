@@ -16,6 +16,7 @@
 #  updated_at       :datetime
 #  position         :integer
 #  type             :string(255)
+#  deleted_at       :datetime
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl

@@ -18,6 +18,7 @@
 #  updated_at       :datetime
 #  position         :integer
 #  type             :string(255)
+#  deleted_at       :datetime
 #
 class Account < ActiveRecord::Base
   # All available account provider types
