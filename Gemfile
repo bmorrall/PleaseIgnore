@@ -57,6 +57,9 @@ gem 'high_voltage'
 # Use flutie for page_title and body_class
 gem 'flutie'
 
+# Soft Delete Critical Records
+gem "paranoia", "~> 2.0"
+
 # Use redcarpet for markdown parseing
 gem 'redcarpet'
 
