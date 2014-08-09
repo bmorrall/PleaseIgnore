@@ -121,7 +121,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :test, :development do
-  gem 'rspec-rails', '3.0.1'
+  gem 'rspec-rails'
   gem 'pry-rails'
 
   # Code Quality Metrics

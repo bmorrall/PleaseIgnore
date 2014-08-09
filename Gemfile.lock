@@ -279,7 +279,7 @@ GEM
       rspec-support (~> 3.0.0)
     rspec-mocks (3.0.3)
       rspec-support (~> 3.0.0)
-    rspec-rails (3.0.1)
+    rspec-rails (3.0.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -429,7 +429,7 @@ DEPENDENCIES
   redis-rails
   responders
   rolify
-  rspec-rails (= 3.0.1)
+  rspec-rails
   rubocop
   sass-rails (~> 4.0.0)
   sdoc
