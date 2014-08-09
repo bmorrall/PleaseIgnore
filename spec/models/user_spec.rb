@@ -23,6 +23,8 @@ require 'spec_helper'
 describe User do
   include OmniauthHelpers
 
+  it_behaves_like 'a soft deletable model'
+
   describe 'Factories' do
     it 'creates a User with basic details' do
       user = create(:user)
