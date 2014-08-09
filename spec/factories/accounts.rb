@@ -21,10 +21,13 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :developer_account, class: Accounts::Developer do
+  factory :account, class: Accounts::Developer do
     sequence(:uid) { |n| "uid_#{n}" }
     name { Faker::Name.name }
     user
+
+    factory :developer_account do
+    end
 
     factory :facebook_account, class: Accounts::Facebook do
       image 'http://graph.facebook.com/1234567/picture?type=square'

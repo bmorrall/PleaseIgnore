@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140809115547) do
+ActiveRecord::Schema.define(version: 20140809121828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,8 +30,10 @@ ActiveRecord::Schema.define(version: 20140809115547) do
     t.datetime "updated_at"
     t.integer  "position"
     t.string   "type"
+    t.datetime "deleted_at"
   end
 
+  add_index "accounts", ["deleted_at"], name: "index_accounts_on_deleted_at", using: :btree
   add_index "accounts", ["user_id"], name: "index_accounts_on_user_id", using: :btree
 
   create_table "roles", force: true do |t|

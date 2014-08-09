@@ -29,6 +29,7 @@ class Account < ActiveRecord::Base
 
   belongs_to :user, touch: true
   acts_as_list scope: :user
+  acts_as_paranoid
 
   # Attributes
 

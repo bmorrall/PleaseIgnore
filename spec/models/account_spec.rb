@@ -23,6 +23,8 @@ require 'spec_helper'
 describe Account do
   include OmniauthHelpers
 
+  it_behaves_like 'a soft deletable model'
+
   describe 'associations' do
     it { should belong_to(:user).touch }
   end
