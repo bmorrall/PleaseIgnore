@@ -34,5 +34,9 @@ FactoryGirl.define do
     trait(:banned) do
       after(:create) { |user| user.add_role :banned }
     end
+
+    trait :soft_deleted do
+      deleted_at { DateTime.now }
+    end
   end
 end

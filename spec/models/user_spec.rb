@@ -51,6 +51,19 @@ describe User do
   describe 'Validations' do
     it { should validate_presence_of(:name) }
     it { should validate_acceptance_of(:terms_and_conditions) }
+
+    it 'should validate the uniqueness of email' do
+      create :user
+      should validate_uniqueness_of(:email)
+    end
+
+    context 'with a existing soft deleted user' do
+      let!(:user) { create(:user, :soft_deleted) }
+      # Ensure validate_uniqueness_of compares against soft deleted model
+      before(:each) { expect(described_class).to receive(:first).and_return(user) }
+
+      it { should validate_uniqueness_of(:email) }
+    end
   end
 
   describe '.new_with_session' do

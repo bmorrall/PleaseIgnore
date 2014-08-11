@@ -109,15 +109,17 @@ class Account < ActiveRecord::Base
 
   # Validations
 
+  require 'uniqueness_without_deleted_validator'
+
   # UID is unique to each account type (provider)
   validates :uid,
             presence: true,
-            uniqueness: { scope: :type }
+            uniqueness_without_deleted: { scope: :type }
 
   # Users can only have one account per account type (provider)
   validates :user_id,
             presence: true,
-            uniqueness: { scope: :type }
+            uniqueness_without_deleted: { scope: :type }
 
   # Instance Methods
 

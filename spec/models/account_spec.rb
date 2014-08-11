@@ -41,6 +41,15 @@ describe Account do
       create(:developer_account)
       should validate_uniqueness_of(:user_id).scoped_to(:type)
     end
+
+    context 'with a existing soft deleted account' do
+      let!(:account) { create(:developer_account, :soft_deleted) }
+      # Ensure validate_uniqueness_of compares against soft deleted model
+      before(:each) { expect(described_class).to receive(:first).and_return(account) }
+
+      it { should_not validate_uniqueness_of(:uid).scoped_to(:type) }
+      it { should_not validate_uniqueness_of(:user_id).scoped_to(:type) }
+    end
   end
 
   describe '.find_for_oauth' do

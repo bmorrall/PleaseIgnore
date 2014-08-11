@@ -26,6 +26,10 @@ FactoryGirl.define do
     name { Faker::Name.name }
     user
 
+    trait :soft_deleted do
+      deleted_at { DateTime.now }
+    end
+
     factory :developer_account do
     end
 
