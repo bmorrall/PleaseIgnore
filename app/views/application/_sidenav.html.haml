@@ -1,0 +1,19 @@
+- if user_signed_in?
+  .btn-group-vertical
+    = link_to root_url, class: 'btn btn-default' do
+      = fa 'home'
+      Dashboard
+    = link_to edit_user_registration_path, class: 'btn btn-default' do
+      = fa 'user'
+      My Account
+    - if can? :read, PaperTrail::Version
+      = link_to users_versions_path, class: 'btn btn-default' do
+        = fa 'list-ul'
+        History
+
+  - if current_user.has_role?(:admin)
+    %h5 Services
+    .btn-group-vertical
+      = external_link sidekiq_web_path, class: 'btn btn-default' do
+        = fa 'external-link'
+        Sidekiq

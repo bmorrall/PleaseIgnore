@@ -1,0 +1,15 @@
+.sidenav {
+  // Sidenav buttons are 100% width
+  .btn-group-vertical {
+    width: 100%;
+  }
+}
+
+main > {
+  section:first-child,  .page-header:first-child {
+    // Remove top margin for first header in content
+    h3, h4 {
+      margin-top: 0;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+
+// Hover elements are hidden until a parent has a hover state
+.hover-only {
+  display: none;
+}
+:hover > .hover-only {
+  display: block;
+}
