@@ -53,6 +53,36 @@ describe Account do
     end
   end
 
+  describe 'versioning' do
+    it 'creates a create version on create' do
+      account = build :account
+      with_versioning do
+        expect do
+          account.save!
+        end.to change(PaperTrail::Version, :count).by(1)
+      end
+      expect(account.versions.last.event).to eq('create')
+    end
+    it 'creates a destroy version on delete' do
+      account = create :account
+      with_versioning do
+        expect do
+          account.destroy
+        end.to change(PaperTrail::Version, :count).by(1)
+      end
+      expect(account.versions.last.event).to eq('destroy')
+    end
+    it 'creates a restore version on restore' do
+      account = create :account, :soft_deleted
+      with_versioning do
+        expect do
+          account.restore
+        end.to change(PaperTrail::Version, :count).by(1)
+      end
+      expect(account.versions.last.event).to eq('restore')
+    end
+  end
+
   describe '.find_for_oauth' do
     it 'raises an illegal argument error with an invalid provider' do
       expect do

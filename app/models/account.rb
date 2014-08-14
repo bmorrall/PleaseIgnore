@@ -26,6 +26,16 @@ class Account < ActiveRecord::Base
 
   self.inheritance_column = :type
 
+  # Use paper_trail to track changes to unexpected values
+  has_paper_trail(
+    only: [
+      :user_id,
+      :type
+    ]
+  )
+
+  include Concerns::RecordRestore
+
   # Associations
 
   belongs_to :user, touch: true
@@ -121,6 +131,10 @@ class Account < ActiveRecord::Base
   validates :user_id,
             presence: true,
             uniqueness_without_deleted: { scope: :type }
+
+  # Callbacks
+
+  after_restore :record_restore
 
   # Instance Methods
 
