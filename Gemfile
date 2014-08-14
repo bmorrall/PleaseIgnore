@@ -88,6 +88,9 @@ gem 'sidekiq'
 # Send Devise mail through Sidekiq
 gem 'devise-async'
 
+# Leave a Paper Trail
+gem 'paper_trail', '~> 3.0.1'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
