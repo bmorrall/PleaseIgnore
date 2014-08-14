@@ -67,6 +67,36 @@ describe User do
     end
   end
 
+  describe 'versioning' do
+    it 'creates a create version on create' do
+      user = build :user
+      with_versioning do
+        expect do
+          user.save!
+        end.to change(PaperTrail::Version, :count).by(1)
+      end
+      expect(user.versions.last.event).to eq('create')
+    end
+    it 'creates a destroy version on delete' do
+      user = create :user
+      with_versioning do
+        expect do
+          user.destroy
+        end.to change(PaperTrail::Version, :count).by(1)
+      end
+      expect(user.versions.last.event).to eq('destroy')
+    end
+    it 'creates a restore version on restore' do
+      user = create :user, :soft_deleted
+      with_versioning do
+        expect do
+          user.restore
+        end.to change(PaperTrail::Version, :count).by(1)
+      end
+      expect(user.versions.last.event).to eq('restore')
+    end
+  end
+
   describe '.new_with_session' do
     Account.omniauth_providers.each do |provider|
       provider_name = Account.provider_name(provider)

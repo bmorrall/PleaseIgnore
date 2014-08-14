@@ -22,6 +22,27 @@
 #  deleted_at             :datetime
 #
 class User < ActiveRecord::Base
+  # Use paper_trail to track changes to user modifyable values
+  has_paper_trail(
+    only: [
+      :email,
+      :name
+    ],
+    ignore: [
+      :current_sign_in_at,
+      :current_sign_in_ip
+    ],
+    skip: [
+      :encrypted_password,
+      :reset_password_token,
+      :reset_password_sent_at,
+      :remember_created_at,
+      :sign_in_count,
+      :last_sign_in_at,
+      :last_sign_in_ip
+    ]
+  )
+
   rolify
   acts_as_paranoid
 
@@ -38,6 +59,8 @@ class User < ActiveRecord::Base
     :github,
     :google_oauth2
   ]
+
+  include Concerns::RecordRestore
 
   # Associations
 
@@ -70,6 +93,8 @@ class User < ActiveRecord::Base
   # Callbacks
 
   after_create :save_new_session_accounts
+
+  after_restore :record_restore
 
   # Instance Methods
 
