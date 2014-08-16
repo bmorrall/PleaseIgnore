@@ -43,23 +43,37 @@ class User < ActiveRecord::Base
     ]
   )
 
+  # Use Rolify to manage roles a user can hold
   rolify
+
+  # Use paranoia to soft delete records (instead of destroying them)
   acts_as_paranoid
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :async # Send email through Sidekiq
+  devise(
+    :database_authenticatable,
+    :registerable,
+    :recoverable,
+    :rememberable,
+    :trackable,
+    :validatable,
+    :async # Send email through Sidekiq
+  )
 
-  devise :omniauthable, omniauth_providers: [
-    :developer,
-    :facebook,
-    :twitter,
-    :github,
-    :google_oauth2
-  ]
+  # Include Omniauth Providers available to Users
+  devise(
+    :omniauthable,
+    omniauth_providers: [
+      :developer,
+      :facebook,
+      :twitter,
+      :github,
+      :google_oauth2
+    ]
+  )
 
+  # Allow soft_deletion restore events to be logged
   include Concerns::RecordRestore
 
   # Associations
@@ -92,8 +106,10 @@ class User < ActiveRecord::Base
 
   # Callbacks
 
+  # Save built accounts that have been imported from a session
   after_create :save_new_session_accounts
 
+  # Create Restore paper_trail version if a record is restored
   after_restore :record_restore
 
   # Instance Methods

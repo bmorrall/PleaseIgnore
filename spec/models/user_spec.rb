@@ -68,32 +68,87 @@ describe User do
   end
 
   describe 'versioning' do
-    it 'creates a create version on create' do
-      user = build :user
-      with_versioning do
-        expect do
-          user.save!
-        end.to change(PaperTrail::Version, :count).by(1)
+    context 'with create event' do
+      it 'creates a create version' do
+        user = build :user
+        with_versioning do
+          expect do
+            user.save!
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(user.versions.last.event).to eq('create')
       end
-      expect(user.versions.last.event).to eq('create')
     end
-    it 'creates a destroy version on delete' do
-      user = create :user
-      with_versioning do
-        expect do
-          user.destroy
-        end.to change(PaperTrail::Version, :count).by(1)
+
+    context 'with destroy event' do
+      it 'creates a destroy version' do
+        user = create :user
+        with_versioning do
+          expect do
+            user.destroy
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(user.versions.last.event).to eq('destroy')
       end
-      expect(user.versions.last.event).to eq('destroy')
     end
-    it 'creates a restore version on restore' do
-      user = create :user, :soft_deleted
-      with_versioning do
-        expect do
-          user.restore
-        end.to change(PaperTrail::Version, :count).by(1)
+
+    context 'with restore event' do
+      it 'creates a restore version' do
+        user = create :user, :soft_deleted
+        with_versioning do
+          expect do
+            user.restore
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(user.versions.last.event).to eq('restore')
       end
-      expect(user.versions.last.event).to eq('restore')
+    end
+
+    context 'with update event' do
+      it 'creates a update version when email is changed' do
+        user = create :user
+        with_versioning do
+          expect do
+            user.update_attribute :email, Faker::Internet.email
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(user.versions.last.event).to eq('update')
+      end
+      it 'creates a update version when name is changed' do
+        user = create :user
+        with_versioning do
+          expect do
+            user.update_attribute :name, Faker::Name.name
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(user.versions.last.event).to eq('update')
+      end
+      it 'ignores sensitive user data' do
+        user = create :user
+        with_versioning do
+          expect do
+            user.update_attributes(
+              password: 'new_password',
+              password_confirmation: 'new_password'
+            )
+          end.to_not change(PaperTrail::Version, :count)
+        end
+      end
+      it 'ignores devise managed properties' do
+        user = create :user
+        with_versioning do
+          expect do
+            user.update_attributes(
+              reset_password_token: Faker::Code.rut,
+              reset_password_sent_at: DateTime.now,
+              remember_created_at: DateTime.now,
+              sign_in_count: 22,
+              last_sign_in_at: DateTime.now,
+              last_sign_in_ip: Faker::Internet.ip_v4_address
+            )
+          end.to_not change(PaperTrail::Version, :count)
+        end
+      end
     end
   end
 

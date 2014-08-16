@@ -54,32 +54,87 @@ describe Account do
   end
 
   describe 'versioning' do
-    it 'creates a create version on create' do
-      account = build :account
-      with_versioning do
-        expect do
-          account.save!
-        end.to change(PaperTrail::Version, :count).by(1)
+    context 'with create event' do
+      it 'creates a create version' do
+        account = build :account
+        with_versioning do
+          expect do
+            account.save!
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(account.versions.last.event).to eq('create')
       end
-      expect(account.versions.last.event).to eq('create')
     end
-    it 'creates a destroy version on delete' do
-      account = create :account
-      with_versioning do
-        expect do
-          account.destroy
-        end.to change(PaperTrail::Version, :count).by(1)
+
+    context 'with destroy event' do
+      it 'creates a destroy version' do
+        account = create :account
+        with_versioning do
+          expect do
+            account.destroy
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(account.versions.last.event).to eq('destroy')
       end
-      expect(account.versions.last.event).to eq('destroy')
     end
-    it 'creates a restore version on restore' do
-      account = create :account, :soft_deleted
-      with_versioning do
-        expect do
-          account.restore
-        end.to change(PaperTrail::Version, :count).by(1)
+
+    context 'with restore event' do
+      it 'creates a restore version' do
+        account = create :account, :soft_deleted
+        with_versioning do
+          expect do
+            account.restore
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(account.versions.last.event).to eq('restore')
       end
-      expect(account.versions.last.event).to eq('restore')
+      it 'should touch the user model' do
+        account = create :account, :soft_deleted
+        user = account.user
+        with_versioning do
+          expect do
+            account.restore
+            user.reload
+          end.to change(user, :updated_at)
+        end
+      end
+    end
+
+    context 'with update event' do
+      it 'creates a update version when user_id is changed' do
+        account = create :account
+        with_versioning do
+          expect do
+            account.update_attribute :user_id, account.user_id + 1
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(account.versions.last.event).to eq('update')
+      end
+      it 'creates a update version when type is changed' do
+        account = create :account
+        with_versioning do
+          expect do
+            account.update_attribute :type, Accounts::Facebook.class.name
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(account.versions.last.event).to eq('update')
+      end
+      it 'ignores omniauth assigned properties' do
+        account = create :account
+        with_versioning do
+          expect do
+            account.update_attributes(
+              name: Faker::Name.name,
+              nickname: Faker::Name.first_name,
+              image: Faker::Avatar.image,
+              website: Faker::Internet.url,
+              oauth_token: Faker::Code.rut,
+              oauth_secret: Faker::Code.isbn,
+              oauth_expires_at: DateTime.now
+            )
+          end.to_not change(PaperTrail::Version, :count)
+        end
+      end
     end
   end
 

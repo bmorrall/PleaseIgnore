@@ -24,6 +24,7 @@ class Account < ActiveRecord::Base
   # All available account provider types
   PROVIDERS = %w(facebook twitter github google_oauth2 developer).freeze
 
+  # Accounts are instanciated using Sub-Classes controlled by type
   self.inheritance_column = :type
 
   # Use paper_trail to track changes to unexpected values
@@ -31,16 +32,24 @@ class Account < ActiveRecord::Base
     only: [
       :user_id,
       :type
+    ],
+    ignore: [
+      :deleted_at
     ]
   )
 
+  # Use paranoia to soft delete records (instead of destroying them)
+  acts_as_paranoid
+
+  # Allow soft_deletion restore events to be logged
   include Concerns::RecordRestore
 
   # Associations
 
   belongs_to :user, touch: true
+
+  # Allow User accounts to be managed as a sorted list
   acts_as_list scope: :user
-  acts_as_paranoid
 
   # Attributes
 
@@ -134,7 +143,11 @@ class Account < ActiveRecord::Base
 
   # Callbacks
 
-  after_restore :record_restore
+  # Create Restore paper_trail version if a record is restored
+  after_restore do
+    record_restore
+    user.touch # Ensure the user is touched
+  end
 
   # Instance Methods
 
