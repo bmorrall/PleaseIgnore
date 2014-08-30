@@ -5,7 +5,6 @@ cache:
     - vendor/bundle
     - vendor/assets/components
 rvm:
-  - 1.9.3
   - 2.1.2
 before_install:
   - npm install -g bower
