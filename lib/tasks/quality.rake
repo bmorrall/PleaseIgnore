@@ -3,9 +3,9 @@ namespace :quality do
   begin
     require 'cane/rake_task'
   rescue LoadError
-    warn "cane not available, cane task not provided."
+    warn 'cane not available, cane task not provided.'
   else
-    desc "Run cane to check quality metrics"
+    desc 'Run cane to check quality metrics'
     Cane::RakeTask.new(:cane) do |cane|
       cane.abc_max       = 16
       cane.no_doc        = true
@@ -18,7 +18,7 @@ namespace :quality do
   begin
     require 'rubocop/rake_task'
   rescue LoadError
-    warn "rubocop not available, rubocop task not provided."
+    warn 'rubocop not available, rubocop task not provided.'
   else
     desc 'Run rubocop static code analyser'
     RuboCop::RakeTask.new(:rubocop) do |task|
@@ -33,7 +33,7 @@ namespace :quality do
     begin
       require 'yardstick/rake/measurement'
     rescue LoadError
-      warn "yardstick not available, yardstick task not provided."
+      warn 'yardstick not available, yardstick task not provided.'
     else
       options = YAML.load_file('config/yardstick.yml')
 
@@ -47,7 +47,7 @@ namespace :quality do
     begin
       require 'yardstick/rake/verify'
     rescue LoadError
-      warn "yardstick not available, yardstick task not provided."
+      warn 'yardstick not available, yardstick task not provided.'
     else
       options = YAML.load_file('config/yardstick.yml')
 
@@ -59,5 +59,5 @@ namespace :quality do
   task yardstick: %w(yardstick:verify)
 end
 
-desc "Run code quality metrics on project"
+desc 'Run code quality metrics on project'
 task quality: %w(quality:cane quality:rubocop quality:yardstick brakeman:run)

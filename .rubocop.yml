@@ -5,7 +5,7 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-Style/ClassLength:
+Metrics/ClassLength:
   Enabled: false
 
 Encoding:
@@ -17,3 +17,9 @@ GuardClause:
 # Offense count: 172
 LineLength:
   Max: 100
+  Exclude:
+    - 'lib/tasks/cucumber.rake'
+
+Style/SpecialGlobalVars:
+  Exclude:
+    - 'lib/tasks/travis.rake'

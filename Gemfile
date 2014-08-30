@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.4'
+gem 'rails', '4.1.5'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -37,7 +37,7 @@ gem 'simple_form'
 gem 'acts_as_list'
 
 # User authentication with Devise
-gem 'devise'
+gem 'devise', '< 3.3.0'
 
 # Use Action Caching to save pages
 gem 'actionpack-action_caching'
@@ -45,7 +45,7 @@ gem 'actionpack-action_caching'
 # Omniauth providers
 gem 'omniauth-facebook'
 gem 'omniauth-github'
-gem "omniauth-google-oauth2"
+gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 
 # Use Haml for cleaner HTML
@@ -58,7 +58,7 @@ gem 'high_voltage'
 gem 'flutie'
 
 # Soft Delete Critical Records
-gem "paranoia", "~> 2.0"
+gem 'paranoia', '~> 2.0'
 
 # Use redcarpet for markdown parseing
 gem 'redcarpet'
@@ -67,7 +67,7 @@ gem 'redcarpet'
 gem 'sendgrid'
 
 # Fix assets for Bower
-gem "non-stupid-digest-assets"
+gem 'non-stupid-digest-assets'
 
 # Use Draper for Decorators
 gem 'draper', '~> 1.3'
@@ -92,7 +92,7 @@ gem 'sidekiq'
 gem 'devise-async'
 
 # Leave a Paper Trail
-gem 'paper_trail', '~> 3.0.1'
+gem 'paper_trail'
 
 group :production do
   # Integration with heroku
@@ -142,7 +142,7 @@ end
 group :test do
   gem 'capybara-webkit', '1.2.0'
   gem 'coveralls', require: false
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
