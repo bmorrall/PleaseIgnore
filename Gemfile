@@ -140,7 +140,7 @@ group :test, :development do
   gem 'yardstick', require: false
 end
 group :test do
-  gem 'capybara-webkit', '1.2.0'
+  gem 'capybara-webkit'
   gem 'coveralls', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
