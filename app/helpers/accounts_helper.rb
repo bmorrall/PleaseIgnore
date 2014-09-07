@@ -21,7 +21,7 @@ module AccountsHelper
 
   # List of enabled providers
   def omniauth_providers
-    @omniauth_providers ||= Account.omniauth_providers.map { |provider| provider.to_s }
+    @omniauth_providers ||= Account.omniauth_providers.map(&:to_s)
   end
 
   # Icon of the Account provider

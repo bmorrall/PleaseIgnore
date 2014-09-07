@@ -66,7 +66,7 @@ describe Users::AccountsController do
           it { should respond_with(:success) }
           it 'reorders the accounts' do
             # Reload the accounts
-            [account_a, account_b, account_c].each { |a| a.reload }
+            [account_a, account_b, account_c].each(&:reload)
 
             # Accounts should be in sort order
             expect(account_b.position).to eq(1)
