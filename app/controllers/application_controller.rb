@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   # check_authorization :unless => :devise_controller?
 
   # Add extra parameters for Devise Controllers
-  before_filter :configure_permitted_parameters, if: :devise_controller?
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
 

@@ -19,12 +19,12 @@ class Contact
 
   # Validations
 
-  validates_presence_of :name
+  validates :name, presence: true
 
-  validates_presence_of :email
-  # validates_format_of :email, :with => email_regexp
+  validates :email, presence: true
+  # validates :email, format: { with: email_regexp }
 
-  validates_presence_of :body
+  validates :body, presence: true
 
   # Instance Methods
 

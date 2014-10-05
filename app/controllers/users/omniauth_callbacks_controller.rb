@@ -11,10 +11,10 @@ module Users
   # - Otherwise, Redirects to registration, and links account on successful registration.
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # Don't check CSRF for callbacks
-    skip_before_filter :verify_authenticity_token
+    skip_before_action :verify_authenticity_token
 
     # Ensure User can create accounts
-    before_filter do
+    before_action do
       authorize! :create, Account
     end
 

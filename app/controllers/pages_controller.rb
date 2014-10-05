@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 
   skip_authorization_check # Pages are available for all
 
-  before_filter :set_page_metadata
+  before_action :set_page_metadata
 
   # Cache the show action
   caches_action :show, layout: false

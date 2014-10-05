@@ -10,7 +10,7 @@ class ContactsController < ApplicationController
 
   respond_to :html
 
-  before_filter do
+  before_action do
     authorize! :create, Contact
   end
 
