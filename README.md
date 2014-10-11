@@ -165,6 +165,13 @@ Deployment instructions
 Deployment on Heroku
 --------------------
 
+Starting Sidekiq
+----------------
+
+[Sidekiq](https://github.com/mperham/sidekiq) is used to perform background jobs (mailers, cron tasks, etc). A basic config file that covers all known job types can be found at `config/sidekiq.yml`.
+
+A Sidekiq worker can be started by running: `sidekiq -C config/sidekiq.yml`.
+
 ### Initial setup
 
 Heroku requires a custom buildpack in order to install `Bower` components via NodeJS.
