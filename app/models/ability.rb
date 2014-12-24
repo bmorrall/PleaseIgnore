@@ -18,9 +18,9 @@ class Ability
     # Restrictable Visitor Abilities
     can :create, Account
 
-    if user.persisted?
-      # Authenticated User Abilties
-      can [:update, :destroy], Account, user_id: user.id
-    end
+    return unless user.persisted?
+
+    # Authenticated User Abilties
+    can [:update, :sort, :destroy], Account, user_id: user.id
   end
 end

@@ -139,10 +139,10 @@ class User < ActiveRecord::Base
   #
   # @param size [Fixnum] size of the requested image (in px)
   def gravatar_image(size = 128)
-    unless email.blank?
-      gravatar_id = Digest::MD5.hexdigest(email.downcase)
-      "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
-    end
+    return if email.blank?
+
+    gravatar_id = Digest::MD5.hexdigest(email.downcase)
+    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
   end
 
   # Picture representation of user.

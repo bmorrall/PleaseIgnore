@@ -43,18 +43,22 @@ class ContactsController < ApplicationController
     params.require(:contact).permit(:name, :email, :body, :referer)
   end
 
+  def http_referer
+    @http_referer ||= request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']
+  end
+
   # Sets default values for contact based on current_user and refererr
   #
   # @param contact [Contact] Contact to be updated based
   def update_contact_default_values(contact)
-    # Preset User Detaisl
-    contact.user = current_user if user_signed_in?
+    contact.user = current_user if user_signed_in? # Preset User Details
+    contact.referer = http_referer # Preset Referrer
 
-    # Preset Referrer
-    referer = request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']
-    contact.referer = referer
-    if referer && !current_page?(referer)
-      flash.now[:info] = t('flash.contacts.show.info', referer: referer)
-    end
+    display_referer_flash_message(http_referer)
+  end
+
+  def display_referer_flash_message(referer)
+    return if !referer || current_page?(referer)
+    flash.now[:info] = t('flash.contacts.show.info', referer: referer)
   end
 end

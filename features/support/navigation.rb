@@ -1,7 +1,7 @@
 # Provides Helpers to Simulate Users moving through the site via menus and links,
 # rather than directly entering page urls.
 module NavigationHelpers
-  # rubocop:disable CyclomaticComplexity, MethodLength
+  # rubocop:disable AbcSize, CyclomaticComplexity, MethodLength
 
   def navigate_to(page_name)
     # Ensure a at least home page is open
@@ -52,8 +52,6 @@ module NavigationHelpers
     @current_page = path_to(page_name)
   end
 
-  # rubocop:enable CyclomaticComplexity, MethodLength
-
   def switch_to_new_tab
     if page.driver.browser.respond_to? :switch_to
       # Switch tabs when using selenium
@@ -62,6 +60,8 @@ module NavigationHelpers
       page.driver.switch_to_window page.driver.window_handles.last
     end
   end
+
+  # rubocop:enable AbcSize, CyclomaticComplexity, MethodLength
 end
 
 World(NavigationHelpers)

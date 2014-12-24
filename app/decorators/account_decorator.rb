@@ -38,10 +38,10 @@ class AccountDecorator < Draper::Decorator
   # Renders the account image as an addon for summary_field
   def summary_image
     account_image = object.image
-    if account_image
-      h.content_tag :span, class: 'input-group-addon account-image' do
-        h.image_tag account_image, size: '32x32'
-      end
+    return unless account_image
+
+    h.content_tag :span, class: 'input-group-addon account-image' do
+      h.image_tag account_image, size: '32x32'
     end
   end
 

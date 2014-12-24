@@ -10,6 +10,7 @@ namespace :quality do
       cane.abc_max       = 16
       cane.no_doc        = true
       cane.style_glob    = './{app,config,feature,lib,spec}/**/*.rb'
+      cane.style_exclude = ['./spec/support/**/*.rb', './spec/spec_helper.rb']
       cane.style_measure = 100
     end
   end

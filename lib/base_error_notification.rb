@@ -33,9 +33,13 @@ class BaseErrorNotification < SimpleForm::ErrorNotification
     messages = [template.content_tag(:strong, super)]
     base_errors = object.errors[:base]
     if base_errors.any?
-      error_items = base_errors.map { |error| template.content_tag :li, error }
-      messages << template.content_tag(:ul, error_items.join.html_safe)
+      error_items = base_errors_as_list_items(base_errors)
+      messages << template.content_tag(:ul, error_items)
     end
     messages.join.html_safe
+  end
+
+  def base_errors_as_list_items(base_errors)
+    base_errors.map { |error| template.content_tag :li, error }.join.html_safe
   end
 end
