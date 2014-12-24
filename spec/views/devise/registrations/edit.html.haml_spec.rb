@@ -1,9 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'devise/registrations/edit.html.haml' do
+describe 'devise/registrations/edit.html.haml', type: :view do
 
   def stub_user_accounts(user, *accounts)
-    allow(accounts).to receive(:decorate).and_return(AccountDecorator.decorate_collection(accounts))
+    skip_double_verification do
+      decorated_accounts = AccountDecorator.decorate_collection(accounts)
+      allow(accounts).to receive(:decorate).and_return(decorated_accounts)
+    end
     allow(user).to receive(:accounts).and_return(accounts)
     allow(user).to receive(:provider_account?).and_return(true)
   end
@@ -15,7 +18,7 @@ describe 'devise/registrations/edit.html.haml' do
     let(:display_accounts) { true }
 
     before(:each) do
-      allow(view).to receive(:devise_mapping).and_return(Devise.mappings[:user])
+      stub_devise_mappings
       allow(view).to receive(:resource).and_return(user)
       allow(view).to receive(:resource_name).and_return('user')
 

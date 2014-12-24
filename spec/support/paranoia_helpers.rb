@@ -1,6 +1,6 @@
 
 RSpec.shared_examples 'a soft deletable model' do
-  it { should have_db_column(:deleted_at) }
+  it { is_expected.to have_db_column(:deleted_at) }
 
   it 'should soft delete instances' do
     instance = create described_class.name.underscore

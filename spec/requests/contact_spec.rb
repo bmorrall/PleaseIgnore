@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Contact' do
+describe 'Contact', type: :request do
   enable_rails_cache
 
   def valid_create_attributes

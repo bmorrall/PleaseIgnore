@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::RegistrationsController do
+describe Users::RegistrationsController, type: :routing do
   describe 'routing' do
 
     it 'routes to #cancel' do

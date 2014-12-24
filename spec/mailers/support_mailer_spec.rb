@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SupportMailer do
+describe SupportMailer, type: :mailer do
   describe 'contact_email' do
     let(:mail) { SupportMailer.contact_email(contact_email_attributes) }
     let(:contact_email_attributes) do

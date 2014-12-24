@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'pages/terms.html.haml' do
+describe 'pages/terms.html.haml', type: :view do
 
   context do # Within default nesting
     it 'renders the terms page' do

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'pages/privacy.html.haml' do
+describe 'pages/privacy.html.haml', type: :view do
 
   context do # Within default nesting
     it 'renders the privacy page' do

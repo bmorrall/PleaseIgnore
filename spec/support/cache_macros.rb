@@ -22,3 +22,7 @@ module CacheMacros
     controller_spec.extend(ClassMethods)
   end
 end
+
+RSpec.configure do |config|
+  config.include CacheMacros, type: :request
+end

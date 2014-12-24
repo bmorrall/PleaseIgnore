@@ -19,9 +19,9 @@
 #  deleted_at             :datetime
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe User do
+describe User, type: :model do
   include OmniauthHelpers
 
   it_behaves_like 'a soft deletable model'
@@ -46,16 +46,16 @@ describe User do
   end
 
   describe 'Associations' do
-    it { should have_many(:accounts).dependent(:destroy) }
+    it { is_expected.to have_many(:accounts).dependent(:destroy) }
   end
 
   describe 'Validations' do
-    it { should validate_presence_of(:name) }
-    it { should validate_acceptance_of(:terms_and_conditions) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_acceptance_of(:terms_and_conditions) }
 
     it 'should validate the uniqueness of email' do
       create :user
-      should validate_uniqueness_of(:email)
+      is_expected.to validate_uniqueness_of(:email)
     end
 
     context 'with a existing soft deleted user' do
@@ -63,7 +63,7 @@ describe User do
       # Ensure validate_uniqueness_of compares against soft deleted model
       before(:each) { expect(described_class).to receive(:first).and_return(user) }
 
-      it { should validate_uniqueness_of(:email) }
+      it { is_expected.to validate_uniqueness_of(:email) }
     end
   end
 

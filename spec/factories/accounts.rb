@@ -23,7 +23,7 @@
 
 FactoryGirl.define do
   factory :account, class: Accounts::Developer do
-    sequence(:uid) { |n| "uid_#{n}" }
+    sequence(:uid) { |n| "#{type.demodulize.downcase}_uid_#{n}" }
     name { Faker::Name.name }
     user
 

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Passwords' do
+describe 'Passwords', type: :request do
 
   describe 'GET new' do
     context 'as a visitor' do

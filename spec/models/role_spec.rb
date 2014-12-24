@@ -10,17 +10,17 @@
 #  updated_at    :datetime
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Role do
+describe Role, type: :model do
 
   describe 'associations' do
-    it { should have_and_belong_to_many(:users) }
-    it { should belong_to(:resource) }
+    it { is_expected.to have_and_belong_to_many(:users) }
+    it { is_expected.to belong_to(:resource) }
   end
 
   describe 'validations' do
-    it { should allow_value('admin').for(:name) }
-    it { should allow_value('banned').for(:name) }
+    it { is_expected.to allow_value('admin').for(:name) }
+    it { is_expected.to allow_value('banned').for(:name) }
   end
 end

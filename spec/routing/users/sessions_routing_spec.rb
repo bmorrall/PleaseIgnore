@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::SessionsController do
+describe Users::SessionsController, type: :routing do
   describe 'routing' do
 
     it 'routes to #new' do

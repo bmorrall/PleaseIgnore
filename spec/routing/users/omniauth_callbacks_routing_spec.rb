@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::OmniauthCallbacksController do
+describe Users::OmniauthCallbacksController, type: :routing do
   describe 'routing' do
 
     it 'routes to #facebook callback' do

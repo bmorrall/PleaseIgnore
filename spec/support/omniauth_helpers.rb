@@ -5,7 +5,7 @@ module OmniauthHelpers
     @auth_account ||= { name: 'Testy McSocial', email: 'testy@socialexample.com' }
   end
 
-  # rubocop:disable MethodLength
+  # rubocop:disable AbcSize, MethodLength
 
   # @param provider [Symbol] name of provider to create credentials for
   # @return [Hash] Credentials for creating a provider auth hash
@@ -192,7 +192,7 @@ module OmniauthHelpers
     )
   end
 
-  # rubocop:enable MethodLength
+  # rubocop:enable AbcSize, MethodLength
 
   def set_oauth(provider, auth_hash)
     OmniAuth.config.test_mode = true

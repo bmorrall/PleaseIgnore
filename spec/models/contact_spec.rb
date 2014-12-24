@@ -1,12 +1,12 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Contact do
+describe Contact, type: :model do
 
   describe 'Validations' do
-    it { should validate_presence_of(:name) }
-    it { should validate_presence_of(:email) }
-    it { should validate_presence_of(:body) }
-    it { should_not validate_presence_of(:referer) }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:body) }
+    it { is_expected.not_to validate_presence_of(:referer) }
   end
 
   describe 'Attributes' do

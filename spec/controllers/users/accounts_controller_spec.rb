@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::AccountsController do
+describe Users::AccountsController, type: :controller do
 
   describe 'DELETE destroy' do
     context 'with a signed in User' do
@@ -22,7 +22,7 @@ describe Users::AccountsController do
 
           it { expect(response).to redirect_to edit_user_registration_path }
           it do
-            should set_the_flash[:notice].to(
+            is_expected.to set_the_flash[:notice].to(
               t('flash.users.accounts.destroy.notice', provider_name: 'Facebook')
             )
           end
@@ -42,7 +42,11 @@ describe Users::AccountsController do
           end
 
           it { expect(response).to redirect_to edit_user_registration_path }
-          it { should set_the_flash[:warning].to(t('flash.users.accounts.destroy.warning')) }
+          it do
+            is_expected.to set_the_flash[:warning].to(
+              t('flash.users.accounts.destroy.warning')
+            )
+          end
         end
       end
     end
@@ -51,7 +55,7 @@ describe Users::AccountsController do
   describe 'POST sort' do
     context 'with a signed in User' do
       login_user
-      grant_ability :update, Account
+      grant_ability :sort, Account
 
       context 'with multiple accounts' do
         let!(:account_a) { create(:developer_account, position: 1, user: logged_in_user) }
@@ -63,7 +67,7 @@ describe Users::AccountsController do
             xhr :post, :sort, account_ids: [account_b.id, account_c.id, account_a.id]
           end
 
-          it { should respond_with(:success) }
+          it { is_expected.to respond_with(:success) }
           it 'reorders the accounts' do
             # Reload the accounts
             [account_a, account_b, account_c].each(&:reload)

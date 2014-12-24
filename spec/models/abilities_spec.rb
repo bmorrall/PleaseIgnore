@@ -1,7 +1,7 @@
-require 'spec_helper'
+require 'rails_helper'
 require 'cancan/matchers'
 
-describe User do
+describe User, type: :model do
 
   describe 'abilities' do
     let(:user) { nil }
@@ -9,23 +9,23 @@ describe User do
 
     shared_examples 'a standard user' do
       # Accounts
-      it { should be_able_to(:create, Account) }
-      it { should be_able_to(:update, build_stubbed(:developer_account, user: user)) }
-      it { should be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
-      it { should_not be_able_to(:update, build_stubbed(:developer_account)) }
-      it { should_not be_able_to(:destroy, build_stubbed(:developer_account)) }
+      it { is_expected.to be_able_to(:create, Account) }
+      it { is_expected.to be_able_to(:update, build_stubbed(:developer_account, user: user)) }
+      it { is_expected.to be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
+      it { is_expected.not_to be_able_to(:update, build_stubbed(:developer_account)) }
+      it { is_expected.not_to be_able_to(:destroy, build_stubbed(:developer_account)) }
 
       # Contacts
-      it { should be_able_to(:create, Contact) }
+      it { is_expected.to be_able_to(:create, Contact) }
     end
 
     describe 'as a guest' do
 
       # Accounts
-      it { should be_able_to(:create, Account) }
+      it { is_expected.to be_able_to(:create, Account) }
 
       # Contacts
-      it { should be_able_to(:create, Contact) }
+      it { is_expected.to be_able_to(:create, Contact) }
     end
 
     describe 'as a user' do
@@ -43,11 +43,11 @@ describe User do
       let(:user) { create(:user, :banned) }
 
       # Accounts
-      it { should_not be_able_to(:create, Account) }
-      it { should_not be_able_to(:update, build_stubbed(:developer_account, user: user)) }
-      it { should_not be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
-      it { should_not be_able_to(:update, Account) }
-      it { should_not be_able_to(:destroy, Account) }
+      it { is_expected.not_to be_able_to(:create, Account) }
+      it { is_expected.not_to be_able_to(:update, build_stubbed(:developer_account, user: user)) }
+      it { is_expected.not_to be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
+      it { is_expected.not_to be_able_to(:update, Account) }
+      it { is_expected.not_to be_able_to(:destroy, Account) }
     end
   end
 end

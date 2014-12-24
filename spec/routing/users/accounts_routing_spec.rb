@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::AccountsController do
+describe Users::AccountsController, type: :routing do
   describe 'routing' do
 
     it 'routes to #destroy' do

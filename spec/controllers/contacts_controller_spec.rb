@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ContactsController do
+describe ContactsController, type: :controller do
 
   def valid_create_attributes
     attributes_for(:contact)
@@ -12,11 +12,11 @@ describe ContactsController do
 
       context 'with a valid request' do
         before(:each) { get :show }
-        it { should render_template(:show) }
-        it { should render_with_layout(:application) }
+        it { is_expected.to render_template(:show) }
+        it { is_expected.to render_with_layout(:application) }
         it { expect(response.content_type).to eq('text/html') }
-        it { should_not set_the_flash }
-        it { should_not set_the_flash.now }
+        it { is_expected.not_to set_the_flash }
+        it { is_expected.not_to set_the_flash.now }
         it 'assigns a Contact to contact' do
           expect(assigns(:contact)).to be_kind_of(Contact)
         end
@@ -31,7 +31,7 @@ describe ContactsController do
           expect(contact.referer).to eq('http://pleaseignore.com/terms')
         end
         it do
-          should set_the_flash.now[:info].to(
+          is_expected.to set_the_flash.now[:info].to(
             t('flash.contacts.show.info', referer: 'http://pleaseignore.com/terms')
           )
         end
@@ -46,7 +46,7 @@ describe ContactsController do
           expect(contact.referer).to eq('http://pleaseignore.com/about')
         end
         it do
-          should set_the_flash.now[:info].to(
+          is_expected.to set_the_flash.now[:info].to(
             t('flash.contacts.show.info', referer: 'http://pleaseignore.com/about')
           )
         end
@@ -56,7 +56,7 @@ describe ContactsController do
           request.headers['HTTP_REFERER'] = 'http://test.host/contact'
           get :show
         end
-        it { should_not set_the_flash.now }
+        it { is_expected.not_to set_the_flash.now }
       end
     end
     context 'as a logged in user' do
@@ -83,8 +83,8 @@ describe ContactsController do
 
       context 'with a valid xhr request' do
         before(:each) { xhr :post, :create, contact: valid_create_attributes }
-        it { should redirect_to thank_you_contact_path }
-        it { should set_the_flash[:notice].to t('flash.contacts.create.notice') }
+        it { is_expected.to redirect_to thank_you_contact_path }
+        it { is_expected.to set_the_flash[:notice].to t('flash.contacts.create.notice') }
         it 'should send a contact email to support' do
           email = ActionMailer::Base.deliveries.last
           expect(email.to).to eq(['support@pleaseignore.com'])
@@ -94,9 +94,9 @@ describe ContactsController do
       end
       context 'with a xhr request with errors' do
         before(:each) { xhr :post, :create, contact: { name: 'not-valid' } }
-        it { should respond_with(:unprocessable_entity) }
-        it { should_not render_with_layout }
-        it { should_not set_the_flash }
+        it { is_expected.to respond_with(:unprocessable_entity) }
+        it { is_expected.not_to render_with_layout }
+        it { is_expected.not_to set_the_flash }
         it 'should assign a contact with errors' do
           contact = assigns(:contact)
           expect(contact.errors).to_not be_empty
@@ -132,9 +132,9 @@ describe ContactsController do
     context 'as a visitor' do
       context 'with a valid request' do
         before(:each) { get :thank_you }
-        it { should render_template(:thank_you) }
-        it { should render_with_layout(:application) }
-        it { should_not set_the_flash }
+        it { is_expected.to render_template(:thank_you) }
+        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.not_to set_the_flash }
       end
     end
   end

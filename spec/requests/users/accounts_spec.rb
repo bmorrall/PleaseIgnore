@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Users::Accounts' do
+describe 'Users::Accounts', type: :request do
 
   describe 'DELETE /users/accounts/1 AS xhr' do
     context 'as a user belonging to the account' do

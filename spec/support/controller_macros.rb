@@ -36,3 +36,7 @@ module ControllerMacros
     end
   end
 end
+
+RSpec.configure do |config|
+  config.include ControllerMacros, type: :controller
+end

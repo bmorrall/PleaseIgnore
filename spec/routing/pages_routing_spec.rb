@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe PagesController do
+describe PagesController, type: :routing do
   describe 'routing' do
 
     it 'routes root to #show' do

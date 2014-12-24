@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Sessions' do
+describe 'Sessions', type: :request do
 
   describe 'GET new' do
     context 'as a visitor' do

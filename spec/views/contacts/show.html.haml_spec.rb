@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'contacts/show.html.haml' do
+describe 'contacts/show.html.haml', type: :view do
 
   context 'with a new Contact' do
     let(:contact) { Contact.new }

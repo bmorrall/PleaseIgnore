@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'Pages' do
+describe 'Pages', type: :request do
   enable_rails_cache
 
   def page_titles

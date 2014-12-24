@@ -19,9 +19,9 @@
 #  deleted_at       :datetime
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Account do
+describe Account, type: :model do
   include OmniauthHelpers
 
   describe '.find_for_oauth' do
@@ -64,10 +64,10 @@ describe Account do
   end
 end
 
-describe Accounts::Github do
+describe Accounts::Github, type: :model do
 
   describe 'validations' do
-    it { should allow_value('Accounts::Github').for(:type) }
+    it { is_expected.to allow_value('Accounts::Github').for(:type) }
   end
 
   describe '#account_uid' do
@@ -92,10 +92,10 @@ describe Accounts::Github do
   describe '#enabled?' do
     context 'with a user account' do
       before(:each) { subject.user = build_stubbed(:user) }
-      it { should be_enabled }
+      it { is_expected.to be_enabled }
     end
     context 'without a user' do
-      it { should_not be_enabled }
+      it { is_expected.not_to be_enabled }
     end
   end
 

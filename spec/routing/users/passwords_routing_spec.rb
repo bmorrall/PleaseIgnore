@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::PasswordsController do
+describe Users::PasswordsController, type: :routing do
   describe 'routing' do
 
     it 'routes to #new' do

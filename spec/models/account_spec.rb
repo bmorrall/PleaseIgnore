@@ -19,28 +19,28 @@
 #  deleted_at       :datetime
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe Account do
+describe Account, type: :model do
   include OmniauthHelpers
 
   it_behaves_like 'a soft deletable model'
 
   describe 'associations' do
-    it { should belong_to(:user).touch }
+    it { is_expected.to belong_to(:user).touch }
   end
 
   describe 'validations' do
-    it { should validate_presence_of(:uid) }
+    it { is_expected.to validate_presence_of(:uid) }
     it 'should validate uniqueness of uid scoped to provider' do
       create(:developer_account)
-      should validate_uniqueness_of(:uid).scoped_to(:type)
+      is_expected.to validate_uniqueness_of(:uid).scoped_to(:type)
     end
 
-    it { should validate_presence_of(:user_id) }
+    it { is_expected.to validate_presence_of(:user_id) }
     it 'should validate uniqueness of user_id scoped to provider' do
       create(:developer_account)
-      should validate_uniqueness_of(:user_id).scoped_to(:type)
+      is_expected.to validate_uniqueness_of(:user_id).scoped_to(:type)
     end
 
     context 'with a existing soft deleted account' do
@@ -48,8 +48,8 @@ describe Account do
       # Ensure validate_uniqueness_of compares against soft deleted model
       before(:each) { expect(described_class).to receive(:first).and_return(account) }
 
-      it { should_not validate_uniqueness_of(:uid).scoped_to(:type) }
-      it { should_not validate_uniqueness_of(:user_id).scoped_to(:type) }
+      it { is_expected.not_to validate_uniqueness_of(:uid).scoped_to(:type) }
+      it { is_expected.not_to validate_uniqueness_of(:user_id).scoped_to(:type) }
     end
   end
 
