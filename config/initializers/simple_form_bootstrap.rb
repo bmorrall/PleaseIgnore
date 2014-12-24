@@ -65,7 +65,7 @@ SimpleForm.setup do |config|
   config.label_class = 'control-label'
 
   # Don't display required start for forms
-  config.label_text = ->(label, _required) { label }
+  config.label_text = ->(label, _required, _explicit_label) { label }
 
   # Add Animated Error Classes
   config.error_notification_class = 'alert alert-danger animated fadeInDown'
