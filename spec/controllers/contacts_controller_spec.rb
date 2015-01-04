@@ -108,13 +108,14 @@ describe ContactsController, type: :controller do
         end
       end
 
-      it 'should send contact emails through Sidekiq mailer queue' do
+      it 'should send contact emails through a action mailer delivery job queue' do
         Sidekiq::Testing.fake! do
+          mailer_worker = ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
           expect do
             xhr :post, :create, contact: valid_create_attributes
-          end.to change(Sidekiq::Extensions::DelayedMailer.jobs, :size).by(1)
+          end.to change(mailer_worker.jobs, :size).by(1)
 
-          mailer_job = Sidekiq::Extensions::DelayedMailer.jobs.last
+          mailer_job = mailer_worker.jobs.last
           expect(mailer_job['queue']).to eq('mailer')
         end
       end

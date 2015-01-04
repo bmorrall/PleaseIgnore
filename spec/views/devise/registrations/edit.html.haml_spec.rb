@@ -98,9 +98,10 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           stub_user_accounts(user, facebook_account, twitter_account)
           render
 
-          assert_select '.linked-accounts[data-sort-path=?]', sort_users_accounts_path, count: 1 do
-            assert_select '.btn-facebook[data-account-id=?]', facebook_account.id
-            assert_select '.btn-twitter[data-account-id=?]', twitter_account.id
+          linked_accounts_div = ".linked-accounts[data-sort-path='#{sort_users_accounts_path}']"
+          assert_select linked_accounts_div, count: 1 do
+            assert_select ".btn-facebook[data-account-id='#{facebook_account.id}']"
+            assert_select ".btn-twitter[data-account-id='#{twitter_account.id}']"
           end
         end
 

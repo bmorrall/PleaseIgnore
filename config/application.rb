@@ -28,5 +28,8 @@ module PleaseIgnore
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
+
+    # Fix deprecation errors with transactional callbacks
+    config.active_record.raise_in_transactional_callbacks = true
   end
 end
