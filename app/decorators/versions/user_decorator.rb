@@ -22,13 +22,13 @@ module Versions
         object.event,
         item_id: object.item_id,
         scope: [:decorators, :versions, :title, :profile],
-        default: event_message
+        default: title_for_user
       )
     end
 
     def title_for_user
       I18n.t(
-        event_type,
+        object.event,
         item_id: object.item_id,
         scope: [:decorators, :versions, :title, :user]
       )
