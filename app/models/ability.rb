@@ -22,5 +22,10 @@ class Ability
 
     # Authenticated User Abilties
     can [:update, :sort, :destroy], Account, user_id: user.id
+
+    return unless user.has_role? :admin
+
+    # Admin User Abilities
+    can :read, PaperTrail::Version
   end
 end

@@ -32,13 +32,20 @@ describe User, type: :model do
       let(:user) { build_stubbed(:user) }
 
       it_behaves_like 'a standard user'
+
+      # Versions
+      it { is_expected.to_not be_able_to(:read, PaperTrail::Version) }
     end
 
     describe 'as a admin' do
       let(:user) { create(:user, :admin) }
 
       it_behaves_like 'a standard user'
+
+      # Versions
+      it { is_expected.to be_able_to(:read, PaperTrail::Version) }
     end
+
     describe 'as a banned user' do
       let(:user) { create(:user, :banned) }
 
@@ -48,6 +55,9 @@ describe User, type: :model do
       it { is_expected.not_to be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
       it { is_expected.not_to be_able_to(:update, Account) }
       it { is_expected.not_to be_able_to(:destroy, Account) }
+
+      # Versions
+      it { is_expected.not_to be_able_to(:read, PaperTrail::Version) }
     end
   end
 end

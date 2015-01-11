@@ -151,6 +151,14 @@ class User < ActiveRecord::Base
     image || gravatar_image(size)
   end
 
+  # Returns a collection of PaperTrail::Version objects that correlates to changes made by the user
+  def related_versions
+    PaperTrail::Version.where "(item_type = ? AND item_id = ?) OR \
+                               (item_type = ? AND item_id IN (?))",
+                              'User', id,
+                              'Account', accounts.with_deleted.pluck(:id)
+  end
+
   protected
 
   # Collects auth hashes from all stored providers and adds them to the new_session_accounts

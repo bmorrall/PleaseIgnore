@@ -7,6 +7,7 @@ class AccountDecorator < Draper::Decorator
 
   # Alert Display Helpers
 
+  # Returns a url to an icon representing the account type
   def account_icon
     h.provider_icon object.provider
   end

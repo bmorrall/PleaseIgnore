@@ -1,0 +1,13 @@
+- decorate_version(@version) do |version|
+  %h3
+    = version.title
+
+  .list-group-item
+    %p.list-group-item-text
+      = version.whodunnit_on
+    %p.list-group-item-text
+      %small{style: 'color: #888'}
+        = version.user_location
+
+  %pre
+    = version.change_summary

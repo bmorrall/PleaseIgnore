@@ -4,3 +4,30 @@ en:
       prompts:
         cancel_registration: "Are you sure you want to cancel sign in?"
         unlink_account: "Are you sure you want to unlink your %{provider} account"
+    versions:
+      title:
+        account:
+          create: 'Created %{provider_name} Account #%{item_id} <%{account_uid}>'
+          create_on: 'Created %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          destroy: 'Deleted %{provider_name} Account #%{item_id} <%{account_uid}>'
+          destroy_on: 'Deleted %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          restore: 'Recovered %{provider_name} Account #%{item_id} <%{account_uid}>'
+          restore_on: 'Recovered %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          update: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}>'
+          update_on: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}> on'
+        profile:
+          destroy: 'Deleted Profile'
+          destroy_on: 'Deleted Profile on'
+          restore: 'Recovered Profile'
+          restore_on: 'Recovered Profile on'
+          update: 'Updated Profile'
+          update_on: 'Updated Profile on'
+        user:
+          create: 'Created Account'
+          create_on: 'Created Account on'
+          destroy: 'Deleted Account'
+          destroy_on: 'Deleted Account on'
+          restore: 'Recovered Account'
+          restore_on: 'Recovered Account on'
+          update: 'Updated Account'
+          update_on: 'Updated Account on'

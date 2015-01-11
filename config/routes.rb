@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :accounts, only: :destroy do
       post :sort, on: :collection
     end
+    resources :versions, only: [:index]
   end
 
   resource :contact, only: [:show, :create] do

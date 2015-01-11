@@ -21,7 +21,6 @@
 #  deleted_at       :datetime
 #
 class Account < ActiveRecord::Base
-
   # All available account provider types
   PROVIDERS = %w(facebook twitter github google_oauth2 developer).freeze
 

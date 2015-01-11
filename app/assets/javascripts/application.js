@@ -29,3 +29,4 @@
 //
 //= require main
 //= require users
+//= require versions

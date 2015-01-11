@@ -12,3 +12,10 @@ en:
         account_invalid: 'We were unable to save this account'
         account_limit: 'You have already been linked to a %{kind} account'
         previously_linked: 'Someone has already linked to this account'
+  papertrail/versions:
+    created_on:
+      today: Today
+    user:
+      rake: Rake
+      console: Console
+      guest: Guest

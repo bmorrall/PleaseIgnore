@@ -8,6 +8,7 @@ elsif File.basename($PROGRAM_NAME) == 'rake'
 end
 
 module PaperTrail
+  # Additional features for PaperTrail::Version
   class Version < ActiveRecord::Base
     # Add meta attributes onto version table
     store :meta, accessors: [:ip, :user_agent, :comments], coder: JSON

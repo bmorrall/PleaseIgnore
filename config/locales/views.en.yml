@@ -32,3 +32,6 @@ en:
     accounts:
       buttons:
         link_account: 'Link your %{provider_name} Account'
+    versions:
+      index:
+        page_title: History

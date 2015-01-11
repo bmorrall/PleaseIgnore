@@ -1,0 +1,15 @@
+.versions-list {
+  // Fix display of fields
+  .user-location {
+    color: #888;
+  }
+  .whodunnit {
+    color: $brand-info;
+    font-family: monospace, monospace;
+  }
+
+  // Remove extra margin around code blocks
+  .list-group-item pre {
+    margin: ($line-height-computed / 2) 0 0;
+  }
+}

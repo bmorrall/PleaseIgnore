@@ -81,4 +81,14 @@ module ApplicationHelper
     end
     link_to(name, options, html_options, &block)
   end
+
+  # Utilities
+
+  def date_is_today?(date)
+    date == DateTime.now.to_date
+  end
+
+  def date_is_recent?(date)
+    date > 1.day.ago
+  end
 end
