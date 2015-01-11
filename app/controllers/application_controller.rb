@@ -29,4 +29,13 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]
     devise_parameter_sanitizer.for(:account_update) << :name
   end
+
+  # [PaperTrail] include IP and User Agent in version history
+  def info_for_paper_trail
+    {
+      comments: params[:comments],
+      ip: request.remote_ip,
+      user_agent: request.user_agent
+    }
+  end
 end
