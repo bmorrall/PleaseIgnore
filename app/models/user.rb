@@ -58,11 +58,7 @@ class User < ActiveRecord::Base
     :rememberable,
     :trackable,
     :validatable,
-    :async # Send email through Sidekiq
-  )
-
-  # Include Omniauth Providers available to Users
-  devise(
+    :async, # Send email through Sidekiq
     :omniauthable,
     omniauth_providers: [
       :developer,
