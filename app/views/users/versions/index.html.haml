@@ -1,8 +1,8 @@
 - content_for(:page_title) { t('.page_title') }
 
-.versions-list
-  - @versions.group_by { |item| item.created_at.to_date }.each do |created_on, grouped_versions|
-    %h3
+- @versions.group_by { |item| item.created_at.to_date }.each do |created_on, grouped_versions|
+  %section.versions-list
+    %h3.page-header
       - if date_is_today? created_on
         = t('papertrail/versions.created_on.today')
       - else

@@ -8,6 +8,8 @@ module Users
   # - Allows user to edit their details without providing a password
   # - Provides separate profile update and password change forms
   class RegistrationsController < Devise::RegistrationsController
+    layout 'dashboard', only: [:edit, :update]
+
     helper_method :display_accounts?
     helper_method :display_profile?
     helper_method :display_password_change?

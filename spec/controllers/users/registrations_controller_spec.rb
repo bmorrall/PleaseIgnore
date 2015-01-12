@@ -29,6 +29,8 @@ describe Users::RegistrationsController, type: :controller do
         before(:each) do
           get :edit
         end
+        it { is_expected.to render_template(:edit) }
+        it { is_expected.to render_with_layout(:dashboard) }
         it 'displays all forms' do
           expect(controller.send(:display_password_change?)).to be(true)
           expect(controller.send(:display_accounts?)).to be(true)
@@ -60,7 +62,7 @@ describe Users::RegistrationsController, type: :controller do
           post :update, user: invalid_profile_attributes
         end
         it { is_expected.to render_template(:edit) }
-        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.to render_with_layout(:dashboard) }
         it { is_expected.not_to set_the_flash }
         it 'should only display the profile form' do
           expect(controller.send(:display_profile?)).to be(true)
@@ -87,7 +89,7 @@ describe Users::RegistrationsController, type: :controller do
           post :update, user: invalid_password_change_attributes
         end
         it { is_expected.to render_template(:edit) }
-        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.to render_with_layout(:dashboard) }
         it { is_expected.not_to set_the_flash }
         it 'should only display the password form' do
           expect(controller.send(:display_password_change?)).to be(true)
