@@ -9,10 +9,6 @@ module PaperTrail
       h.content_tag :blockquote, object.comments if object.comments?
     end
 
-    def created_at
-      h.local_time object.created_at, format: :long
-    end
-
     def created_at_ago
       h.local_time_ago object.created_at
     end
@@ -61,12 +57,6 @@ module PaperTrail
       else
         parts.join(' on ')
       end.html_safe
-    end
-
-    def whodunnit_on
-      parts = [whodunnit, created_at]
-
-      parts.join(' on ').html_safe
     end
 
     protected
