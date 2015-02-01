@@ -92,6 +92,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  # Attributes
+
+  attr_accessor :terms_and_conditions
+
   # Validations
 
   validates :name,
