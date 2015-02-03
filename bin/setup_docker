@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'pathname'
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+
+Dir.chdir APP_ROOT do
+  # This script is a starting point to setup your application in a Docker container.
+  preamble = 'RAILS_ENV=production DEVISE_SECRET_KEY=devise'
+
+  puts "== Updating configuration =="
+  system "rm config/database.yml"
+  system "cp config/database.yml.docker config/database.yml"
+
+  puts "\n== Downloading assets =="
+  system "bower install"
+
+  puts "\n== Compiling assets =="
+  system "#{preamble} bundle exec rake assets:precompile"
+
+  puts "\n== Removing old logs and tempfiles =="
+  system "rm -f log/*"
+  system "rm -rf tmp/cache"
+end
