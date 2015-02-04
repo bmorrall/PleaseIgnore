@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+require 'pathname'
+
+# path to your application root.
+APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+
+Dir.chdir APP_ROOT do
+  postgres_config = {
+    'POSTGRES_USER' => 'postgres',
+    'POSTGRES_PASSWORD' => 'mysecretpassword'
+  }.map { |k, v| "-e #{k}=#{v}" }.join(' ')
+
+  webapp_config = {
+    'POSTGRES_USERNAME' => 'postgres',
+    'POSTGRES_PASSWORD' => 'mysecretpassword',
+    'SECRET_KEY_BASE' => '7d3da7d86a58ab7a7ed4817ec46b58e380811b8f7f9ee31e8197ab4e70b7d87b535d5fb89d13cc78266c9d94d1ed7c8dffa56369796a3b7f43b0ec082cbeb1bb',
+    'DEVISE_SECRET_KEY' => '0724d3936095acd5e5a17fa5c92983c71e4bda30c5fdb19cfcff954c31c97147a964b5d6905c96b24697f885bc20d654dcb5b17a44c7dd51022593faa5a0531e'
+  }.map { |k, v| "-e #{k}=#{v}" }.join(' ')
+
+  puts "== Booting Instance =="
+  system "vagrant up"
+
+  puts "\n== Stopping all containers =="
+  system "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
+  system "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
+
+  puts "\n== Updating config for localhost =="
+  unless File.exist?("etc/nginx/webapp.conf.original")
+    system "cp etc/nginx/webapp.conf etc/nginx/webapp.conf.original"
+  end
+  system 'ruby -i -pe \'gsub "please-ignore.com", "localhost"\' etc/nginx/webapp.conf'
+
+  puts "\n== Building image =="
+  system "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
+
+  puts "\n== Starting postgres =="
+  system "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres'"
+
+  puts "\n== Starting webapp =="
+  system "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp --link please_ignore-postgres:postgres -p 80:80 #{webapp_config} please_ignore'"
+
+  puts "\n== Migrating database =="
+  db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
+  system "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
+
+  puts "\n== Done =="
+  system "open http://localhost:8080/"
+end

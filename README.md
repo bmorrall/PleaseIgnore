@@ -162,6 +162,13 @@ Services
 Deployment instructions
 =======================
 
+Vagrant Staging
+---------------
+
+Install [Vagrant](https://www.vagrantup.com/) and run `/bin/vagrant` to provision a local staging server.
+
+The server can be accessed from http://localhost:8080/.
+
 Deployment on Heroku
 --------------------
 

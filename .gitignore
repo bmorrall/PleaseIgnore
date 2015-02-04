@@ -24,6 +24,9 @@
 # Ingnore Environment config
 /.ruby-version
 
+# Ignore vagrant resources
+/.vagrant
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
