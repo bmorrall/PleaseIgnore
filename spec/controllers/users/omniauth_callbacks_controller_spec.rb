@@ -30,7 +30,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               end
               it { is_expected.to redirect_to(new_user_registration_path) }
               it do
-                is_expected.to set_the_flash[:notice].to(
+                is_expected.to set_flash[:notice].to(
                   t('devise.omniauth_callbacks.success_registered', kind: provider_name)
                 )
               end
@@ -55,7 +55,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               end
               it { is_expected.to redirect_to(root_path) }
               it do
-                is_expected.to set_the_flash[:notice].to(
+                is_expected.to set_flash[:notice].to(
                   t('devise.omniauth_callbacks.success_authenticated', kind: provider_name)
                 )
               end
@@ -79,7 +79,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               before(:each) { get provider }
               it { is_expected.to redirect_to(new_user_session_path) }
               it do
-                is_expected.to set_the_flash[:alert].to(
+                is_expected.to set_flash[:alert].to(
                   t('devise.omniauth_callbacks.failure',
                     kind: provider_name,
                     reason: t('account.reasons.failure.account_disabled')
@@ -99,7 +99,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               before(:each) { get provider }
               it { is_expected.to redirect_to(edit_user_registration_path) }
               it do
-                is_expected.to set_the_flash[:notice].to(
+                is_expected.to set_flash[:notice].to(
                   t('devise.omniauth_callbacks.success_linked', kind: provider_name)
                 )
               end
@@ -119,7 +119,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
                 before(:each) { get provider }
                 it { is_expected.to redirect_to(edit_user_registration_path) }
                 it do
-                  is_expected.to set_the_flash[:alert].to(
+                  is_expected.to set_flash[:alert].to(
                     t('devise.omniauth_callbacks.failure',
                       kind: provider_name,
                       reason: t('account.reasons.failure.account_invalid')
@@ -149,7 +149,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               end
               it { is_expected.to redirect_to(edit_user_registration_path) }
               it do
-                is_expected.to set_the_flash[:notice].to(
+                is_expected.to set_flash[:notice].to(
                   t('devise.omniauth_callbacks.success_linked', kind: provider_name)
                 )
               end
@@ -170,7 +170,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               end
               it { is_expected.to redirect_to(edit_user_registration_path) }
               it do
-                is_expected.to set_the_flash[:alert].to(
+                is_expected.to set_flash[:alert].to(
                   t('devise.omniauth_callbacks.failure',
                     kind: provider_name,
                     reason: t('account.reasons.failure.account_limit', kind: provider_name)
@@ -189,7 +189,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               end
               it { is_expected.to redirect_to(edit_user_registration_path) }
               it do
-                is_expected.to set_the_flash[:alert].to(
+                is_expected.to set_flash[:alert].to(
                   t('devise.omniauth_callbacks.failure',
                     kind: provider_name,
                     reason: t('account.reasons.failure.previously_linked')
@@ -225,7 +225,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
             end
             it { is_expected.to redirect_to(new_user_registration_path) }
             it do
-              is_expected.to set_the_flash[:notice].to(
+              is_expected.to set_flash[:notice].to(
                 t('devise.omniauth_callbacks.success_registered', kind: 'Developer')
               )
             end
@@ -250,7 +250,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
             end
             it { is_expected.to redirect_to(new_user_session_path) }
             it do
-              is_expected.to set_the_flash[:alert].to(
+              is_expected.to set_flash[:alert].to(
                 t('devise.omniauth_callbacks.failure',
                   kind: 'Developer',
                   reason: t('account.reasons.failure.account_disabled')
@@ -280,7 +280,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
             end
             it { is_expected.to redirect_to(edit_user_registration_path) }
             it do
-              is_expected.to set_the_flash[:notice].to(
+              is_expected.to set_flash[:notice].to(
                 t('devise.omniauth_callbacks.success_linked', kind: 'Developer')
               )
             end
@@ -312,7 +312,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
             end
             it { is_expected.to redirect_to(edit_user_registration_path) }
             it do
-              is_expected.to set_the_flash[:alert].to(
+              is_expected.to set_flash[:alert].to(
                 t('devise.omniauth_callbacks.failure',
                   kind: 'Developer',
                   reason: t('account.reasons.failure.previously_linked')

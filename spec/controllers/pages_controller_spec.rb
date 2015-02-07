@@ -10,7 +10,7 @@ describe PagesController, type: :controller do
           it { is_expected.to render_template(page) }
           it { is_expected.to render_with_layout(:application) }
           it { expect(response.content_type).to eq('text/html') }
-          it { is_expected.not_to set_the_flash }
+          it { is_expected.not_to set_flash }
         end
       end
     end

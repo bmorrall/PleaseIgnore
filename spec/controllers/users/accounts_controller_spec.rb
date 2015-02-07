@@ -22,7 +22,7 @@ describe Users::AccountsController, type: :controller do
 
           it { expect(response).to redirect_to edit_user_registration_path }
           it do
-            is_expected.to set_the_flash[:notice].to(
+            is_expected.to set_flash[:notice].to(
               t('flash.users.accounts.destroy.notice', provider_name: 'Facebook')
             )
           end
@@ -43,7 +43,7 @@ describe Users::AccountsController, type: :controller do
 
           it { expect(response).to redirect_to edit_user_registration_path }
           it do
-            is_expected.to set_the_flash[:warning].to(
+            is_expected.to set_flash[:warning].to(
               t('flash.users.accounts.destroy.warning')
             )
           end

@@ -49,7 +49,7 @@ describe Users::RegistrationsController, type: :controller do
           post :update, user: valid_profile_attributes
         end
         it { expect(response).to redirect_to edit_user_registration_path }
-        it { is_expected.to set_the_flash[:notice].to(t('devise.registrations.updated')) }
+        it { is_expected.to set_flash[:notice].to(t('devise.registrations.updated')) }
         it 'should update the User account' do
           @logged_in_user.reload
           valid_profile_attributes.each do |key, value|
@@ -63,7 +63,7 @@ describe Users::RegistrationsController, type: :controller do
         end
         it { is_expected.to render_template(:edit) }
         it { is_expected.to render_with_layout(:dashboard) }
-        it { is_expected.not_to set_the_flash }
+        it { is_expected.not_to set_flash }
         it 'should only display the profile form' do
           expect(controller.send(:display_profile?)).to be(true)
           expect(controller.send(:display_accounts?)).to be(false)
@@ -78,7 +78,7 @@ describe Users::RegistrationsController, type: :controller do
           post :update, user: valid_password_change_attributes
         end
         it { expect(response).to redirect_to edit_user_registration_path }
-        it { is_expected.to set_the_flash[:notice].to(t('devise.registrations.updated_password')) }
+        it { is_expected.to set_flash[:notice].to(t('devise.registrations.updated_password')) }
         it 'should update the User password' do
           @logged_in_user.reload
           expect(@logged_in_user).to be_valid_password('newpassword')
@@ -90,7 +90,7 @@ describe Users::RegistrationsController, type: :controller do
         end
         it { is_expected.to render_template(:edit) }
         it { is_expected.to render_with_layout(:dashboard) }
-        it { is_expected.not_to set_the_flash }
+        it { is_expected.not_to set_flash }
         it 'should only display the password form' do
           expect(controller.send(:display_password_change?)).to be(true)
           expect(controller.send(:display_accounts?)).to be(false)
