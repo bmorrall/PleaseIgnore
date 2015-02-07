@@ -1,0 +1,3 @@
+[submodule "etc/vagrant-provision-reboot"]
+	path = etc/vagrant-provision-reboot
+	url = git@github.com:exratione/vagrant-provision-reboot.git
