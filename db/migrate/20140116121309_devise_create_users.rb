@@ -32,7 +32,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       t.string     :name
 
-      t.timestamps
+      t.timestamps null: true
     end
 
     add_index :users, :name,                 :unique => true

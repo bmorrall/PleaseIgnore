@@ -12,7 +12,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.datetime :oauth_expires_at
       t.references :user, index: true
 
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :accounts, [:provider, :uid], unique: true
   end
