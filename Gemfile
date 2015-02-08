@@ -90,6 +90,7 @@ gem 'sidekiq'
 
 # Send Devise mail through Sidekiq
 gem 'devise-async'
+gem 'devise-async-activejob'
 
 # Leave a Paper Trail
 gem 'paper_trail'
