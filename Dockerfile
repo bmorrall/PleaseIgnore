@@ -1,6 +1,6 @@
 # See https://github.com/phusion/passenger-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM phusion/passenger-ruby22:0.9.15
+FROM phusion/passenger-customizable:0.9.15
 MAINTAINER Ben Morrall <bemo56@hotmail.com>
 
 # Set correct environment variables.
@@ -8,6 +8,12 @@ ENV HOME /root
 
 # Use baseimage-docker's init process.
 CMD ["/sbin/my_init"]
+
+# Install Ruby 2.2
+RUN /pd_build/ruby2.2.sh
+
+# Install Memcached
+RUN /pd_build/memcached.sh
 
 # Install Bower for asset management
 RUN npm install bower@1.3.12 --global
@@ -32,6 +38,9 @@ RUN rm /etc/nginx/sites-enabled/default
 RUN cp etc/nginx/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 RUN cp etc/nginx/*-env.conf /etc/nginx/main.d/
 RUN rm -f /etc/service/nginx/down
+
+# Enable the memcached service.
+RUN rm -f /etc/service/memcached/down
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

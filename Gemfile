@@ -102,8 +102,8 @@ group :production do
   # Use unicorn as the app server
   gem 'unicorn'
 
-  # Use Redis as a cache
-  gem 'redis-rails'
+  # Use Memcached as a cache
+  gem 'dalli'
 end
 
 group :doc do
