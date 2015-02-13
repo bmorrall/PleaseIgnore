@@ -5,6 +5,11 @@ require 'pathname'
 APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
 
 Dir.chdir APP_ROOT do
+  def command(*args)
+    system *args
+    fail "Unable to run command #{args.join(' ')}" unless $?.exitstatus == 0
+  end
+
   postgres_config = {
     'POSTGRES_USER' => 'postgres',
     'POSTGRES_PASSWORD' => 'mysecretpassword'
@@ -18,31 +23,31 @@ Dir.chdir APP_ROOT do
   }.map { |k, v| "-e #{k}=#{v}" }.join(' ')
 
   puts "== Booting Instance =="
-  system "vagrant up"
+  command "vagrant up"
 
   puts "\n== Stopping all containers =="
-  system "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
-  system "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
+  command "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
+  command "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
 
   puts "\n== Updating config for localhost =="
   unless File.exist?("etc/nginx/webapp.conf.original")
-    system "cp etc/nginx/webapp.conf etc/nginx/webapp.conf.original"
+    command "cp etc/nginx/webapp.conf etc/nginx/webapp.conf.original"
   end
-  system 'ruby -i -pe \'gsub "please-ignore.com", "localhost"\' etc/nginx/webapp.conf'
+  command 'ruby -i -pe \'gsub "please-ignore.com", "localhost"\' etc/nginx/webapp.conf'
 
   puts "\n== Building image =="
-  system "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
+  command "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
 
   puts "\n== Starting postgres =="
-  system "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres'"
+  command "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres'"
 
   puts "\n== Starting webapp =="
-  system "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp --link please_ignore-postgres:postgres -p 80:80 #{webapp_config} please_ignore'"
+  command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp --link please_ignore-postgres:postgres -p 80:80 #{webapp_config} please_ignore'"
 
   puts "\n== Migrating database =="
   db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
-  system "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
+  command "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
 
   puts "\n== Done =="
-  system "open http://localhost:8080/"
+  command "open http://localhost:8080/"
 end
