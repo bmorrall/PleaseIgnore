@@ -5,8 +5,6 @@ module VersionsHelper
     item_type = version_model.item_type
     decorator_class = "Versions::#{item_type}Decorator".safe_constantize
 
-    puts decorator_class
-
     if decorator_class
       decorated_model = decorator_class.new(version_model)
       yield(decorated_model) if block_given?
