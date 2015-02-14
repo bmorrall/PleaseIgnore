@@ -38,7 +38,8 @@ Dir.chdir APP_ROOT do
     'DEVISE_SECRET_KEY' => '0724d3936095acd5e5a17fa5c92983c71e4bda30c5fdb19cfcff954c31c97147a964b5d6905c96b24697f885bc20d654dcb5b17a44c7dd51022593faa5a0531e'
   ) + link_options(
     'mailcatcher' => 'mailcatcher',
-    'please_ignore-postgres' => 'postgres'
+    'please_ignore-postgres' => 'postgres',
+    'please_ignore-redis' => 'redis'
   ) + port_options(
     '80' => '80'
   )
@@ -62,6 +63,9 @@ Dir.chdir APP_ROOT do
 
   puts "\n== Starting postgres =="
   command "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres:9.4.1'"
+
+  puts "\n== Starting redis =="
+  command "vagrant ssh -c 'sudo docker run --name please_ignore-redis -d redis:2.8.19'"
 
   puts "\n== Starting mailcatcher =="
   command "vagrant ssh -c 'sudo docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher'"

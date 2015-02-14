@@ -1,18 +1,19 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  application_domain = ENV['CI'] ? ENV.fetch('CI_DOMAIN', 'localhost:8080') : 'pleaseignore.com'
 
   # Configure Sendgrid
   if ENV['CI']
     ActionMailer::Base.smtp_settings = {
       address: ENV['MAILCATCHER_PORT_1025_TCP_ADDR'],
       port: ENV['MAILCATCHER_PORT_1025_TCP_PORT'],
-      domain: ENV.fetch('CI_DOMAIN', 'localhost:8080')
+      domain: application_domain
     }
   else
     ActionMailer::Base.smtp_settings = {
       user_name: ENV['SENDGRID_USERNAME'],
       password: ENV['SENDGRID_PASSWORD'],
-      domain: 'pleaseignore.com',
+      domain: application_domain,
       address: 'smtp.sendgrid.net',
       port: 587,
       authentication: :plain,
@@ -98,4 +99,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Set the default url host
+  config.action_mailer.default_url_options = { host: application_domain }
 end
