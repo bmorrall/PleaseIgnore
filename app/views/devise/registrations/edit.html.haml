@@ -47,7 +47,7 @@
           - if resource.errors.any?
             = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
 
-- if display_accounts?
+- if display_accounts? && omniauth_providers.any?
   %section
     %header.page-header
       %h3 Linked Accounts
