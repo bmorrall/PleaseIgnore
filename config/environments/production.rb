@@ -2,15 +2,23 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Configure Sendgrid
-  ActionMailer::Base.smtp_settings = {
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: 'pleaseignore.com',
-    address: 'smtp.sendgrid.net',
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
+  if ENV['CI']
+    ActionMailer::Base.smtp_settings = {
+      address: ENV['MAILCATCHER_PORT_1025_TCP_ADDR'],
+      port: ENV['MAILCATCHER_PORT_1025_TCP_PORT'],
+      domain: ENV.fetch('CI_DOMAIN', 'localhost:8080')
+    }
+  else
+    ActionMailer::Base.smtp_settings = {
+      user_name: ENV['SENDGRID_USERNAME'],
+      password: ENV['SENDGRID_PASSWORD'],
+      domain: 'pleaseignore.com',
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      authentication: :plain,
+      enable_starttls_auto: true
+    }
+  end
 
   # Code is not reloaded between requests.
   config.cache_classes = true

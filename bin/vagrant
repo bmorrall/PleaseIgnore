@@ -10,24 +10,46 @@ Dir.chdir APP_ROOT do
     fail "Unable to run command #{args.join(' ')}" unless $?.exitstatus == 0
   end
 
-  postgres_config = {
+  def env_options(options)
+    options.map { |k, v| "-e #{k}=#{v}" }
+  end
+
+  def link_options(options)
+    options.map { |k, v| "--link #{k}:#{v}" }
+  end
+
+  def port_options(options)
+    options.map { |k, v| "-p #{k}:#{v}" }
+  end
+
+  postgres_config = env_options(
     'POSTGRES_USER' => 'postgres',
     'POSTGRES_PASSWORD' => 'mysecretpassword'
-  }.map { |k, v| "-e #{k}=#{v}" }.join(' ')
+  ).join(' ')
 
-  webapp_config = {
+  webapp_config = env_options(
+    'CI' => 1,
     'POSTGRES_USERNAME' => 'postgres',
     'POSTGRES_PASSWORD' => 'mysecretpassword',
+    'ACCOUNTS_EMAIL_ADDRESS' => 'accounts@pleaseignore.com',
+    'CONTACT_EMAIL_ADDRESS' => 'contact@pleaseignore.com',
+    'SUPPORT_EMAIL_ADDRESS' => 'support@pleaseignore.com',
     'SECRET_KEY_BASE' => '7d3da7d86a58ab7a7ed4817ec46b58e380811b8f7f9ee31e8197ab4e70b7d87b535d5fb89d13cc78266c9d94d1ed7c8dffa56369796a3b7f43b0ec082cbeb1bb',
     'DEVISE_SECRET_KEY' => '0724d3936095acd5e5a17fa5c92983c71e4bda30c5fdb19cfcff954c31c97147a964b5d6905c96b24697f885bc20d654dcb5b17a44c7dd51022593faa5a0531e'
-  }.map { |k, v| "-e #{k}=#{v}" }.join(' ')
+  ) + link_options(
+    'mailcatcher' => 'mailcatcher',
+    'please_ignore-postgres' => 'postgres'
+  ) + port_options(
+    '80' => '80'
+  )
+  webapp_config = webapp_config.join(' ')
 
   puts "== Booting Instance =="
   command "vagrant up"
 
   puts "\n== Stopping all containers =="
-  command "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
-  command "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
+  system "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
+  system "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
 
   puts "\n== Updating config for localhost =="
   unless File.exist?("etc/nginx/webapp.conf.original")
@@ -41,13 +63,17 @@ Dir.chdir APP_ROOT do
   puts "\n== Starting postgres =="
   command "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres'"
 
+  puts "\n== Starting mailcatcher =="
+  command "vagrant ssh -c 'sudo docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher'"
+
   puts "\n== Starting webapp =="
-  command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp --link please_ignore-postgres:postgres -p 80:80 #{webapp_config} please_ignore'"
+  command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp #{webapp_config} please_ignore'"
 
   puts "\n== Migrating database =="
   db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
   command "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
 
   puts "\n== Done =="
-  command "open http://localhost:8080/"
+  command "open http://localhost:1080/" # mailcatcher
+  command "open http://localhost:8080/" # webapp
 end
