@@ -16,7 +16,7 @@ describe 'Passwords', type: :request do
       end
       it 'includes the page title' do
         get new_user_password_path
-        assert_select 'title', 'PleaseIgnore | Forgot your password?'
+        assert_select 'title', "#{application_name} | #{t 'devise.passwords.new.page_title'}"
       end
     end
   end

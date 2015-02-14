@@ -26,7 +26,7 @@ describe 'Contact', type: :request do
       end
       it 'includes the page title' do
         get contact_path
-        assert_select 'title', 'PleaseIgnore | Contact us'
+        assert_select 'title', "#{application_name} | #{t 'contacts.show.page_title'}"
       end
     end
   end

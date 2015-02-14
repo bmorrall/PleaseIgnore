@@ -2,6 +2,11 @@
 #
 # Provides common helpers for layout
 module ApplicationHelper
+  # Returns the translated Application Name of the app
+  def application_name
+    @application_name ||= t('application.name')
+  end
+
   # Cache
 
   # Ensure cache is cleared after an hour (to prevent issues)

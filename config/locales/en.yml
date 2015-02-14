@@ -20,4 +20,7 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  application:
+    name: PleaseIgnore
+    company_name: 'PleaseIgnore, Inc'
+    pretty_domain: PleaseIgnore.com

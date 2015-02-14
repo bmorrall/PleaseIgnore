@@ -23,11 +23,11 @@ en:
         page_title: Create Account
   pages:
     privacy:
-      page_title: Privacy Policy
+      page_title: PleaseIgnore Privacy Policy
     styles:
       page_title: PleaseIgnore Styles
     terms:
-      page_title: Terms of Service
+      page_title: PleaseIgnore Terms of Service
   users:
     accounts:
       buttons:

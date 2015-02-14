@@ -19,7 +19,7 @@ describe 'Users/Versions', type: :request do
         end
         it 'includes the page title' do
           get users_versions_path
-          assert_select 'title', 'PleaseIgnore | History'
+          assert_select 'title', "#{application_name} | #{t 'users.versions.index.page_title'}"
         end
       end
     end

@@ -89,7 +89,7 @@ describe ContactsController, type: :controller do
           email = ActionMailer::Base.deliveries.last
           expect(email.to).to eq(['support@pleaseignore.com'])
           expect(email.from).to eq(['contact@pleaseignore.com'])
-          expect(email.subject).to eq('PleaseIgnore Contact Email')
+          expect(email.subject).to eq t('support_mailer.contact_email.subject')
         end
       end
       context 'with a xhr request with errors' do

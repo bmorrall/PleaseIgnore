@@ -16,7 +16,7 @@ describe 'Sessions', type: :request do
       end
       it 'includes the page title' do
         get new_user_session_path
-        assert_select 'title', 'PleaseIgnore | Login'
+        assert_select 'title', "#{application_name} | #{t 'devise.sessions.new.page_title'}"
       end
     end
   end

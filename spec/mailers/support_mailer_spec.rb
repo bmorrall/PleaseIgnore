@@ -20,7 +20,7 @@ describe SupportMailer, type: :mailer do
 
     it 'renders the body' do
       body = mail.body.encoded
-      expect(body).to match('You have received a Contact Email from PleaseIgnore')
+      expect(body).to match("You have received a Contact Email from #{application_name}")
       expect(body).to match('Test User')
       expect(body).to match('test@example.com')
       expect(body).to match('This is the body')

@@ -5,9 +5,9 @@ describe 'Pages', type: :request do
 
   def page_titles
     @page_titles ||= {
-      'privacy' => 'Privacy Policy',
-      'styles' => 'PleaseIgnore Styles',
-      'terms' => 'Terms of Service'
+      'privacy' => t('pages.privacy.page_title'),
+      'styles' => t('pages.styles.page_title'),
+      'terms' => t('pages.terms.page_title')
     }
   end
 
@@ -29,7 +29,7 @@ describe 'Pages', type: :request do
       end
       it 'includes the page title' do
         get root_url
-        assert_select 'title', 'PleaseIgnore'
+        assert_select 'title', application_name
       end
     end
   end
@@ -65,7 +65,7 @@ describe 'Pages', type: :request do
         end
         it 'includes the page title' do
           get page_path(page)
-          assert_select 'title', "PleaseIgnore | #{page_titles[page]}"
+          assert_select 'title', "#{application_name} | #{page_titles[page]}"
         end
       end
     end

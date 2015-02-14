@@ -16,7 +16,7 @@ describe 'Registrations', type: :request do
       end
       it 'includes the page title' do
         get new_user_registration_path
-        assert_select 'title', 'PleaseIgnore | Create Account'
+        assert_select 'title', "#{application_name} | #{t 'devise.registrations.new.page_title'}"
       end
     end
   end

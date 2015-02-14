@@ -7,6 +7,8 @@ class SupportMailer < ActionMailer::Base
   sendgrid_category :use_subject_lines
   default to: Rails.application.secrets.support_email_address
 
+  add_template_helper(ApplicationHelper)
+
   # Sends a Contact Request to Support
   #
   # @param attributes [Hash] Contact attributes to send to support
