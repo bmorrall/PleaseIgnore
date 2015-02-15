@@ -77,6 +77,12 @@ Dir.chdir APP_ROOT do
   db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
   command "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
 
+  puts "\n== Reverting config changes =="
+  if File.exist?("etc/nginx/webapp.conf.original")
+    command "rm etc/nginx/webapp.conf"
+    command "mv etc/nginx/webapp.conf.original etc/nginx/webapp.conf"
+  end
+
   puts "\n== Done =="
   command "open http://localhost:1080/" # mailcatcher
   command "open http://localhost:8080/" # webapp
