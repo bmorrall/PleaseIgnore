@@ -1,5 +1,5 @@
 ---
-:concurrency: 25
+:concurrency: <%= ENV.fetch('SIDEKIQ_WORKERS', 25).to_i %>
 :pidfile: ./tmp/pids/sidekiq.pid
 :logfile: ./log/sidekiq.log
 :queues:

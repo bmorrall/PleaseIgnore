@@ -31,6 +31,7 @@ Dir.chdir APP_ROOT do
     'CI' => 1,
     'POSTGRES_USERNAME' => 'postgres',
     'POSTGRES_PASSWORD' => 'mysecretpassword',
+    'SIDEKIQ_WORKERS' => 5,
     'ACCOUNTS_EMAIL_ADDRESS' => 'accounts@pleaseignore.com',
     'CONTACT_EMAIL_ADDRESS' => 'contact@pleaseignore.com',
     'SUPPORT_EMAIL_ADDRESS' => 'support@pleaseignore.com',

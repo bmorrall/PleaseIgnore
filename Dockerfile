@@ -42,5 +42,9 @@ RUN rm -f /etc/service/nginx/down
 # Enable the memcached service.
 RUN rm -f /etc/service/memcached/down
 
+# Start the Sidekiq service
+RUN mkdir /etc/service/sidekiq
+ADD etc/sidekiq/sidekiq.sh /etc/service/sidekiq/run
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

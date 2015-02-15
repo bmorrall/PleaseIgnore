@@ -11,6 +11,7 @@ Dir.chdir APP_ROOT do
   puts "== Updating configuration =="
   system "rm config/database.yml"
   system "cp config/database.yml.docker config/database.yml"
+  system 'mkdir -p log tmp tmp/pids'
 
   puts "\n== Downloading assets =="
   system "bower install"
