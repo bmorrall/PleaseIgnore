@@ -1,0 +1,8 @@
+.git
+tmp/
+log/
+
+# Generated Assets
+public/assets/
+vendor/assets/components/
+
