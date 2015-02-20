@@ -10,6 +10,7 @@ class PagesController < ApplicationController
   skip_authorization_check # Pages are available for all
   skip_before_action :verify_authenticity_token # No actions are here
 
+  before_action :add_cache_control_headers
   before_action :set_page_metadata
 
   # Cache the show action

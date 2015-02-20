@@ -54,4 +54,11 @@ class ApplicationController < ActionController::Base
       user_agent: request.user_agent
     }
   end
+
+  private
+
+  def add_cache_control_headers(max_age: 10.minutes.to_s)
+    request.session_options[:skip] = true  # removes session data
+    response.headers['Cache-Control'] = "public, max-age=#{max_age}"
+  end
 end

@@ -12,6 +12,10 @@ describe PagesController, type: :controller do
           it { is_expected.to render_with_layout('frontend_static') }
           it { expect(response.content_type).to eq('text/html') }
           it { is_expected.not_to set_flash }
+
+          it 'should set the cache headers' do
+            expect(response.headers['Cache-Control']).to eq('public, max-age=600')
+          end
         end
       end
 
@@ -23,6 +27,10 @@ describe PagesController, type: :controller do
           it { is_expected.to render_with_layout('documents') }
           it { expect(response.content_type).to eq('text/html') }
           it { is_expected.not_to set_flash }
+
+          it 'should set the cache headers' do
+            expect(response.headers['Cache-Control']).to eq('public, max-age=600')
+          end
         end
       end
     end
