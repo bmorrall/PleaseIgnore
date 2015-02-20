@@ -13,7 +13,7 @@ class PagesController < ApplicationController
   before_action :set_page_metadata
 
   # Cache the show action
-  caches_action :show, layout: false
+  caches_action :show, layout: true
 
   # Change the layout based on contents
   layout :layout_for_page
