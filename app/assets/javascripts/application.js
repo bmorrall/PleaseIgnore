@@ -28,5 +28,6 @@
 //= require turboboost_events
 //
 //= require main
+//= require forms
 //= require users
 //= require versions
