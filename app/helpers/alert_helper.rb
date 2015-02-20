@@ -31,7 +31,7 @@ module AlertHelper
 
   # Returns true if `name` matches known flash types
   def should_display_alert?(name, message)
-    message.is_a?(String) &&
+    message.is_a?(String) && !message.blank? &&
       %w(success notice warning alert danger info).include?(name)
   end
 

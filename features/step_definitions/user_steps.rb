@@ -239,10 +239,6 @@ Then(/^I should see a mismatched password message$/) do
   expect(page).to have_content "Password confirmation doesn't match"
 end
 
-Then(/^I should see a signed out message$/) do
-  expect(page).to have_content 'Signed out successfully.'
-end
-
 Then(/^I see an invalid login message$/) do
   expect(page).to have_content t('devise.failure.invalid')
 end

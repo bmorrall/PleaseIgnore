@@ -7,5 +7,4 @@ Feature: Sign out
   Scenario: User signs out
     Given I am logged in
     When I sign out
-    Then I should see a signed out message
-     And I should be signed out
+    Then I should be signed out
