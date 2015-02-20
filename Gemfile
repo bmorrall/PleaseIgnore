@@ -142,6 +142,7 @@ group :test, :development do
 end
 group :test do
   gem 'capybara-webkit'
+  gem 'capybara-screenshot'
   gem 'coveralls', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'

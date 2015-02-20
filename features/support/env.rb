@@ -6,6 +6,8 @@
 
 require 'cucumber/rails'
 
+require 'capybara-screenshot/cucumber'
+
 # rubocop:disable LineLength
 
 # Capybara defaults to CSS3 selectors rather than XPath.
