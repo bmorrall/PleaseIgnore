@@ -16,8 +16,9 @@ module NavigationHelpers
 
     when /the sign up page/
       within 'nav.navbar' do
-        click_link 'Create Account'
+        click_link 'Login'
       end
+      click_link 'Create a new account'
 
     when /the sign in page/
       within 'nav.navbar' do
@@ -30,6 +31,7 @@ module NavigationHelpers
 
     when /my profile page/
       within 'nav.navbar' do
+        click_link 'Login' if page.has_selector?('a', text: 'Login')
         click_link @visitor[:name]
         click_link 'My Account'
       end

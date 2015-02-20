@@ -73,11 +73,17 @@ def reset_password
 end
 
 def visit_my_account
+  within 'nav.navbar' do
+    click_link 'Login'
+  end if page.has_selector?('nav.navbar a', text: 'Login')
+
   unless Capybara.current_session.server.nil?
     # User must click name to trigger js dropdown menu
     click_link @visitor[:name]
   end
-  click_link 'My Account'
+  within 'nav.navbar' do
+    click_link 'My Account'
+  end
 end
 
 ### GIVEN ###
@@ -201,13 +207,15 @@ end
 ### THEN ###
 Then(/^I should be signed in$/) do
   page.has_selector?('li', text: 'Logout', visible: false)
-  expect(page).to_not have_content 'Sign up'
-  expect(page).to_not have_content 'Login'
 end
 
 Then(/^I should be signed out$/) do
-  expect(page).to have_content 'Create Account'
-  expect(page).to have_content 'Login'
+  # Home -> Login Page
+  within 'nav.navbar' do
+    click_link 'Login'
+  end
+
+  # Login page is only visible when user is not signed in
   page.has_no_selector?('li', text: 'Logout', visible: false)
 end
 

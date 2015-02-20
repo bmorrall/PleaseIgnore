@@ -4,11 +4,23 @@ describe PagesController, type: :controller do
 
   describe 'GET show' do
     context 'as a visitor' do
-      %w(home styles privacy terms).each do |page|
+      # Frontend Pages
+      %w(home styles).each do |page|
         context "with GET to /#{page}" do
           before(:each) { get :show, id: page }
           it { is_expected.to render_template(page) }
-          it { is_expected.to render_with_layout(:application) }
+          it { is_expected.to render_with_layout('frontend_static') }
+          it { expect(response.content_type).to eq('text/html') }
+          it { is_expected.not_to set_flash }
+        end
+      end
+
+      # Documentation
+      %w(privacy terms).each do |page|
+        context "with GET to /#{page}" do
+          before(:each) { get :show, id: page }
+          it { is_expected.to render_template(page) }
+          it { is_expected.to render_with_layout('documents') }
           it { expect(response.content_type).to eq('text/html') }
           it { is_expected.not_to set_flash }
         end

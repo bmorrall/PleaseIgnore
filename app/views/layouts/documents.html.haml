@@ -2,11 +2,10 @@
 %html
   %head
     = render 'layouts/head'
-    = csrf_meta_tags
+    = static_csrf_meta_tags
   %body{ class: body_class }
     #wrap
-      = render 'layouts/navigation'
+      = render 'layouts/documents_nav'
       %main.container(role='main')
-        = render 'layouts/messages'
         = yield
     = render 'layouts/footer'

@@ -13,7 +13,7 @@ describe ContactsController, type: :controller do
       context 'with a valid request' do
         before(:each) { get :show }
         it { is_expected.to render_template(:show) }
-        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.to render_with_layout('frontend') }
         it { expect(response.content_type).to eq('text/html') }
         it { is_expected.not_to set_flash }
         it { is_expected.not_to set_flash.now }
@@ -134,7 +134,7 @@ describe ContactsController, type: :controller do
       context 'with a valid request' do
         before(:each) { get :thank_you }
         it { is_expected.to render_template(:thank_you) }
-        it { is_expected.to render_with_layout(:application) }
+        it { is_expected.to render_with_layout('frontend') }
         it { is_expected.not_to set_flash }
       end
     end

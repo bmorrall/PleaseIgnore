@@ -2,6 +2,7 @@
 %html
   %head
     = render 'layouts/head'
+    = csrf_meta_tags
   %body{ class: body_class }
     #wrap
       = render 'layouts/navigation'

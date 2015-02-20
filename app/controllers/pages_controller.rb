@@ -8,14 +8,15 @@ class PagesController < ApplicationController
   include Concerns::ContentForLayout
 
   skip_authorization_check # Pages are available for all
+  skip_before_action :verify_authenticity_token # No actions are here
 
   before_action :set_page_metadata
 
   # Cache the show action
   caches_action :show, layout: false
 
-  # Fix HighVoltage/pjax layout conflict
-  # layout proc { |c| pjax_request? ? pjax_layout : HighVoltage.layout }
+  # Change the layout based on contents
+  layout :layout_for_page
 
   protected
 
@@ -28,6 +29,15 @@ class PagesController < ApplicationController
         page_description t("pages.#{page}.page_description", default: '')
         extra_body_classes "#{page}-page"
       end
+    end
+  end
+
+  def layout_for_page
+    case params[:id]
+    when /terms|privacy/
+      'documents'
+    else
+      'frontend_static'
     end
   end
 end

@@ -33,7 +33,7 @@
               %li
                 = link_to 'Logout', destroy_user_session_path, method: 'delete'
         - else
-          %li{class: header_nav_class(new_user_session_path)}<
-            = link_to 'Login', new_user_session_path
           %li{class: header_nav_class(new_user_registration_path)}<
             = link_to 'Create Account', new_user_registration_path
+          %li{class: header_nav_class(new_user_session_path)}<
+            = link_to 'Login', new_user_session_path

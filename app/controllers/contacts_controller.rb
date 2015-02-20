@@ -8,6 +8,8 @@ class ContactsController < ApplicationController
   include Concerns::BetterTurboboostErrors
   include ActionView::Helpers::UrlHelper
 
+  layout 'frontend'
+
   respond_to :html
 
   before_action do

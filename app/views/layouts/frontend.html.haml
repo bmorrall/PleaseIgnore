@@ -5,7 +5,7 @@
     = csrf_meta_tags
   %body{ class: body_class }
     #wrap
-      = render 'layouts/navigation'
+      = render 'layouts/frontend_nav'
       %main.container(role='main')
         = render 'layouts/messages'
         = yield

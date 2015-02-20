@@ -14,6 +14,14 @@ module ApplicationHelper
     { expires_in: 1.hour }
   end
 
+  # blank CSRF tags that allow for pages to be statically cached
+  def static_csrf_meta_tags
+    [
+      tag('meta', name: 'csrf-param', content: request_forgery_protection_token),
+      tag('meta', name: 'csrf-token', content: '')
+    ].join("\n").html_safe
+  end
+
   # Header
 
   # returns active class if navigation item is a link to the current page.
