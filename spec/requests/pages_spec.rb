@@ -54,6 +54,7 @@ describe 'Pages', type: :request do
         end
         it "caches the #{page} page" do
           cache_path = "views/www.example.com#{page_path(page)}"
+          ActionController::Base.cache_store.delete(cache_path)
           get page_path(page)
           expect(ActionController::Base.cache_store.exist?(cache_path)).to be(true)
         end
