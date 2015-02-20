@@ -29,8 +29,8 @@ describe 'Sessions', type: :request do
           post user_session_path,  user: { email: user.email, password: user.password }
         end
 
-        it 'redirects to the root url' do
-          expect(response).to redirect_to root_url
+        it 'redirects to the user profile page' do
+          expect(response).to redirect_to edit_user_registration_path
         end
       end
       context 'with a failed login attempt' do

@@ -24,6 +24,22 @@ class ApplicationController < ActionController::Base
     fail exception
   end
 
+  # [Devise] Redirects signed in users to their profile instead of root
+  def after_sign_in_path_for(resource)
+    default_url = edit_user_registration_path
+    stored_path = request.env['omniauth.origin'] || stored_location_for(resource)
+    case stored_path.try(:gsub, root_url, '/')
+    when root_path
+      # Don't return to homepage
+      default_url
+    when %r{\A/users/}
+      # Don't return to sign in/up page
+      default_url
+    else
+      stored_path
+    end || default_url
+  end
+
   # [Devise] Adds extra User params to Devise param sanitiser
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]

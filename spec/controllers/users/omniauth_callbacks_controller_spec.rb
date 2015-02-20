@@ -53,7 +53,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               before(:each) do
                 get provider
               end
-              it { is_expected.to redirect_to(root_path) }
+              it { is_expected.to redirect_to(edit_user_registration_path) }
               it do
                 is_expected.to set_flash[:notice].to(
                   t('devise.omniauth_callbacks.success_authenticated', kind: provider_name)
