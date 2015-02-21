@@ -29,6 +29,7 @@ Dir.chdir APP_ROOT do
 
   webapp_config = env_options(
     'CI' => 1,
+    'VIRTUAL_HOST' => 'localhost',
     'POSTGRES_USERNAME' => 'postgres',
     'POSTGRES_PASSWORD' => 'mysecretpassword',
     'SIDEKIQ_WORKERS' => 5,
@@ -53,12 +54,6 @@ Dir.chdir APP_ROOT do
   system "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
   system "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
 
-  puts "\n== Updating config for localhost =="
-  unless File.exist?("etc/nginx/webapp.conf.original")
-    command "cp etc/nginx/webapp.conf etc/nginx/webapp.conf.original"
-  end
-  command 'ruby -i -pe \'gsub "please-ignore.com", "localhost"\' etc/nginx/webapp.conf'
-
   puts "\n== Building image =="
   command "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
 
@@ -77,12 +72,6 @@ Dir.chdir APP_ROOT do
   puts "\n== Migrating database =="
   db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
   command "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
-
-  puts "\n== Reverting config changes =="
-  if File.exist?("etc/nginx/webapp.conf.original")
-    command "rm etc/nginx/webapp.conf"
-    command "mv etc/nginx/webapp.conf.original etc/nginx/webapp.conf"
-  end
 
   puts "\n== Done =="
   command "open http://localhost:1080/" # mailcatcher

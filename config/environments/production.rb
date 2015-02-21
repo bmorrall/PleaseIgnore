@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  application_domain = ENV['CI'] ? ENV.fetch('CI_DOMAIN', 'localhost:8080') : 'pleaseignore.com'
+  application_domain = ENV.fetch('VIRTUAL_HOST', 'please-ignore.com')
 
   # Configure Sendgrid
   if ENV['CI']
