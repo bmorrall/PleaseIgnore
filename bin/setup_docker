@@ -3,6 +3,7 @@ require 'pathname'
 
 # path to your application root.
 APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+require File.join(APP_ROOT, 'lib', 'command')
 
 Dir.chdir APP_ROOT do
   # This script is a starting point to setup your application in a Docker container.
@@ -14,10 +15,10 @@ Dir.chdir APP_ROOT do
   system 'mkdir -p log tmp tmp/pids'
 
   puts "\n== Downloading assets =="
-  system "bower install"
+  command "bower install"
 
   puts "\n== Compiling assets =="
-  system "#{preamble} bundle exec rake assets:precompile"
+  command "#{preamble} bundle exec rake assets:precompile"
 
   puts "\n== Removing old logs and tempfiles =="
   system "rm -f log/*"

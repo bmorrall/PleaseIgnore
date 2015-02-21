@@ -3,13 +3,9 @@ require 'pathname'
 
 # path to your application root.
 APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
+require File.join(APP_ROOT, 'lib', 'command')
 
 Dir.chdir APP_ROOT do
-  def command(*args)
-    system *args
-    fail "Unable to run command #{args.join(' ')}" unless $?.exitstatus == 0
-  end
-
   def env_options(options)
     options.map { |k, v| "-e #{k}=#{v}" }
   end
