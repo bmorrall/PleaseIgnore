@@ -1,9 +1,6 @@
-redis_domain = ENV['REDIS_PORT_6379_TCP_ADDR']
-redis_port   = ENV['REDIS_PORT_6379_TCP_PORT']
+redis_url = ENV['REDIS_URL']
 
-if redis_domain && redis_port
-  redis_url = "redis://#{redis_domain}:#{redis_port}/0"
-
+if redis_url
   redis_config = {
     namespace: 'sidekiq',
     url: redis_url

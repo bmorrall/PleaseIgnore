@@ -10,8 +10,6 @@ Dir.chdir APP_ROOT do
   preamble = 'RAILS_ENV=production DEVISE_SECRET_KEY=devise'
 
   puts "== Updating configuration =="
-  system "rm config/database.yml"
-  system "cp config/database.yml.docker config/database.yml"
   system 'mkdir -p log tmp tmp/pids'
 
   puts "\n== Downloading assets =="

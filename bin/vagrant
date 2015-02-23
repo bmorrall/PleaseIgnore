@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 require 'pathname'
+require 'json'
 
 # path to your application root.
 APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
 require File.join(APP_ROOT, 'lib', 'command')
 
 Dir.chdir APP_ROOT do
+
+  # Configuration
+
   def env_options(options)
     options.map { |k, v| "-e #{k}=#{v}" }
   end
@@ -18,16 +22,16 @@ Dir.chdir APP_ROOT do
     options.map { |k, v| "-p #{k}:#{v}" }
   end
 
-  postgres_config = env_options(
-    'POSTGRES_USER' => 'postgres',
-    'POSTGRES_PASSWORD' => 'mysecretpassword'
-  ).join(' ')
+  postgres_user = 'postgres'
+  postgres_password = 'mysecretpassword'
+  postgres_options = env_options(
+    'POSTGRES_USER' => postgres_user,
+    'POSTGRES_PASSWORD' => postgres_password
+  )
 
-  webapp_config = env_options(
+  webapp_options = env_options(
     'CI' => 1,
     'VIRTUAL_HOST' => 'localhost',
-    'POSTGRES_USERNAME' => 'postgres',
-    'POSTGRES_PASSWORD' => 'mysecretpassword',
     'SIDEKIQ_WORKERS' => 5,
     'ACCOUNTS_EMAIL_ADDRESS' => 'accounts@pleaseignore.com',
     'CONTACT_EMAIL_ADDRESS' => 'contact@pleaseignore.com',
@@ -41,7 +45,25 @@ Dir.chdir APP_ROOT do
   ) + port_options(
     '80' => '80'
   )
-  webapp_config = webapp_config.join(' ')
+
+  # Utils
+
+  def network_settings(container)
+    @network_settings ||= {}
+    @network_settings.fetch(container) do
+      JSON.parse `vagrant ssh -c 'sudo docker inspect -f "{{ json .NetworkSettings }}" #{container}'`
+    end
+  end
+
+  def container_ip(container)
+    network_settings(container)['IPAddress']
+  end
+
+  def container_port(container, port)
+    port.split('/').first # ['Ports'][port][0]['HostPort']
+  end
+
+  # Init
 
   puts "== Booting Instance =="
   command "vagrant up"
@@ -54,15 +76,25 @@ Dir.chdir APP_ROOT do
   command "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
 
   puts "\n== Starting postgres =="
+  postgres_config = postgres_options.join(' ')
   command "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres:9.4.1'"
+  postgres_ip = container_ip('please_ignore-postgres')
+  postgres_port = container_port('please_ignore-postgres', '5432/tcp')
 
   puts "\n== Starting redis =="
   command "vagrant ssh -c 'sudo docker run --name please_ignore-redis -d redis:2.8.19'"
+  redis_ip = container_ip('please_ignore-redis')
+  redis_port = container_port('please_ignore-redis', '6379/tcp')
 
   puts "\n== Starting mailcatcher =="
   command "vagrant ssh -c 'sudo docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher'"
 
   puts "\n== Starting webapp =="
+  webapp_options += env_options(
+    'DATABASE_URL' => "postgres://#{postgres_user}:#{postgres_password}@#{postgres_ip}:#{postgres_port}/",
+    'REDIS_URL' => "redis://#{redis_ip}:#{redis_port}/0"
+  )
+  webapp_config = webapp_options.join(' ')
   command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp #{webapp_config} please_ignore'"
 
   puts "\n== Migrating database =="
