@@ -171,6 +171,8 @@ body {
   }
 }
 
+@import 'overrides/turbolinks';
+
 @import 'layout';
 @import 'devise';
 @import 'simple_form';

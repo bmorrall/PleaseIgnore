@@ -26,6 +26,8 @@
 //= require jquery.formerrors
 //= require turboboost_events
 //
+//= require_tree ./overrides
+//
 //= require main
 //= require forms
 //= require users
