@@ -75,4 +75,13 @@ ActionController::Base.cache_store = :memory_store
 
 World(AbstractController::Translation) # Add t() translation helper
 
+# Allow known CDN urls to connect to the outside world
+Before('@javascript') do
+  Capybara.current_session.driver.tap do |driver|
+    driver.block_unknown_urls
+    driver.allow_url('ajax.googleapis.com') # Allow CDN Hosted jQuery
+    driver.allow_url('fonts.googleapis.com') # Allow Custom Fonts
+  end
+end
+
 # rubocop:enable LineLength
