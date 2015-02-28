@@ -150,5 +150,6 @@ group :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'email_spec'
+  gem 'rspec-its'
   gem 'shoulda-matchers', require: false
 end

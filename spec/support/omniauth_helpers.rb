@@ -10,7 +10,7 @@ module OmniauthHelpers
   # @param provider [Symbol] name of provider to create credentials for
   # @return [Hash] Credentials for creating a provider auth hash
   def provider_credentials(provider)
-    case provider
+    case provider.to_sym
     when :developer
       auth_account
     when :facebook
@@ -29,7 +29,7 @@ module OmniauthHelpers
   # @param provider [Symbol] name of provider to create auth hash for
   # @return [Hash] OAuth Hash for representing a provider account
   def provider_auth_hash(provider)
-    case provider
+    case provider.to_sym
     when :developer
       developer_auth_hash
     when :facebook
