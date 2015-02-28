@@ -66,22 +66,18 @@ Dir.chdir APP_ROOT do
   puts "== Booting Instance =="
   command "vagrant up"
 
-  puts "\n== Stopping all containers =="
-  system "vagrant ssh -c 'sudo docker stop $(sudo docker ps -a -q) &>/dev/null'"
-  system "vagrant ssh -c 'sudo docker rm $(sudo docker ps -a -q) &>/dev/null'"
-
   puts "\n== Building image =="
   command "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
 
   puts "\n== Starting postgres =="
   postgres_config = postgres_options.join(' ')
-  command "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres:9.4.1'"
+  system "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres:9.4.1'"
 
   puts "\n== Starting redis =="
-  command "vagrant ssh -c 'sudo docker run --name please_ignore-redis -d redis:2.8.19'"
+  system "vagrant ssh -c 'sudo docker run --name please_ignore-redis -d redis:2.8.19'"
 
   puts "\n== Starting mailcatcher =="
-  command "vagrant ssh -c 'sudo docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher'"
+  system "vagrant ssh -c 'sudo docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher'"
 
   puts "\n== Updating config =="
   postgres_ip = container_ip('please_ignore-postgres')
@@ -97,6 +93,10 @@ Dir.chdir APP_ROOT do
   worker_config = webapp_options.join(' ')
   db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
   command "vagrant ssh -c 'sudo docker run #{worker_config} please_ignore su app -c \"#{db_setup_script}\"'"
+
+  puts "\n== Stopping webapp container =="
+  system "vagrant ssh -c 'sudo docker stop please_ignore-webapp &>/dev/null'"
+  system "vagrant ssh -c 'sudo docker rm please_ignore-webapp &>/dev/null'"
 
   puts "\n== Starting webapp =="
   webapp_options += port_options(
