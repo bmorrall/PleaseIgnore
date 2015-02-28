@@ -42,8 +42,6 @@ Dir.chdir APP_ROOT do
     'mailcatcher' => 'mailcatcher',
     'please_ignore-postgres' => 'postgres',
     'please_ignore-redis' => 'redis'
-  ) + port_options(
-    '80' => '80'
   )
 
   # Utils
@@ -78,28 +76,34 @@ Dir.chdir APP_ROOT do
   puts "\n== Starting postgres =="
   postgres_config = postgres_options.join(' ')
   command "vagrant ssh -c 'sudo docker run --name please_ignore-postgres #{postgres_config} -d postgres:9.4.1'"
-  postgres_ip = container_ip('please_ignore-postgres')
-  postgres_port = container_port('please_ignore-postgres', '5432/tcp')
 
   puts "\n== Starting redis =="
   command "vagrant ssh -c 'sudo docker run --name please_ignore-redis -d redis:2.8.19'"
-  redis_ip = container_ip('please_ignore-redis')
-  redis_port = container_port('please_ignore-redis', '6379/tcp')
 
   puts "\n== Starting mailcatcher =="
   command "vagrant ssh -c 'sudo docker run -d -p 1080:1080 --name mailcatcher schickling/mailcatcher'"
 
-  puts "\n== Starting webapp =="
+  puts "\n== Updating config =="
+  postgres_ip = container_ip('please_ignore-postgres')
+  postgres_port = container_port('please_ignore-postgres', '5432/tcp')
+  redis_ip = container_ip('please_ignore-redis')
+  redis_port = container_port('please_ignore-redis', '6379/tcp')
   webapp_options += env_options(
     'DATABASE_URL' => "postgres://#{postgres_user}:#{postgres_password}@#{postgres_ip}:#{postgres_port}/",
     'REDIS_URL' => "redis://#{redis_ip}:#{redis_port}/0"
   )
-  webapp_config = webapp_options.join(' ')
-  command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp #{webapp_config} please_ignore'"
 
   puts "\n== Migrating database =="
+  worker_config = webapp_options.join(' ')
   db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
-  command "vagrant ssh -c 'sudo docker exec please_ignore-webapp su app -c \"#{db_setup_script}\"'"
+  command "vagrant ssh -c 'sudo docker run #{worker_config} please_ignore su app -c \"#{db_setup_script}\"'"
+
+  puts "\n== Starting webapp =="
+  webapp_options += port_options(
+    '80' => '80'
+  )
+  webapp_config = webapp_options.join(' ')
+  command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp #{webapp_config} please_ignore'"
 
   puts "\n== Done =="
   command "open http://localhost:1080/" # mailcatcher
