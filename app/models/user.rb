@@ -71,26 +71,13 @@ class User < ActiveRecord::Base
 
   # Allow soft_deletion restore events to be logged
   include Concerns::RecordRestore
+  include Concerns::AccountsFromSession
 
   # Associations
 
   has_many :accounts,
            -> { order 'position ASC, accounts.type ASC' },
            dependent: :destroy
-
-  # Class Methods
-
-  # [Devise] Returns a new user from Session data.
-  # Saves stored accounts to #new_session_accounts if auth hash is found in session.
-  #
-  # @param _params [Hash] params from Controller request
-  # @param session [Hash] stored Guest session data
-  # @return [User] new User object with Accounts loaded from `session`
-  def self.new_with_session(_params, session)
-    super.tap do |user|
-      user.send :add_accounts_from_session, session
-    end
-  end
 
   # Attributes
 
@@ -106,9 +93,6 @@ class User < ActiveRecord::Base
 
   # Callbacks
 
-  # Save built accounts that have been imported from a session
-  after_create :save_new_session_accounts
-
   # Create Restore paper_trail version if a record is restored
   after_restore :record_restore
 
@@ -121,11 +105,6 @@ class User < ActiveRecord::Base
   def provider_account?(provider)
     account_type = Account.provider_account_class(provider).name
     accounts.where(type: account_type).any?
-  end
-
-  # @return [Array] Array of Accounts that will be saved on create
-  def new_session_accounts
-    @new_session_accounts ||= []
   end
 
   # Primary account of user
@@ -161,39 +140,6 @@ class User < ActiveRecord::Base
                                (item_type = ? AND item_id IN (?))",
                               'User', id,
                               'Account', accounts.with_deleted.pluck(:id)
-  end
-
-  protected
-
-  # Collects auth hashes from all stored providers and adds them to the new_session_accounts
-  # temporary list.
-  def save_new_session_accounts
-    new_session_accounts.each do |account|
-      account.user = self
-      next if account.save
-
-      # Add errors to model and raise exception
-      logger.error "Unable to save Account: #{account.provider}: #{account.uid}"
-      error_message = "Unable to add your #{Account.provider_name(account.provider)} account"
-      errors.add :base, error_message
-      fail ActiveRecord::RecordInvalid, account
-    end
-  end
-
-  # Collections auth hashes from all stored providers and adds them to
-  # the `new_session_accounts` temporary list
-  #
-  # @param session [Hash] Guest session containg provider auth hashes
-  def add_accounts_from_session(session)
-    Account::PROVIDERS.each do |provider|
-      provider_key = "devise.#{provider}_data"
-      next unless (data = session[provider_key])
-
-      # Add account to new session accounts
-      account = Account.new_with_auth_hash(data, provider)
-      update_defaults_from_account account
-      new_session_accounts << account
-    end
   end
 
   # Updates default properties from account
