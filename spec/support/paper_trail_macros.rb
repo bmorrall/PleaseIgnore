@@ -11,3 +11,7 @@ module PaperTrailMacros
     end
   end
 end
+
+RSpec.configure do |config|
+  config.include PaperTrailMacros, type: :model
+end
