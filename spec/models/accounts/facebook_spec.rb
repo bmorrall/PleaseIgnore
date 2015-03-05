@@ -122,9 +122,9 @@ describe Accounts::Facebook, type: :model do
         subject.send(:update_from_auth_hash, auth_hash)
         expect(subject.nickname).to eq('nickname')
       end
-      it 'should update the image from the auth hash' do
+      it 'should prepend https and update the image from the auth hash' do
         subject.send(:update_from_auth_hash, auth_hash)
-        expect(subject.image).to eq('http://graph.facebook.com/1234567/picture?type=square')
+        expect(subject.image).to eq('https://graph.facebook.com/1234567/picture?type=square')
       end
     end
     context 'with a Facebook account' do

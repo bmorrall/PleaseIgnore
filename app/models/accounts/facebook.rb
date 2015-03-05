@@ -31,6 +31,11 @@ module Accounts
       end
     end
 
+    # Ensure images are served from https
+    def image
+      super.sub(/\Ahttp\:/, 'https:') if super
+    end
+
     # Common name for Account Provider
     def provider
       :facebook
