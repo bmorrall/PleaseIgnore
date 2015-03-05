@@ -81,7 +81,7 @@ Before('@javascript') do
     driver.block_unknown_urls
     driver.allow_url('ajax.googleapis.com') # Allow CDN Hosted jQuery
     driver.allow_url('fonts.googleapis.com') # Allow Custom Fonts
-  end
+  end if Capybara.current_session.driver.respond_to? :block_unknown_urls
 end
 
 # rubocop:enable LineLength
