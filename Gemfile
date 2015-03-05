@@ -100,8 +100,8 @@ group :production do
   # Integration with heroku
   gem 'rails_12factor'
 
-  # Use unicorn as the app server
-  gem 'unicorn'
+  # Use Passenger as the app server
+  gem 'passenger'
 
   # Use Memcached as a cache
   gem 'dalli'
