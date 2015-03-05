@@ -73,12 +73,24 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use memcached in production.
-  config.cache_store = :dalli_store, nil, {
-    namespace: 'please_ignore',
-    expires_in: 1.day,
-    compress: true,
-    raise_errors: false
-  }
+  if ENV['MEMCACHIER_SERVERS']
+    # [Heroku] Use Memcachier service
+    config.cache_store = :dalli_store, ENV['MEMCACHIER_SERVERS'].split(','), {
+      username: ENV['MEMCACHIER_USERNAME'],
+      password: ENV['MEMCACHIER_PASSWORD'],
+      failover: true,
+      socket_timeout: 1.5,
+      socket_failure_delay: 0.2
+    }
+  else
+    # [Docker] Use Memcached on localhost
+    config.cache_store = :dalli_store, nil, {
+      namespace: 'please_ignore',
+      expires_in: 1.day,
+      compress: true,
+      raise_errors: false
+    }
+  end
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
