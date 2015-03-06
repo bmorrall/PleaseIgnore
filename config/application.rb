@@ -34,5 +34,10 @@ module PleaseIgnore
 
     # Use sidekiq for ActiveJob
     config.active_job.queue_adapter = :sidekiq
+
+    # Add response codes for common exceptions
+    Rails.application.config.action_dispatch.rescue_responses.merge!(
+      'CanCan::AccessDenied' => :forbidden
+    )
   end
 end

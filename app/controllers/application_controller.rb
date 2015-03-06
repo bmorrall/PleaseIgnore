@@ -19,11 +19,6 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  rescue_from CanCan::AccessDenied do |exception|
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
-    fail exception
-  end
-
   # [Devise] Redirects signed in users to their profile instead of root
   def after_sign_in_path_for(resource)
     default_url = edit_user_registration_path
