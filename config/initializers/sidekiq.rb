@@ -1,9 +1,7 @@
-redis_url = ENV['REDIS_URL']
-
-if redis_url
+if Rails.application.secrets.redis_url
   redis_config = {
     namespace: 'sidekiq',
-    url: redis_url
+    url: Rails.application.secrets.redis_url
   }
 
   Sidekiq.configure_server do |config|
