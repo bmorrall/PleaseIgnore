@@ -65,6 +65,7 @@ Dir.chdir APP_ROOT do
 
   puts "== Booting Instance =="
   command "vagrant up"
+  system "vagrant ssh -c 'sudo docker start please_ignore-postgres please_ignore-redis mailcatcher'"
 
   puts "\n== Building image =="
   command "vagrant ssh -c 'sudo docker build -t please_ignore /vagrant'"
