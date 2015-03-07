@@ -144,6 +144,8 @@ GEM
       json
       thread
       thread_safe
+    email_prefixer (1.1.0)
+      rails (>= 4.0)
     email_spec (1.6.0)
       launchy (~> 2.1)
       mail (~> 2.2)
@@ -439,6 +441,7 @@ DEPENDENCIES
   devise-async
   devise-async-activejob
   draper (~> 1.3)
+  email_prefixer
   email_spec
   factory_girl_rails
   faker

@@ -96,6 +96,9 @@ gem 'devise-async-activejob'
 # Leave a Paper Trail
 gem 'paper_trail'
 
+# Add Application Name Prefix to Emails
+gem 'email_prefixer'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
