@@ -24,7 +24,7 @@ describe PagesController, type: :controller do
         context "with GET to /#{page}" do
           before(:each) { get :show, id: page }
           it { is_expected.to render_template(page) }
-          it { is_expected.to render_with_layout('documents') }
+          it { is_expected.to render_with_layout('backend_static') }
           it { expect(response.content_type).to eq('text/html') }
           it { is_expected.not_to set_flash }
 

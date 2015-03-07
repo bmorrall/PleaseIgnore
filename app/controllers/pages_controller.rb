@@ -36,7 +36,7 @@ class PagesController < ApplicationController
   def layout_for_page
     case params[:id]
     when /terms|privacy/
-      'documents'
+      'backend_static'
     else
       'frontend_static'
     end

@@ -3,5 +3,6 @@ module Users
   # Users Passwords Controller
   # Allows Guests to reset their forgotten passwords
   class PasswordsController < Devise::PasswordsController
+    layout 'backend'
   end
 end

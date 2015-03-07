@@ -8,7 +8,7 @@ module Users
   # - Allows user to edit their details without providing a password
   # - Provides separate profile update and password change forms
   class RegistrationsController < Devise::RegistrationsController
-    layout 'dashboard', only: [:edit, :update]
+    layout :registrations_layout
 
     helper_method :display_accounts?
     helper_method :display_profile?
@@ -61,6 +61,11 @@ module Users
     # Only display accounts on #show
     def display_accounts?
       params[:user].nil?
+    end
+
+    # Returns layout backend layout except for profile page
+    def registrations_layout
+      %w(edit update).include?(params[:action]) ? 'dashboard_backend' : 'backend'
     end
 
     # Updates Account or Changes Password depending on params

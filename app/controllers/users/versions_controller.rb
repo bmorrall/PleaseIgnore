@@ -1,7 +1,7 @@
 module Users
   # Renders the local history of a User, including changes made by the User
   class VersionsController < ApplicationController
-    layout 'dashboard'
+    layout 'dashboard_backend'
 
     before_filter :authenticate_user!
     load_and_authorize_resource class: 'PaperTrail::Version',
