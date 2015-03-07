@@ -35,6 +35,11 @@ class ApplicationController < ActionController::Base
     end || default_url
   end
 
+  # [Devise] Redirects users back to the login form upon logging out
+  def after_sign_out_path_for(_resource)
+    new_user_session_path
+  end
+
   # [Devise] Adds extra User params to Devise param sanitiser
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]

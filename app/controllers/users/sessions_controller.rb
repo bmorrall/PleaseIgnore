@@ -4,11 +4,5 @@ module Users
   # Allows Guests to sign in and sign out as a User
   class SessionsController < Devise::SessionsController
     layout 'backend'
-
-    # DELETE /users/sign_out
-    def destroy
-      super
-      flash.delete(:notice) # Remove flash message
-    end
   end
 end
