@@ -7,7 +7,7 @@
                   turboboost: true,
                   html: { role: 'form', class: 'form-horizontal' },
                   wrapper: :horizontal_bootstrap_wide,
-                  defaults: { label_html: { class: 'col-sm-2' } }) do |f|
+                  defaults: horizontal_bootstrap_wide_defaults) do |f|
   = f.error_notification
   = f.input :referer, as: :hidden
   = f.input :name, input_html: { autofocus: contact_autofocus_input?(:name) }

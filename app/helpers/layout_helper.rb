@@ -44,4 +44,16 @@ module LayoutHelper
   def display_sidekiq_service_link?
     !!Rails.application.secrets.redis_url
   end
+
+  # Forms
+
+  # Default Params for Horizontal Forms
+  def horizontal_bootstrap_defaults
+    { label_html: { class: 'col-sm-3' } }
+  end
+
+  # Default Params for Wide Horizontal Forms
+  def horizontal_bootstrap_wide_defaults
+    { label_html: { class: 'col-sm-2' } }
+  end
 end
