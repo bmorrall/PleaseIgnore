@@ -8,9 +8,9 @@
       = render 'layouts/navigation', { navbar_style: 'navbar-default' }
       .container-fluid
         .row
-          %aside.col-md-2.sidenav(role='aside')
+          %aside.hidden-xs.hidden-sm.col-md-2.sidenav(role='aside')
             = render 'sidenav'
-          %main.col-md-10.main(role='main')
+          %main.col-sm-12.col-md-10.col-lg-9.col-xl-8.main(role='main')
             = render 'layouts/messages'
             = yield
     = render 'layouts/footer'
