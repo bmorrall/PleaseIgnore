@@ -68,3 +68,22 @@ a.form-control[disabled]:hover {
     }
   }
 }
+
+// Fix User Terms and Conditions Checkbox
+.user_terms_and_conditions {
+  .checkbox {
+    input[type="checkbox"] {
+      margin-left: 0;
+    }
+    span {
+      margin-left: 20px;
+    }
+  }
+}
+@media (min-width: $screen-sm-min) {
+  .user_terms_and_conditions {
+    .col-sm-8 {
+      margin-left: percentage(2 / $grid-columns);
+    }
+  }
+}

@@ -1,26 +1,26 @@
 - content_for(:page_title) { t('.page_title') }
-.col-sm-offset-2.col-sm-8.col-mobile-single
-  = simple_form_for(resource,
-                    as: resource_name,
-                    url: session_path(resource_name),
-                    html: { role: 'form'}) do |f|
-    %legend Login
-    .form-group
-      - omniauth_provider_groups.each do |providers|
-        .btn-group.btn-group-justified
-          - providers.each do |provider|
-            = system_link user_omniauth_authorize_path(provider), class: "btn btn-#{provider_class(provider)}" do
-              = provider_icon(provider)
-              %span
-                = provider_name(provider)
-    = f.error_notification
-    = f.input :email
-    .form-group
+= simple_form_for(resource,
+                  as: resource_name,
+                  url: session_path(resource_name),
+                  html: { role: 'form'}) do |f|
+  .form-group.row
+    .col-sm-offset-2.col-sm-8
+      %legend Login
+      = render 'devise/sessions/auth_buttons'
+
+  = f.error_notification
+
+  .form-group.row(style="margin-bottom: 0")
+    .col-sm-offset-2.col-sm-8
+      = f.input :email
+  .form-group.row
+    .col-sm-offset-2.col-sm-8
       - if devise_mapping.recoverable?
         = link_to "Forgot password?", new_password_path(resource_name), class: 'pull-right', tabindex: '-1'
       = f.label :password
       = f.input_field :password
-    .form-group
+  .form-group.row
+    .col-sm-offset-2.col-sm-8
       %button.btn.btn-primary(type='submit')
         = fa "unlock-alt"
         Sign in

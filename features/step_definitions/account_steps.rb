@@ -51,7 +51,7 @@ When(/^I unlink my (.+) account$/) do |provider_name|
   provider_class = provider == :google_oauth2 ? 'google-plus' : provider.to_s
 
   navigate_to 'my profile page'
-  within(".btn-#{provider_class}") do
+  within(".linked-#{provider_class}") do
     find('a.unlink-account').click
   end
   page.driver.browser.switch_to.alert.accept if page.driver.browser.respond_to? :switch_to
@@ -104,7 +104,7 @@ Then(/^I should be linked to my (.+) account$/) do |provider_name|
 
   account = Account.last
   expect(account.provider).to eq(provider)
-  within(".btn-#{provider_class}") do
+  within(".linked-#{provider_class}") do
     if [:developer, :google_oauth2].include? provider
       find_link(account.account_uid)
     else
@@ -121,6 +121,7 @@ Then(/^I should not be linked to a (.+) account$/) do |provider_name|
   provider_class = provider == :google_oauth2 ? 'google-plus' : provider.to_s
 
   navigate_to 'my profile page'
+  expect(page).to_not have_css(".linked-#{provider_class}")
   expect(page).to_not have_css("a.unlink-#{provider_class}")
   expect(
     find_link(t('users.accounts.buttons.link_account', provider_name: provider_name))
@@ -135,7 +136,7 @@ Then(/^I should see a sign up form with my (.+) credentials$/) do |provider_name
   expect(find_field('Name').value).to eq(credentials[:name])
   expect(find_field('Email').value).to eq(credentials[:email]) unless provider == :twitter
 
-  within(".btn-#{provider_class}") do
+  within(".pending-#{provider_class}") do
     expect(page).to have_content("#{provider_name} account")
     if [:developer, :google_oauth2].include? provider
       expect(page).to have_selector('a[disabled]')

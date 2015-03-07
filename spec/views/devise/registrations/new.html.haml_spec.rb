@@ -44,7 +44,16 @@ describe 'devise/registrations/new.html.haml', type: :view do
       end
     end
 
-    describe 'new account links' do
+    it 'renders the social media login buttons' do
+      render
+
+      assert_select "a.btn-facebook[href=?][rel='nofollow']", '/users/auth/facebook'
+      assert_select "a.btn-google-plus[href=?][rel='nofollow']", '/users/auth/google_oauth2'
+      assert_select "a.btn-github[href=?][rel='nofollow']", '/users/auth/github'
+      assert_select "a.btn-twitter[href=?][rel='nofollow']", '/users/auth/twitter'
+    end
+
+    describe 'pending account links' do
       {
         facebook: 'facebook',
         twitter: 'twitter',
@@ -55,7 +64,7 @@ describe 'devise/registrations/new.html.haml', type: :view do
           allow(user).to receive(:new_session_accounts).and_return([account])
 
           render
-          assert_select ".btn-#{display_class}" do
+          assert_select ".pending-#{display_class}" do
             assert_select 'a[href=?][rel="external"]', account.website
             assert_select 'a[href=?][data-method="get"][rel="nofollow"]',
                           cancel_user_registration_path
@@ -68,7 +77,7 @@ describe 'devise/registrations/new.html.haml', type: :view do
         allow(user).to receive(:new_session_accounts).and_return([google_oauth2_account])
 
         render
-        assert_select '.btn-google-plus' do
+        assert_select '.pending-google-plus' do
           assert_select 'a[href="#"][disabled]' # Google has no website
           assert_select 'a[href=?][data-method="get"][rel="nofollow"]',
                         cancel_user_registration_path

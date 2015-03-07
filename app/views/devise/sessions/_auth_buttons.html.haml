@@ -1,0 +1,7 @@
+- omniauth_provider_groups.each do |providers|
+  .btn-group.btn-group-justified
+    - providers.each do |provider|
+      = system_link user_omniauth_authorize_path(provider), class: "btn btn-#{provider_class(provider)}" do
+        = provider_icon(provider)
+        %span
+          = provider_name(provider)

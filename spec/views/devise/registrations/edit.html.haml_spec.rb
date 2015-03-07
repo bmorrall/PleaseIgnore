@@ -100,8 +100,8 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
           linked_accounts_div = ".linked-accounts[data-sort-path='#{sort_users_accounts_path}']"
           assert_select linked_accounts_div, count: 1 do
-            assert_select ".btn-facebook[data-account-id='#{facebook_account.id}']"
-            assert_select ".btn-twitter[data-account-id='#{twitter_account.id}']"
+            assert_select ".linked-facebook[data-account-id='#{facebook_account.id}']"
+            assert_select ".linked-twitter[data-account-id='#{twitter_account.id}']"
           end
         end
 
@@ -122,7 +122,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
         it 'renders a Developer account summary' do
           render
-          assert_select '.btn-developer' do
+          assert_select '.linked-developer' do
             assert_select 'a[disabled]', developer_account.uid
             assert_select 'a[href=?][data-method="delete"]', users_account_path(developer_account)
             assert_select 'i.fa.fa-user' # Generic FontAwesome icon
@@ -137,7 +137,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
         it 'renders a Facebook account summary' do
           render
-          assert_select '.btn-facebook' do
+          assert_select '.linked-facebook' do
             assert_select 'a[href=?][rel="external"]', facebook_account.website
             assert_select 'a[href=?][data-method="delete"]', users_account_path(facebook_account)
             assert_select 'i.fa.fa-facebook' # FontAwesome icon
@@ -157,7 +157,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
         end
         it 'renders a Twitter account summary' do
           render
-          assert_select '.btn-twitter' do
+          assert_select '.linked-twitter' do
             assert_select 'a[href=?][rel="external"]', twitter_account.website
             assert_select 'a[href=?][data-method="delete"]', users_account_path(twitter_account)
             assert_select 'i.fa.fa-twitter' # FontAwesome icon
@@ -178,7 +178,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
         it 'renders a GitHub account summary' do
           render
-          assert_select '.btn-github' do
+          assert_select '.linked-github' do
             assert_select 'a[href=?][rel="external"]', github_account.website
             assert_select 'a[href=?][data-method="delete"]', users_account_path(github_account)
             assert_select 'i.fa.fa-github' # FontAwesome icon
@@ -201,7 +201,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
         it 'renders a Google account summary' do
           render
-          assert_select '.btn-google-plus' do
+          assert_select '.linked-google-plus' do
             assert_select 'a[href="#"][disabled]' # Google has no website
             assert_select 'a[href=?][data-method="delete"]',
                           users_account_path(google_oauth2_account)
@@ -222,7 +222,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
         before(:each) { allow(user).to receive(:provider_account?).and_return(false) }
         it 'renders a "Link your Facebook account" link' do
           render
-          assert_select '.btn-facebook' do
+          assert_select '.connect-facebook' do
             assert_select 'a[href=?][rel="nofollow"]', user_omniauth_authorize_path('facebook')
           end
         end
@@ -231,7 +231,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
         before(:each) { allow(user).to receive(:provider_account?).and_return(false) }
         it 'renders a "Link your Twitter account" link' do
           render
-          assert_select '.btn-twitter' do
+          assert_select '.connect-twitter' do
             assert_select 'a[href=?][rel="nofollow"]', user_omniauth_authorize_path('twitter')
           end
         end
@@ -240,7 +240,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
         before(:each) { allow(user).to receive(:provider_account?).and_return(false) }
         it 'renders a "Link your GitHub account" link' do
           render
-          assert_select '.btn-github' do
+          assert_select '.connect-github' do
             assert_select 'a[href=?][rel="nofollow"]', user_omniauth_authorize_path('github')
           end
         end
@@ -249,7 +249,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
         before(:each) { allow(user).to receive(:provider_account?).and_return(false) }
         it 'renders a "Link your Google account" link' do
           render
-          assert_select '.btn-google-plus' do
+          assert_select '.connect-google-plus' do
             assert_select 'a[href=?][rel="nofollow"]',
                           user_omniauth_authorize_path('google_oauth2')
           end
