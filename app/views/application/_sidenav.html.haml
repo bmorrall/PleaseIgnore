@@ -11,9 +11,10 @@
         = fa 'list-ul'
         History
 
-  - if current_user.has_role?(:admin)
+  - if display_external_services?
     %h5 Services
     .btn-group-vertical
-      = external_link sidekiq_web_path, class: 'btn btn-default' do
-        = fa 'external-link'
-        Sidekiq
+      - if display_sidekiq_service_link?
+        = external_link sidekiq_web_path, class: 'btn btn-default' do
+          = fa 'line-chart'
+          Sidekiq

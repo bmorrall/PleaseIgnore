@@ -30,4 +30,18 @@ module LayoutHelper
   def header_nav_class(path)
     current_page?(path) ? 'active' : nil
   end
+
+  # External Services
+
+  # @return [Boolean] true if user should see list of external services
+  def display_external_services?
+    current_user.has_role?(:admin) && (
+      display_sidekiq_service_link?
+    )
+  end
+
+  # @return [Boolean] true if user should see link to sidekiq service
+  def display_sidekiq_service_link?
+    !!Rails.application.secrets.redis_url
+  end
 end
