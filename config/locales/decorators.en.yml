@@ -7,12 +7,12 @@ en:
     versions:
       title:
         account:
-          create: 'Created %{provider_name} Account #%{item_id} <%{account_uid}>'
-          create_on: 'Created %{provider_name} Account #%{item_id} <%{account_uid}> on'
-          destroy: 'Deleted %{provider_name} Account #%{item_id} <%{account_uid}>'
-          destroy_on: 'Deleted %{provider_name} Account #%{item_id} <%{account_uid}> on'
-          restore: 'Recovered %{provider_name} Account #%{item_id} <%{account_uid}>'
-          restore_on: 'Recovered %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          create: 'Linked %{provider_name} Account #%{item_id} <%{account_uid}>'
+          create_on: 'Linked %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          destroy: 'Removed %{provider_name} Account #%{item_id} <%{account_uid}>'
+          destroy_on: 'Removed %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          restore: 'Restored %{provider_name} Account #%{item_id} <%{account_uid}>'
+          restore_on: 'Restored %{provider_name} Account #%{item_id} <%{account_uid}> on'
           update: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}>'
           update_on: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}> on'
         profile:
