@@ -5,7 +5,7 @@
     = csrf_meta_tags
   %body{ class: body_class }
     #wrap
-      = render 'layouts/navigation'
+      = render 'layouts/navigation', { navbar_style: 'navbar-default' }
       .container-fluid
         .row
           %aside.col-md-2.sidenav(role='aside')
