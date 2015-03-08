@@ -14,8 +14,8 @@ $navbar-inverse-border:            darken($navbar-inverse-bg, 6.5%);
 $navbar-inverse-link-color:                $navbar-default-bg;
 $navbar-inverse-link-hover-color:          $brand-success;
 $navbar-inverse-link-hover-bg:             transparent;
-$navbar-inverse-link-active-color:         #fff;
-$navbar-inverse-link-active-bg:            darken($navbar-default-bg, 10%);
+$navbar-inverse-link-active-color:         $navbar-default-bg;
+$navbar-inverse-link-active-bg:            $navbar-inverse-bg;
 $navbar-inverse-link-disabled-color:       #ccc;
 $navbar-inverse-link-disabled-bg:          transparent;
 
