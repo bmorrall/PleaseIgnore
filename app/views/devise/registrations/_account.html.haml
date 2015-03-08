@@ -1,6 +1,7 @@
 = cache_if account.persisted?, [:v1, account], default_cache_params do # cache saved accounts only
   - account_provider_class = provider_class(account.provider)
-  - account_class = "btn-#{account_provider_class} #{account.persisted? ? 'linked' : 'pending'}-#{account_provider_class}"
+  - account_type = account.persisted? ? 'linked' : 'pending'
+  - account_class = "btn-#{account_provider_class} #{account_type}-account #{account_type}-#{account_provider_class}"
   .form-group{ class: account_class, data: { account_id: account.id } }
     %label.control-label.col-sm-3
       = account.account_icon
