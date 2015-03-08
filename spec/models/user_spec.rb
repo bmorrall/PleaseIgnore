@@ -24,27 +24,104 @@ require 'rails_helper'
 describe User, type: :model do
   it_behaves_like 'a soft deletable model'
 
-  describe 'Factories' do
-    it 'creates a User with basic details' do
-      user = create(:user)
-      expect(user.name).not_to be_blank
-      expect(user.email).not_to be_blank
-      expect(user.encrypted_password).not_to be_nil
-    end
-    describe 'role traits' do
-      it 'creates a admin user' do
-        user = create(:user, :admin)
-        expect(user).to have_role(:admin)
+  describe '#gravatar_image' do
+    context 'with a email address' do
+      before(:each) { subject.email = 'bemo56@hotmail.com' }
+      context 'with no arguments' do
+        it 'returns a 128px gravatar image url' do
+          expected = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+          expect(subject.gravatar_image).to eq(expected)
+        end
       end
-      it 'creates a banned user' do
-        user = create(:user, :banned)
-        expect(user).to have_role(:banned)
+      %w(16 32 64 128).each do |size|
+        context "with a size argument of #{size}" do
+          it "returns a #{size}px gravatar image url" do
+            expected = "http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}"
+            expect(subject.gravatar_image(size)).to eq(expected)
+          end
+        end
+      end
+    end
+    context 'with no email address' do
+      it 'returns nil' do
+        expect(subject.gravatar_image).to be_nil
       end
     end
   end
 
-  describe 'Associations' do
+  describe 'Accounts' do
     it { is_expected.to have_many(:accounts).dependent(:destroy) }
+
+    describe '#primary_account' do
+      it 'returns the first account' do
+        first_account = build_stubbed(:developer_account)
+        allow(subject).to receive(:accounts).and_return([
+          first_account,
+          build_stubbed(:developer_account)
+        ])
+        expect(subject.primary_account).to be(first_account)
+      end
+    end
+
+    describe '#provider_account?' do
+      subject { create(:user) }
+      context 'with no Account' do
+        Account::PROVIDERS.each do |provider|
+          it "returns false for #{provider}" do
+            subject.provider_account?(provider)
+          end
+        end
+      end
+      Account::PROVIDERS.each do |provider|
+        context "with a #{provider} account" do
+          let!(:account) { create :"#{provider}_account", user: subject }
+          it "returns true for #{provider}" do
+            expect(subject.provider_account? provider).to be(true)
+          end
+          Account::PROVIDERS.reject { |p| p == provider }.each do |p|
+            it "returns false for #{p}" do
+              expect(subject.provider_account? p).to be(false)
+            end
+          end
+        end
+      end
+    end
+
+    describe '#profile_picture' do
+      context 'with a primary account' do
+        let(:account) { build_stubbed(:developer_account) }
+        before(:each) do
+          # Stub the primary_account method
+          allow(subject).to receive(:primary_account).and_return(account)
+        end
+        context 'with a profile_picture' do
+          let(:account_image) { 'http://graph.facebook.com/1234567/picture?type=square' }
+          before(:each) { allow(account).to receive(:profile_picture).and_return(account_image) }
+
+          it 'returns the profile_picture from the primary account ' do
+            expect(subject.profile_picture).to be(account_image)
+          end
+        end
+        context 'without a profile picture' do
+          before(:each) { allow(account).to receive(:profile_picture).and_return(nil) }
+
+          it 'reverts back to the gravatar image' do
+            gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+            allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
+
+            expect(subject.profile_picture).to eq(gravatar_image)
+          end
+        end
+      end
+      context 'with no accounts' do
+        it 'returns the gravatar image for the user' do
+          gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+          allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
+
+          expect(subject.profile_picture).to eq(gravatar_image)
+        end
+      end
+    end
   end
 
   describe 'Validations' do
@@ -65,7 +142,7 @@ describe User, type: :model do
     end
   end
 
-  describe 'versioning' do
+  describe 'Versioning' do
     context 'with create event' do
       it 'creates a create version' do
         user = build :user
@@ -150,100 +227,21 @@ describe User, type: :model do
     end
   end
 
-  describe '#provider_account?' do
-    subject { create(:user) }
-    context 'with no Account' do
-      Account::PROVIDERS.each do |provider|
-        it "returns false for #{provider}" do
-          subject.provider_account?(provider)
-        end
-      end
+  describe 'Factories' do
+    it 'creates a User with basic details' do
+      user = create(:user)
+      expect(user.name).not_to be_blank
+      expect(user.email).not_to be_blank
+      expect(user.encrypted_password).not_to be_nil
     end
-    Account::PROVIDERS.each do |provider|
-      context "with a #{provider} account" do
-        let!(:account) { create :"#{provider}_account", user: subject }
-        it "returns true for #{provider}" do
-          expect(subject.provider_account? provider).to be(true)
-        end
-        Account::PROVIDERS.reject { |p| p == provider }.each do |p|
-          it "returns false for #{p}" do
-            expect(subject.provider_account? p).to be(false)
-          end
-        end
+    describe 'role traits' do
+      it 'creates a admin user' do
+        user = create(:user, :admin)
+        expect(user).to have_role(:admin)
       end
-    end
-  end
-
-  describe '#primary_account' do
-    it 'returns the first account' do
-      first_account = build_stubbed(:developer_account)
-      allow(subject).to receive(:accounts).and_return([
-        first_account,
-        build_stubbed(:developer_account)
-      ])
-      expect(subject.primary_account).to be(first_account)
-    end
-  end
-
-  # Instance Methods (Pictures)
-
-  describe '#gravatar_image' do
-    context 'with a email address' do
-      before(:each) { subject.email = 'bemo56@hotmail.com' }
-      context 'with no arguments' do
-        it 'returns a 128px gravatar image url' do
-          expected = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
-          expect(subject.gravatar_image).to eq(expected)
-        end
-      end
-      %w(16 32 64 128).each do |size|
-        context "with a size argument of #{size}" do
-          it "returns a #{size}px gravatar image url" do
-            expected = "http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}"
-            expect(subject.gravatar_image(size)).to eq(expected)
-          end
-        end
-      end
-    end
-    context 'with no email address' do
-      it 'returns nil' do
-        expect(subject.gravatar_image).to be_nil
-      end
-    end
-  end
-
-  describe '#profile_picture' do
-    context 'with a primary account' do
-      let(:account) { build_stubbed(:developer_account) }
-      before(:each) do
-        # Stub the primary_account method
-        allow(subject).to receive(:primary_account).and_return(account)
-      end
-      context 'with a profile_picture' do
-        let(:account_image) { 'http://graph.facebook.com/1234567/picture?type=square' }
-        before(:each) { allow(account).to receive(:profile_picture).and_return(account_image) }
-
-        it 'returns the profile_picture from the primary account ' do
-          expect(subject.profile_picture).to be(account_image)
-        end
-      end
-      context 'without a profile picture' do
-        before(:each) { allow(account).to receive(:profile_picture).and_return(nil) }
-
-        it 'reverts back to the gravatar image' do
-          gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
-          allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
-
-          expect(subject.profile_picture).to eq(gravatar_image)
-        end
-      end
-    end
-    context 'with no accounts' do
-      it 'returns the gravatar image for the user' do
-        gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
-        allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
-
-        expect(subject.profile_picture).to eq(gravatar_image)
+      it 'creates a banned user' do
+        user = create(:user, :banned)
+        expect(user).to have_role(:banned)
       end
     end
   end

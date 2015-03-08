@@ -26,11 +26,11 @@ describe Account, type: :model do
 
   it_behaves_like 'a soft deletable model'
 
-  describe 'associations' do
+  describe 'Associations' do
     it { is_expected.to belong_to(:user).touch }
   end
 
-  describe 'validations' do
+  describe 'Validations' do
     it { is_expected.to validate_presence_of(:uid) }
     it 'should validate uniqueness of uid scoped to provider' do
       create(:developer_account)
@@ -53,7 +53,7 @@ describe Account, type: :model do
     end
   end
 
-  describe 'versioning' do
+  describe 'Versioning' do
     context 'with create event' do
       it 'creates a create version' do
         account = build :account
