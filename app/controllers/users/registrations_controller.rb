@@ -36,31 +36,9 @@ module Users
 
     protected
 
-    # [Rails] Params for updating a user profile
+    # Params for updating a user profile
     def account_update_params
       devise_parameter_sanitizer.sanitize(:account_update)
-    end
-
-    # [Devise] Redirect Users back to the profile page after updates
-    #
-    # @param _resource [User] resource requiring redirect
-    def after_update_path_for(_resource)
-      edit_user_registration_path
-    end
-
-    # Only display password on #show or if update profile fails
-    def display_profile?
-      params[:user].nil? || !params[:user].key?(:password)
-    end
-
-    # Only display password on #show or if change password fails
-    def display_password_change?
-      params[:user].nil? || params[:user].key?(:password)
-    end
-
-    # Only display accounts on #show
-    def display_accounts?
-      params[:user].nil?
     end
 
     # Returns layout backend layout except for profile page
@@ -80,11 +58,37 @@ module Users
       end
     end
 
-    private
-
-    # [Devise] Returns true if new password param is included
+    # Returns true if new password param is included
     def needs_password_param?(_user, params)
       params.key? :password
+    end
+
+    concerning :DeviseOverrides do
+      protected
+
+      # [Devise] Redirect Users back to the profile page after updates
+      #
+      # @param _resource [User] resource requiring redirect
+      def after_update_path_for(_resource)
+        edit_user_registration_path
+      end
+    end
+
+    concerning :Helpers do
+      # Only display password on #show or if update profile fails
+      def display_profile?
+        params[:user].nil? || !params[:user].key?(:password)
+      end
+
+      # Only display password on #show or if change password fails
+      def display_password_change?
+        params[:user].nil? || params[:user].key?(:password)
+      end
+
+      # Only display accounts on #show
+      def display_accounts?
+        params[:user].nil?
+      end
     end
   end
 end
