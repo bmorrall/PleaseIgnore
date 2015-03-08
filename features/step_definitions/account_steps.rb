@@ -137,11 +137,6 @@ Then(/^I should see a sign up form with my (.+) credentials$/) do |provider_name
   expect(find_field('Email').value).to eq(credentials[:email]) unless provider == :twitter
 
   within(".pending-#{provider_class}") do
-    expect(page).to have_content("#{provider_name} account")
-    if [:developer, :google_oauth2].include? provider
-      expect(page).to have_selector('a[disabled]')
-    else
-      expect(page).to have_selector("a[href='#{credentials[:website]}']")
-    end
+    expect(page).to have_selector(".btn-#{provider_class}[title='#{provider_name} account']")
   end
 end
