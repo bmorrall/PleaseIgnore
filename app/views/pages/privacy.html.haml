@@ -35,7 +35,7 @@
   %section
     = tos_header "Disclosure"
     :markdown
-      #{application_name} may disclose personally identifiable information under special circumstances, such as to comply with subpoenas or when your actions violate the [Terms of Service](/terms).
+      #{application_name} may disclose personally identifiable information under special circumstances, such as to comply with subpoenas or when your actions violate the #{link_to 'Terms of Service', page_url('terms')}.
 
   %section
     = tos_header "Changes"
@@ -45,4 +45,4 @@
   %section
     = tos_header "Questions"
     :markdown
-      Any questions about this Privacy Policy should be addressed to support@example.com or sent via our [Contact form](/contact).
+      Any questions about this Privacy Policy should be addressed to #{mail_to Rails.application.secrets.support_email_address} or sent via our #{link_to 'Contact form', contact_url}.
