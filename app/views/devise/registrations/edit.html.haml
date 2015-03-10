@@ -64,7 +64,7 @@
           - unless resource.provider_account? provider
             = render partial: 'connect_account', locals: { provider: provider }
 
-- if display_accounts?
+- if display_accounts? && can?(:destroy, resource)
   %section
     %header.page-header
       %h3 Delete Account

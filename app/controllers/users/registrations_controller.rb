@@ -10,6 +10,8 @@ module Users
   class RegistrationsController < Devise::RegistrationsController
     layout :registrations_layout
 
+    before_filter :ensure_destroy_permission!, only: :destroy
+
     helper_method :display_accounts?
     helper_method :display_profile?
     helper_method :display_password_change?
@@ -35,6 +37,15 @@ module Users
     end
 
     protected
+
+    # Filters
+
+    # Checks that the user can destroy their own account
+    def ensure_destroy_permission!
+      authorize! :destroy, current_user
+    end
+
+    # Helpers
 
     # Params for updating a user profile
     def account_update_params

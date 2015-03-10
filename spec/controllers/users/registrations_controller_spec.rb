@@ -104,4 +104,16 @@ describe Users::RegistrationsController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy' do
+    context 'with a logged in user' do
+      login_user
+
+      context 'with no delete permission' do
+        it 'should raise a CanCan::AccessDenied exception' do
+          expect { delete :destroy }.to raise_error(CanCan::AccessDenied)
+        end
+      end
+    end
+  end
+
 end
