@@ -1,6 +1,5 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-require './etc/vagrant-provision-reboot/vagrant-provision-reboot-plugin'
 
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
@@ -13,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -66,18 +65,6 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    # install the backported kernel
-    sudo apt-get update
-    sudo apt-get install -y linux-image-generic-lts-raring linux-headers-generic-lts-raring
-
-    # install the backported kernel and xorg if using Unity/Xorg
-    sudo apt-get install -y --install-recommends linux-generic-lts-raring xserver-xorg-lts-raring libgl1-mesa-glx-lts-raring
-  SHELL
-
-  # Run a reboot of a *NIX guest.
-  config.vm.provision :unix_reboot
-
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get install -y curl
 
