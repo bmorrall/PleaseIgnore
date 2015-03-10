@@ -20,8 +20,12 @@
   / Registration Details
   = f.input :name, input_html: { autofocus: true }
   = f.input :email
-  = f.input :password
-  = f.input :password_confirmation
+
+  / Don't require passwords with linked accounts
+  - if resource.password_required?
+    = f.input :password
+    = f.input :password_confirmation
+
   - terms_and_conditions_label = content_tag :span do
     I accept the
     = external_link 'Terms of Service', page_path('terms')

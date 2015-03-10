@@ -108,6 +108,46 @@ class User < ActiveRecord::Base
     end
   end
 
+  concerning :DeviseOverrides do
+    # Checks if the password has not be set to the user, or the password was previous not set
+    def no_login_password?
+      encrypted_password.blank? || (
+        # Password is being added
+        encrypted_password_changed? && encrypted_password_change.first.blank?
+      )
+    end
+
+    # Checks whether a password is needed or not. For validations only.
+    # Passwords are always required if it's a new record, or if the password
+    # or confirmation are being set somewhere.
+    def password_required?
+      (!persisted? && new_session_accounts.empty?) ||
+        !password.nil? ||
+        !password_confirmation.nil?
+    end
+
+    # [Devise] Allows valid_password to accept a nil current_password value
+    def update_with_password(params, *options)
+      @allow_empty_password = true
+      super
+    ensure
+      @allow_empty_password = false
+    end
+
+    # Verifies whether an password (ie from sign in) is the user password.
+    def valid_password?(password)
+      # User is adding a password
+      return allow_empty_password? if password.nil? && encrypted_password.blank?
+      super # Fallback to standard logic
+    end
+
+    protected
+
+    def allow_empty_password?
+      !!@allow_empty_password
+    end
+  end
+
   concerning :Versioning do
     included do
       # Use paper_trail to track changes to user modifyable values

@@ -14,7 +14,7 @@ Feature: Google Registration
   Scenario: Create a new profile linked to a Google account
     Given I do not exist as a user
     When I sign in using my Google account
-    And I sign up with valid user data
+    And I complete the registration form
     Then I should be signed in
     And I should be linked to my Google account
 

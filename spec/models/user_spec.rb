@@ -124,6 +124,163 @@ describe User, type: :model do
     end
   end
 
+  describe 'DeviseOverrides' do
+    describe '#no_login_password?' do
+      let(:instance) { described_class.new }
+      subject { instance.no_login_password? }
+
+      it 'returns true when the encrypted_password is blank' do
+        is_expected.to be(true)
+      end
+
+      it 'returns true if the password has been assigned but not saved' do
+        instance.password = Faker::Lorem.word
+        is_expected.to be(true)
+      end
+
+      context 'when the user has a encrypted_password' do
+        let(:instance) { create(:user) }
+
+        it { is_expected.to be(false) }
+
+        it 'should remain false when a new password has been set' do
+          instance.password = Faker::Lorem.word
+          is_expected.to be(false)
+        end
+      end
+    end
+
+    describe '#password_required?' do
+      let(:instance) { described_class.new }
+      subject { instance.password_required? }
+
+      it 'returns true when password is set' do
+        instance.password = Faker::Lorem.word
+        is_expected.to be(true)
+      end
+      it 'returns true when password_confirmation is set' do
+        instance.password_confirmation = Faker::Lorem.word
+        is_expected.to be(true)
+      end
+      context 'with a new user' do
+        context 'with a new session account' do
+          before(:each) do
+            allow(instance).to receive(:new_session_accounts).and_return([double(:account)])
+          end
+          it { is_expected.to be(false) }
+        end
+        context 'with no new session accounts' do
+          before(:each) do
+            allow(instance).to receive(:new_session_accounts).and_return([])
+          end
+          it { is_expected.to be(true) }
+        end
+      end
+      context 'with a persisted user' do
+        let(:instance) { create(:user).tap(&:reload) }
+
+        context 'with a new session account' do
+          before(:each) do
+            allow(instance).to receive(:new_session_accounts).and_return([double(:account)])
+          end
+          it { is_expected.to be(true) }
+        end
+      end
+    end
+
+    describe '#update_with_password' do
+      let(:instance) { described_class.new }
+      let(:attributes) { { password: 'test' } }
+      subject { instance.update_with_password(attributes) }
+
+      it 'should call update_attributes with a valid password' do
+        expect(instance).to receive(:valid_password?).with(nil).and_return(true)
+        expect(instance).to receive(:update_attributes)
+        subject
+      end
+      it 'should call valid_password with allow_empty_password as true then return it to false' do
+        expect(instance).to receive(:valid_password?) do
+          expect(instance.send(:allow_empty_password?)).to be(true)
+        end
+        expect(instance).to receive(:update_attributes)
+        subject
+        expect(instance.send(:allow_empty_password?)).to be(false)
+      end
+    end
+
+    describe '#valid_password?' do
+      subject { instance.valid_password?(password) }
+
+      context 'when the password is nil and the encrypted password is blank' do
+        let(:password) { nil }
+        let(:instance) { described_class.new }
+
+        it 'should return the result from allow_empty_password?' do
+          result = double('result')
+          allow(instance).to receive(:allow_empty_password?).and_return(result)
+          expect(subject).to eq result
+        end
+      end
+    end
+  end
+
+  describe 'DeviseValidations' do
+    describe 'email validation' do
+      context 'when email is required' do
+        before(:each) { allow(subject).to receive(:email_required?).and_return(true) }
+
+        it { should validate_presence_of :email }
+      end
+
+      context 'when email has changed' do
+        before(:each) { allow(subject).to receive(:email_changed?).and_return(true) }
+
+        it { should validate_uniqueness_of :email }
+
+        it 'should allow valid emails' do
+          %w(
+            a.b.c@example.com
+            test_mail@gmail.com
+            any@any.net
+            email@test.br
+            123@mail.test
+            1☃3@mail.test
+          ).each do |valid_email|
+            should allow_value(valid_email).for(:email)
+          end
+        end
+        it 'should not allow invalid emails' do
+          %w{
+            invalid_email_format
+            123
+            $$$
+            ()
+            ☃
+            bla@bla.
+          }.each_with_index do |invalid_email|
+            should_not allow_value(invalid_email).for(:email)
+          end
+        end
+      end
+
+      context 'with a soft_deleted user with the same email' do
+        before(:each) { create(:user, :soft_deleted, email: 'test@example.com') }
+
+        it 'should not allow the same email to be used' do
+          should_not allow_value('test@example.com').for(:email)
+        end
+      end
+    end
+
+    describe 'password validation' do
+      context 'when password is required' do
+        it { should validate_presence_of(:password) }
+        it { should validate_confirmation_of(:password) }
+        it { should validate_length_of(:password).is_at_least(8).is_at_most(128) }
+      end
+    end
+  end
+
   describe 'Validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_acceptance_of(:terms_and_conditions) }

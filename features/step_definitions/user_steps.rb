@@ -25,7 +25,7 @@ end
 def create_unconfirmed_user
   create_visitor
   delete_user
-  sign_up
+  submit_registration
   destroy_session
 end
 
@@ -40,15 +40,20 @@ def delete_user
   @visitor = nil
 end
 
-def sign_up
+def fill_in_registration(skip_password = false)
   create_visitor
-
-  navigate_to 'the sign up page'
   fill_in 'user_name', with: @visitor[:name]
   fill_in 'user_email', with: @visitor[:email]
-  fill_in 'user_password', with: @visitor[:password]
-  fill_in 'user_password_confirmation', with: @visitor[:password_confirmation]
+  unless skip_password
+    fill_in 'user_password', with: @visitor[:password]
+    fill_in 'user_password_confirmation', with: @visitor[:password_confirmation]
+  end
   check 'user_terms_and_conditions'
+end
+
+def submit_registration(skip_password = false)
+  navigate_to 'the sign up page'
+  fill_in_registration(skip_password)
   click_button 'Sign up'
   find_user
 end
@@ -129,31 +134,36 @@ end
 
 When(/^I sign up with valid user data$/) do
   create_visitor
-  sign_up
+  submit_registration
+end
+
+When(/^I complete the registration form$/) do
+  create_visitor
+  submit_registration(true)
 end
 
 When(/^I sign up with an invalid email$/) do
   create_visitor
   @visitor = @visitor.merge(email: 'notanemail')
-  sign_up
+  submit_registration
 end
 
 When(/^I sign up without a password confirmation$/) do
   create_visitor
   @visitor = @visitor.merge(password_confirmation: '')
-  sign_up
+  submit_registration
 end
 
 When(/^I sign up without a password$/) do
   create_visitor
   @visitor = @visitor.merge(password: '')
-  sign_up
+  submit_registration
 end
 
 When(/^I sign up with a mismatched password confirmation$/) do
   create_visitor
   @visitor = @visitor.merge(password_confirmation: 'changeme123')
-  sign_up
+  submit_registration
 end
 
 When(/^I return to the site$/) do

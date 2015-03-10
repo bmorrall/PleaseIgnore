@@ -11,36 +11,51 @@ describe 'devise/registrations/new.html.haml', type: :view do
     end
 
     describe 'the new registration form' do
-      it 'renders the form' do
+      it 'renders the name field' do
         render
 
         assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-          assert_select 'input#user_name[name=?]', 'user[name]'
-          assert_select 'input#user_email[name=?]', 'user[email]'
-          assert_select 'input#user_password[name=?]', 'user[password]'
-          assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
+          assert_select 'label[for=?]', 'user_name', 'Name'
+          assert_select 'input#user_name[name=?][placeholder=?]',
+                        'user[name]',
+                        t('simple_form.placeholders.defaults.name')
         end
       end
-      it 'renders all form labels' do
+      it 'renders the email field' do
         render
 
-        assert_select 'label[for=?]', 'user_name', 'Name'
-        assert_select 'label[for=?]', 'user_email', 'Email'
-        assert_select 'label[for=?]', 'user_password', 'Password'
-        assert_select 'label[for=?]', 'user_password_confirmation',
-                      t('simple_form.labels.user.password_confirmation')
+        assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+          assert_select 'label[for=?]', 'user_email', 'Email'
+          assert_select 'input#user_email[name=?][placeholder=?]',
+                        'user[email]',
+                        t('simple_form.placeholders.defaults.email')
+        end
       end
-      it 'renders all form placeholders' do
-        render
 
-        assert_select '#user_name[placeholder=?]',
-                      t('simple_form.placeholders.defaults.name')
-        assert_select '#user_email[placeholder=?]',
-                      t('simple_form.placeholders.defaults.email')
-        assert_select '#user_password[placeholder=?]',
-                      t('simple_form.placeholders.defaults.password')
-        assert_select '#user_password_confirmation[placeholder=?]',
-                      t('simple_form.placeholders.defaults.password_confirmation')
+      context 'when the user requires a password' do
+        before(:each) { allow(user).to receive(:password_required?).and_return(true) }
+
+        it 'renders the password field' do
+          render
+
+          assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+            assert_select 'label[for=?]', 'user_password', 'Password'
+            assert_select 'input#user_password[name=?][placeholder=?]',
+                          'user[password]',
+                          t('simple_form.placeholders.defaults.password')
+          end
+        end
+        it 'renders the password confirmation field' do
+          render
+
+          assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+            assert_select 'label[for=?]', 'user_password_confirmation',
+                          t('simple_form.labels.user.password_confirmation')
+            assert_select 'input#user_password_confirmation[name=?][placeholder=?]',
+                          'user[password_confirmation]',
+                          t('simple_form.placeholders.defaults.password_confirmation')
+          end
+        end
       end
     end
 

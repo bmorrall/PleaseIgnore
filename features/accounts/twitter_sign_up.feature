@@ -14,7 +14,7 @@ Feature: Twitter Registration
   Scenario: Create a new profile linked to a Twitter account
     Given I do not exist as a user
     When I sign in using my Twitter account
-    And I sign up with valid user data
+    And I complete the registration form
     Then I should be signed in
     And I should be linked to my Twitter account
 

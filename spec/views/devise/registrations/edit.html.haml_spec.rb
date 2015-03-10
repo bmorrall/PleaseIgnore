@@ -28,64 +28,89 @@ describe 'devise/registrations/edit.html.haml', type: :view do
     end
 
     describe 'update profile form' do
-      it 'renders the form' do
+      it 'renders the header' do
         render
 
         assert_select 'h3', 'Profile Information'
+      end
+      it 'renders the name field' do
+        render
+
         assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-          assert_select 'input#user_name[name=?]', 'user[name]'
-          assert_select 'input#user_email[name=?]', 'user[email]'
+          assert_select 'label[for=?]', 'user_name', 'Name'
+          assert_select 'input#user_name[name=?][placeholder=?]',
+                        'user[name]',
+                        t('simple_form.placeholders.defaults.name')
         end
       end
-      it 'renders all form labels' do
+      it 'renders the email field' do
         render
 
-        assert_select 'label[for=?]', 'user_name', 'Name'
-        assert_select 'label[for=?]', 'user_email', 'Email'
-      end
-      it 'renders all form placeholders' do
-        render
-
-        assert_select '#user_name[placeholder=?]',
-                      t('simple_form.placeholders.defaults.name')
-        assert_select '#user_email[placeholder=?]',
-                      t('simple_form.placeholders.defaults.email')
+        assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+          assert_select 'label[for=?]', 'user_email', 'Email'
+          assert_select 'input#user_email[name=?][placeholder=?]',
+                        'user[email]',
+                        t('simple_form.placeholders.defaults.email')
+        end
       end
     end
 
     describe 'the change password form' do
-      it 'renders the change password form' do
+      it 'renders the new password field' do
         render
 
-        assert_select 'h3', 'Change Password'
         assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-          assert_select 'input#user_password[name=?]', 'user[password]'
-          assert_select 'input#user_password_confirmation[name=?]', 'user[password_confirmation]'
-          assert_select 'input#user_current_password[name=?]', 'user[current_password]'
+          assert_select 'label[for=?]', 'user_password', 'New Password'
+          assert_select 'input#user_password[name=?][placeholder=?]',
+                        'user[password]',
+                        t('simple_form.placeholders.defaults.password')
         end
       end
-      it 'renders all form labels' do
+      it 'renders the password confirmation field' do
         render
 
-        assert_select 'label[for=?]', 'user_password', 'New Password'
-        assert_select 'label[for=?]', 'user_password_confirmation',
-                      t('simple_form.labels.user.password_confirmation')
-        assert_select 'label[for=?]', 'user_current_password', 'Current password'
+        assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+          assert_select 'label[for=?]', 'user_password_confirmation',
+                        t('simple_form.labels.user.password_confirmation')
+          assert_select 'input#user_password_confirmation[name=?][placeholder=?]',
+                        'user[password_confirmation]',
+                        t('simple_form.placeholders.defaults.password_confirmation')
+        end
       end
-      it 'renders all form placeholders' do
-        render
 
-        assert_select '#user_password[placeholder=?]',
-                      t('simple_form.placeholders.defaults.password')
-        assert_select '#user_password_confirmation[placeholder=?]',
-                      t('simple_form.placeholders.defaults.password_confirmation')
-        assert_select '#user_current_password[placeholder=?]',
-                      t('simple_form.placeholders.defaults.current_password')
+      context 'when the user has a encrypted password' do
+        before(:each) { allow(user).to receive(:no_login_password?).and_return(false) }
+
+        it 'renders the Change Password header' do
+          render
+
+          assert_select 'h3', 'Change Password'
+        end
+        it 'renders the current password field' do
+          render
+
+          assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
+            assert_select 'label[for=?]', 'user_current_password', 'Current password'
+            assert_select 'input#user_current_password[name=?][placeholder=?]',
+                          'user[current_password]',
+                          t('simple_form.placeholders.defaults.current_password')
+            assert_select '.help-block', t('simple_form.hints.user.current_password')
+          end
+        end
       end
-      it 'renders all hints' do
-        render
+      context 'when the user does not have a password' do
+        before(:each) { allow(user).to receive(:no_login_password?).and_return(true) }
 
-        assert_select '.help-block', t('simple_form.hints.user.current_password')
+        it 'renders the Add Login Password header' do
+          render
+
+          assert_select 'h3', 'Add Login Password'
+        end
+        it 'does not render the current password field' do
+          render
+
+          assert_select 'input#user_current_password', count: 0
+        end
       end
     end
 

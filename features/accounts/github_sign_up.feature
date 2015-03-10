@@ -14,7 +14,7 @@ Feature: GitHub Registration
   Scenario: Create a new profile linked to a GitHub account
     Given I do not exist as a user
     When I sign in using my GitHub account
-    And I sign up with valid user data
+    And I complete the registration form
     Then I should be signed in
     And I should be linked to my GitHub account
 
