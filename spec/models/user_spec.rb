@@ -240,17 +240,58 @@ describe User, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_acceptance_of(:terms_and_conditions) }
 
-    it 'should validate the uniqueness of email' do
-      create :user
-      is_expected.to validate_uniqueness_of(:email).case_insensitive
+    describe 'email validation' do
+      it 'should validate the uniqueness of email' do
+        create :user
+        is_expected.to validate_uniqueness_of(:email).case_insensitive
+      end
+
+      context 'when email is required' do
+        before(:each) { allow(subject).to receive(:email_required?).and_return(true) }
+
+        it { should validate_presence_of :email }
+      end
+
+      context 'when email has changed' do
+        before(:each) { allow(subject).to receive(:email_changed?).and_return(true) }
+
+        %w(
+          a.b.c@example.com
+          test_mail@gmail.com
+          any@any.net
+          email@test.br
+          123@mail.test
+          1☃3@mail.test
+        ).each do |valid_email|
+          it { should allow_value(valid_email).for(:email) }
+        end
+        %w(
+          invalid_email_format
+          123
+          $$$
+          ()
+          ☃
+          bla@bla.
+        ).each do |invalid_email|
+          it { should_not allow_value(invalid_email).for(:email) }
+        end
+      end
+
+      context 'with a soft_deleted user with the same email' do
+        before(:each) { create(:user, :soft_deleted, email: 'test@example.com') }
+
+        it 'should not allow the same email to be used' do
+          should_not allow_value('test@example.com').for(:email)
+        end
+      end
     end
 
-    context 'with a existing soft deleted user' do
-      let!(:user) { create(:user, :soft_deleted) }
-      # Ensure validate_uniqueness_of compares against soft deleted model
-      before(:each) { expect(described_class).to receive(:first).and_return(user) }
-
-      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+    describe 'password validation' do
+      context 'when password is required' do
+        it { should validate_presence_of(:password) }
+        it { should validate_confirmation_of(:password) }
+        it { should validate_length_of(:password).is_at_least(8).is_at_most(128) }
+      end
     end
   end
 
