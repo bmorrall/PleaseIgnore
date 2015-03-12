@@ -149,8 +149,15 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           render
           assert_select '.linked-developer' do
             assert_select 'a[disabled]', developer_account.uid
-            assert_select 'a[href=?][data-method="delete"]', users_account_path(developer_account)
             assert_select 'i.fa.fa-user' # Generic FontAwesome icon
+          end
+        end
+        it 'renders a delete button when the user has the destroy ability' do
+          controller.current_ability.can :destroy, developer_account
+          render
+          assert_select '.linked-developer' do
+            assert_select 'a[href=?][data-method="delete"]',
+                          users_account_path(developer_account)
           end
         end
       end
@@ -164,8 +171,15 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           render
           assert_select '.linked-facebook' do
             assert_select 'a[href=?][rel="external"]', facebook_account.website
-            assert_select 'a[href=?][data-method="delete"]', users_account_path(facebook_account)
             assert_select 'i.fa.fa-facebook' # FontAwesome icon
+          end
+        end
+        it 'renders a delete button when the user has the destroy ability' do
+          controller.current_ability.can :destroy, facebook_account
+          render
+          assert_select '.linked-facebook' do
+            assert_select 'a[href=?][data-method="delete"]',
+                          users_account_path(facebook_account)
           end
         end
         it 'does not render a "Link your Facebook account" link' do
@@ -184,8 +198,15 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           render
           assert_select '.linked-twitter' do
             assert_select 'a[href=?][rel="external"]', twitter_account.website
-            assert_select 'a[href=?][data-method="delete"]', users_account_path(twitter_account)
             assert_select 'i.fa.fa-twitter' # FontAwesome icon
+          end
+        end
+        it 'renders a delete button when the user has the destroy ability' do
+          controller.current_ability.can :destroy, twitter_account
+          render
+          assert_select '.linked-twitter' do
+            assert_select 'a[href=?][data-method="delete"]',
+                          users_account_path(twitter_account)
           end
         end
         it 'does not render a "Link your Twitter account" link' do
@@ -205,8 +226,15 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           render
           assert_select '.linked-github' do
             assert_select 'a[href=?][rel="external"]', github_account.website
-            assert_select 'a[href=?][data-method="delete"]', users_account_path(github_account)
             assert_select 'i.fa.fa-github' # FontAwesome icon
+          end
+        end
+        it 'renders a delete button when the user has the destroy ability' do
+          controller.current_ability.can :destroy, github_account
+          render
+          assert_select '.linked-github' do
+            assert_select 'a[href=?][data-method="delete"]',
+                          users_account_path(github_account)
           end
         end
         it 'does not render a "Link your GitHub account" link' do
@@ -228,9 +256,15 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           render
           assert_select '.linked-google-plus' do
             assert_select 'a[href="#"][disabled]' # Google has no website
+            assert_select 'i.fa.fa-google-plus' # FontAwesome icon
+          end
+        end
+        it 'renders a delete button when the user has the destroy ability' do
+          controller.current_ability.can :destroy, Account
+          render
+          assert_select '.linked-google-plus' do
             assert_select 'a[href=?][data-method="delete"]',
                           users_account_path(google_oauth2_account)
-            assert_select 'i.fa.fa-google-plus' # FontAwesome icon
           end
         end
         it 'does not render a "Link your Google account" link' do

@@ -35,6 +35,12 @@ FactoryGirl.define do
     trait(:banned) do
       after(:create) { |user| user.add_role :banned }
     end
+    trait(:no_login_password) do
+      password nil
+      password_confirmation nil
+      after(:build) { |user| user.new_session_accounts << build(:developer_account) }
+      after(:create) { |user| user.update_column :encrypted_password, '' }
+    end
 
     trait :soft_deleted do
       deleted_at { DateTime.now }

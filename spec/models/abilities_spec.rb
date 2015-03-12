@@ -8,22 +8,11 @@ describe User, type: :model do
     subject { Ability.new(user) }
 
     shared_examples 'a standard user' do
-      # Accounts
-      it { is_expected.to be_able_to(:create, Account) }
-      it { is_expected.to be_able_to(:update, build_stubbed(:developer_account, user: user)) }
-      it { is_expected.to be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
-      it { is_expected.not_to be_able_to(:update, build_stubbed(:developer_account)) }
-      it { is_expected.not_to be_able_to(:destroy, build_stubbed(:developer_account)) }
-
       # Contacts
       it { is_expected.to be_able_to(:create, Contact) }
     end
 
     describe 'as a guest' do
-
-      # Accounts
-      it { is_expected.to be_able_to(:create, Account) }
-
       # Contacts
       it { is_expected.to be_able_to(:create, Contact) }
     end
@@ -49,15 +38,59 @@ describe User, type: :model do
     describe 'as a banned user' do
       let(:user) { create(:user, :banned) }
 
-      # Accounts
-      it { is_expected.not_to be_able_to(:create, Account) }
-      it { is_expected.not_to be_able_to(:update, build_stubbed(:developer_account, user: user)) }
-      it { is_expected.not_to be_able_to(:destroy, build_stubbed(:developer_account, user: user)) }
-      it { is_expected.not_to be_able_to(:update, Account) }
-      it { is_expected.not_to be_able_to(:destroy, Account) }
-
       # Versions
       it { is_expected.not_to be_able_to(:read, PaperTrail::Version) }
+    end
+
+    describe 'Account abilities' do
+      context 'as a guest' do
+        it { is_expected.to be_able_to(:create, Account) }
+      end
+      context 'as a user' do
+        let(:user) { create(:user) }
+
+        it { is_expected.to be_able_to(:create, Account) }
+
+        context 'with an account belonging to the user' do
+          let(:account) { create :developer_account, user: user }
+
+          it { is_expected.to be_able_to(:update, account) }
+          it { is_expected.to be_able_to(:destroy, account) }
+        end
+        context 'with an account belonging to another user' do
+          let(:another_user) { create :user }
+          let(:account) { create :developer_account, user: another_user }
+
+          it { is_expected.to_not be_able_to(:update, account) }
+          it { is_expected.to_not be_able_to(:destroy, account) }
+        end
+      end
+      context 'as a user with no login password' do
+        let(:user) { create(:user, :no_login_password) }
+        let(:account) { user.accounts.first }
+
+        it 'should not allow the user to delete the account with no remaining accounts' do
+          is_expected.to_not be_able_to(:destroy, account)
+        end
+        it 'should allow the user to delete the account with additional accounts' do
+          create :facebook_account, user: user
+          is_expected.to be_able_to(:destroy, account)
+        end
+      end
+      context 'as a banned user' do
+        let(:user) { create(:user, :banned) }
+
+        it { is_expected.not_to be_able_to(:create, Account) }
+
+        context 'with an account belonging to the user' do
+          context 'with an account belonging to the user' do
+            let(:account) { create :developer_account, user: user }
+
+            it { is_expected.to_not be_able_to(:update, account) }
+            it { is_expected.to_not be_able_to(:destroy, account) }
+          end
+        end
+      end
     end
   end
 end

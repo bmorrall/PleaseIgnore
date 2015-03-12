@@ -400,6 +400,12 @@ describe User, type: :model do
         user = create(:user, :banned)
         expect(user).to have_role(:banned)
       end
+      it 'creates a user with no login password and a account' do
+        user = create(:user, :no_login_password)
+        expect(user.no_login_password?).to be(true)
+        expect(user.encrypted_password).to be_blank
+        expect(user.accounts.size).to be(1)
+      end
     end
   end
 end

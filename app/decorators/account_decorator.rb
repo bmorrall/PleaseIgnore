@@ -17,7 +17,7 @@ class AccountDecorator < Draper::Decorator
   # Returns a button for removing a account
   def summary_delete_button
     if object.persisted?
-      destroy_account_button
+      destroy_account_button if h.can?(:destroy, object)
     else
       cancel_registration_button
     end
@@ -68,7 +68,7 @@ class AccountDecorator < Draper::Decorator
     provider_class = h.provider_class(object.provider)
     h.system_link(
       '&times;'.html_safe,
-      h.users_account_path(account),
+      h.users_account_path(object),
       method: 'delete',
       class: "input-group-addon unlink-account unlink-#{provider_class}",
       data: {
