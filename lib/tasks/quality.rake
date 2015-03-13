@@ -23,7 +23,8 @@ namespace :quality do
   else
     desc 'Run rubocop static code analyser'
     RuboCop::RakeTask.new(:rubocop) do |task|
-      task.patterns = %w(app config features lib spec)
+      task.patterns = %w(Vagrantfile app config features lib spec)
+      task.options << '--display-cop-names'
       task.fail_on_error = true
     end
   end
