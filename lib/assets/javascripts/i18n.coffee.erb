@@ -20,4 +20,5 @@ I18n.t = (key) ->
     current_scope = current_scope[key_part]
     unless current_scope?
       return false
-  return current_scope || "missing translation: <%= I18n.locale %>.javascript." + key
+  unless current_scope then console.warn "missing translation: <%= I18n.locale %>.javascript." + key
+  return current_scope

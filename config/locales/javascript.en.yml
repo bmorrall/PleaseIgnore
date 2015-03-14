@@ -5,3 +5,4 @@ en:
     # Turboboost Translations
     turboboost:
       default_errors: 'Please review the problems below:'
+      unknown_error: 'An unexpected error has occurred. Please try again later.'

@@ -10,7 +10,9 @@
 # Copyright 2014, Ben Morrall
 # Released under the MIT license.
 
-Turboboost.defaultError = I18n.t('turboboost.default_errors')
+DEFAULT_ERROR = I18n.t('turboboost.default_errors')
+UNKNOWN_ERROR = I18n.t('turboboost.unknown_error')
+
 Turboboost.insertErrors = false # Don't allow Turboboost to render errors
 
 tryJSONParse = (str) ->
@@ -32,7 +34,9 @@ $(document).on 'ajax:beforeSend', ->
 
 $(document).on "turboboost:error", (e, errors) ->
   parsed_errors = tryJSONParse(errors)
-  $('[data-turboboost]').displayErrors parsed_errors, Turboboost.defaultError
+  error_message = (if parsed_errors then DEFAULT_ERROR else UNKNOWN_ERROR) ||
+    Turboboost.defaultError
+  $('[data-turboboost]').displayErrors parsed_errors, error_message
 
 $(document).on "turboboost:success", (e, flash) ->
   console.log('turboboost success')
