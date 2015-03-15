@@ -40,7 +40,7 @@
       = f.input :current_password unless resource.no_login_password?
       .form-group
         .col-sm-offset-3.col-sm-6
-          %button.btn.btn.btn-primary(type='submit')
+          %button.btn.btn-primary(type='submit')
             = fa 'key'
             = resource.no_login_password? ? 'Add Password' : 'Change Password'
           - if resource.errors.any?

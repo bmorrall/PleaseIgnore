@@ -18,12 +18,9 @@
   }
 }
 
-main > {
-  section:first-child,  .page-header:first-child {
-    // Remove top margin for first header in content
-    h3, h4 {
-      margin-top: 0;
-    }
+main {
+  > section {
+    margin-bottom: ($line-height-computed * 2); // Instead of page header margin, add after section
   }
 }
 

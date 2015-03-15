@@ -92,5 +92,47 @@ describe User, type: :model do
         end
       end
     end
+
+    describe 'Organisation abilities' do
+      context 'as a guest' do
+        it { is_expected.to_not be_able_to(:create, Organisation) }
+      end
+      context 'as a user' do
+        let(:user) { create(:user) }
+
+        it { is_expected.to be_able_to(:create, Organisation) }
+
+        context 'with a persisted organisation' do
+          let(:organisation) { create :organisation }
+
+          it { is_expected.to_not be_able_to(:read, organisation) }
+          it { is_expected.to_not be_able_to(:update, organisation) }
+          it { is_expected.to_not be_able_to(:destroy, organisation) }
+        end
+
+        context 'when the user owns the organisation' do
+          let(:organisation) { create :organisation }
+          before(:each) { user.add_role :owner, organisation }
+
+          it { is_expected.to be_able_to(:read, organisation) }
+          it { is_expected.to be_able_to(:update, organisation) }
+          it { is_expected.to be_able_to(:destroy, organisation) }
+        end
+      end
+      context 'as a banned user' do
+        let(:user) { create(:user, :banned) }
+
+        it { is_expected.to_not be_able_to(:create, Organisation) }
+
+        context 'when the user owns the organisation' do
+          let(:organisation) { create :organisation }
+          before(:each) { user.add_role :owner, organisation }
+
+          it { is_expected.to_not be_able_to(:read, organisation) }
+          it { is_expected.to_not be_able_to(:update, organisation) }
+          it { is_expected.to_not be_able_to(:destroy, organisation) }
+        end
+      end
+    end
   end
 end

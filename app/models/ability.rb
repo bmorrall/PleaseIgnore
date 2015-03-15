@@ -3,9 +3,6 @@
 class Ability
   include CanCan::Ability
 
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
-
   # Initialises Abilties available to `user`.
   # Abilities anr enabled/disabled based on User#roles.
   #
@@ -24,10 +21,8 @@ class Ability
     return unless user.persisted?
 
     # Authenticated User Abilties
-    can [:update, :sort], Account, user_id: user.id
-    can :destroy, Account do |account|
-      account.user_id == user.id && (!user.no_login_password? || user.accounts.size > 1)
-    end
+    grant_account_abilities(user)
+    grant_organisation_abilities(user)
 
     return unless user.has_role? :admin
 
@@ -35,6 +30,20 @@ class Ability
     can :read, PaperTrail::Version
   end
 
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
+  private
+
+  def grant_account_abilities(user)
+    can [:update, :sort], Account, user_id: user.id
+    can :destroy, Account do |account|
+      account.user_id == user.id && (!user.no_login_password? || user.accounts.size > 1)
+    end
+  end
+
+  def grant_organisation_abilities(user)
+    can :create, Organisation
+    can :read, Organisation, id: user.organisation_ids
+    can [:update, :destroy], Organisation do |organisation|
+      user.has_role? :owner, organisation
+    end
+  end
 end

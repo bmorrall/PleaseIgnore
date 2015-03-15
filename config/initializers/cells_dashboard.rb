@@ -4,3 +4,9 @@ Cells::Dashboard.create(:dashboard) do
 
   fallback 'dashboard/empty'
 end
+
+Cells::Dashboard.create(:organisation) do
+  # TODO: Add Dashboard Widgets
+
+  fallback 'dashboard/empty'
+end

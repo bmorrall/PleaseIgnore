@@ -19,6 +19,7 @@ en:
         email: 'Email'
         password: 'Password'
         password_confirmation: 'Confirm Password'
+        permalink: 'Permalink'
         current_password: 'Current Password'
         body: 'Body'
     hints:

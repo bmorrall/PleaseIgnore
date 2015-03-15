@@ -126,7 +126,10 @@ body {
 // -------------------------
 
 .page-header {
-  margin-top: 0; // Remove top margin for page headers
+  margin-top: 0; // Remove top margin for page header
+  h2, h3, h4 {
+    margin-top: 0; // Remove top margin for headers
+  }
 }
 
 .has-warning {

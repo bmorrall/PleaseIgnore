@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     resources :versions, only: [:index]
   end
 
+  resources :organisations, only: [:show, :edit, :update]
+
   resource :contact, only: [:show, :create] do
     get :thank_you
   end
