@@ -35,6 +35,18 @@ class User < ActiveRecord::Base
 
   attr_accessor :terms_and_conditions
 
+  # Associations
+
+  # Returns the ids of Organisations the user is associated with
+  def organisation_ids
+    roles.where(resource_type: Organisation.name).pluck(:resource_id)
+  end
+
+  # Returns a ActiveRecord::Collection of Organisations
+  def organisations
+    Organisation.where(id: organisation_ids)
+  end
+
   # Validations
 
   validates :name,

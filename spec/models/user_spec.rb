@@ -55,6 +55,32 @@ describe User, type: :model do
     end
   end
 
+  describe 'Associations' do
+    describe 'organisation_ids' do
+      let(:instance) { create :user }
+      subject { instance.organisation_ids }
+
+      it 'should return ids of organisations the user has an owner role on' do
+        organisation = create(:organisation)
+        instance.add_role :owner, organisation
+
+        expect(subject).to eq [organisation.id]
+      end
+    end
+
+    describe '#organisations' do
+      let(:instance) { create :user }
+      subject { instance.organisations }
+
+      it 'should return the organisations the user has an owner role on' do
+        organisation = create(:organisation)
+        instance.add_role :owner, organisation
+
+        expect(subject).to eq [organisation]
+      end
+    end
+  end
+
   describe 'Accounts' do
     it { is_expected.to have_many(:accounts).dependent(:destroy) }
 
@@ -298,21 +324,9 @@ describe User, type: :model do
         with_versioning do
           expect { user.add_role(:admin) }.to change(PaperTrail::Version, :count).by(1)
         end
+
         create_version = PaperTrail::Version.last
         expect(create_version.item_owner).to eq user
-        expect(create_version.meta).to include(user_id: user.id, role: 'admin')
-        expect(create_version.event).to eq 'create'
-      end
-    end
-    context 'when adding a role to a user object' do
-      it 'should create a PaperTrail::Version with the object as the item owner' do
-        user = create(:user)
-        account = create(:developer_account, user: user)
-        with_versioning do
-          expect { user.add_role(:admin, account) }.to change(PaperTrail::Version, :count).by(1)
-        end
-        create_version = PaperTrail::Version.last
-        expect(create_version.item_owner).to eq account
         expect(create_version.meta).to include(user_id: user.id, role: 'admin')
         expect(create_version.event).to eq 'create'
       end
@@ -321,26 +335,50 @@ describe User, type: :model do
       it 'should create a PaperTrail::Version with the user as the item owner' do
         user = create(:user)
         user.add_role(:admin)
+
         with_versioning do
           expect { user.remove_role(:admin) }.to change(PaperTrail::Version, :count).by(1)
         end
+
         create_version = PaperTrail::Version.last
         expect(create_version.item_owner).to eq user
         expect(create_version.meta).to include(user_id: user.id, role: 'admin')
         expect(create_version.event).to eq 'destroy'
       end
     end
-    context 'when removing a role from a user object' do
+
+    context 'when adding a association role to a user object' do
+      it 'should create a PaperTrail::Version with the object as the item owner' do
+        user = create(:user)
+        organisation = create(:organisation)
+
+        with_versioning do
+          expect do
+            user.add_role(:owner, organisation)
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+
+        create_version = PaperTrail::Version.last
+        expect(create_version.item_owner).to eq organisation
+        expect(create_version.meta).to include(user_id: user.id, role: 'owner')
+        expect(create_version.event).to eq 'create'
+      end
+    end
+    context 'when removing a association role from a user object' do
       it 'should create a PaperTrail::Version with the user as the item owner' do
         user = create(:user)
-        account = create(:developer_account, user: user)
-        user.add_role(:admin, account)
+        organisation = create(:organisation)
+        user.add_role(:owner, organisation)
+
         with_versioning do
-          expect { user.remove_role(:admin, account) }.to change(PaperTrail::Version, :count).by(1)
+          expect do
+            user.remove_role(:owner, organisation)
+          end.to change(PaperTrail::Version, :count).by(1)
         end
+
         create_version = PaperTrail::Version.last
-        expect(create_version.item_owner).to eq account
-        expect(create_version.meta).to include(user_id: user.id, role: 'admin')
+        expect(create_version.item_owner).to eq organisation
+        expect(create_version.meta).to include(user_id: user.id, role: 'owner')
         expect(create_version.event).to eq 'destroy'
       end
     end
