@@ -116,6 +116,7 @@ group :doc do
 end
 
 group :development do
+  gem 'annotate' # Annotate models with db schema
   gem 'quiet_assets'
   gem 'i18n-tasks'
 

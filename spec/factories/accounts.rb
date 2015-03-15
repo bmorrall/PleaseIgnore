@@ -3,20 +3,25 @@
 # Table name: accounts
 #
 #  id               :integer          not null, primary key
-#  uid              :string(255)      not null
-#  name             :string(255)
-#  nickname         :string(255)
-#  image            :string(255)
-#  website          :string(255)
-#  oauth_token      :string(255)
-#  oauth_secret     :string(255)
+#  uid              :string           not null
+#  name             :string
+#  nickname         :string
+#  image            :string
+#  website          :string
+#  oauth_token      :string
+#  oauth_secret     :string
 #  oauth_expires_at :datetime
 #  user_id          :integer
 #  created_at       :datetime
 #  updated_at       :datetime
 #  position         :integer
-#  type             :string(255)
+#  type             :string
 #  deleted_at       :datetime
+#
+# Indexes
+#
+#  index_accounts_on_deleted_at  (deleted_at)
+#  index_accounts_on_user_id     (user_id)
 #
 
 # Read about factories at https://github.com/thoughtbot/factory_girl
