@@ -118,20 +118,6 @@ Given(/^I have made a password reset request$/) do
   reset_password
 end
 
-### WHEN ###
-When(/^I sign in with valid credentials$/) do
-  create_visitor
-  sign_in
-end
-
-When(/^I sign out$/) do
-  unless Capybara.current_session.server.nil?
-    # User must click name to trigger js dropdown menu
-    click_link @visitor[:name]
-  end
-  click_link 'Logout'
-end
-
 When(/^I sign up with valid user data$/) do
   create_visitor
   submit_registration
@@ -168,16 +154,6 @@ end
 
 When(/^I return to the site$/) do
   navigate_to 'the home page'
-end
-
-When(/^I sign in with a wrong email$/) do
-  @visitor = @visitor.merge(email: 'wrong@example.com')
-  sign_in
-end
-
-When(/^I sign in with a wrong password$/) do
-  @visitor = @visitor.merge(password: 'wrongpass')
-  sign_in
 end
 
 When(/^I edit my account details$/) do
@@ -233,10 +209,6 @@ Then(/^I see an unconfirmed account message$/) do
   expect(page).to have_content 'You have to confirm your account before continuing.'
 end
 
-Then(/^I see a successful sign in message$/) do
-  expect(page).to have_content 'Signed in successfully.'
-end
-
 Then(/^I should see a successful sign up message$/) do
   expect(page).to have_content 'Welcome! You have signed up successfully.'
 end
@@ -255,10 +227,6 @@ end
 
 Then(/^I should see a mismatched password message$/) do
   expect(page).to have_content "Password confirmation doesn't match"
-end
-
-Then(/^I see an invalid login message$/) do
-  expect(page).to have_content t('devise.failure.invalid')
 end
 
 Then(/^I should see an account edited message$/) do
