@@ -18,12 +18,16 @@
 #
 class Role < ActiveRecord::Base
   # All available roles to Users
-  ROLES = %w(admin banned)
+  ROLES = %w(admin banned).freeze
+
+  # Roles avaliable to an Ownable Resources
+  OWNABLE_RESOURCE_ROLES = %w(owner).freeze
 
   has_and_belongs_to_many :users, join_table: :users_roles
   belongs_to :resource, polymorphic: true
 
-  validates :name, inclusion: { in: ROLES }
+  validates :name, inclusion: { in: ROLES, unless: :resource_type? }
+  validates :name, inclusion: { in: OWNABLE_RESOURCE_ROLES, if: :resource_type? }
 
   scopify
 

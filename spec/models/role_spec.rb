@@ -27,5 +27,16 @@ describe Role, type: :model do
   describe 'validations' do
     it { is_expected.to allow_value('admin').for(:name) }
     it { is_expected.to allow_value('banned').for(:name) }
+
+    it { is_expected.to_not allow_value('owner').for(:name) }
+
+    context 'when the role has a resource' do
+      before(:each) { subject.resource = build_stubbed(:organisation) }
+
+      it { is_expected.to allow_value('owner').for(:name) }
+
+      it { is_expected.to_not allow_value('admin').for(:name) }
+      it { is_expected.to_not allow_value('banned').for(:name) }
+    end
   end
 end
