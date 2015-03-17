@@ -1,15 +1,9 @@
 require 'core_extensions/paper_trail/version_item_owner'
+require 'core_extensions/paper_trail/version_meta_store'
 
 # Add Extensions onto the Version Model
 PaperTrail::Version.include CoreExtensions::PaperTrail::VersionItemOwner
-
-module PaperTrail
-  # Additional features for PaperTrail::Version
-  class Version < ActiveRecord::Base
-    # Add meta attributes onto version table
-    store :meta, accessors: [:ip, :user_agent, :comments], coder: JSON
-  end
-end
+PaperTrail::Version.include CoreExtensions::PaperTrail::VersionMetaStore
 
 # Remove Rails 4.2 Deprecation Warnings
 current_behavior = ActiveSupport::Deprecation.behavior
