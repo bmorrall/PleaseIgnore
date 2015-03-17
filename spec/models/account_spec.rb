@@ -69,6 +69,14 @@ describe Account, type: :model do
         end
         expect(account.versions.last.event).to eq('create')
       end
+      it 'should assign the item_owner to the user' do
+        user = create(:user)
+        account = build :account, user: user
+        with_versioning do
+          account.save!
+        end
+        expect(account.versions.first.item_owner).to eq(user)
+      end
     end
 
     context 'with destroy event' do

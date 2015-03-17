@@ -1,3 +1,8 @@
+require 'core_extensions/paper_trail/version_item_owner'
+
+# Add Extensions onto the Version Model
+PaperTrail::Version.include CoreExtensions::PaperTrail::VersionItemOwner
+
 module PaperTrail
   # Additional features for PaperTrail::Version
   class Version < ActiveRecord::Base

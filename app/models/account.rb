@@ -148,7 +148,10 @@ class Account < ActiveRecord::Base
           :image,
           :website,
           :deleted_at
-        ]
+        ],
+        meta: {
+          item_owner: :item_owner
+        }
       )
 
       # Allow soft_deletion restore events to be logged
@@ -159,6 +162,11 @@ class Account < ActiveRecord::Base
         record_restore
         user.touch # Ensure the user is touched
       end
+    end
+
+    # All accounts belong to a user
+    def item_owner
+      user
     end
   end
 

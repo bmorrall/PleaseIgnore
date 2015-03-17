@@ -174,7 +174,10 @@ class User < ActiveRecord::Base
           :sign_in_count,
           :last_sign_in_at,
           :last_sign_in_ip
-        ]
+        ],
+        meta: {
+          item_owner: :item_owner
+        }
       )
 
       # Allow soft_deletion restore events to be logged
@@ -184,13 +187,15 @@ class User < ActiveRecord::Base
       after_restore :record_restore
     end
 
+    # The user is the owner of all changes made to itself
+    def item_owner
+      self
+    end
+
     # Returns a collection of PaperTrail::Version objects that correlates to changes
     # made by the user
     def related_versions
-      PaperTrail::Version.where "(item_type = ? AND item_id = ?) OR \
-                                 (item_type = ? AND item_id IN (?))",
-                                'User', id,
-                                'Account', accounts.with_deleted.pluck(:id)
+      PaperTrail::Version.where(item_owner: self)
     end
   end
 

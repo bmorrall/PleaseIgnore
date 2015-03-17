@@ -316,6 +316,13 @@ describe User, type: :model do
         end
         expect(user.versions.last.event).to eq('create')
       end
+      it 'should assign itself the item_owner' do
+        user = build(:user)
+        with_versioning do
+          user.save!
+        end
+        expect(user.versions.first.item_owner).to eq(user)
+      end
     end
 
     context 'with destroy event' do
