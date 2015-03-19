@@ -16,6 +16,7 @@ RSpec.configure do |config|
   # Disable PaperTrail during specs
   config.before(:each) do
     PaperTrail.enabled = false
+    PaperTrail.whodunnit = 'rspec'
   end
   config.before(:each, type: :feature) do
     PaperTrail.enabled = true
