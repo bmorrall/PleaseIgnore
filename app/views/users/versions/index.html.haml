@@ -21,6 +21,7 @@
                 %p.list-group-item-text
                   %small.user-location
                     = version.user_location
-                %pre.list-group-item-text
-                  = version.change_summary
+                - if version.display_change_summary?
+                  %pre.list-group-item-text
+                    = version.change_summary
 

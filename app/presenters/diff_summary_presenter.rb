@@ -13,7 +13,6 @@ class DiffSummaryPresenter
   end
 
   def display
-    return unless changeset
     [
       '---',
       change_summary_attributes

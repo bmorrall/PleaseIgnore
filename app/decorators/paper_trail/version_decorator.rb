@@ -13,7 +13,12 @@ module PaperTrail
       h.local_time_ago object.created_at
     end
 
+    def display_change_summary?
+      object.changeset && object.changeset.any?
+    end
+
     def change_summary
+      return unless display_change_summary?
       DiffSummaryPresenter.display(h, object.changeset)
     end
 
