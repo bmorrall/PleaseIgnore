@@ -13,5 +13,14 @@ module PaperTrailMacros
 end
 
 RSpec.configure do |config|
-  config.include PaperTrailMacros, type: :model
+  # Disable PaperTrail during specs
+  config.before(:each) do
+    PaperTrail.enabled = false
+  end
+  config.before(:each, type: :feature) do
+    PaperTrail.enabled = true
+  end
+
+  # Allow PaperTrail to be selectively enabled
+  config.include PaperTrailMacros, paper_trail: true
 end

@@ -305,7 +305,7 @@ describe User, type: :model do
     end
   end
 
-  describe 'Versioning' do
+  describe 'Versioning', :paper_trail do
     context 'with create event' do
       it 'creates a create version' do
         user = build :user
