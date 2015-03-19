@@ -26,4 +26,20 @@ class Role < ActiveRecord::Base
   validates :name, inclusion: { in: ROLES }
 
   scopify
+
+  concerning :RoleVersioning do
+    included do
+      # Add PaperTrail Versioning, only for unexpected event types
+      has_paper_trail(
+        on: [:update],
+        meta: {
+          item_owner: :item_owner
+        }
+      )
+    end
+
+    def item_owner
+      resource
+    end
+  end
 end

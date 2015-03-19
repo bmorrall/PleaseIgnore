@@ -28,9 +28,6 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ActiveRecord::Base
-  # Use Rolify to manage roles a user can hold
-  rolify
-
   # Use paranoia to soft delete records (instead of destroying them)
   acts_as_paranoid
 
@@ -151,6 +148,38 @@ class User < ActiveRecord::Base
 
     def allow_empty_password?
       !!@allow_empty_password
+    end
+  end
+
+  concerning :Roles do
+    included do
+      # Use Rolify to manage roles a user can hold
+      rolify after_add: :after_add_role, after_remove: :after_remove_role
+
+      # Adds a Version on the Role Object indicatating a added role
+      def after_add_role(role)
+        role.send(:record_create).tap do |role_version|
+          update_role_version_attributes role_version, role
+        end if PaperTrail.enabled? && Role.paper_trail_enabled_for_model?
+      end
+
+      # Adds a Version on the Role Object indicating a removeds Role
+      def after_remove_role(role)
+        role.send(:record_destroy).tap do |role_versions|
+          update_role_version_attributes role_versions.last, role # Last is the created item
+        end if PaperTrail.enabled? && Role.paper_trail_enabled_for_model?
+      end
+    end
+
+    protected
+
+    # Adds extra attributes to the Version
+    def update_role_version_attributes(role_version, role)
+      return unless role_version && role
+      role_version.item_owner = self if role_version.item_owner.nil?
+      role_version.meta[:user_id] = id
+      role_version.meta[:role] = role.name
+      role_version.save!
     end
   end
 

@@ -287,6 +287,61 @@ describe User, type: :model do
     end
   end
 
+  describe 'RoleVersioning', :paper_trail do
+    context 'when adding a role to a user' do
+      it 'should create a PaperTrail::Version with the user as the item owner' do
+        user = create(:user)
+        with_versioning do
+          expect { user.add_role(:admin) }.to change(PaperTrail::Version, :count).by(1)
+        end
+        create_version = PaperTrail::Version.last
+        expect(create_version.item_owner).to eq user
+        expect(create_version.meta).to include(user_id: user.id, role: 'admin')
+        expect(create_version.event).to eq 'create'
+      end
+    end
+    context 'when adding a role to a user object' do
+      it 'should create a PaperTrail::Version with the object as the item owner' do
+        user = create(:user)
+        account = create(:developer_account, user: user)
+        with_versioning do
+          expect { user.add_role(:admin, account) }.to change(PaperTrail::Version, :count).by(1)
+        end
+        create_version = PaperTrail::Version.last
+        expect(create_version.item_owner).to eq account
+        expect(create_version.meta).to include(user_id: user.id, role: 'admin')
+        expect(create_version.event).to eq 'create'
+      end
+    end
+    context 'when removing a role from a user' do
+      it 'should create a PaperTrail::Version with the user as the item owner' do
+        user = create(:user)
+        user.add_role(:admin)
+        with_versioning do
+          expect { user.remove_role(:admin) }.to change(PaperTrail::Version, :count).by(1)
+        end
+        create_version = PaperTrail::Version.last
+        expect(create_version.item_owner).to eq user
+        expect(create_version.meta).to include(user_id: user.id, role: 'admin')
+        expect(create_version.event).to eq 'destroy'
+      end
+    end
+    context 'when removing a role from a user object' do
+      it 'should create a PaperTrail::Version with the user as the item owner' do
+        user = create(:user)
+        account = create(:developer_account, user: user)
+        user.add_role(:admin, account)
+        with_versioning do
+          expect { user.remove_role(:admin, account) }.to change(PaperTrail::Version, :count).by(1)
+        end
+        create_version = PaperTrail::Version.last
+        expect(create_version.item_owner).to eq account
+        expect(create_version.meta).to include(user_id: user.id, role: 'admin')
+        expect(create_version.event).to eq 'destroy'
+      end
+    end
+  end
+
   describe 'Validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_acceptance_of(:terms_and_conditions) }
