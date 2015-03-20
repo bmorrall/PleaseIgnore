@@ -9,6 +9,8 @@ Bundler.require(*Rails.groups)
 module PleaseIgnore
   # PleaseIgnore is a Rails Application
   class Application < Rails::Application
+    CURRENT_COMMIT = `git describe --always --tags`.strip.freeze
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -39,5 +41,19 @@ module PleaseIgnore
     Rails.application.config.action_dispatch.rescue_responses.merge!(
       'CanCan::AccessDenied' => :forbidden
     )
+
+    # Set whodunnint for non-ActionController changes
+    rake_tasks do
+      # Keep track of rake tasks
+      PaperTrail.whodunnit = "#{`whoami`.strip}: rake #{ARGV.join ' '} (#{CURRENT_COMMIT})"
+    end
+    runner do
+      # Keep track of runner tasks
+      PaperTrail.whodunnit = "#{`whoami`.strip}: runner (#{CURRENT_COMMIT})"
+    end
+    console do
+      # Keep track of console commands
+      PaperTrail.whodunnit = "#{`whoami`.strip}: console (#{CURRENT_COMMIT})"
+    end
   end
 end
