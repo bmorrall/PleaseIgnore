@@ -4,7 +4,7 @@ FactoryGirl.define do
     skip_create
 
     name { Faker::Name.name }
-    email { Faker::Internet.email }
+    email { Faker::Internet.email(name) }
     body 'Example Contact Body'
   end
 end
