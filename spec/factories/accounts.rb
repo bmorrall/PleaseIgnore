@@ -28,8 +28,12 @@
 
 FactoryGirl.define do
   factory :account, class: Accounts::Developer do
-    sequence(:uid) { |n| "#{type.demodulize.downcase}_uid_#{n}" }
-    name { Faker::Name.name }
+    transient do
+      auth_hash { create :developer_auth_hash }
+    end
+
+    uid { auth_hash.uid }
+    name { auth_hash.info.name }
     user
 
     trait :soft_deleted do
@@ -37,36 +41,55 @@ FactoryGirl.define do
     end
 
     factory :developer_account do
+      email { auth_hash.info.email }
     end
 
     factory :facebook_account, class: Accounts::Facebook do
-      image 'http://graph.facebook.com/1234567/picture?type=square'
-      website 'http://www.facebook.com/jbloggs'
-      sequence(:oauth_token) { |n| "facebook_auth_#{n}" }
-      oauth_expires_at '2014-02-18 16:02:39'
-      user
+      transient do
+        auth_hash { create :facebook_auth_hash }
+      end
+
+      email { auth_hash.info.email }
+      image { auth_hash.info.image }
+      website { auth_hash.info.urls[:Facebook] }
+      oauth_token { auth_hash.credentials.token }
+      oauth_expires_at { Time.at(auth_hash.credentials.expires_at).to_datetime }
     end
+
     factory :github_account, class: Accounts::Github do
-      nickname 'jonqpublic'
-      image 'http://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png'
-      website 'https://github.com/johnqpublic'
-      sequence(:oauth_token) { |n| "twitter_auth_#{n}" }
-      sequence(:oauth_secret) { |n| "twitter_secret_#{n}" }
-      user
+      transient do
+        auth_hash { create :github_auth_hash }
+      end
+
+      email { auth_hash.info.email }
+      nickname { auth_hash.info.nickname }
+      image { auth_hash.info.image }
+      website { auth_hash.info.urls[:Github] }
+      oauth_token { auth_hash.credentials.token }
+      oauth_secret { auth_hash.credentials.secret }
     end
+
     factory :google_oauth2_account, class: Accounts::GoogleOauth2 do
-      image 'https://lh3.googleusercontent.com/url/photo.jpg'
-      sequence(:oauth_token) { |n| "twitter_auth_#{n}" }
-      oauth_expires_at '2014-02-18 16:02:39'
-      user
+      transient do
+        auth_hash { create :google_oauth2_auth_hash }
+      end
+
+      email { auth_hash.info.email }
+      image { auth_hash.info.image }
+      oauth_token { auth_hash.credentials.token }
+      oauth_expires_at { Time.at(auth_hash.credentials.expires_at).to_datetime }
     end
+
     factory :twitter_account, class: Accounts::Twitter do
-      nickname 'jonqpublic'
-      image 'http://si0.twimg.com/sticky/default_profile_images/default_profile_2_normal.png'
-      website 'https://twitter.com/johnqpublic'
-      sequence(:oauth_token) { |n| "twitter_auth_#{n}" }
-      sequence(:oauth_secret) { |n| "twitter_secret_#{n}" }
-      user
+      transient do
+        auth_hash { create :twitter_auth_hash }
+      end
+
+      nickname { auth_hash.info.nickname }
+      image { auth_hash.info.image }
+      website { auth_hash.info.urls[:Twitter] }
+      oauth_token { auth_hash.credentials.token }
+      oauth_secret { auth_hash.credentials.secret }
     end
   end
 end

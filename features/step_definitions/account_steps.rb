@@ -1,22 +1,16 @@
-### UTILITY METHODS ###
-
-require Rails.root.join('spec', 'support', 'omniauth_helpers')
-
-include OmniauthHelpers
-
 ### GIVEN ###
 
 Given(/^I am already linked to my (.+) account$/) do |provider_name|
   provider = provider_from_name(provider_name)
   auth_hash = provider_auth_hash(provider)
-  create(:"#{provider}_account", uid: auth_hash.uid)
+  create(:"#{provider}_account", auth_hash: auth_hash)
 end
 
 Given(/^I exist as a user linked to my (.+) account$/) do |provider_name|
   provider = provider_from_name(provider_name)
   auth_hash = provider_auth_hash(provider)
   create_user
-  create(:"#{provider}_account", user: @user, uid: auth_hash.uid)
+  create(:"#{provider}_account", user: @user, auth_hash: auth_hash)
 end
 
 ### WHEN ###
@@ -129,10 +123,10 @@ end
 Then(/^I should see a sign up form with my (.+) credentials$/) do |provider_name|
   provider = provider_from_name(provider_name)
   provider_class = provider == :google_oauth2 ? 'google-plus' : provider.to_s
-  credentials = provider_credentials(provider)
+  auth_hash = provider_auth_hash(provider)
 
-  expect(find_field('Name').value).to eq(credentials[:name])
-  expect(find_field('Email').value).to eq(credentials[:email]) unless provider == :twitter
+  expect(find_field('Name').value).to eq(auth_hash.info.name)
+  expect(find_field('Email').value).to eq(auth_hash.info.email) unless provider == :twitter
 
   within(".pending-#{provider_class}") do
     expect(page).to have_selector(".btn-#{provider_class}[title='#{provider_name} account']")

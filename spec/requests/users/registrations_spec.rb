@@ -23,15 +23,14 @@ describe 'Registrations', type: :request do
 
   describe 'POST create' do
     context 'as a visitor' do
-      context 'with invalid account data' do
-        include OmniauthHelpers
-
+      context 'with invalid account data', :omniauth do
         before(:each) do
           # Ensure the Account fails validation
           expect_any_instance_of(Account).to receive(:valid?).and_return(false)
 
           # Fake a successful oauth attempt
-          set_oauth :facebook, facebook_auth_hash
+          auth_hash = create(:facebook_auth_hash)
+          set_oauth :facebook, auth_hash
           post user_omniauth_authorize_path(:facebook)
           follow_redirect! # to callback path
           follow_redirect! # to user registration

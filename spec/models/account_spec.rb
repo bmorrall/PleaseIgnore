@@ -27,8 +27,6 @@
 require 'rails_helper'
 
 describe Account, type: :model do
-  include OmniauthHelpers
-
   it_behaves_like 'a soft deletable model'
 
   describe 'Associations' do
@@ -159,9 +157,10 @@ describe Account, type: :model do
       end.to raise_error(ArgumentError)
     end
     it 'raises an exception if the provider does not match the expected value' do
+      auth_hash = create(:twitter_auth_hash)
       expected_message = "Provider (twitter) doesn't match expected value: not_matching_provider"
       expect do
-        Account.find_for_oauth(twitter_auth_hash, 'not_matching_provider')
+        Account.find_for_oauth(auth_hash, 'not_matching_provider')
       end.to raise_error(Exception, expected_message)
     end
   end
@@ -169,8 +168,9 @@ describe Account, type: :model do
   describe '.new_with_auth_hash' do
     it 'raises an exception if the provider does not match the expected value' do
       expected_message = "Provider (twitter) doesn't match expected value: not_matching_provider"
+      auth_hash = create(:twitter_auth_hash)
       expect do
-        Account.new_with_auth_hash(twitter_auth_hash, 'not_matching_provider')
+        Account.new_with_auth_hash(auth_hash, 'not_matching_provider')
       end.to raise_error(Exception, expected_message)
     end
   end

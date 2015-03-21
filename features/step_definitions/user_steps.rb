@@ -11,7 +11,7 @@ def create_visitor
     visitor_attributes = attributes_for(:user)
     {
       name: visitor_attributes[:name],
-      email: 'example@example.com',
+      email: visitor_attributes[:email],
       password: 'changeme',
       password_confirmation: 'changeme'
     }

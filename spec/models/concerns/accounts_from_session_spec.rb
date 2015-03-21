@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Concerns::AccountsFromSession, type: :model do
-  include OmniauthHelpers
   subject { User.new }
 
   describe '.new_with_session' do
@@ -9,11 +8,12 @@ describe Concerns::AccountsFromSession, type: :model do
       provider_name = Account.provider_name(provider)
 
       context "with #{provider_name} auth_session_data" do
-        let(:session) { { "devise.#{provider}_data" => provider_auth_hash(provider) } }
+        let(:auth_hash) { create :"#{provider}_auth_hash" }
+        let(:session) { { "devise.#{provider}_data" => auth_hash } }
         it 'builds a new user using values from the auth hash' do
           user = User.new_with_session({}, session)
-          expect(user.name).to eq(auth_account[:name])
-          expect(user.email).to eq(auth_account[:email]) unless provider == :twitter
+          expect(user.name).to eq(auth_hash.info.name)
+          expect(user.email).to eq(auth_hash.info.email) unless provider == :twitter
         end
         context 'with valid user params' do
           let(:user_params) { attributes_for(:user) }

@@ -27,14 +27,12 @@
 require 'rails_helper'
 
 describe Account, type: :model do
-  include OmniauthHelpers
-
   describe '.find_for_oauth' do
     context 'with a Twitter auth hash' do
-      let(:auth_hash) { twitter_auth_hash }
+      let(:auth_hash) { create :twitter_auth_hash }
 
       context 'with an existing account' do
-        let!(:existing_account) { create(:twitter_account, uid: auth_hash.uid) }
+        let!(:existing_account) { create(:twitter_account, auth_hash: auth_hash) }
 
         it 'finds the existing_account matching the uid' do
           expect(Account.find_for_oauth(auth_hash)).to eq(existing_account)
@@ -55,7 +53,7 @@ describe Account, type: :model do
 
   describe '.new_with_auth_hash' do
     context 'with a Twitter auth hash' do
-      let(:auth_hash) { twitter_auth_hash }
+      let(:auth_hash) { create :twitter_auth_hash }
 
       it 'builds a new Accounts::Twitter from a auth hash' do
         account = Account.new_with_auth_hash(auth_hash)

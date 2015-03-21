@@ -27,11 +27,9 @@
 require 'rails_helper'
 
 describe Account, type: :model do
-  include OmniauthHelpers
-
   describe '.find_for_oauth' do
     context 'with a GitHub auth hash' do
-      let(:auth_hash) { github_auth_hash }
+      let(:auth_hash) { create :github_auth_hash }
       context 'with an existing account' do
         let!(:existing_account) { create(:github_account, uid: auth_hash.uid) }
         it 'finds the existing_account matching the uid' do
@@ -53,7 +51,7 @@ describe Account, type: :model do
 
   describe '.new_with_auth_hash' do
     context 'with a GitHub auth hash' do
-      let(:auth_hash) { github_auth_hash }
+      let(:auth_hash) { create :github_auth_hash }
 
       it 'builds a new Accounts::Github from a auth hash' do
         account = Account.new_with_auth_hash(auth_hash)

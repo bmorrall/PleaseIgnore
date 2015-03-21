@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Users::OmniauthCallbacksController, type: :controller do
-  include OmniauthHelpers
   before(:each) { @request.env['devise.mapping'] = Devise.mappings[:user] }
 
   %w(
@@ -15,8 +14,8 @@ describe Users::OmniauthCallbacksController, type: :controller do
     session_key = "devise.#{provider}_data"
 
     describe "GET #{provider}" do
-      context "with omniauth.auth containing a #{provider_name} auth hash" do
-        let(:auth_hash) { provider_auth_hash(provider) }
+      context "with omniauth.auth containing a #{provider_name} auth hash", :omniauth do
+        let(:auth_hash) { create :"#{provider}_auth_hash" }
         before(:each) do
           set_oauth provider, auth_hash
           request.env['omniauth.auth'] = auth_hash
