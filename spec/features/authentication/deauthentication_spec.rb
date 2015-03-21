@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Deauthentication', :csrf_protection do
+feature 'Deauthentication', type: :feature do
   scenario 'User signs out via the navbar', :js do
     password = Faker::Internet.password
     user = create(:user, password: password, password_confirmation: password)

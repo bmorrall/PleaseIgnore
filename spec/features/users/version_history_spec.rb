@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User Version History', :csrf_protection do
+feature 'User Version History', type: :feature do
   scenario 'Review Account History' do
     # Given there is a admin user
     password = 'password123' || Faker::Internet.password

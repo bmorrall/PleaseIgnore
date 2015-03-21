@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Email Authentication', :csrf_protection do
+feature 'Email Authentication', type: :feature do
   # Success
 
   scenario 'Guest signs in with correct credentials' do

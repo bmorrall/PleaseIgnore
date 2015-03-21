@@ -3,23 +3,27 @@ module PaperTrailMacros
   # Enables PaperTrail versions for content within a block
   def with_versioning
     was_enabled = PaperTrail.enabled?
+    was_enabled_for_controller = PaperTrail.enabled_for_controller?
     PaperTrail.enabled = true
+    PaperTrail.enabled_for_controller = true
     begin
       yield
     ensure
       PaperTrail.enabled = was_enabled
+      PaperTrail.enabled_for_controller = was_enabled_for_controller
     end
   end
 end
 
 RSpec.configure do |config|
-  # Disable PaperTrail during specs
   config.before(:each) do
-    PaperTrail.enabled = false
     PaperTrail.whodunnit = 'rspec'
+    PaperTrail.enabled = false
+    PaperTrail.enabled_for_controller = false
   end
   config.before(:each, type: :feature) do
     PaperTrail.enabled = true
+    PaperTrail.enabled_for_controller = true
   end
 
   # Allow PaperTrail to be selectively enabled
