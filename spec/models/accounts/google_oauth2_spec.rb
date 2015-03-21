@@ -51,7 +51,7 @@ describe Account, type: :model do
 
   describe '.new_with_auth_hash' do
     context 'with a Google auth hash' do
-      let(:auth_hash) { create :google_oauth2_auth_hash }
+      let(:auth_hash) { create(:google_oauth2_auth_hash).to_h }
 
       it 'builds a new Accounts::GoogleOauth2 from a auth hash' do
         account = Account.new_with_auth_hash(auth_hash)

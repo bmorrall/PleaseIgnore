@@ -51,7 +51,7 @@ describe Account, type: :model do
 
   describe '.new_with_auth_hash' do
     context 'with a GitHub auth hash' do
-      let(:auth_hash) { create :github_auth_hash }
+      let(:auth_hash) { create(:github_auth_hash).to_h }
 
       it 'builds a new Accounts::Github from a auth hash' do
         account = Account.new_with_auth_hash(auth_hash)

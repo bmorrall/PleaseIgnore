@@ -29,6 +29,19 @@ class Account < ActiveRecord::Base
   # All available account provider types
   PROVIDERS = %w(facebook twitter github google_oauth2 developer).freeze
 
+  # Error when a auth hash is received for a different provider
+  class InvalidProviderError < ::StandardError
+    def initialize(provider, expected_provider)
+      super "Provider (#{provider}) doesn't match expected value: #{expected_provider}"
+    end
+  end
+  # Error when a auth hash or request has been received for a unknown provider
+  class UnknownProviderError < ::StandardError
+    def initialize(provider)
+      super "Provider (#{provider}) has not been registered"
+    end
+  end
+
   # Accounts are instanciated using Sub-Classes controlled by type
   self.inheritance_column = :type
 
@@ -53,19 +66,17 @@ class Account < ActiveRecord::Base
   class << self
     # Finds a existing Account from an OmniAuth hash, and updates from latest details
     #
-    # @param auth_hash [Hash] Hash containg payload from Omniauth
+    # @param auth_hash [OmniAuth::AuthHash] Hash containg payload from Omniauth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] Account matching `auth_hash` or nil
-    # @raise [ArgumentError] if the `expected_provider` doesn't match the `auth_hash` provider
+    # @raise [InvalidProviderError] if the `expected_provider` doesn't match the `auth_hash`
+    # @raise [UnknownProviderError] if the `auth_hash` provider hasn't been configured by the app
     def find_for_oauth(auth_hash, expected_provider = nil)
-      provider = auth_hash.provider
-      if expected_provider && provider != expected_provider
-        # Provider from hash doesn't match expected values
-        fail ArgumentError,
-             "Provider (#{provider}) doesn't match expected value: #{expected_provider}"
-      end
+      ensure_expected_provider! auth_hash, expected_provider
 
-      provider_account_class(provider).find_by_uid(auth_hash.uid).tap do |account|
+      provider = auth_hash['provider']
+      account_uid = auth_hash['uid']
+      provider_account_class(provider).find_by_uid(account_uid).tap do |account|
         account.send(:update_and_save_from_auth_hash, auth_hash) if account
       end
     end
@@ -75,15 +86,12 @@ class Account < ActiveRecord::Base
     # @param auth_hash [Hash] Hash containg payload from Omniauth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] a new Account containing extracted data from `auth_hash`
-    # @raise [ArgumentError] if the `expected_provider` doesn't match the `auth_hash` provider
+    # @raise [InvalidProviderError] if the `expected_provider` doesn't match the `auth_hash`
+    # @raise [UnknownProviderError] if the `auth_hash` provider hasn't been configured by the app
     def new_with_auth_hash(auth_hash, expected_provider = nil)
-      provider = auth_hash['provider']
-      if expected_provider && provider != expected_provider
-        # Provider from hash doesn't match expected values
-        fail ArgumentError,
-             "Provider (#{provider}) doesn't match expected value: #{expected_provider}"
-      end
+      ensure_expected_provider! auth_hash, expected_provider
 
+      provider = auth_hash['provider']
       provider_account_class(provider).new(
         uid: auth_hash['uid']
       ).send(:update_from_auth_hash, auth_hash)
@@ -109,12 +117,23 @@ class Account < ActiveRecord::Base
     # @api private
     # @param provider [String] name of provider that Account belongs to
     # @return [Class] Account class used to represent provider accounts
+    # @raise [UnknownProviderError] if the `provider` hasn't been configured by the app
     def provider_account_class(provider)
       @provider_account_class ||= {}
       @provider_account_class[provider] ||= begin
-        fail ArgumentError, "Unknown provider: #{provider}" unless PROVIDERS.include? provider
+        fail UnknownProviderError, provider unless PROVIDERS.include? provider
         "Accounts::#{provider.classify}".constantize
       end
+    end
+
+    protected
+
+    # Raise error if provider from auth_hash doesn't match expected_provider
+    def ensure_expected_provider!(auth_hash, expected_provider)
+      provider = auth_hash['provider']
+      return if !expected_provider || provider == expected_provider
+
+      fail InvalidProviderError.new(provider, expected_provider)
     end
   end
 

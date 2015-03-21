@@ -52,7 +52,7 @@ describe Account, type: :model do
 
   describe '.new_with_auth_hash' do
     context 'with a Facebook auth hash' do
-      let(:auth_hash) { create :facebook_auth_hash }
+      let(:auth_hash) { create(:facebook_auth_hash).to_h }
 
       it 'builds a new Accounts::Facebook from a auth hash' do
         account = Account.new_with_auth_hash(auth_hash)

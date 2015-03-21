@@ -150,28 +150,32 @@ describe Account, type: :model do
   end
 
   describe '.find_for_oauth' do
-    it 'raises an illegal argument error with an invalid provider' do
+    it 'raises an UnknownProviderError with an invalid provider' do
+      expected_message = 'Provider (does-not-exist) has not been registered'
       expect do
-        auth_hash_double = double('auth_hash', provider: 'does-not-exist', uid: '1234')
+        auth_hash_double = {
+          'provider' => 'does-not-exist',
+          'uid' => '1234'
+        }
         Account.find_for_oauth auth_hash_double, 'does-not-exist'
-      end.to raise_error(ArgumentError)
+      end.to raise_error(Account::UnknownProviderError, expected_message)
     end
-    it 'raises an exception if the provider does not match the expected value' do
+    it 'raises an InvalidProviderError if the provider does not match the expected value' do
       auth_hash = create(:twitter_auth_hash)
       expected_message = "Provider (twitter) doesn't match expected value: not_matching_provider"
       expect do
         Account.find_for_oauth(auth_hash, 'not_matching_provider')
-      end.to raise_error(Exception, expected_message)
+      end.to raise_error(Account::InvalidProviderError, expected_message)
     end
   end
 
   describe '.new_with_auth_hash' do
-    it 'raises an exception if the provider does not match the expected value' do
+    it 'raises an InvalidProviderError if the provider does not match the expected value' do
       expected_message = "Provider (twitter) doesn't match expected value: not_matching_provider"
-      auth_hash = create(:twitter_auth_hash)
+      auth_hash = create(:twitter_auth_hash).to_h # Hash is returned from Session store
       expect do
         Account.new_with_auth_hash(auth_hash, 'not_matching_provider')
-      end.to raise_error(Exception, expected_message)
+      end.to raise_error(Account::InvalidProviderError, expected_message)
     end
   end
 
