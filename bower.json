@@ -17,9 +17,9 @@
     "tests"
   ],
   "dependencies": {
-    "animate.css": "3.2.0",
+    "animate.css": "3.2.5",
     "font-awesome": "4.3.0",
     "html5sortable": "git+https://github.com/farhadi/html5sortable.git",
-    "ladda-bootstrap": "0.1.0"
+    "ladda": "0.9.7"
   }
 }

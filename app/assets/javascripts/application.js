@@ -17,8 +17,8 @@
 //= require bootstrap/dropdown
 //= require bootstrap/transition
 //= require html5sortable/jquery.sortable
-//= require ladda-bootstrap/dist/spin
-//= require ladda-bootstrap/dist/ladda
+//= require spin.js/spin
+//= require ladda/dist/ladda.min
 //= require local_time
 //= require turbolinks
 //= require turboboost/turboboost
