@@ -21,7 +21,7 @@
 //= require ladda-bootstrap/dist/ladda
 //= require local_time
 //= require turbolinks
-//= require turboboost
+//= require turboboost/turboboost
 //
 //= require i18n
 //= require jquery.formerrors

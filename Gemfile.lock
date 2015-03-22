@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bmorrall/turboboost.git
-  revision: f6c5051a06641eb51a882ec3c2a93bce96eb2367
+  revision: 8a9133aa3aae93319ce9067cf715d01ac81b020b
   specs:
     turboboost (0.0.12)
       coffee-rails
@@ -284,7 +284,7 @@ GEM
       sprockets-rails
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
-    rails-dom-testing (1.0.5)
+    rails-dom-testing (1.0.6)
       activesupport (>= 4.2.0.beta, < 5.0)
       nokogiri (~> 1.6.0)
       rails-deprecated_sanitizer (>= 1.0.1)
