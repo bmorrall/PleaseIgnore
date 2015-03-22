@@ -13,7 +13,7 @@
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li{class: header_nav_class(root_path)}<
-              = link_to 'Home', root_url
+              = link_to t('.home'), root_url
             %li{class: header_nav_class(page_path('styles'))}<
               = link_to 'Styles', page_url('styles')
             %li{class: header_nav_class(contact_path)}<
@@ -30,12 +30,10 @@
                   %i.caret
                 %ul.dropdown-menu
                   %li
-                    = link_to 'My Account', edit_user_registration_url
+                    = link_to t('.my_account'), edit_user_registration_url
                   %li.divider
                   %li
                     = link_to 'Logout', destroy_user_session_url, method: 'delete'
             - else
-              %li{class: header_nav_class(new_user_registration_path)}<
-                = link_to 'Create Account', new_user_registration_url
-              %li{class: header_nav_class(new_user_session_path)}<
-                = link_to 'Login', new_user_session_url
+              %li{class: header_nav_class(new_user_registration_path, new_user_session_path)}<
+                = link_to t('layouts.navigation.my_dashboard'), new_user_session_url

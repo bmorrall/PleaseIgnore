@@ -79,15 +79,15 @@ end
 
 def visit_my_account
   within 'nav.navbar' do
-    click_link 'Login'
-  end if page.has_selector?('nav.navbar a', text: 'Login')
+    click_link t('layouts.navigation.my_dashboard')
+  end if page.has_selector?('nav.navbar a', text: t('layouts.navigation.my_dashboard'))
 
   unless Capybara.current_session.server.nil?
     # User must click name to trigger js dropdown menu
     click_link @visitor[:name]
   end
   within 'nav.navbar' do
-    click_link 'My Account'
+    click_link t('layouts.navigation.my_account')
   end
 end
 
@@ -198,7 +198,7 @@ end
 Then(/^I should be signed out$/) do
   # Home -> Login Page
   within 'nav.navbar' do
-    click_link 'Login'
+    click_link t('layouts.navigation.my_dashboard')
   end
 
   # Login page is only visible when user is not signed in

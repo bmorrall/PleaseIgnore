@@ -8,7 +8,7 @@
   .form-group
     .col-sm-offset-2.col-sm-8
       %legend
-        Create Account
+        = t('.title')
       = render 'devise/sessions/auth_buttons'
 
   = f.error_notification
@@ -38,3 +38,5 @@
       %button.btn.btn-success(type='submit')
         = fa 'check'
         Sign up
+      - if devise_mapping.authenticatable?
+        = link_to t('.login_account'), new_session_path(resource_name), class: 'btn btn-link login-account'

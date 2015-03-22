@@ -5,7 +5,8 @@
                   html: { role: 'form'}) do |f|
   .form-group.row
     .col-sm-offset-2.col-sm-8
-      %legend Login
+      %legend
+        = t('.title')
       = render 'devise/sessions/auth_buttons'
 
   = f.error_notification
@@ -25,4 +26,4 @@
         = fa "unlock-alt"
         Sign in
       - if devise_mapping.registerable?
-        = link_to 'Create a new account', new_registration_path(resource_name), class: 'btn btn-link create-account'
+        = link_to t('.create_account'), new_registration_path(resource_name), class: 'btn btn-link create-account'

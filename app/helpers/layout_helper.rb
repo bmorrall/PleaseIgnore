@@ -27,8 +27,8 @@ module LayoutHelper
   #
   # @param path [String] Path of Navigation Item
   #
-  def header_nav_class(path)
-    current_page?(path) ? 'active' : nil
+  def header_nav_class(*paths)
+    paths.any? { |path| current_page?(path) } ? 'active' : nil
   end
 
   # External Services

@@ -13,11 +13,11 @@
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
             %li{class: header_nav_class(root_path)}<
-              = link_to 'Home', root_url
+              = link_to t('layouts.navigation.home'), root_url
             %li{class: header_nav_class(page_path('styles'))}<
               = link_to 'Styles', page_url('styles')
             %li{class: header_nav_class(contact_path)}<
               = link_to 'Contact', contact_url
           %ul.nav.navbar-nav.navbar-right
-            %li{class: header_nav_class(new_user_session_path)}<
-              = link_to 'Login', new_user_session_url
+            %li
+              = link_to t('layouts.navigation.my_dashboard'), new_user_session_url

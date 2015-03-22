@@ -39,7 +39,9 @@ feature 'Deauthentication', type: :feature do
 
   def assert_signed_out
     expect(page).to_not have_selector '.navbar-nav .user-name'
-    expect(page).to have_selector ".navbar-nav a[href$='#{new_user_session_path}']", 'Login'
+    expect(page).to have_selector(
+      ".navbar-nav a[href$='#{new_user_session_path}']", t('layouts.navigation.my_dashboard')
+    )
     expect(current_path).to eq new_user_session_path
   end
 end

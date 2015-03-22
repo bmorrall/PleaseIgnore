@@ -11,18 +11,18 @@ module NavigationHelpers
 
     when /the home\s?page/
       within 'nav.navbar' do
-        click_link 'Home'
+        click_link t('layouts.navigation.home')
       end
 
     when /the sign up page/
       within 'nav.navbar' do
-        click_link 'Login'
+        click_link t('layouts.navigation.my_dashboard')
       end
-      click_link 'Create a new account'
+      click_link t('devise.sessions.new.create_account')
 
     when /the sign in page/
       within 'nav.navbar' do
-        click_link 'Login'
+        click_link t('layouts.navigation.my_dashboard')
       end
 
     when /the reset password page/
@@ -31,9 +31,12 @@ module NavigationHelpers
 
     when /my profile page/
       within 'nav.navbar' do
-        click_link 'Login' if page.has_selector?('a', text: 'Login')
+        if page.has_selector?('nav.navbar a', text: t('layouts.navigation.my_dashboard'))
+          # Escape from static pages
+          click_link t('layouts.navigation.my_dashboard')
+        end
         click_link @visitor[:name]
-        click_link 'My Account'
+        click_link t('layouts.navigation.my_account')
       end
 
     when /the privacy policy page/

@@ -16,11 +16,20 @@ en:
     sessions:
       new:
         page_title: Login
+        title: Login
+        create_account: Create a new account
     registrations:
       edit:
         page_title: Account Management
       new:
         page_title: Create Account
+        title: Create Account
+        login_account: Login with my existing account
+  layouts:
+    navigation:
+      home: Home
+      my_account: My Account
+      my_dashboard: My Dashboard
   pages:
     privacy:
       page_title: PleaseIgnore Privacy Policy
