@@ -14,3 +14,6 @@ spec/
 public/assets/
 vendor/assets/components/
 
+# Node modules
+node_modules/
+

@@ -13,7 +13,7 @@ Dir.chdir APP_ROOT do
   system 'mkdir -p log tmp tmp/pids'
 
   puts "\n== Downloading assets =="
-  command "bower install"
+  command "node_modules/.bin/bower install"
 
   puts "\n== Compiling assets =="
   command "#{preamble} bundle exec rake assets:precompile"

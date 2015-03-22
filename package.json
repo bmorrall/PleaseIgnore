@@ -1,0 +1,17 @@
+{
+  "name" : "PleaseIgnore",
+  "version" : "0.0.1",
+  "description" : "A Simple Rails Bootstrap that runs on Heroku and in Docker",
+  "bugs" : {
+    "url" : "https://github.com/bmorrall/PleaseIgnore/issues"
+  },
+  "license" : "MIT",
+  "author" : "Ben Morrall <bemo56@hotmail.com> (http://benmorrall.com/)",
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/bmorrall/PleaseIgnore.git"
+  },
+  "dependencies" : {
+    "bower" : "1.3.12"
+  }
+}

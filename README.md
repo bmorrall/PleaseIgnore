@@ -37,8 +37,8 @@ Front-end libraries are managed using [Bower](http://bower.io/). Bower downloads
 
 Assuming you have installed `Node.js`, run the following to install Bower and download all required frontend assets.
 
-    npm install -g bower
-    bower install
+    npm install
+    node_modules/.bin/bower install
 
 Configuration
 =============

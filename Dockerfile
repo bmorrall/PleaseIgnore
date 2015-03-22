@@ -15,20 +15,21 @@ RUN /pd_build/ruby2.2.sh
 # Install Memcached
 RUN /pd_build/memcached.sh
 
-# Install Bower for asset management
-RUN npm install bower@1.3.12 --global
+WORKDIR /tmp
+
+# Install npm Packages
+ADD package.json ./
+RUN npm install
 
 # Bundle install (allow gems to be cached)
-WORKDIR /tmp
-ADD Gemfile /tmp/
-ADD Gemfile.lock /tmp/
+ADD Gemfile ./
+ADD Gemfile.lock ./
 RUN bundle install --without development test
 
 # Add Project Files
 ADD . /home/app/webapp
 WORKDIR /home/app/webapp
-RUN mv /tmp/.bundle .
-RUN chown -R app:app /home/app/webapp
+RUN mv /tmp/.bundle .; mv /tmp/node_modules .; chown -R app:app /home/app/webapp
 
 # Setup the container
 RUN su app -c "bin/setup_docker"
