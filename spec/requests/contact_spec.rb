@@ -41,7 +41,7 @@ describe 'Contact', type: :request do
         xhr :post, contact_path, contact: valid_create_attributes
         follow_redirect!
 
-        assert_select '.alert.alert-success strong', 'Your contact request has been sent'
+        assert_select '.alert.alert-success strong', t('flash.contacts.create.notice')
       end
       it 'renders Turboboost errors for invalid request' do
         xhr :post, contact_path, contact: { name: 'Test User' }

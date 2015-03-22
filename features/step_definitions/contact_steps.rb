@@ -54,8 +54,8 @@ end
 
 Then(/^I should be notified I am making a request from (.+)$/) do |page_name|
   referer_path = "#{current_host_with_port}#{path_to(page_name)}"
-  expect(page).to have_content(
-    t('flash.contacts.show.info', referer: referer_path)
+  expect(page).to have_selector(
+    '.alert.alert-info', t('flash.contacts.show.info', referer: referer_path)
   )
 end
 
@@ -65,11 +65,16 @@ Then(/^I should see my name and email on the contact form$/) do
 end
 
 Then(/^I should see a thank you message$/) do
+  expect(page).to have_selector(
+    '.alert.alert-success', text: t('flash.contacts.create.notice')
+  )
   expect(page).to have_content t('contacts.thank_you.page_title')
 end
 
 Then(/^I see an invalid contact request message$/) do
-  expect(page).to have_content t('simple_form.error_notification.default_message')
+  expect(page).to have_selector(
+    '.alert.alert-danger', text: t('simple_form.error_notification.default_message')
+  )
 end
 
 Then(/^I should see the full contact request message$/) do
