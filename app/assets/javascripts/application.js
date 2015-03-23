@@ -22,10 +22,12 @@
 //= require local_time
 //= require turbolinks
 //= require turboboost/turboboost
+//= require jquery-throttle-debounce/jquery.ba-throttle-debounce.js
 //
 //= require i18n
 //= require jquery.formerrors
 //= require turboboost_events
+//= require utils/ajax_placeholder
 //
 //= require_tree ./overrides
 //

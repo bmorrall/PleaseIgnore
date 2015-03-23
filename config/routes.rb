@@ -17,6 +17,11 @@ Rails.application.routes.draw do
     get :thank_you
   end
 
+  # Utility Methods
+  namespace :utils do
+    get 'safe_permalink', to: 'safe_permalink#create'
+  end
+
   # Admin Engines
   authenticate :user, ->(u) { u.has_role? :admin } do
     require 'sidekiq/web'

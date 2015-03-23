@@ -20,6 +20,7 @@
     "animate.css": "3.2.5",
     "font-awesome": "4.3.0",
     "html5sortable": "git+https://github.com/farhadi/html5sortable.git",
+    "jquery-throttle-debounce": "git+https://github.com/cowboy/jquery-throttle-debounce.git",
     "ladda": "0.9.7"
   }
 }
