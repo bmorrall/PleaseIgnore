@@ -20,7 +20,9 @@
               = link_to 'Contact', contact_url
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
-              %li.dropdown{class:page_title=~/Account Management/i?'active':nil}
+              %li.no-js-only
+                = link_to t('layouts.navigation.my_dashboard'), new_user_session_url
+              %li.js-only.dropdown{class:page_title=~/Account Management/i?'active':nil}
                 %a.dropdown-toggle(href='#' data-toggle='dropdown')
                   - cache [:v1, current_user, :navbar_tag], default_cache_params do
                     - decorate current_user do |user|
