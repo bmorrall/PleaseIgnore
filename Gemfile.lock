@@ -138,7 +138,7 @@ GEM
     docile (1.1.5)
     domain_name (0.5.23)
       unf (>= 0.0.5, < 1.0.0)
-    draper (1.4.0)
+    draper (2.1.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
@@ -449,7 +449,7 @@ DEPENDENCIES
   devise
   devise-async
   devise-async-activejob
-  draper (~> 1.3)
+  draper
   email_prefixer
   email_spec
   factory_girl_rails

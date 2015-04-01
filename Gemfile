@@ -71,7 +71,7 @@ gem 'sendgrid'
 gem 'non-stupid-digest-assets'
 
 # Use Draper for Decorators
-gem 'draper', '~> 1.3'
+gem 'draper'
 
 # Use Responders for Dry-ing up responses
 gem 'responders'
