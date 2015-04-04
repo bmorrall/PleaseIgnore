@@ -1,4 +1,4 @@
-@javascript @csrf_protection
+@csrf_protection
 Feature: User sends contact reqeust
   In order to notify support
   A user
@@ -10,9 +10,9 @@ Feature: User sends contact reqeust
      Then I should see a thank you message
      And "support@pleaseignore.com" should receive an email
 
+  @javascript
   Scenario: User attempts to send a contact request with errors
     Given I am at the home page
     When I submit an incomplete contact request
     Then I see an invalid contact request message
     And "support@pleaseignore.com" should receive no emails
-

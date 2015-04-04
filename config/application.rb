@@ -37,6 +37,9 @@ module PleaseIgnore
     # Use sidekiq for ActiveJob
     config.active_job.queue_adapter = :sidekiq
 
+    # Allow Turboboost/remote forms to work without Javascript
+    config.action_view.embed_authenticity_token_in_remote_forms = true
+
     # Add response codes for common exceptions
     Rails.application.config.action_dispatch.rescue_responses.merge!(
       'CanCan::AccessDenied' => :forbidden
