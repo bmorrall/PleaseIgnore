@@ -14,16 +14,6 @@ module ApplicationHelper
     { expires_in: 1.hour }
   end
 
-  # Icons
-
-  # Displays a Font Awesome icon in a non semantic tag.
-  #
-  # @param icon_name [String] icon name without the fa- previx
-  # @see http://fortawesome.github.io/Font-Awesome/icons/
-  def fa(icon_name)
-    content_tag :i, nil, class: "fa fa-#{icon_name}"
-  end
-
   # Links
 
   # Renders a external link that should not be followed by TurboLinks
