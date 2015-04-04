@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   # Ensure CanCan(Can) authorizes all actions
-  # check_authorization :unless => :devise_controller?
+  check_authorization unless: :devise_controller?
 
   concerning :Caching do
     protected

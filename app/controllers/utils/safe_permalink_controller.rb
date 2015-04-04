@@ -1,6 +1,6 @@
 module Utils
   # Converts a String into a safe permalink
-  class SafePermalinkController < ApplicationController
+  class SafePermalinkController < ActionController::Base
     respond_to :json
 
     # GET /utils/safe_permalink
