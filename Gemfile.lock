@@ -91,6 +91,12 @@ GEM
     capybara-webkit (1.5.0)
       capybara (>= 2.3.0, < 2.5.0)
       json
+    cells (3.11.3)
+      actionpack (>= 3.0)
+      railties (>= 3.0)
+      uber (~> 0.0.8)
+    cells-dashboard (0.0.1)
+      cells
     celluloid (0.16.0)
       timers (~> 4.0.0)
     coderay (1.1.0)
@@ -414,6 +420,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.13)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -441,6 +448,8 @@ DEPENDENCIES
   cane
   capybara-screenshot
   capybara-webkit
+  cells (~> 3.11.3)
+  cells-dashboard
   coffee-rails (~> 4.1.0)
   coveralls
   cucumber-rails

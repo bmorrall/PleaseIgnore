@@ -15,7 +15,7 @@ feature 'Email Authentication', type: :feature do
     expect(page).to have_selector '.alert-success', t('devise.sessions.signed_in')
 
     # And I should be at the new registration path
-    expect(current_path).to eq edit_user_registration_path
+    expect(current_path).to eq dashboard_path
 
     # And I should be signed in
     assert_signed_in user

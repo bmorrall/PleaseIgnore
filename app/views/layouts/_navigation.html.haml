@@ -12,8 +12,8 @@
           = link_to application_name, root_url, class: 'navbar-brand'
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li{class: header_nav_class(root_path)}<
-              = link_to t('.home'), root_url
+            %li{class: header_nav_class(dashboard_path)}<
+              = link_to t('.home'), user_signed_in? ? dashboard_url : new_user_session_url
             %li{class: header_nav_class(page_path('styles'))}<
               = link_to 'Styles', page_url('styles')
             %li{class: header_nav_class(contact_path)}<
@@ -21,7 +21,7 @@
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li.no-js-only
-                = link_to t('layouts.navigation.my_dashboard'), new_user_session_url
+                = link_to t('layouts.navigation.my_dashboard'), dashboard_url
               %li.js-only.dropdown{class:page_title=~/Account Management/i?'active':nil}
                 %a.dropdown-toggle(href='#' data-toggle='dropdown')
                   - cache [:v1, current_user, :navbar_tag], default_cache_params do

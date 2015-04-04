@@ -1,0 +1,8 @@
+en:
+  dashboard:
+    empty:
+      display:
+        empty_message: "Time to put up your feet, it's Pina Colada time!"
+  dashboards:
+    show:
+      page_title: My Dashboard

@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
     # [Devise] Redirects signed in users to their profile instead of root
     def after_sign_in_path_for(resource)
-      default_url = edit_user_registration_path
+      default_url = dashboard_path
       stored_path = request.env['omniauth.origin'] || stored_location_for(resource)
       case stored_path.try(:gsub, root_url, '/')
       when root_path

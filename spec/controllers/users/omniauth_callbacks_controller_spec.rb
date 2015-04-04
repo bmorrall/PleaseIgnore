@@ -73,7 +73,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
                 get provider
               end
 
-              it { is_expected.to redirect_to(edit_user_registration_path) }
+              it { is_expected.to redirect_to(dashboard_path) }
               it 'should set the flash based off the success_message' do
                 is_expected.to set_flash[:notice].to(account.success_message)
               end

@@ -99,6 +99,12 @@ gem 'paper_trail'
 # Add Application Name Prefix to Emails
 gem 'email_prefixer'
 
+# Dashboard
+# ==============
+
+gem 'cells', '~> 3.11.3'
+gem 'cells-dashboard'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'

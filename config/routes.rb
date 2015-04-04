@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
+  resource :dashboard, only: [:show]
+
   namespace :users do
     resources :accounts, only: :destroy do
       post :sort, on: :collection
