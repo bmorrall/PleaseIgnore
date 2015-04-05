@@ -2,7 +2,7 @@ en:
   dashboard:
     empty:
       display:
-        empty_message: "Time to put up your feet, it's Pina Colada time!"
+        empty_message: "Time to put up your feet, and enjoy a cup of joe!"
   dashboards:
     show:
       page_title: My Dashboard
