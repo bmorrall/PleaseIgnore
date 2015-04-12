@@ -210,10 +210,11 @@ describe Account, type: :model do
   describe '#remove_oauth_credentials' do
     context 'with an account with oauth credentials' do
       subject do
-        build_stubbed(:developer_account,
-                      oauth_token: 'oauth_token',
-                      oauth_secret: 'oauth_secret',
-                      oauth_expires_at: DateTime.now
+        build_stubbed(
+          :developer_account,
+          oauth_token: 'oauth_token',
+          oauth_secret: 'oauth_secret',
+          oauth_expires_at: DateTime.now
         )
       end
       it 'sets oauth_token to nil' do

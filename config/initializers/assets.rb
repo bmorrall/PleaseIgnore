@@ -19,6 +19,6 @@ Rails.application.config.assets.append_path 'components'
 # Explicitly add required files into assets
 Rails.application.config.assets.precompile.push(proc do |path|
   [
-    /\Afont-awesome\/fonts/, # include font-awesome fonts
+    %r{\Afont-awesome\/fonts}, # include font-awesome fonts
   ].any? { |pattern| path =~ pattern }
 end)

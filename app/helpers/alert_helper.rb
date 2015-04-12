@@ -21,11 +21,12 @@ module AlertHelper
 
   # Link for dismissing assocated alert
   def alert_dismiss_button
-    content_tag(:button, '&times;'.html_safe,
-                type: 'button',
-                class: 'close',
-                data: { dismiss: 'alert' },
-                'aria-hidden' => 'true'
+    content_tag(
+      :button, '&times;'.html_safe,
+      type: 'button',
+      class: 'close',
+      data: { dismiss: 'alert' },
+      'aria-hidden' => 'true'
     )
   end
 

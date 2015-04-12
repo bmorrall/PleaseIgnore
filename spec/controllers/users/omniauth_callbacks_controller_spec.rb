@@ -99,10 +99,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               it { is_expected.to redirect_to(new_user_session_path) }
               it 'should set the flash to alert' do
                 is_expected.to set_flash[:alert].to(
-                  t('devise.omniauth_callbacks.failure',
-                    kind: provider_name,
-                    reason: error.message
-                  )
+                  t('devise.omniauth_callbacks.failure', kind: provider_name, reason: error.message)
                 )
               end
             end
@@ -153,10 +150,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
               it { is_expected.to redirect_to(edit_user_registration_path) }
               it 'should set the flash to alert' do
                 is_expected.to set_flash[:alert].to(
-                  t('devise.omniauth_callbacks.failure',
-                    kind: provider_name,
-                    reason: error.message
-                  )
+                  t('devise.omniauth_callbacks.failure', kind: provider_name, reason: error.message)
                 )
               end
             end

@@ -153,7 +153,7 @@ end
 Then(/^there should be (an|no|\d+) attachments? named "([^"]*?)"$/) do |amount, filename|
   expect(
     current_email_attachments.select { |a| a.filename == filename }.size
-    ).to eq(parse_email_count(amount))
+  ).to eq(parse_email_count(amount))
 end
 
 Then(/^attachment (\d+) should be named "([^"]*?)"$/) do |index, filename|
