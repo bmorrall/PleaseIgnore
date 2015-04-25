@@ -49,7 +49,7 @@ module PaperTrail
           whodunnit_as_command
         else
           # Display as Guest
-          h.t('papertrail/versions.user.guest')
+          h.t('paper_trail.versions.whodunnit.guest')
         end
       end
     end
@@ -79,9 +79,9 @@ module PaperTrail
       command = parts.last
 
       if command =~ /rake/
-        h.t('papertrail/versions.user.rake')
+        h.t('paper_trail.versions.whodunnit.rake')
       elsif command =~ /console/
-        h.t('papertrail/versions.user.console')
+        h.t('paper_trail.versions.whodunnit.console')
       else
         command.titleize
       end

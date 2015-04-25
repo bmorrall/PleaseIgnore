@@ -1,0 +1,14 @@
+---
+en:
+  paper_trail:
+    versions:
+      created_on:
+        today: Today
+      whodunnit:
+        console: Console
+        guest: Guest
+        rake: Rake
+  users:
+    versions:
+      index:
+        page_title: History

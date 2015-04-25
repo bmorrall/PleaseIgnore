@@ -1,46 +1,12 @@
-# English Translations for App Meta Data
-# i.e Page Titles
-
+---
 en:
-  contacts:
-    show:
-      page_title: Contact us
-    thank_you:
-      page_title: Thank you for contacting PleaseIgnore
-  devise:
-    passwords:
-      edit:
-        page_title: Change your password
-      new:
-        page_title: Forgot your password?
-    sessions:
-      new:
-        page_title: Login
-        title: Login
-        create_account: Create a new account
-    registrations:
-      edit:
-        page_title: Account Management
-      new:
-        page_title: Create Account
-        title: Create Account
-        login_account: Login with my existing account
+  javascript:
+    # Turboboost Translations
+    turboboost:
+      default_errors: 'Please review the problems below:'
+      unknown_error: An unexpected error has occurred. Please try again later.
   layouts:
     navigation:
       home: Home
       my_account: My Account
       my_dashboard: My Dashboard
-  pages:
-    privacy:
-      page_title: PleaseIgnore Privacy Policy
-    styles:
-      page_title: PleaseIgnore Styles
-    terms:
-      page_title: PleaseIgnore Terms of Service
-  users:
-    accounts:
-      buttons:
-        link_account: 'Link your %{provider_name} Account'
-    versions:
-      index:
-        page_title: History

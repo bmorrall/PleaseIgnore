@@ -1,0 +1,16 @@
+---
+en:
+  contacts:
+    show:
+      page_title: Contact us
+    thank_you:
+      page_title: Thank you for contacting PleaseIgnore
+  flash:
+    contacts:
+      create:
+        notice: Your contact request has been sent
+      show:
+        info: Your message will mention you visited this page from %{referer}
+  support_mailer:
+    contact_email:
+      subject: Contact Email Request

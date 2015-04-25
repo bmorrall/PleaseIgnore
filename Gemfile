@@ -126,7 +126,6 @@ end
 group :development do
   gem 'annotate' # Annotate models with db schema
   gem 'quiet_assets'
-  gem 'i18n-tasks'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
@@ -148,6 +147,7 @@ group :test, :development do
   gem 'pry-rails'
 
   # Code Quality Metrics
+  gem 'i18n-tasks', require: false
   gem 'brakeman', require: false
   gem 'cane', require: false
   gem 'rubocop', require: false

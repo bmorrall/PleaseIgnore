@@ -1,0 +1,41 @@
+---
+en:
+  account:
+    provider_name:
+      developer: Developer
+      facebook: Facebook
+      github: GitHub
+      google_oauth2: Google
+      twitter: Twitter
+    reasons:
+      failure:
+        account_disabled: Authentication has been disabled from this account
+        account_invalid: We were unable to save this account
+        account_limit: You have already been linked to a %{kind} account
+        previously_linked: Someone has already linked to this account
+  decorators:
+    account:
+      prompts:
+        cancel_registration: Are you sure you want to cancel sign in?
+        unlink_account: Are you sure you want to unlink your %{provider} account
+    versions:
+      title:
+        account:
+          create: 'Linked %{provider_name} Account #%{item_id} <%{account_uid}>'
+          create_on: 'Linked %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          destroy: 'Removed %{provider_name} Account #%{item_id} <%{account_uid}>'
+          destroy_on: 'Removed %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          restore: 'Restored %{provider_name} Account #%{item_id} <%{account_uid}>'
+          restore_on: 'Restored %{provider_name} Account #%{item_id} <%{account_uid}> on'
+          update: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}>'
+          update_on: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}> on'
+  flash:
+    users:
+      accounts:
+        destroy:
+          notice: Successfully unlinked your %{provider_name} account.
+          warning: Your account has already been unlinked.
+  users:
+    accounts:
+      buttons:
+        link_account: Link your %{provider_name} Account
