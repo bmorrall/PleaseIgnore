@@ -11,12 +11,12 @@ PleaseIgnore README
 Rails version
 -------------
 
-PleaseIgnore currently runs on `Rails 4.1.5`.
+PleaseIgnore currently runs on `Rails 4.2.1`.
 
 Ruby version
 ------------
 
-In order to main compatability with Heroku, PleaseIgnore is designed to run on `MRI Ruby 2.1.2`. This project will be continually updated to matchin newer versions of Ruby and Rails.
+In order to main compatability with Heroku, PleaseIgnore is designed to run on `MRI Ruby 2.2.0`. This project will be continually updated to matchin newer versions of Ruby and Rails.
 
 PleaseIgnore should not make any assumptions, nor have any dependencies on how Ruby is installed on its host system, however the development environment has been configured to use [rbenv](https://github.com/sstephenson/rbenv).
 
