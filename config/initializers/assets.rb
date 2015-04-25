@@ -7,7 +7,7 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.paths << Emoji.images_path
 
 # include non-CDN jQuery in compiled assets
-Rails.application.config.assets.precompile += ['jquery.js']
+Rails.application.config.assets.precompile += %w(jquery/dist/jquery.js)
 
 # include Bower components in compiled assets
 Rails.application.config.assets.append_path 'components'
