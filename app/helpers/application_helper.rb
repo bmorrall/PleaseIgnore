@@ -58,6 +58,12 @@ module ApplicationHelper
     link_to(name, options, html_options, &block)
   end
 
+  # Rendering
+
+  def render_summary
+    "<!-- Page generated at #{Time.zone.now.iso8601} -->".html_safe
+  end
+
   # Utilities
 
   def date_is_today?(date)
