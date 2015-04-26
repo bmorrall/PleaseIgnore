@@ -61,6 +61,12 @@ SendGrid Configuration
 - Sign up for [SendGrid](http://sendgrid.com/) or add it as [a plugin to your heroku app](https://devcenter.heroku.com/articles/sendgrid).
 - Copy and paste *Username* and *Password* keys into `SENDGRID_USERNAME` and `SENDGRID_PASSWORD` environment variables.
 
+Google Analytics Configuration
+------------------------------
+
+- Sign up for [Google Analytics](http://www.google.com/analytics/) and generate a Analytics ID
+- Copy and paste the *Analytics ID* into the `GOOGLE_ANALYTICS_ID` environment variable.
+
 OAuth Configuration
 -------------------
 

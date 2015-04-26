@@ -19,3 +19,7 @@
 
 = jquery_include_tag :google, 'data-turbolinks-track' => false, force: Rails.env.test?
 = javascript_include_tag "application", "data-turbolinks-track" => true
+
+- initialize_scripts = render(partial: 'initialize_scripts', formats: [:js])
+- unless initialize_scripts.blank?
+  = javascript_tag initialize_scripts

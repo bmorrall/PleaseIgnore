@@ -18,6 +18,7 @@
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/transition
+//= require google_analytics
 //= require html5sortable/jquery.sortable
 //= require spin.js/spin
 //= require ladda/dist/ladda.min
