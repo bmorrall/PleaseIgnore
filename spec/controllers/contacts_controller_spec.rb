@@ -89,7 +89,7 @@ describe ContactsController, type: :controller do
           email = ActionMailer::Base.deliveries.last
           expect(email.to).to eq(['support@pleaseignore.com'])
           expect(email.from).to eq(['contact@pleaseignore.com'])
-          expect(email.subject).to end_with t('support_mailer.contact_email.subject')
+          expect(email.subject).to end_with t('contact_mailer.support_email.subject')
           expect(email.subject).to start_with "[#{t('application.name')} TEST] "
         end
       end

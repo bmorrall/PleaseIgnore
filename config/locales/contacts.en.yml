@@ -1,5 +1,8 @@
 ---
 en:
+  contact_mailer:
+    support_email:
+      subject: Contact Email Request
   contacts:
     show:
       page_title: Contact us
@@ -11,6 +14,3 @@ en:
         notice: Your contact request has been sent
       show:
         info: Your message will mention you visited this page from %{referer}
-  support_mailer:
-    contact_email:
-      subject: Contact Email Request

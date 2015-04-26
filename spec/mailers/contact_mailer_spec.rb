@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe SupportMailer, type: :mailer do
-  describe 'contact_email' do
-    let(:mail) { SupportMailer.contact_email(contact_email_attributes) }
-    let(:contact_email_attributes) do
+describe ContactMailer, type: :mailer do
+  describe 'support_email' do
+    let(:mail) { described_class.support_email(contact_attributes) }
+    let(:contact_attributes) do
       {
         name: 'Test User',
         email: 'test@example.com',
@@ -13,7 +13,7 @@ describe SupportMailer, type: :mailer do
     end
 
     it 'renders the headers' do
-      expect(mail.subject).to eq t('support_mailer.contact_email.subject')
+      expect(mail.subject).to eq t('contact_mailer.support_email.subject')
       expect(mail.to).to eq(['support@pleaseignore.com'])
       expect(mail.from).to eq(['contact@pleaseignore.com'])
     end
@@ -27,5 +27,4 @@ describe SupportMailer, type: :mailer do
       expect(body).to match('http://wavedigital.com.au')
     end
   end
-
 end

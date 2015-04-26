@@ -32,10 +32,9 @@ data:
     - ['{decorators,flash}.{account}.*', 'config/locales/account.%{locale}.yml']
     - ['decorators.versions.title.{account}.*', 'config/locales/account.%{locale}.yml']
     ## Contacts
-    - ['{contacts}.*', 'config/locales/\1.%{locale}.yml']
+    - ['{contacts,contact_mailer}.*', 'config/locales/contacts.%{locale}.yml']
     - ['{decorators,flash}.contacts.*', 'config/locales/contacts.%{locale}.yml']
     - ['decorators.versions.title.{contacts}.*', 'config/locales/contacts.%{locale}.yml']
-    - ['support_mailer.contact_email.*', 'config/locales/contacts.%{locale}.yml']
     ## Dashboard
     - ['{dashboards,dashboard}.*', 'config/locales/dashboard.%{locale}.yml']
     ## Pages
