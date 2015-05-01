@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
     included do
       # Add extra parameters for Devise Controllers
       before_action :configure_permitted_parameters, if: :devise_controller?
+      before_action :delete_authentication_tokens
     end
 
     protected
@@ -57,6 +58,12 @@ class ApplicationController < ActionController::Base
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]
       devise_parameter_sanitizer.for(:account_update) << :name
+    end
+
+    # Tiddle is used for API authentication, remove all authentication for the main app
+    def delete_authentication_tokens
+      request.headers.env.delete 'HTTP_X_USER_EMAIL'
+      request.headers.env.delete 'HTTP_X_USER_TOKEN'
     end
   end
 

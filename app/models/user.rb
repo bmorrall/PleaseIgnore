@@ -100,6 +100,7 @@ class User < ActiveRecord::Base
         :validatable,
         :async, # Send email through Sidekiq
         :omniauthable,
+        :token_authenticatable,
         omniauth_providers: [
           :developer,
           :facebook,
@@ -108,6 +109,9 @@ class User < ActiveRecord::Base
           :google_oauth2
         ]
       )
+
+      # Authentications are used for api authentication
+      has_many :authentication_tokens
     end
   end
 

@@ -24,6 +24,14 @@ Rails.application.routes.draw do
     get 'safe_permalink', to: 'safe_permalink#create'
   end
 
+  # Api
+  namespace :api do
+    namespace :v1, defaults: { format: :json } do
+      resource :registration, only: [:create]
+      resource :session, only: [:create, :destroy]
+    end
+  end
+
   # Admin Engines
   authenticate :user, ->(u) { u.has_role? :admin } do
     require 'sidekiq/web'

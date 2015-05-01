@@ -408,6 +408,9 @@ GEM
     thor (0.19.1)
     thread (0.2.0)
     thread_safe (0.3.5)
+    tiddle (0.3.0)
+      activerecord (~> 4.2.0)
+      devise (~> 3.4.1)
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
@@ -497,6 +500,7 @@ DEPENDENCIES
   spring
   spring-commands-cucumber
   spring-commands-rspec
+  tiddle
   turboboost!
   turbolinks
   uglifier (>= 1.3.0)

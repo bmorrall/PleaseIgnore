@@ -130,6 +130,10 @@ describe User, type: :model do
     end
   end
 
+  describe 'Authentication' do
+    it { should have_many(:authentication_tokens) }
+  end
+
   describe 'DeviseOverrides' do
     describe '#no_login_password?' do
       let(:instance) { described_class.new }
