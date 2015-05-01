@@ -37,4 +37,8 @@
 
   });
 
+  $(function() {
+    // Download Ladda fonts (for Bootswatch)
+    $(document.createElement('style')).attr('type', 'text/css').html('@import url("//fonts.googleapis.com/css?family=Lato:400,700,400italic");').insertBefore($('#wrap'));
+  });
 }(jQuery));
