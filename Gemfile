@@ -101,6 +101,9 @@ gem 'paper_trail'
 # Add Application Name Prefix to Emails
 gem 'email_prefixer'
 
+# Adds ActiveModel::Errors#details display method
+gem 'active_model-errors_details'
+
 # Dashboard
 # ==============
 
