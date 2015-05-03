@@ -10,7 +10,7 @@ module Api
         if user.save
           respond_with_new_user(user)
         else
-          render json: { errors: user.errors.details }, status: :unprocessable_entity
+          render_api_error(:unprocessable_entity, errors: user.errors.details)
         end
       end
 
@@ -28,7 +28,7 @@ module Api
           render json: { authentication_token: token }
         else
           message = t(:"signed_up_but_#{user.inactive_message}", scope: 'devise.registrations')
-          render json: { error: message }, status: :unauthorized
+          render_api_error(:unauthorized, error: message)
         end
       end
 

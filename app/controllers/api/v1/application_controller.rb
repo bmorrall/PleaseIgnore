@@ -21,6 +21,18 @@ module Api
           user_agent: request.user_agent
         }
       end
+
+      # Renders a standard error response back to the user
+      def render_api_error(status, error_body = {})
+        status_number =
+          case status
+          when Symbol
+            Rack::Utils::SYMBOL_TO_STATUS_CODE[status]
+          else
+            status.to_i
+          end
+        render json: error_body.merge(status: status_number), status: status
+      end
     end
   end
 end

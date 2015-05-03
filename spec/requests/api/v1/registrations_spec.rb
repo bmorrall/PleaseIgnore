@@ -37,7 +37,9 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
         expect(response.status).to eq(401)
 
         json_response = JSON.parse(response.body, symbolize_names: true)
-        expect(json_response).to eq(error: t('devise.registrations.signed_up_but_inactive'))
+        expect(json_response).to eq(
+          error: t('devise.registrations.signed_up_but_inactive'), status: 401
+        )
       end
 
       it 'renders a unproccessable entity JSON response when provided with invalid parameters' do
@@ -45,6 +47,7 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
         expect(response.status).to eq(422)
 
         json_response = JSON.parse(response.body, symbolize_names: true)
+        expect(json_response[:status]).to eq(422)
         expect(json_response[:errors]).to be_a_kind_of(Hash)
       end
     end

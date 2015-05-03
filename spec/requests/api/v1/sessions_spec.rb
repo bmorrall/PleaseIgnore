@@ -31,7 +31,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
         expect(response.status).to eq(401)
 
         json_response = JSON.parse(response.body, symbolize_names: true)
-        expect(json_response).to eq(error: t('devise.failure.invalid'))
+        expect(json_response).to eq(error: t('devise.failure.invalid'), status: 401)
       end
 
       it 'renders a unuthorized JSON response with an incorrect password' do
@@ -40,7 +40,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
         expect(response.status).to eq(401)
 
         json_response = JSON.parse(response.body, symbolize_names: true)
-        expect(json_response).to eq(error: t('devise.failure.invalid'))
+        expect(json_response).to eq(error: t('devise.failure.invalid'), status: 401)
       end
     end
   end

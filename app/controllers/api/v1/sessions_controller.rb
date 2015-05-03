@@ -12,7 +12,7 @@ module Api
           token = Tiddle.create_and_return_token(resource, request)
           render json: { authentication_token: token }
         else
-          render json: { error: t('devise.failure.invalid') }, status: :unauthorized
+          render_api_error(:unauthorized, error: t('devise.failure.invalid'))
         end
       end
 
