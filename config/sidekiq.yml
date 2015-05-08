@@ -4,5 +4,6 @@
 :logfile: ./log/sidekiq.log
 :queues:
   - [default, 3]
-  - [mailer, 1]
+  - [mailer, 2]
   - [high_priority, 5]
+  - [low_priority, 1]
