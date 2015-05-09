@@ -45,6 +45,8 @@ data:
     ## Versions
     - ['paper_trail.*', 'config/locales/versions.%{locale}.yml']
     - ['users.{versions}.*', 'config/locales/\1.%{locale}.yml']
+    ## rack-attack
+    - ['{rack_attack}.*', 'config/locales/\1.%{locale}.yml']
     ## Views (Fallback)
     - ['{layouts,javascript}.*', 'config/locales/views.%{locale}.yml']
     - ['*.page_title', 'config/locales/views.%{locale}.yml']
@@ -73,8 +75,10 @@ data:
 # Find translate calls
 search:
   ## Paths or `File.find` patterns to search in:
-  # paths:
-  #  - app/
+  paths:
+   - app/
+   - config/
+   - lib/
 
   ## Root directories for relative keys resolution.
   relative_roots:
@@ -89,6 +93,7 @@ search:
   exclude:
     - app/assets/images
     - app/assets/fonts
+    - lib/assets
 
   ## Alternatively, the only files or `File.fnmatch patterns` to search in `paths`:
   ## If specified, this settings takes priority over `exclude`, but `exclude` still applies.

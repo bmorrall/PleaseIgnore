@@ -120,6 +120,11 @@ gem 'cells-dashboard'
 
 gem 'whenever', require: false
 
+# Security
+# ==============
+
+gem 'rack-attack'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'

@@ -35,12 +35,47 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
       end
 
       it 'renders a unuthorized JSON response with an incorrect password' do
-        create :user, email: 'test@example.com'
-        post api_v1_session_path, user: { email: 'test@example.com', password: 'wrong' }
+        user = create(:user, email: 'test@example.com')
+        post api_v1_session_path, user: { email: user.email, password: 'wrong' }
         expect(response.status).to eq(401)
 
         json_response = JSON.parse(response.body, symbolize_names: true)
         expect(json_response).to eq(error: t('devise.failure.invalid'), status: 401)
+      end
+
+      describe 'Rate Limiting' do
+        include ActiveSupport::Testing::TimeHelpers
+
+        it 'rate limits requests to 5 attempts per 20 seconds from the same IP address' do
+          travel_to(Time.now.midnight) do
+            5.times do
+              post api_v1_session_path
+            end
+            post api_v1_session_path
+          end
+
+          expect(response.status).to eq 429
+          expect(response.body).to eq(
+            { status: 429, error: I18n.t('rack_attack.limit_exceeded_message') }.to_json
+          )
+          expect(response.headers['Retry-After']).to eq 20
+        end
+
+        it 'rate limits requests to 5 attempts per 20 seconds with the same email address' do
+          email = Faker::Internet.email
+          travel_to(Time.now.midnight) do
+            5.times do |i|
+              post api_v1_session_path, { user: { email: email } }, 'REMOTE_ADDR' => "1.2.3.#{i}"
+            end
+            post api_v1_session_path, { user: { email: email } }, 'REMOTE_ADDR' => '1.2.3.6'
+          end
+
+          expect(response.status).to eq 429
+          expect(response.body).to eq(
+            { status: 429, error: I18n.t('rack_attack.limit_exceeded_message') }.to_json
+          )
+          expect(response.headers['Retry-After']).to eq 20
+        end
       end
     end
   end

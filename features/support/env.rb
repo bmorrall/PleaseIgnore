@@ -84,4 +84,9 @@ Before('@javascript') do
   end if Capybara.current_session.driver.respond_to? :block_unknown_urls
 end
 
+After do
+  # Prevent rack-attack from limiting requests
+  Rack::Attack.cache.store.clear
+end
+
 # rubocop:enable LineLength
