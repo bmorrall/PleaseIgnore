@@ -185,6 +185,11 @@ Starting Sidekiq
 
 A Sidekiq worker can be started by running: `sidekiq -C config/sidekiq.yml`.
 
+Whenever
+--------
+
+[Whenever](https://github.com/javan/whenever) is used to setup daily and hourly cron tasks. Use `whenever --update-crontab` to convert `config/schedule.rb` into a crontab.
+
 ### Initial setup
 
 Heroku requires a custom buildpack in order to install `Bower` components via NodeJS.

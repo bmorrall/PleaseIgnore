@@ -47,5 +47,8 @@ RUN rm -f /etc/service/memcached/down
 RUN mkdir /etc/service/sidekiq
 ADD etc/sidekiq/sidekiq.sh /etc/service/sidekiq/run
 
+# Update the Crontab
+ADD etc/whenever/setup_cron.sh /etc/my_init.d/setup_cron.sh
+
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

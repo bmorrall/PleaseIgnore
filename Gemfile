@@ -115,6 +115,11 @@ gem 'tiddle'
 gem 'cells', '~> 3.11.3'
 gem 'cells-dashboard'
 
+# Cron
+# ==============
+
+gem 'whenever', require: false
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
