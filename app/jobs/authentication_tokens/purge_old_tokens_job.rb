@@ -4,7 +4,7 @@ module AuthenticationTokens
     queue_as :low_priority
 
     def perform
-      users.each { |user| Tiddle.purge_old_tokens(user) }
+      users.find_each { |user| Tiddle.purge_old_tokens(user) }
     end
 
     protected

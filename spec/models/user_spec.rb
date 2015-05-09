@@ -131,7 +131,7 @@ describe User, type: :model do
   end
 
   describe 'Authentication' do
-    it { should have_many(:authentication_tokens) }
+    it { should have_many(:authentication_tokens).dependent(:destroy) }
   end
 
   describe 'DeviseOverrides' do

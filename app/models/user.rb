@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
       )
 
       # Authentications are used for api authentication
-      has_many :authentication_tokens
+      has_many :authentication_tokens, dependent: :destroy
     end
   end
 

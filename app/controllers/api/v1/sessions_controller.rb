@@ -9,6 +9,10 @@ module Api
 
         resource = User.find_for_authentication auth_options
         if resource.try(:valid_password?, password)
+          # Ensure the user doesn't go over their token limit
+          Tiddle.purge_old_tokens(resource)
+
+          # Generate and return a new token
           token = Tiddle.create_and_return_token(resource, request)
           render json: { authentication_token: token }
         else
