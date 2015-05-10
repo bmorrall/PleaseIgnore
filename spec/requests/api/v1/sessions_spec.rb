@@ -24,6 +24,19 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
           json_response = JSON.parse(response.body, symbolize_names: true)
           expect(json_response).to eq(authentication_token: authentication_token)
         end
+
+        it 'returns CORS headers to the response' do
+          post api_v1_session_path,
+               { user: { email: user.email, password: user.password } },
+               'Origin' => '*'
+
+          expect(response.headers['Access-Control-Allow-Origin']).to eq('*')
+          expect(response.headers['Access-Control-Allow-Methods']).to eq(
+            'GET, POST, DELETE, PUT, OPTIONS, HEAD'
+          )
+          expect(response.headers['Access-Control-Max-Age']).to eq('600')
+          expect(response.headers['Access-Control-Allow-Credentials']).to eq(nil)
+        end
       end
 
       it 'renders a unuthorized JSON response when no matching user is found' do

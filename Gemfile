@@ -124,6 +124,7 @@ gem 'whenever', require: false
 # ==============
 
 gem 'rack-attack'
+gem 'rack-cors', require: 'rack/cors'
 
 group :production do
   # Integration with heroku

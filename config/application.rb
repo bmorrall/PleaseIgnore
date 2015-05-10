@@ -48,6 +48,18 @@ module PleaseIgnore
     # Use Rack::Attack to secure critical points against attacks
     config.middleware.use Rack::Attack
 
+    # Use Rack::Cors to control external api access
+    config.middleware.insert_before 0, 'Rack::Cors', logger: (-> { Rails.logger }) do
+      allow do
+        origins '*'
+        resource '/api/v1/*',
+                 headers: ['X-USER-EMAIL', 'X-USER-TOKEN'],
+                 methods: [:get, :post, :delete, :put, :options, :head],
+                 credentials: false,
+                 max_age: 10.minutes
+      end
+    end
+
     # Set whodunnint for non-ActionController changes
     rake_tasks do
       # Keep track of rake tasks
