@@ -29,8 +29,12 @@ Rails.application.routes.draw do
   # Api
   namespace :api do
     namespace :v1, defaults: { format: :json } do
+      # Authentication
       resource :registration, only: [:create]
       resource :session, only: [:create, :destroy]
+
+      # Resources
+      resources :organisations, only: [:index, :show]
     end
   end
 
