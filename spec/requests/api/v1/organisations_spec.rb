@@ -25,9 +25,9 @@ RSpec.describe 'Api::V1::Organisations', type: :request do
           expect(json_response.length).to eq 1
 
           organisation_json = json_response.first
+          expect(organisation_json[:id]).to eq organisation.permalink
           expect(organisation_json[:name]).to eq organisation.name
           expect(organisation_json[:url]).to eq api_v1_organisation_url(organisation)
-          expect(organisation_json).to_not have_key :id
         end
       end
     end
@@ -52,9 +52,9 @@ RSpec.describe 'Api::V1::Organisations', type: :request do
           expect(response).to be_success
 
           json_response = JSON.parse(response.body, symbolize_names: true)
+          expect(json_response[:id]).to eq organisation.permalink
           expect(json_response[:name]).to eq organisation.name
           expect(json_response[:url]).to eq api_v1_organisation_url(organisation)
-          expect(json_response).to_not have_key :id
         end
       end
     end
