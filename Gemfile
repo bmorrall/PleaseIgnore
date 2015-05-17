@@ -144,6 +144,7 @@ end
 group :development do
   gem 'annotate' # Annotate models with db schema
   gem 'quiet_assets'
+  gem 'rack-mini-profiler' # Add a profiling tab to each page
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
