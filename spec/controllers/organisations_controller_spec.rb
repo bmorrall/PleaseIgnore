@@ -40,12 +40,16 @@ RSpec.describe OrganisationsController, type: :controller do
 
         it 'assigns the requested organisation as @organisation' do
           organisation = create(:organisation)
+          logged_in_user.add_role :owner, organisation
+
           get :show, id: organisation.to_param
           expect(assigns(:organisation)).to eq(organisation)
         end
 
         it "renders the 'show' template" do
           organisation = create(:organisation)
+          logged_in_user.add_role :owner, organisation
+
           get :show, id: organisation.to_param
           expect(response).to render_template('show')
           expect(response).to render_with_layout('dashboard')
@@ -54,6 +58,8 @@ RSpec.describe OrganisationsController, type: :controller do
 
       it 'should raise a CanCan::AccessDenied without access' do
         organisation = create(:organisation)
+        logged_in_user.add_role :owner, organisation
+
         expect do
           get :show, id: organisation.to_param
         end.to raise_error(CanCan::AccessDenied)
@@ -70,12 +76,16 @@ RSpec.describe OrganisationsController, type: :controller do
 
         it 'assigns the requested organisation as @organisation' do
           organisation = create(:organisation)
+          logged_in_user.add_role :owner, organisation
+
           get :edit, id: organisation.to_param
           expect(assigns(:organisation)).to eq(organisation)
         end
 
         it "renders the 'edit' template" do
           organisation = create(:organisation)
+          logged_in_user.add_role :owner, organisation
+
           get :edit, id: organisation.to_param
           expect(response).to render_template('edit')
           expect(response).to render_with_layout('dashboard_backend')
@@ -84,6 +94,8 @@ RSpec.describe OrganisationsController, type: :controller do
 
       it 'should raise a CanCan::AccessDenied without access' do
         organisation = create(:organisation)
+        logged_in_user.add_role :owner, organisation
+
         expect do
           get :edit, id: organisation.to_param
         end.to raise_error(CanCan::AccessDenied)
@@ -105,6 +117,8 @@ RSpec.describe OrganisationsController, type: :controller do
 
           it 'updates the requested organisation' do
             organisation = create(:organisation)
+            logged_in_user.add_role :owner, organisation
+
             put :update, id: organisation.to_param, organisation: new_attributes
             organisation.reload
             expect(organisation.name).to eq new_attributes[:name]
@@ -112,12 +126,16 @@ RSpec.describe OrganisationsController, type: :controller do
 
           it 'assigns the requested organisation as @organisation' do
             organisation = create(:organisation)
+            logged_in_user.add_role :owner, organisation
+
             put :update, id: organisation.to_param, organisation: new_attributes
             expect(assigns(:organisation)).to eq(organisation)
           end
 
           it 'redirects to the organisation' do
             organisation = create(:organisation)
+            logged_in_user.add_role :owner, organisation
+
             put :update, id: organisation.to_param, organisation: new_attributes
             expect(response).to redirect_to(organisation)
             is_expected.to set_flash[:notice].to(
@@ -129,6 +147,8 @@ RSpec.describe OrganisationsController, type: :controller do
         context 'with invalid params' do
           it 'assigns the organisation as @organisation' do
             organisation = create(:organisation)
+            logged_in_user.add_role :owner, organisation
+
             put :update, id: organisation.to_param, organisation: invalid_attributes
             expect(assigns(:organisation)).to eq(organisation)
             expect(assigns(:organisation).errors).to_not be_empty
@@ -136,6 +156,8 @@ RSpec.describe OrganisationsController, type: :controller do
 
           it "re-renders the 'edit' template" do
             organisation = create(:organisation)
+            logged_in_user.add_role :owner, organisation
+
             put :update, id: organisation.to_param, organisation: invalid_attributes
             expect(response).to render_template('edit')
             expect(response).to render_with_layout('dashboard_backend')
@@ -145,6 +167,8 @@ RSpec.describe OrganisationsController, type: :controller do
 
       it 'should raise a CanCan::AccessDenied without access' do
         organisation = create(:organisation)
+        logged_in_user.add_role :owner, organisation
+
         expect do
           put :update, id: organisation.to_param, organisation: invalid_attributes
         end.to raise_error(CanCan::AccessDenied)

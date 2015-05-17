@@ -3,7 +3,7 @@ class OrganisationsController < ApplicationController
   include Concerns::BetterTurboboostErrors
 
   before_action :authenticate_user!
-  load_and_authorize_resource find_by: :permalink
+  load_and_authorize_resource through: :current_user, find_by: :permalink
 
   respond_to :html
 
