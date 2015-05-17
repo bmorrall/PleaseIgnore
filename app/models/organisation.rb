@@ -17,11 +17,15 @@ class Organisation < ActiveRecord::Base
     about
     admin
     announce
+    api
     contact
+    dashboard
+    organisations
     privacy
     sidekiq
-    users
     terms
+    users
+    utils
     wp-admin
     wp-content
   )

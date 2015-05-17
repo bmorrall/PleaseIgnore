@@ -67,11 +67,15 @@ RSpec.describe Organisation, type: :model do
     it { should_not allow_value('about').for(:permalink) }
     it { should_not allow_value('admin').for(:permalink) }
     it { should_not allow_value('announce').for(:permalink) }
+    it { should_not allow_value('api').for(:permalink) }
     it { should_not allow_value('contact').for(:permalink) }
+    it { should_not allow_value('dashboard').for(:permalink) }
+    it { should_not allow_value('organisations').for(:permalink) }
     it { should_not allow_value('privacy').for(:permalink) }
     it { should_not allow_value('sidekiq').for(:permalink) }
-    it { should_not allow_value('users').for(:permalink) }
     it { should_not allow_value('terms').for(:permalink) }
+    it { should_not allow_value('users').for(:permalink) }
+    it { should_not allow_value('utils').for(:permalink) }
     it { should_not allow_value('wp-admin').for(:permalink) }
     it { should_not allow_value('wp-content').for(:permalink) }
   end
