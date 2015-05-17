@@ -1,5 +1,5 @@
 language: ruby
-bundler_args: --without development --deployment
+bundler_args: "--without development --deployment"
 cache:
   directories:
     - vendor/bundle
@@ -9,9 +9,17 @@ rvm:
 before_install:
   - npm install -g bower
   - bower install
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
 script:
   - RAILS_ENV=test bundle exec rake db:create db:migrate --trace
   - bundle exec rake travis
-
+deploy:
+  provider: heroku
+  api_key:
+    secure: pFa2I6buUT9B11LgxdI1V9M+9hdhWMyDdOJJ64uRVFEabLg4EOhkmCswVWU/MnC1UKYXnnAkizLSXXwiOr91pDAC/v6BQ89seW1D7ekVS361DnwOzK0YzFJQIUeH2p4foH8Ex3fIzhNmHCLs+KNr0K9UKUUZQPrzOOAhjzaKbas=
+  app: please-ignore
+  on:
+    repo: bmorrall/PleaseIgnore
+  run:
+    - "rake db:migrate"
