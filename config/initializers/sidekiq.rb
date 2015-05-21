@@ -1,6 +1,7 @@
 if Rails.application.secrets.redis_url
   redis_config = {
     namespace: 'sidekiq',
+    network_timeout: 2,
     url: Rails.application.secrets.redis_url
   }
 
