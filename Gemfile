@@ -6,7 +6,7 @@ ruby '2.2.0'
 gem 'rails', '4.2.1'
 
 # Use postgresql as the database for Active Record
-gem 'pg'
+gem 'pg', '~> 0.18.2'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.1'
@@ -25,7 +25,7 @@ gem 'jquery-rails'
 gem 'jquery-rails-cdn'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+gem 'turbolinks', '~> 2.5.3'
 gem 'turboboost', git: 'https://github.com/bmorrall/turboboost.git'
 
 # Use Twitter Bootstrap for base stylesheet
@@ -35,12 +35,12 @@ gem 'bootstrap-sass'
 gem 'jbuilder' # , '~> 1.2'
 
 # Use simple form to simplify forms
-gem 'simple_form'
+gem 'simple_form', '~> 3.1.0'
 
 gem 'acts_as_list'
 
 # User authentication with Devise
-gem 'devise'
+gem 'devise', '~> 3.4.1'
 
 # Use Action Caching to save pages
 gem 'actionpack-action_caching'
@@ -89,7 +89,7 @@ gem 'rolify'
 
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
-gem 'sidekiq'
+gem 'sidekiq', '~> 3.3.4'
 
 # Send Devise mail through Sidekiq
 gem 'devise-async'
@@ -130,10 +130,10 @@ group :production do
   gem 'rails_12factor'
 
   # Use Passenger as the app server
-  gem 'passenger'
+  gem 'passenger', '~> 5.0.7'
 
   # Use Memcached as a cache
-  gem 'dalli'
+  gem 'dalli', '~> 2.7.4'
 end
 
 group :doc do
