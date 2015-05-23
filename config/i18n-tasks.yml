@@ -116,6 +116,8 @@ ignore_missing:
 ignore_unused:
 # - 'activerecord.attributes.*'
 - '{flash,javascript}.*'
+- 'activerecord.attributes.*'
+- 'activerecord.errors.models.*'
 - 'errors.messages.*'
 - '{devise,kaminari,papertrail}.*'
 - 'simple_form.{yes,no}'

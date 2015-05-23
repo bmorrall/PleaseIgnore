@@ -1,0 +1,11 @@
+.confirm-account
+  %h3 Confirm your Account
+  %p Confirming your email address will help protect your account from being stolen, and will help you receive support in the event of a problem.
+  = simple_form_for @user,
+                    as: 'user',
+                    url: user_confirmation_path,
+                    html: { method: :post } do |f|
+    .form-group
+      %button.btn.btn-primary(type='submit')
+        = fa 'check'
+        = t('devise.confirmations.form.send')

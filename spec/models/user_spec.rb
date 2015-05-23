@@ -17,9 +17,14 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  deleted_at             :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
 #
 # Indexes
 #
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
@@ -502,6 +507,10 @@ describe User, type: :model do
       it 'creates a banned user' do
         user = create(:user, :banned)
         expect(user).to have_role(:banned)
+      end
+      it 'creates a confirmed user' do
+        user = create(:user, :confirmed)
+        expect(user).to be_confirmed_at
       end
       it 'creates a user with no login password and a account' do
         user = create(:user, :no_login_password)

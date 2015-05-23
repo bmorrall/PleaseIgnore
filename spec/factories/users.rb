@@ -17,9 +17,14 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  deleted_at             :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
 #
 # Indexes
 #
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
@@ -40,6 +45,9 @@ FactoryGirl.define do
     end
     trait(:banned) do
       after(:create) { |user| user.add_role :banned }
+    end
+    trait(:confirmed) do
+      confirmed_at { Time.zone.now }
     end
     trait(:no_login_password) do
       password nil

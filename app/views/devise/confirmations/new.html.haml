@@ -1,0 +1,13 @@
+- content_for(:page_title) { t('.page_title') }
+
+- if resource.errors.any?
+  .alert.alert-danger.animated.fadeInDown
+    %p
+      %strong Unable to confirm your email address!
+    %ul
+      - resource.errors.full_messages.each do |error_message|
+        %li
+          = error_message
+
+- if user_signed_in?
+  = render 'form'

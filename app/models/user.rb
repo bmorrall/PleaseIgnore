@@ -20,9 +20,14 @@
 #  created_at             :datetime
 #  updated_at             :datetime
 #  deleted_at             :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string
 #
 # Indexes
 #
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
@@ -99,6 +104,7 @@ class User < ActiveRecord::Base
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable and :omniauthable
       devise(
+        :confirmable,
         :database_authenticatable,
         :registerable,
         :recoverable,
@@ -129,6 +135,11 @@ class User < ActiveRecord::Base
         # Password is being added
         encrypted_password_changed? && encrypted_password_change.first.blank?
       )
+    end
+
+    # Allow users to continue using the app without confirming their email addresses
+    def confirmation_required?
+      false
     end
 
     # Checks whether a password is needed or not. For validations only.

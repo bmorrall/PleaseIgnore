@@ -11,10 +11,14 @@ describe 'Dashboard', type: :request do
         get dashboard_path
         expect(response.status).to be(200)
       end
-      it 'renders the dashboard/empty cell' do
-        get dashboard_path
-        assert_select 'p', t('dashboard.empty.display.empty_message')
+
+      context 'as an unconfirmed user' do
+        it 'renders the dashboard/confirmation cell' do
+          get dashboard_path
+          assert_select '.confirm-account'
+        end
       end
+
       describe 'Metadata' do
         it 'renders all expected metadata' do
           get dashboard_path

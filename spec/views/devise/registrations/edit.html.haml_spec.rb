@@ -48,9 +48,19 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
         assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
           assert_select 'label[for=?]', 'user_email', 'Email'
-          assert_select 'input#user_email[name=?][placeholder=?][disabled]',
+          assert_select 'input#user_email[name=?][placeholder=?]',
                         'user[email]',
                         t('simple_form.placeholders.defaults.email')
+        end
+      end
+
+      context 'with a confirmed user account' do
+        let(:user) { build_stubbed(:user, :confirmed) }
+
+        it 'should disable the email field' do
+          render
+
+          assert_select 'input#user_email[name=?][disabled]', 'user[email]'
         end
       end
     end

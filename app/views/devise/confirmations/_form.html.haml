@@ -1,0 +1,25 @@
+= simple_form_for resource,
+                  as: resource_name,
+                  url: confirmation_path(resource_name),
+                  html: { method: :post } do |f|
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      %legend
+        = t('.title')
+
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      %p
+        Confirming your email address will help protect your account from being stolen, 
+        and will help you receive support in the event of a problem.
+      %p
+        We will send you a confirmation email with the details of your account. 
+        Please follow the link on the included email to confirm your email address.
+      %p
+        Check your junk mail folder in case your email does not appear.
+
+  .form-group
+    .col-sm-offset-2.col-sm-8
+      %button.btn.btn-primary(type='submit')
+        = fa 'check'
+        = t('.send')

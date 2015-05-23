@@ -13,7 +13,7 @@
                       defaults: horizontal_bootstrap_defaults) do |f|
       = f.error_notification
       = f.input :name
-      = f.input :email, disabled: true
+      = f.input :email, disabled: resource.confirmed_at?
       .form-group
         .col-sm-offset-3.col-sm-6
           %button.btn.btn.btn-primary(type='submit')

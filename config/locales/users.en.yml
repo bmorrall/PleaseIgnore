@@ -1,5 +1,15 @@
 ---
 en:
+  activerecord:
+    attributes:
+      user:
+        confirmation_token: Confirmation Token
+    errors:
+      models:
+        user:
+          attributes:
+            confirmation_token:
+              blank: 'was not found, did you copy the confirmation link correctly?'
   decorators:
     versions:
       title:
@@ -29,6 +39,12 @@ en:
           update: Updated Account
           update_on: Updated Account on
   devise:
+    confirmations:
+      new:
+        page_title: Confirm your Account
+      form:
+        title: Confirm your Account
+        send: Send Confirmation Email
     passwords:
       edit:
         page_title: Change your password
