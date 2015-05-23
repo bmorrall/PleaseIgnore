@@ -114,9 +114,10 @@ describe Account, type: :model do
     context 'with update event' do
       it 'creates a update version when user_id is changed' do
         account = create :account
+        other_user = create :user
         with_versioning do
           expect do
-            account.update_attribute :user_id, account.user_id + 1
+            account.update_attribute :user_id, other_user.id
           end.to change(PaperTrail::Version, :count).by(1)
         end
         expect(account.versions.last.event).to eq('update')
