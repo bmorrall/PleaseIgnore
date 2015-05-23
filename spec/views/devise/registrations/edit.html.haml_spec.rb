@@ -48,7 +48,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
 
         assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
           assert_select 'label[for=?]', 'user_email', 'Email'
-          assert_select 'input#user_email[name=?][placeholder=?]',
+          assert_select 'input#user_email[name=?][placeholder=?][disabled]',
                         'user[email]',
                         t('simple_form.placeholders.defaults.email')
         end

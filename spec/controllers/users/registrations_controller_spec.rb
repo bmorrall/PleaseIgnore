@@ -15,11 +15,11 @@ describe Users::RegistrationsController, type: :controller do
     }
   end
 
-  let(:valid_profile_attributes) do
-    attributes_for(:user).keep_if { |attribute| attribute !~ /password/ }
+  let(:valid_update_attributes) do
+    attributes_for(:user).keep_if { |attribute| attribute !~ /email|password/ }
   end
-  let(:invalid_profile_attributes) do
-    { name: nil, email: nil }
+  let(:invalid_update_attributes) do
+    { name: nil }
   end
 
   describe 'GET edit' do
@@ -46,20 +46,20 @@ describe Users::RegistrationsController, type: :controller do
 
       context 'with a valid profile update request' do
         before(:each) do
-          post :update, user: valid_profile_attributes
+          post :update, user: valid_update_attributes
         end
         it { expect(response).to redirect_to edit_user_registration_path }
         it { is_expected.to set_flash[:notice].to(t('devise.registrations.updated')) }
         it 'should update the User account' do
           @logged_in_user.reload
-          valid_profile_attributes.each do |key, value|
+          valid_update_attributes.each do |key, value|
             expect(@logged_in_user[key]).to eq(value)
           end
         end
       end
       context 'with a invalid profile update request' do
         before(:each) do
-          post :update, user: invalid_profile_attributes
+          post :update, user: invalid_update_attributes
         end
         it { is_expected.to render_template(:edit) }
         it { is_expected.to render_with_layout(:dashboard_backend) }

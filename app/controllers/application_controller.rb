@@ -58,6 +58,7 @@ class ApplicationController < ActionController::Base
     def configure_permitted_parameters
       devise_parameter_sanitizer.for(:sign_up) << [:name, :terms_and_conditions]
       devise_parameter_sanitizer.for(:account_update) << :name
+      devise_parameter_sanitizer.for(:account_update).delete(:email)
     end
 
     # Tiddle is used for API authentication, remove all authentication for the main app
