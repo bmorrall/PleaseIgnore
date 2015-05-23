@@ -3,6 +3,7 @@ module Api
     # Renders Organisation belonging to the current user
     class OrganisationsController < Api::V1::ApplicationController
       before_action :authenticate_user!
+      before_action :load_organisation, only: [:index]
       load_and_authorize_resource :organisation,
                                   through: :current_user,
                                   parent: false,
@@ -16,6 +17,12 @@ module Api
       # GET /api/v1/organisation/:id
       def show
         # show.json.jbuilder
+      end
+
+      private
+
+      def load_organisation
+        @organisations = current_user.organisations
       end
     end
   end

@@ -100,7 +100,7 @@ describe User, type: :model do
       context 'as a user' do
         let(:user) { create(:user) }
 
-        it { is_expected.to be_able_to(:create, Organisation) }
+        it { is_expected.to_not be_able_to(:create, Organisation) }
 
         context 'with a persisted organisation' do
           let(:organisation) { create :organisation }

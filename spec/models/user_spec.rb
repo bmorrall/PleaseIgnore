@@ -56,18 +56,6 @@ describe User, type: :model do
   end
 
   describe 'Associations' do
-    describe 'organisation_ids' do
-      let(:instance) { create :user }
-      subject { instance.organisation_ids }
-
-      it 'should return ids of organisations the user has an owner role on' do
-        organisation = create(:organisation)
-        instance.add_role :owner, organisation
-
-        expect(subject).to eq [organisation.id]
-      end
-    end
-
     describe '#organisations' do
       let(:instance) { create :user }
       subject { instance.organisations }
@@ -77,6 +65,11 @@ describe User, type: :model do
         instance.add_role :owner, organisation
 
         expect(subject).to eq [organisation]
+      end
+      it 'should not include organisations the user is not assigned to' do
+        create(:organisation)
+
+        expect(subject).to eq []
       end
     end
   end

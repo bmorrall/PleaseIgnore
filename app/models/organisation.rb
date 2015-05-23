@@ -13,6 +13,8 @@
 #  index_organisations_on_permalink  (permalink) UNIQUE
 #
 class Organisation < ActiveRecord::Base
+  include Concerns::BelongsToUser
+
   RESTRICTED_PERMALINK_VALUES = %w(
     about
     admin

@@ -3,6 +3,7 @@ class OrganisationsController < ApplicationController
   include Concerns::BetterTurboboostErrors
 
   before_action :authenticate_user!
+  before_action :load_organisation, only: [:index]
   load_and_authorize_resource through: :current_user, find_by: :permalink
 
   respond_to :html
@@ -26,6 +27,10 @@ class OrganisationsController < ApplicationController
   end
 
   private
+
+  def load_organisation
+    @organisations = current_user.organisations
+  end
 
   def organisation_layout
     %w(edit update destroy).include?(params[:action]) ? 'dashboard_backend' : 'dashboard'

@@ -40,8 +40,9 @@ class Ability
   end
 
   def grant_organisation_abilities(user)
-    can :create, Organisation
-    can :read, Organisation, id: user.organisation_ids
+    can :read, Organisation do |organisation|
+      user.organisations.where(id: organisation.id).any?
+    end
     can [:update, :destroy], Organisation do |organisation|
       user.has_role? :owner, organisation
     end
