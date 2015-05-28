@@ -1,13 +1,10 @@
 require 'rails_helper'
 
-feature 'Organisation Management', :admin do
-  scenario 'viewing an organsiation dashboard' do
-    # Given I am logged in as an admin user
-    login_admin
-
-    # And I am the owner of an organisation
+feature 'Organisation Management' do
+  scenario 'viewing an organsiation dashboard', :login_user do
+    # Given I am the owner of an organisation
     organisation = create(:organisation)
-    admin_user.add_role :owner, organisation
+    logged_in_user.add_role :owner, organisation
 
     # And I am at the Dashboard
     visit dashboard_url
@@ -22,13 +19,10 @@ feature 'Organisation Management', :admin do
     expect(page).to have_selector('.page-header', text: organisation.name)
   end
 
-  scenario 'updating a organisation', :js do
-    # Given I am logged in as an admin user
-    login_admin
-
-    # And I am the owner of an organisation
+  scenario 'updating a organisation', :js, :login_user do
+    # Given I am the owner of an organisation
     organisation = create(:organisation)
-    admin_user.add_role :owner, organisation
+    logged_in_user.add_role :owner, organisation
 
     # When I open the organisation settings
     visit organisation_path(organisation)

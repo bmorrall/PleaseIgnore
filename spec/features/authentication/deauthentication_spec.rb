@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 feature 'Deauthentication', type: :feature do
-  scenario 'User signs out via the navbar', :js do
-    password = Faker::Internet.password
-    user = create(:user, password: password, password_confirmation: password)
-
-    # Given I am signed in
-    sign_in_with_credentials user.email, password
-
+  scenario 'User signs out via the navbar', :login_user, :js do
     # When I sign out
     sign_out_via_navbar
 
@@ -16,13 +10,6 @@ feature 'Deauthentication', type: :feature do
 
     # And I should be signed out
     assert_signed_out
-  end
-
-  def sign_in_with_credentials(email, password)
-    visit '/users/sign_in'
-    fill_in 'user_email', with: email
-    fill_in 'user_password', with: password
-    click_button 'Sign in'
   end
 
   def sign_out_via_navbar

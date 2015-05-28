@@ -5,11 +5,11 @@ feature 'Email Authentication', type: :feature do
 
   scenario 'Guest signs in with correct credentials' do
     # Given there is a user with a login
-    password = 'password123' || Faker::Internet.password
+    password = Faker::Internet.password
     user = create(:user, password: password, password_confirmation: password)
 
     # When I sign in with valid credentials
-    sign_in_with_credentials user.email, password
+    sign_in_with_credentials(user.email, password)
 
     # Then I see a successful sign in message
     expect(page).to have_selector '.alert-success', t('devise.sessions.signed_in')
@@ -24,8 +24,8 @@ feature 'Email Authentication', type: :feature do
   # Failure
 
   scenario 'Guest attempts to sign in with non existant account' do
-    # When I attempt to login with an incorrect password
-    sign_in_with_credentials Faker::Internet.email, Faker::Internet.password
+    # When I attempt to login with non existant account
+    sign_in_with_credentials(Faker::Internet.email, Faker::Internet.password)
 
     # Then I should see an invalid password error
     expect(page).to have_selector '.alert-danger', t('devise.failure.invalid')
@@ -39,7 +39,7 @@ feature 'Email Authentication', type: :feature do
     user = create(:user)
 
     # When I attempt to login with an incorrect password
-    sign_in_with_credentials user.email, Faker::Internet.password
+    sign_in_with_credentials(user.email, Faker::Internet.password)
 
     # Then I should see an invalid password error
     expect(page).to have_selector '.alert-danger', t('devise.failure.invalid')
@@ -53,22 +53,13 @@ feature 'Email Authentication', type: :feature do
     user = create(:user, :no_login_password)
 
     # When I attempt to login without a password
-    sign_in_with_credentials user.email
+    sign_in_with_credentials(user.email, '')
 
     # Then I should see an illegal password error
     expect(page).to have_selector '.alert-danger', t('devise.failure.invalid')
 
     # And I should not be signed in
     assert_signed_out
-  end
-
-  # WHEN
-
-  def sign_in_with_credentials(email, password = nil)
-    visit new_user_session_path
-    fill_in 'user_email', with: email
-    fill_in 'user_password', with: password if password
-    click_button 'Sign in'
   end
 
   # THEN
