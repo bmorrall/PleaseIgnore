@@ -38,7 +38,7 @@
                 = link_to t('layouts.navigation.my_dashboard'), dashboard_url
               %li.js-only.dropdown{class: page_title = ~/Account Management/i ? 'active' : nil}
                 %a.dropdown-toggle(href='#' data-toggle='dropdown')
-                  - cache [:v1, current_user, :navbar_tag], default_cache_params do
+                  - cache [cache_uid, current_user, :navbar_tag], default_cache_params do
                     - decorate current_user do |user|
                       = user.profile_image
                       = user.display_name

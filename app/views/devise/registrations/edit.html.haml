@@ -51,7 +51,7 @@
     %header.page-header
       %h3 Linked Accounts
 
-    - cache [:v1, resource, :profile_accounts], default_cache_params do
+    - cache [cache_uid, resource, :profile_accounts], default_cache_params do
       .form-horizontal
         // Linked Accounts
         - decorate_account_collection resource.accounts do |accounts|

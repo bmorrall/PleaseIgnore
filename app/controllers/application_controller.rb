@@ -15,12 +15,22 @@ class ApplicationController < ActionController::Base
   check_authorization unless: :devise_controller?
 
   concerning :Caching do
+    included do
+      helper_method :cache_uid
+    end
+
     protected
 
     # Adds Public Cache Control Headers to the request for Reverse Proxies to Store
     def add_cache_control_headers(max_age: 10.minutes.to_s)
       request.session_options[:skip] = true  # removes session data
       response.headers['Cache-Control'] = "public, max-age=#{max_age}"
+    end
+
+    # Current Unique Deployment Reference for Caching.
+    # Change `CACHE_UID` env var to reset fragment caching
+    def cache_uid
+      @cache_uid ||= (ENV['CACHE_UID'] || :v1).freeze
     end
   end
 
