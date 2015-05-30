@@ -12,12 +12,7 @@
           = link_to application_name, root_url, class: 'navbar-brand'
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
-            %li{class: header_nav_class(dashboard_path)}<
-              = link_to t('layouts.navigation.home'), new_user_session_url
-            %li{class: header_nav_class(page_path('styles'))}<
-              = link_to 'Styles', page_url('styles')
-            %li{class: header_nav_class(contact_path)}<
-              = link_to 'Contact', contact_url
+            = render 'layouts/navbar_items', dynamic: false
           %ul.nav.navbar-nav.navbar-right
             %li
               = link_to t('layouts.navigation.my_dashboard'), new_user_session_url

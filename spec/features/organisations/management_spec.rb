@@ -11,7 +11,7 @@ feature 'Organisation Management' do
 
     # When I select my organisation
     within 'nav.navbar' do
-      find('.organisation-navbar a.dropdown-toggle').click
+      find('.organisation-dropdown a.dropdown-toggle').click
       click_on organisation.name
     end
 

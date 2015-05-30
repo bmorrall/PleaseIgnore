@@ -11,27 +11,8 @@
             %span.icon-bar
           = link_to application_name, root_url, class: 'navbar-brand'
         .collapse.navbar-collapse
-          %ul.nav.navbar-nav.organisation-navbar
-            - if user_signed_in? && current_user.organisations.any?
-              %li.js-only.dropdown{class: @organisation ? ' active' : nil}
-                = link_to dashboard_url, class: 'dropdown-toggle', data: { toggle: 'dropdown' } do\
-                  = @organisation.try(:name) || 'Home'
-                  &nbsp;
-                  %i.caret
-                %ul.dropdown-menu
-                  - current_user.organisations.order(:name).each do |organisation|
-                    %li{class: @organisation == organisation ? 'active' : nil}
-                      = link_to organisation.name, organisation_url(organisation)
-                  %li.divider
-                  %li
-                    = link_to 'Home', dashboard_url
-            - else
-              %li{class: header_nav_class(dashboard_path)}<
-                = link_to t('.home'), user_signed_in? ? dashboard_url : new_user_session_url
-              %li{class: header_nav_class(page_path('styles'))}<
-                = link_to 'Styles', page_url('styles')
-              %li{class: header_nav_class(contact_path)}<
-                = link_to 'Contact', contact_url
+          %ul.nav.navbar-nav
+            = render 'layouts/navbar_items', dynamic: true, organisation: @organisation
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li.no-js-only

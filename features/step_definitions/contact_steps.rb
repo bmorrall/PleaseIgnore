@@ -9,7 +9,7 @@ end
 
 def begin_contact_request
   within 'nav.navbar' do
-    click_link 'Contact'
+    click_link t('layouts.navbar_items.contact')
   end
 end
 

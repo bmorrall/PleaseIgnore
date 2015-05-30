@@ -6,7 +6,10 @@ en:
       default_errors: 'Please review the problems below:'
       unknown_error: An unexpected error has occurred. Please try again later.
   layouts:
-    navigation:
+    navbar_items:
       home: Home
+      styles: Styles
+      contact: Contact
+    navigation:
       my_account: My Account
       my_dashboard: My Dashboard

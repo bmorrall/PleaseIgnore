@@ -17,7 +17,7 @@ feature 'User Confirmation', type: :feature do
 
   # When I request an email confirmation
   def send_confirmation_request_via_dashboard
-    click_link 'Home'
+    click_link t('layouts.navbar_items.home')
 
     within '.confirm-account' do
       click_button t('devise.confirmations.form.send')
