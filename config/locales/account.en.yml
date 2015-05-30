@@ -39,3 +39,5 @@ en:
     accounts:
       buttons:
         link_account: Link your %{provider_name} Account
+      labels:
+        account: "%{provider} account"

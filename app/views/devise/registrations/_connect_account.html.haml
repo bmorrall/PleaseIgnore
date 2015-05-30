@@ -3,8 +3,7 @@
 .form-group{ class: "btn-#{provider_class_name} connect-account connect-#{provider_class_name}"}
   %label.control-label.col-sm-3
     = provider_icon(provider)
-    = provider_name
-    account
+    = t('users.accounts.labels.account', provider: provider_name)
   .col-sm-9.col-md-7
     = system_link t('users.accounts.buttons.link_account', provider_name: provider_name),
                   user_omniauth_authorize_path(provider),

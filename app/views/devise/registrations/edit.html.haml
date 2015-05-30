@@ -3,7 +3,8 @@
 - if display_profile?
   %section
     %header.page-header
-      %h3 Profile Information
+      %h3
+        = t('.headers.profile')
 
     = simple_form_for(resource,
                       as: resource_name,
@@ -18,15 +19,15 @@
         .col-sm-offset-3.col-sm-6
           %button.btn.btn.btn-primary(type='submit')
             = fa 'user'
-            Update Profile
+            = t('.buttons.update_profile')
           - if resource.errors.any?
-            = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
+            = link_to t('buttons.cancel'), edit_user_registration_path, class: 'btn btn-default'
 
 - if display_password_change?
   %section
     %header.page-header
       %h3
-        = resource.no_login_password? ? 'Add Login Password' : 'Change Password'
+        = resource.no_login_password? ? t('.headers.add_password') : t('.headers.change_password')
 
     = simple_form_for(resource,
                       as: resource_name,
@@ -35,21 +36,22 @@
                       wrapper: :horizontal_bootstrap,
                       defaults: horizontal_bootstrap_defaults) do |f|
       = f.error_notification
-      = f.input :password, label: 'New Password'
+      = f.input :password, label: t('.labels.password')
       = f.input :password_confirmation
       = f.input :current_password unless resource.no_login_password?
       .form-group
         .col-sm-offset-3.col-sm-6
           %button.btn.btn-primary(type='submit')
             = fa 'key'
-            = resource.no_login_password? ? 'Add Password' : 'Change Password'
+            = resource.no_login_password? ? t('.buttons.add_password') : t('.buttons.change_password')
           - if resource.errors.any?
-            = link_to 'Cancel', edit_user_registration_path, class: 'btn btn-default'
+            = link_to t('buttons.cancel'), edit_user_registration_path, class: 'btn btn-default'
 
 - if display_accounts? && omniauth_providers.any?
   %section
     %header.page-header
-      %h3 Linked Accounts
+      %h3
+        = t('.headers.linked_accounts')
 
     - cache [cache_uid, resource, :profile_accounts], default_cache_params do
       .form-horizontal
@@ -66,10 +68,12 @@
 - if display_accounts? && can?(:destroy, resource)
   %section
     %header.page-header
-      %h3 Delete Account
+      %h3
+        = t('.headers.delete_user')
 
     .col-sm-offset-3.col-sm-9.col-md-7.col-lg-9
-      %p You can delete your account, but keep in mind this action is irreversiable.
-      = button_to registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn btn-danger' do
+      %p
+        = t('.labels.delete_user')
+      = button_to registration_path(resource_name), data: { confirm: t('prompts.confirm_delete') }, method: :delete, class: 'btn btn-danger' do
         = fa 'trash-o'
-        Delete my account
+        = t('.buttons.delete_user')

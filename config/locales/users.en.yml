@@ -53,12 +53,35 @@ en:
     registrations:
       edit:
         page_title: Account Management
+        buttons:
+          add_password: Add Password
+          change_password: Change Password
+          delete_user: Delete my account
+          update_profile: Update Profile
+        headers:
+          add_password: Add Login Password
+          change_password: Change Password
+          delete_user: Delete Account
+          linked_accounts: Linked Accounts
+          profile: Profile Information
+        labels:
+          delete_user: 'You can delete your account, but keep in mind this action is irreversiable.'
+          password: 'New Password'
       new:
-        login_account: Login with my existing account
         page_title: Create Account
         title: Create Account
+        buttons:
+          login_account: Login with my existing account
+          sign_up: Sign up
+        labels:
+          privacy_policy: Privacy Policy
+          terms_and_conditions: "I accept the %{terms_of_service} and %{privacy_policy}."
+          terms_of_service: Terms of Service
     sessions:
       new:
         create_account: Create a new account
         page_title: Login
         title: Login
+        buttons:
+          forgot_password: Forgot password?
+          sign_in: Sign in

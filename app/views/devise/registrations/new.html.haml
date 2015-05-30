@@ -26,17 +26,11 @@
     = f.input :password
     = f.input :password_confirmation
 
-  - terms_and_conditions_label = content_tag :span do
-    I accept the
-    = external_link 'Terms of Service', page_path('terms')
-    and
-    = succeed "." do
-      = external_link 'Privacy Policy', page_path('privacy')
   = f.input :terms_and_conditions, as: :boolean, label: false, inline_label: terms_and_conditions_label
   .form-group
     .col-sm-offset-2.col-sm-8
       %button.btn.btn-success(type='submit')
         = fa 'check'
-        Sign up
+        = t('.buttons.sign_up')
       - if devise_mapping.authenticatable?
-        = link_to t('.login_account'), new_session_path(resource_name), class: 'btn btn-link login-account'
+        = link_to t('.buttons.login_account'), new_session_path(resource_name), class: 'btn btn-link login-account'

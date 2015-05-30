@@ -4,6 +4,8 @@ en:
     company_name: PleaseIgnore, Inc
     name: PleaseIgnore
     pretty_domain: PleaseIgnore.com
+  buttons:
+    cancel: Cancel
   flash:
     actions:
       create:
@@ -13,3 +15,5 @@ en:
         notice: "%{resource_name} was successfully destroyed."
       update:
         notice: "%{resource_name} was successfully updated."
+  prompts:
+    confirm_delete: Are you sure?

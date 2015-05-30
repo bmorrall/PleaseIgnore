@@ -11,7 +11,7 @@ module NavigationHelpers
 
     when /the home\s?page/
       within 'nav.navbar' do
-        click_link t('layouts.navigation.home')
+        click_link t('layouts.navbar_items.home')
       end
 
     when /the sign up page/
