@@ -21,11 +21,13 @@ RSpec.configure do |config|
     PaperTrail.enabled = false
     PaperTrail.enabled_for_controller = false
   end
-  config.before(:each, type: :feature) do
-    PaperTrail.enabled = true
-    PaperTrail.enabled_for_controller = true
+  config.around(type: :feature) do |example|
+    with_versioning do
+      example.run
+    end
   end
 
   # Allow PaperTrail to be selectively enabled
   config.include PaperTrailMacros, paper_trail: true
+  config.include PaperTrailMacros, type: :feature
 end

@@ -3,14 +3,18 @@ module Features
     # Creates an admin and signs them into the app
     def login_admin
       password = Faker::Internet.password
-      @logged_in_user = create(:user, :admin, password: password, password_confirmation: password)
+      with_versioning do
+        @logged_in_user = create(:user, :admin, password: password, password_confirmation: password)
+      end
       sign_in_with_credentials(@logged_in_user.email, password)
     end
 
     # Creates a user and signs them into the app
     def login_user
       password = Faker::Internet.password
-      @logged_in_user = create(:user, password: password, password_confirmation: password)
+      with_versioning do
+        @logged_in_user = create(:user, password: password, password_confirmation: password)
+      end
       sign_in_with_credentials(@logged_in_user.email, password)
     end
 
