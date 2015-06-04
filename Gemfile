@@ -125,6 +125,11 @@ gem 'whenever', require: false
 
 gem 'rack-attack'
 
+# Devops
+# ==============
+
+gem 'rollbar', '~> 1.5.1'
+
 group :production do
   # Integration with heroku
   gem 'rails_12factor'
