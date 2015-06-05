@@ -211,7 +211,8 @@ class User < ActiveRecord::Base
       has_paper_trail(
         only: [
           :email,
-          :name
+          :name,
+          :confirmed_at
         ],
         ignore: [
           :current_sign_in_at,
