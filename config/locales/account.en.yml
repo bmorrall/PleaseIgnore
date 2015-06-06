@@ -22,13 +22,9 @@ en:
       title:
         account:
           create: 'Linked %{provider_name} Account #%{item_id} <%{account_uid}>'
-          create_on: 'Linked %{provider_name} Account #%{item_id} <%{account_uid}> on'
           destroy: 'Removed %{provider_name} Account #%{item_id} <%{account_uid}>'
-          destroy_on: 'Removed %{provider_name} Account #%{item_id} <%{account_uid}> on'
           restore: 'Restored %{provider_name} Account #%{item_id} <%{account_uid}>'
-          restore_on: 'Restored %{provider_name} Account #%{item_id} <%{account_uid}> on'
           update: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}>'
-          update_on: 'Updated %{provider_name} Account #%{item_id} <%{account_uid}> on'
   flash:
     users:
       accounts:

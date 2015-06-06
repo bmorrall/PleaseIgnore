@@ -15,30 +15,19 @@ en:
       title:
         profile:
           destroy: Deleted Profile
-          destroy_on: Deleted Profile on
           restore: Recovered Profile
-          restore_on: Recovered Profile on
           update: Updated Profile
-          update_on: Updated Profile on
         role:
           create: Added %{role} Role to %{user}
-          create_on: Added %{role} Role to %{user} on
           destroy: Removed %{role} Role from %{user}
-          destroy_on: Removed %{role} Role from %{user} on
           user_create: Granted %{role} Role
-          user_create_on: Granted %{role} Role on
           user_destroy: Removed %{role} Role
-          user_destroy_on: Removed %{role} Role on
         user:
           create: Created Account
-          create_on: Created Account on
           confirmed: 'Confirmed Account'
           destroy: Deleted Account
-          destroy_on: Deleted Account on
           restore: Recovered Account
-          restore_on: Recovered Account on
           update: Updated Account
-          update_on: Updated Account on
   devise:
     confirmations:
       new:
