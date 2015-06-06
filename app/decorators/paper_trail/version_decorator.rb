@@ -19,7 +19,7 @@ module PaperTrail
 
     def change_summary
       return unless display_change_summary?
-      DiffSummaryPresenter.display(h, object.changeset)
+      DiffSummaryPresenter.display(h, object.changeset, object.item_type.safe_constantize)
     end
 
     def user_location

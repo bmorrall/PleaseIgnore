@@ -9,7 +9,11 @@
   }
 
   // Remove extra margin around code blocks
-  .list-group-item pre {
+  .list-group-item .well {
     margin: ($line-height-computed / 2) 0 0;
+    padding: 10px;
+  }
+  .list-group-item table {
+    td { padding: 0 5px; }
   }
 }

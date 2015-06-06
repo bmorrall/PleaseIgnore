@@ -26,7 +26,7 @@ feature 'User Version History', type: :feature do
 
     # Then I should see the Version summary
     assert_selector '.versions-list .user-location', visible: true
-    within('pre.list-group-item-text') do
+    within('.change-summary') do
       expect(page).to have_content logged_in_user.email
       expect(page).to have_content logged_in_user.name
     end
