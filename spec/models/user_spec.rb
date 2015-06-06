@@ -463,6 +463,17 @@ describe User, type: :model do
         end
         expect(user.versions.last.event).to eq('update')
       end
+      it 'creates a update version when confirmed_at is changed' do
+        user = create :user
+        with_versioning do
+          expect do
+            user.confirm
+          end.to change(PaperTrail::Version, :count).by(1)
+        end
+        expect(user.versions.last.event).to eq('update')
+        expect(user.versions.last.changeset.size).to be 1
+        expect(user.versions.last.changeset).to have_key('confirmed_at')
+      end
       it 'ignores sensitive user data' do
         user = create :user
         with_versioning do

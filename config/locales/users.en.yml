@@ -32,6 +32,7 @@ en:
         user:
           create: Created Account
           create_on: Created Account on
+          confirmed: 'Confirmed Account'
           destroy: Deleted Account
           destroy_on: Deleted Account on
           restore: Recovered Account

@@ -15,11 +15,27 @@ module Versions
       end
     end
 
+    def display_change_summary?
+      if object.changeset.try(:keys) == %w(confirmed_at)
+        false # Don't display changeset with confirmation
+      else
+        super
+      end
+    end
+
     protected
+
+    def object_event
+      if object.changeset.try(:keys) == %w(confirmed_at)
+        'confirmed'
+      else
+        object.event
+      end
+    end
 
     def title_for_profile
       I18n.t(
-        object.event,
+        object_event,
         item_id: object.item_id,
         scope: [:decorators, :versions, :title, :profile],
         default: title_for_user
@@ -28,7 +44,7 @@ module Versions
 
     def title_for_user
       I18n.t(
-        object.event,
+        object_event,
         item_id: object.item_id,
         scope: [:decorators, :versions, :title, :user]
       )

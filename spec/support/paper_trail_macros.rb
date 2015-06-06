@@ -30,4 +30,5 @@ RSpec.configure do |config|
   # Allow PaperTrail to be selectively enabled
   config.include PaperTrailMacros, paper_trail: true
   config.include PaperTrailMacros, type: :feature
+  config.include PaperTrailMacros, type: :request
 end
