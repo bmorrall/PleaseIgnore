@@ -135,7 +135,7 @@ group :production do
   gem 'rails_12factor'
 
   # Use Passenger as the app server
-  gem 'passenger', '~> 5.0.7'
+  gem 'passenger', '~> 5.0.9'
 
   # Use Memcached as a cache
   gem 'dalli', '~> 2.7.4'
