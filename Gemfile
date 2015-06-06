@@ -40,7 +40,7 @@ gem 'simple_form', '~> 3.1.0'
 gem 'acts_as_list'
 
 # User authentication with Devise
-gem 'devise', '~> 3.4.1'
+gem 'devise', '~> 3.5.1'
 
 # Use Action Caching to save pages
 gem 'actionpack-action_caching'
@@ -107,7 +107,7 @@ gem 'active_model-errors_details'
 # Authentication
 # ==============
 
-gem 'tiddle'
+gem 'tiddle', git: 'https://github.com/bmorrall/tiddle.git', branch: 'patch-1'
 
 # Dashboard
 # ==============
