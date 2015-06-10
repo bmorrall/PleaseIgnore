@@ -55,6 +55,7 @@ en:
           linked_accounts: Linked Accounts
           profile: Profile Information
         labels:
+          email_hint: 'Confirmed on %{date}'
           delete_user: 'You can delete your account, but keep in mind this action is irreversiable.'
           password: 'New Password'
       new:
