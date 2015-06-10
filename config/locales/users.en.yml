@@ -75,3 +75,8 @@ en:
         buttons:
           forgot_password: Forgot password?
           sign_in: Sign in
+  simple_form:
+    labels:
+      user:
+        current_password: 'Current Password'
+        password_confirmation: 'Confirm Password'

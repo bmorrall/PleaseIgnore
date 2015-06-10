@@ -100,7 +100,7 @@ describe 'devise/registrations/edit.html.haml', type: :view do
           render
 
           assert_select 'form[action=?][method=?]', user_registration_path, 'post' do
-            assert_select 'label[for=?]', 'user_current_password', 'Current password'
+            assert_select 'label[for=?]', 'user_current_password', 'Current Password'
             assert_select 'input#user_current_password[name=?][placeholder=?]',
                           'user[current_password]',
                           t('simple_form.placeholders.defaults.current_password')
