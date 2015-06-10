@@ -22,6 +22,9 @@ main {
   > section {
     margin-bottom: ($line-height-computed * 2); // Instead of page header margin, add after section
   }
+  > section:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .input-group-addon .fa {

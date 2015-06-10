@@ -80,3 +80,7 @@
       = button_to registration_path(resource_name), data: { confirm: t('prompts.confirm_delete') }, method: :delete, class: 'btn btn-danger' do
         = fa 'trash-o'
         = t('.buttons.delete_user')
+
+- if resource.last_sign_in_at?
+  %p.small
+    = t('.labels.last_signed_in', date: local_time(resource.last_sign_in_at)).html_safe

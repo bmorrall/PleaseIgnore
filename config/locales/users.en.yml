@@ -57,6 +57,7 @@ en:
         labels:
           email_hint: 'Confirmed on %{date}'
           delete_user: 'You can delete your account, but keep in mind this action is irreversiable.'
+          last_signed_in: 'Last signed in: %{date}'
           password: 'New Password'
       new:
         page_title: Create Account
