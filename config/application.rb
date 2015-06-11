@@ -29,6 +29,12 @@ module PleaseIgnore
     config.generators do |g|
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
+
+      g.decorator false
+      g.decorator_specs false
+      g.helper false
+      g.helper_specs false
+      g.view_specs false
     end
 
     # Fix deprecation errors with transactional callbacks
