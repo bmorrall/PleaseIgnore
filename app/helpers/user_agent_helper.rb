@@ -3,7 +3,7 @@ module UserAgentHelper
   def ip_address_tag(string)
     return unless string
 
-    content_tag :span, title: "IP: #{string}" do
+    content_tag :span, title: "IP: #{string}", class: 'ip-address' do
       [
         fa('globe'),
         content_tag(:span, string, data: { geocode_ip: string })
@@ -15,7 +15,7 @@ module UserAgentHelper
     return unless string
 
     user_agent = UserAgent.parse(string)
-    content_tag :span, title: string do
+    content_tag :span, title: string, class: 'user-agent' do
       [
         user_agent_icon(user_agent),
         html_escape("#{user_agent.browser} #{user_agent.version} (#{user_agent.os})")
@@ -56,6 +56,8 @@ module UserAgentHelper
       'android'
     when /iOS/
       'apple'
+    when /Windows/
+      'windows'
     else
       'mobile'
     end
