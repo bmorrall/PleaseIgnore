@@ -6,11 +6,11 @@
       - else
         = l created_on, format: :long
 
-    .list-group
+    .list-group.collapse-list
       - grouped_versions.each do |unstyled_version|
         - cache [cache_uid, unstyled_version, :history_item], expires_in: 1.hour do
           - decorate_version(unstyled_version) do |version|
-            = link_to '#', class: 'list-group-item' do
+            .list-group-item
               %h4.list-group-item-heading
                 = version.title
               %p.list-group-item-text

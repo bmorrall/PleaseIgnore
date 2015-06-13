@@ -1,0 +1,6 @@
+en:
+  users:
+    authentication_tokens:
+      index:
+        page_title: Authorised Devices
+        empty_message: You currently do not have any authorised devices.

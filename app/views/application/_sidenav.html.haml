@@ -1,0 +1,23 @@
+- if user_signed_in?
+  .btn-group-vertical
+    = link_to dashboard_path, class: 'btn btn-default' do
+      = fa 'home'
+      = t('layouts.navigation.my_dashboard')
+    = link_to edit_user_registration_path, class: 'btn btn-default' do
+      = fa 'user'
+      = t('layouts.navigation.my_profile')
+    = link_to users_authentication_tokens_path, class: 'btn btn-default' do
+      = fa 'mobile'
+      = t('layouts.navigation.my_authentication_tokens')
+    - if can? :read, PaperTrail::Version
+      = link_to users_versions_path, class: 'btn btn-default' do
+        = fa 'list-ul'
+        History
+
+  - if display_external_services?
+    %h5 Services
+    .btn-group-vertical
+      - if display_sidekiq_service_link?
+        = external_link sidekiq_web_path, class: 'btn btn-default' do
+          = fa 'line-chart'
+          Sidekiq

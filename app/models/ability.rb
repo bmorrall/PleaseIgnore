@@ -13,6 +13,8 @@ class Ability
     # TODO: Basic User Abilities
     can :create, Contact
 
+    can :manage, AuthenticationToken #, user_id: user.id
+
     return if user.has_role? :banned
 
     # Restrictable Visitor Abilities

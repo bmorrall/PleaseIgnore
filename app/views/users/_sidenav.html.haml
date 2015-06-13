@@ -8,6 +8,9 @@
   = link_to users_password_index_path, class: 'btn btn-default' do
     = fa 'key'
     = t('layouts.navigation.my_password')
+  = link_to users_authentication_tokens_path, class: 'btn btn-default' do
+    = fa 'mobile'
+    = t('layouts.navigation.my_authentication_tokens')
   = link_to users_history_path, class: 'btn btn-default' do
     = fa 'list-ul'
     = t('layouts.navigation.my_history')

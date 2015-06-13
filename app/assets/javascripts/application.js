@@ -40,4 +40,4 @@
 //= require main
 //= require forms
 //= require users
-//= require versions
+//= require collapse_list

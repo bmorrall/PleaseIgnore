@@ -55,7 +55,7 @@ class DiffSummaryPresenter
   end
 
   def attribute_name_table_cell(attribute)
-    h.content_tag(:th, attribute_name(attribute))
+    h.content_tag(:th, attribute_name(attribute) + ':')
   end
 
   def attribute_value_table_cell(value)

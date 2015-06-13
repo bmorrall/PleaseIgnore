@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
     resource :history, only: [:show]
     resources :password, only: [:index]
+    resources :authentication_tokens, only: [:index, :destroy]
     resources :versions, only: [:index]
   end
 

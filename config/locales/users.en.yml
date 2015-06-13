@@ -79,6 +79,12 @@ en:
         buttons:
           forgot_password: Forgot password?
           sign_in: Sign in
+  flash:
+    users:
+      authentication_tokens:
+        destroy:
+          notice: Successfully removed your authentication token.
+          warning: Your authentication token has already been unlinked.
   simple_form:
     labels:
       user:

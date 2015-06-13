@@ -1,0 +1,40 @@
+- content_for(:page_title) { t('.page_title') }
+- content_for(:sidenav) { render 'users/sidenav', user: current_user }
+
+%section.authentication-tokens-list
+  %h3.page-header
+    = t('.page_title')
+
+%p
+  This page lists all of your mobile devices that have signed into your account.
+
+- if @authentication_tokens.empty?
+  .text-center
+    %p.text-muted
+      %em
+        = t('.empty_message')
+      %br
+      = fa 'mobile'
+- else
+  .list-group.collapse-list
+    - @authentication_tokens.each do |token|
+      = content_tag :div, class: 'list-group-item' do
+        %h4.list-group-item-heading
+          = token.user_agent
+        %p.list-group-item-text
+          - if token.last_used_at?
+            = "Last used: "
+            = local_time_ago token.last_used_at
+          /#= version.whodunnit_ago
+        .collapse
+          %p.list-group-item-text
+            %small.user-location
+              = ip_address_tag(token.ip_address)
+              %br
+              = user_agent_tag(token.user_agent)
+          = link_to 'Revoke',
+                    users_authentication_token_path(token),
+                    class: 'btn btn-warning btn-sm list-group-item-text change-summary',
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' },
+                    style: 'width: 100%; margin-top: 10px'

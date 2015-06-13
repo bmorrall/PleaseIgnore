@@ -1,5 +1,14 @@
 // Overrides to fix issues with Flatly Theme
 
+// Components
+// -------------------------
+
+table, .table {
+  a.btn {
+    text-decoration: none;
+  }
+}
+
 // Scaffolding
 // -------------------------
 
