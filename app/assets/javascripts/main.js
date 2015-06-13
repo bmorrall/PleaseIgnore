@@ -32,6 +32,9 @@
     // Refresh CSRF Tokens
     $.rails.refreshCSRFTokens();
 
+    // Geocode IP Addresses
+    new GeoIP().updateGeocodedTags()
+
     // Users
     PleaseIgnore.Users.initSortableAccounts();
 

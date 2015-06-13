@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "animate.css": "3.3.0",
+    "js-cookie": "1.5.1",
     "font-awesome": "4.3.0",
     "html5sortable": "git+https://github.com/farhadi/html5sortable.git",
     "jquery-throttle-debounce": "git+https://github.com/cowboy/jquery-throttle-debounce.git",

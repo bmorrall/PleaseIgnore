@@ -18,8 +18,10 @@
 //= require bootstrap/collapse
 //= require bootstrap/dropdown
 //= require bootstrap/transition
+//= require geoip
 //= require google_analytics
 //= require html5sortable/jquery.sortable
+//= require js-cookie
 //= require spin.js/spin
 //= require ladda/dist/ladda.min
 //= require local_time

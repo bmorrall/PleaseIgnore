@@ -3,10 +3,10 @@ module UserAgentHelper
   def ip_address_tag(string)
     return unless string
 
-    content_tag :span do
+    content_tag :span, title: "IP: #{string}" do
       [
         fa('globe'),
-        html_escape(string)
+        content_tag(:span, string, data: { geocode_ip: string })
       ].join.html_safe
     end
   end
