@@ -71,7 +71,10 @@ module PaperTrail
     end
 
     def user_location_as_ip
-      "IP: #{object.ip} (#{object.user_agent})"
+      [
+        h.user_agent_tag(object.user_agent),
+        h.ip_address_tag(object.ip)
+      ].reject(&:nil?).join(h.tag(:br)).html_safe
     end
 
     def whodunnit_as_command

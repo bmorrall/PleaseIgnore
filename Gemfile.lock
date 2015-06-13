@@ -438,6 +438,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    useragent (0.13.3)
     warden (1.2.3)
       rack (>= 1.0)
     whenever (0.9.4)
@@ -521,5 +522,6 @@ DEPENDENCIES
   turboboost!
   turbolinks (~> 2.5.3)
   uglifier (>= 1.3.0)
+  useragent
   whenever
   yardstick

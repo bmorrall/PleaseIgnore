@@ -115,6 +115,12 @@ gem 'tiddle', git: 'https://github.com/bmorrall/tiddle.git', branch: 'patch-1'
 gem 'cells', '~> 3.11.3'
 gem 'cells-dashboard'
 
+# Helpers
+# ==============
+
+# Allows for User Agent string to be interrogated
+gem 'useragent'
+
 # Cron
 # ==============
 
