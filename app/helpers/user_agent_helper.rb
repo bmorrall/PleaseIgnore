@@ -28,7 +28,7 @@ module UserAgentHelper
       if user_agent.bot?
         'bug'
       elsif user_agent.mobile?
-        mobule_user_agent_icon_image(user_agent)
+        mobile_user_agent_icon_image(user_agent)
       else
         desktop_user_agent_icon_image(user_agent)
       end
