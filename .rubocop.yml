@@ -23,7 +23,9 @@ Metrics/ClassLength:
 Metrics/LineLength:
   Max: 100
   Exclude:
+    - 'features/**/*.rb'
     - 'lib/tasks/cucumber.rake'
+    - 'spec/**/*.rb'
 
 Style/Documentation:
   Exclude:
