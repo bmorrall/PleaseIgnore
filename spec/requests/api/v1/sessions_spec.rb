@@ -20,9 +20,12 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
           post api_v1_session_path, user: { email: user.email, password: user.password }
           expect(response).to be_success
 
-          authentication_token = user.authentication_tokens.first.body
           json_response = JSON.parse(response.body, symbolize_names: true)
-          expect(json_response).to eq(authentication_token: authentication_token)
+          expect(json_response.keys).to eq([:authentication_token])
+
+          token = json_response[:authentication_token]
+          authentication_token = Tiddle::TokenIssuer.build.find_token(user, token)
+          expect(authentication_token).to be_kind_of(AuthenticationToken)
         end
       end
 
@@ -83,10 +86,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
   describe 'DELETE #destroy' do
     context 'as a signed in user' do
       let(:user) { create :user }
-      let(:authentication_token) { Devise.friendly_token }
-      before(:each) do
-        create(:authentication_token, user: user, body: authentication_token)
-      end
+      let!(:authentication_token) { Tiddle.create_and_return_token(user, FakeRequest.new) }
 
       context 'with a successful request' do
         it 'deletes the AuthenticationToken from the user' do

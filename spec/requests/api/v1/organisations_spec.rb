@@ -8,10 +8,7 @@ RSpec.describe 'Api::V1::Organisations', type: :request do
   describe 'GET index' do
     context 'as a signed in user' do
       let(:user) { create :user }
-      let(:authentication_token) { Devise.friendly_token }
-      before(:each) do
-        create(:authentication_token, user: user, body: authentication_token)
-      end
+      let!(:authentication_token) { Tiddle.create_and_return_token(user, FakeRequest.new) }
 
       context 'with a an organisation' do
         let(:organisation) { create(:organisation) }
@@ -36,10 +33,7 @@ RSpec.describe 'Api::V1::Organisations', type: :request do
   describe 'GET show' do
     context 'as a signed in user' do
       let(:user) { create :user }
-      let(:authentication_token) { Devise.friendly_token }
-      before(:each) do
-        create(:authentication_token, user: user, body: authentication_token)
-      end
+      let!(:authentication_token) { Tiddle.create_and_return_token(user, FakeRequest.new) }
 
       context 'with a an organisation' do
         let(:organisation) { create(:organisation) }

@@ -107,7 +107,7 @@ gem 'active_model-errors_details'
 # Authentication
 # ==============
 
-gem 'tiddle', git: 'https://github.com/bmorrall/tiddle.git', branch: 'patch-1'
+gem 'tiddle'
 
 # Dashboard
 # ==============

@@ -22,9 +22,12 @@ RSpec.describe 'Api::V1::Registrations', type: :request do
           post api_v1_registration_path, user: valid_user_attributes
           expect(response).to be_success
 
-          authentication_token = AuthenticationToken.first.body
           json_response = JSON.parse(response.body, symbolize_names: true)
-          expect(json_response).to eq(authentication_token: authentication_token)
+          expect(json_response.keys).to eq([:authentication_token])
+
+          token = json_response[:authentication_token]
+          authentication_token = Tiddle::TokenIssuer.build.find_token(User.last, token)
+          expect(authentication_token).to be_kind_of(AuthenticationToken)
         end
       end
 
