@@ -9,9 +9,8 @@ GIT
       turbolinks
 
 GIT
-  remote: https://github.com/bmorrall/useragent.git
-  revision: 0a01e8eb6b52771c60e5b5dad195d2a3e3b27d20
-  branch: fix_ios_detection
+  remote: https://github.com/gshutler/useragent.git
+  revision: c8056c805e8c2a098fb7c26a5d59cf1d66ba5f27
   specs:
     useragent (0.13.3)
 

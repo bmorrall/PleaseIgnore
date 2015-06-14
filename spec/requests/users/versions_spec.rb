@@ -130,9 +130,9 @@ describe 'Users/Versions', type: :request do
           context 'with a Chrome OS 30 User Agent String' do
             let(:user_agent) { 'Mozilla/5.0 (X11; CrOS armv7l 4537.56.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.38 Safari/537.36' }
 
-            xit 'should render the parsed user agent' do
+            it 'should render the parsed user agent' do
               get users_versions_path
-              assert_select '.user-agent', text: 'Chrome 30.0.1599.38 (Chrome OS 4537.56.0)'
+              assert_select '.user-agent', text: 'Chrome 30.0.1599.38 (ChromeOS 4537.56.0)'
               assert_select '.user-agent .fa-desktop'
             end
           end
