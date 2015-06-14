@@ -100,7 +100,7 @@ describe 'Users/Versions', type: :request do
           context 'with a iPhone iOS 4.0 User Agent String' do
             let(:user_agent) { 'Mozilla/5.0 (iPhone; U; ru; CPU iPhone OS 4_2_1 like Mac OS X; ru) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148a Safari/6533.18.5' }
 
-            xit 'should render the parsed user agent' do
+            it 'should render the parsed user agent' do
               get users_versions_path
               assert_select '.user-agent', text: 'Safari 5.0.2 (iOS 4.2.1)'
               assert_select '.user-agent .fa-apple'
@@ -110,7 +110,7 @@ describe 'Users/Versions', type: :request do
           context 'with an iPhone iOS 8.0 User Agent String' do
             let(:user_agent) { 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/8.0 Mobile/11A465 Safari/9537.53' }
 
-            xit 'should render the parsed user agent' do
+            it 'should render the parsed user agent' do
               get users_versions_path
               assert_select '.user-agent', text: 'Safari 8.0 (iOS 8.0)'
               assert_select '.user-agent .fa-apple'
@@ -120,9 +120,9 @@ describe 'Users/Versions', type: :request do
           context 'with an iPod Touch iOS 7.0.6 User Agent String' do
             let(:user_agent) { 'Mozilla/5.0 (iPod touch; CPU iPhone OS 7_0_6 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11B651 Safari/9537.53' }
 
-            xit 'should render the parsed user agent' do
+            it 'should render the parsed user agent' do
               get users_versions_path
-              assert_select '.user-agent', text: 'Safari 7.0.6 (iOS 7.0.6)'
+              assert_select '.user-agent', text: 'Safari 7.0 (iOS 7.0.6)'
               assert_select '.user-agent .fa-apple'
             end
           end
