@@ -8,12 +8,6 @@ GIT
       railties
       turbolinks
 
-GIT
-  remote: https://github.com/gshutler/useragent.git
-  revision: c8056c805e8c2a098fb7c26a5d59cf1d66ba5f27
-  specs:
-    useragent (0.13.3)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -438,6 +432,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    useragent (0.14.0)
     warden (1.2.3)
       rack (>= 1.0)
     whenever (0.9.4)
@@ -521,6 +516,6 @@ DEPENDENCIES
   turboboost!
   turbolinks (~> 2.5.3)
   uglifier (>= 1.3.0)
-  useragent!
+  useragent
   whenever
   yardstick

@@ -119,7 +119,7 @@ gem 'cells-dashboard'
 # ==============
 
 # Allows for User Agent string to be interrogated
-gem 'useragent', git: 'https://github.com/gshutler/useragent.git'
+gem 'useragent'
 
 # Cron
 # ==============

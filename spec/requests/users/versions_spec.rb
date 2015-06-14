@@ -70,9 +70,9 @@ describe 'Users/Versions', type: :request do
           context 'with a Android Webkit User Agent String' do
             let(:user_agent) { 'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30' }
 
-            xit 'should render the parsed user agent' do
+            it 'should render the parsed user agent' do
               get users_versions_path
-              assert_select '.user-agent', text: 'Browser 4.0 (Android 4.0.3)'
+              assert_select '.user-agent', text: 'Android 4.0 (Android 4.0.3)'
               assert_select '.user-agent .fa-android'
             end
           end
