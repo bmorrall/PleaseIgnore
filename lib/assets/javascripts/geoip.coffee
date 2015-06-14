@@ -18,7 +18,7 @@
         # Wait for other callbacks to finish
       else
         # Load GeoIP Data from freegeoip.net
-        url = "http://freegeoip.net/json/#{ip_address}"
+        url = "https://freegeoip.net/json/#{ip_address}"
         $.get url, {}, ((data, textStatus, jqXHR) =>
           @setGeoIPData(ip_address, {
             city: data.city,
