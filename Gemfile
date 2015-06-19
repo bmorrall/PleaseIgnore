@@ -26,7 +26,7 @@ gem 'jquery-rails-cdn'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '~> 2.5.3'
-gem 'turboboost', git: 'https://github.com/bmorrall/turboboost.git'
+gem 'turboboost', git: 'https://github.com/waymondo/turboboost.git'
 
 # Use Twitter Bootstrap for base stylesheet
 gem 'bootstrap-sass'
