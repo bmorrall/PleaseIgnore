@@ -11,7 +11,7 @@ PleaseIgnore README
 Rails version
 -------------
 
-PleaseIgnore currently runs on `Rails 4.2.1`.
+PleaseIgnore currently runs on `Rails 4.2.2`.
 
 Ruby version
 ------------
