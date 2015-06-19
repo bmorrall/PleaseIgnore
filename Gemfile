@@ -89,7 +89,7 @@ gem 'rolify'
 
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
-gem 'sidekiq', '~> 3.3.4'
+gem 'sidekiq', '~> 3.4.0'
 
 # Send Devise mail through Sidekiq
 gem 'devise-async'
