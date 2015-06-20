@@ -31,6 +31,10 @@ Metrics/LineLength:
     - 'spec/services/gravatar_spec.rb'
     - 'spec/views/users/versions/index.html.haml_spec.rb'
 
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/security/csp_ruleset_builder.rb'
+
 Style/Documentation:
   Exclude:
     - 'spec/**/*'

@@ -1,3 +1,5 @@
+require 'security/csp_ruleset_builder'
+
 ::SecureHeaders::Configuration.default do |config|
   # Generic Secure Header Protection
   config.hsts = ::Settings.ssl_enabled? && { max_age: 20.years.to_i, include_subdomains: true }
@@ -8,7 +10,7 @@
   config.x_permitted_cross_domain_policies = 'none'
 
   # Content Security Policy Headers
-  config.csp = false
+  config.csp = Security::CspRulesetBuilder.build(settings: ::Settings.instance)
 
   # HTTP Public Key Pinning
   if ::Settings.hpkp_security_enabled?

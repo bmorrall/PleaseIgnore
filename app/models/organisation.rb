@@ -26,6 +26,7 @@ class Organisation < ActiveRecord::Base
     dashboard
     organisations
     privacy
+    security
     sidekiq
     terms
     users

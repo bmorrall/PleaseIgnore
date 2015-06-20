@@ -72,6 +72,7 @@ RSpec.describe Organisation, type: :model do
     it { should_not allow_value('dashboard').for(:permalink) }
     it { should_not allow_value('organisations').for(:permalink) }
     it { should_not allow_value('privacy').for(:permalink) }
+    it { should_not allow_value('security').for(:permalink) }
     it { should_not allow_value('sidekiq').for(:permalink) }
     it { should_not allow_value('terms').for(:permalink) }
     it { should_not allow_value('users').for(:permalink) }

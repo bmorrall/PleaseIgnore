@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   # Security Actions
   namespace :security do
+    resource :csp_report, only: :create
     resource :hpkp_report, only: :create
   end
 

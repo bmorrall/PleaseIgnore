@@ -8,11 +8,28 @@ module Security
 
     add_template_helper(ApplicationHelper)
 
-    # Subject can be set in your I18n file at config/locales/en.yml
-    # with the following lookup:
+    # Sends a email notifing security that a CSP Violation has occured
     #
-    #   en.security.report_mailer.hpkp_report.subject
+    # Subject can be set with the following lookup: en.security.report_mailer.csp_report.subject
     #
+    # @api public
+    # @example Security::ReportMailer.csp_report({...}).deliver_now
+    # @param csp_report [Hash] a JSON parseable payload
+    # @return [ActionMailer::MessageDelivery]
+    def csp_report(csp_report)
+      @csp_report = csp_report
+
+      mail
+    end
+
+    # Sends a email notifing security that a HPKP Violation has occured
+    #
+    # Subject can be set with the following lookup: en.security.report_mailer.hpkp_report.subject
+    #
+    # @api public
+    # @example Security::ReportMailer.hpkp_report({...}).deliver_now
+    # @param csp_report [Hash] a JSON parseable payload
+    # @return [ActionMailer::MessageDelivery]
     def hpkp_report(hpkp_report)
       @hpkp_report = hpkp_report
 

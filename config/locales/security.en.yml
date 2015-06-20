@@ -1,5 +1,7 @@
 en:
   security:
     report_mailer:
+      csp_report:
+        subject: Content Security Policy Violation!
       hpkp_report:
         subject: HTTP Public Key Pins Violation!

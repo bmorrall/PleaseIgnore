@@ -60,6 +60,11 @@ module Rack
       req.params['user'].try(:[], 'email').presence if SIGN_IN_URLS.include?(req.path) && req.post?
     end
 
+    # Prevent the csp report from being flooded
+    throttle('security/csp_report', limit: 5, period: 5.minutes) do |req|
+      req.ip if req.path.starts_with?('/security/csp_report')
+    end
+
     # Prevent the hpkp report from being flooded
     throttle('security/hpkp_report', limit: 5, period: 5.minutes) do |req|
       req.ip if req.path.starts_with?('/security/hpkp_report')

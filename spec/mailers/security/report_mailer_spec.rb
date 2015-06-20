@@ -1,6 +1,32 @@
 require 'rails_helper'
 
 RSpec.describe Security::ReportMailer, type: :mailer do
+  describe 'csp_report' do
+    let(:csp_report) do
+      policy = "default-src 'none'; style-src cdn.example.com; report-uri /security/csp_report"
+      {
+        "csp-report": {
+          "document-uri": 'http://example.com/signup.html',
+          "referrer": '',
+          "blocked-uri": 'http://example.com/css/style.css',
+          "violated-directive": 'style-src cdn.example.com',
+          "original-policy": policy
+        }
+      }
+    end
+    let(:mail) { described_class.csp_report(csp_report) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq t('security.report_mailer.csp_report.subject')
+      expect(mail.to).to eq(['security@pleaseignore.com'])
+      expect(mail.from).to eq(['security@pleaseignore.com'])
+    end
+
+    it 'renders the csp report as pretty JSON' do
+      expect(mail.body.encoded).to match(JSON.pretty_generate(csp_report).gsub("\n", "\r\n"))
+    end
+  end
+
   describe 'hpkp_report' do
     let(:hpkp_report) do
       {
