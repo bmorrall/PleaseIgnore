@@ -22,6 +22,11 @@ Rails.application.routes.draw do
     get :thank_you
   end
 
+  # Security Actions
+  namespace :security do
+    resource :hpkp_report, only: :create
+  end
+
   # Utility Methods
   namespace :utils do
     get 'safe_permalink', to: 'safe_permalink#create'

@@ -1,0 +1,5 @@
+en:
+  security:
+    hpkp_report_mailer:
+      support_email:
+        subject: HTTP Public Key Pins Violation!
