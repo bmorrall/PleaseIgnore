@@ -25,6 +25,7 @@ module Users
 
     Account::PROVIDERS.each do |provider|
       # GET /users/#[provider]/callback
+      # @!method $1()
       define_method provider do
         if user_signed_in?
           # Attempt to link account to current user
@@ -50,6 +51,8 @@ module Users
     private
 
     # Auth Hash provided by Omniauth
+    # @api private
+    # @return [Hash] Omniauth Hash with Account Credentials
     def auth_hash
       @auth_hash ||= request.env['omniauth.auth']
     end
@@ -57,6 +60,8 @@ module Users
     # Displays success flash message
     # @param provider [String] changes variant of notice flash message
     # @param message [String] message to display to the user
+    # @api private
+    # @return void
     def display_success_flash_message(provider, message)
       return unless is_navigational_format?
 
@@ -65,6 +70,8 @@ module Users
     end
 
     # Displays a failure message when linking to an account
+    # @api private
+    # @return void
     def handle_link_account_error(account_error)
       return unless is_navigational_format?
 
@@ -76,6 +83,9 @@ module Users
     end
 
     # Displays a failure message when authenticating with an account
+    # and redirects the user to the login form
+    # @api private
+    # @return void
     def handle_account_authentication_error(account_error)
       return unless is_navigational_format?
 
@@ -88,6 +98,8 @@ module Users
 
     # Store the auth_hash for registration
     # @param provider [String] name of the provider to store session for
+    # @api private
+    # @return void
     def save_auth_hash_to_session(provider)
       # Save the auth hash without raw info
       session["devise.#{provider}_data"] = auth_hash.reject { |key| key.to_sym == :raw_info }

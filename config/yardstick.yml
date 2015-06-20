@@ -1,43 +1,10 @@
 ---
-path: ['app/**/*.rb', 'features/**/*.rb', 'lib/**/*.rb', 'spec/**/*.rb']
+path:
+  - 'app/**/*.rb'
+  - 'features/**/*.rb'
+  - 'lib/**/*.rb'
 require_exact_threshold: false
-threshold: 65
+threshold: 71
 rules:
-  ApiTag::Presence:
-    enabled: true
-    exclude: &controller_actions
-      - 'ContactsController#show'
-      - 'ContactsController#create'
-      - 'ContactsController#thank_you'
-      - 'Users::AccountsController#destroy'
-      - 'Users::AccountsController#sort'
-      - 'Users::OmniauthCallbacksController#developer'
-      - 'Users::RegistrationsController#update'
-  ApiTag::Inclusion:
-    enabled: true
-    exclude: *controller_actions
-  ApiTag::ProtectedMethod:
-    enabled: true
-    exclude: []
-  ApiTag::PrivateMethod:
-    enabled: false
-    exclude: []
   ExampleTag:
     enabled: false
-    exclude: *controller_actions
-  ReturnTag:
-    enabled: true
-    exclude: *controller_actions
-  Summary::Presence:
-    enabled: true
-    exclude: []
-  Summary::Length:
-    enabled: true
-    exclude: []
-  Summary::Delimiter:
-    enabled: true
-    exclude: []
-  Summary::SingleLine:
-    enabled: true
-    exclude: []
-

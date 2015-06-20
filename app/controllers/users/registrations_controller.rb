@@ -16,13 +16,14 @@ module Users
     helper_method :display_profile?
     helper_method :display_password_change?
 
-    # PUT /users
-    #
     # Attempts to save the Password or the Profile for the `current_user`.
     #
     # Keeps the User signed in upon a successful update.
     #
     # Renders the edit form for any errors.
+    # @api public
+    # @example PUT /users
+    # @return void
     def update
       @user = User.find(current_user.id)
 
@@ -41,6 +42,10 @@ module Users
     # Filters
 
     # Checks that the user can destroy their own account
+    #
+    # @raise [CanCan::AccessDenied] if the current user cannot be destroyed
+    # @api private
+    # @return void
     def ensure_destroy_permission!
       authorize! :destroy, current_user
     end
@@ -48,16 +53,22 @@ module Users
     # Helpers
 
     # Params for updating a user profile
+    # @api private
+    # @return [Hash] Santitized Params for updating a User
     def account_update_params
       devise_parameter_sanitizer.sanitize(:account_update)
     end
 
     # Returns layout backend layout except for profile page
+    # @api private
+    # @return [String] Layout for rendering the current action
     def registrations_layout
       %w(edit update).include?(params[:action]) ? 'dashboard_backend' : 'backend'
     end
 
     # Updates Account or Changes Password depending on params
+    # @api private
+    # @return [Boolean] success if the current_user is updated
     def save_account_or_password
       if needs_password_param?(@user, account_update_params)
         @success_message = :updated_password
@@ -69,19 +80,21 @@ module Users
       end
     end
 
-    # Returns true if new password param is included
-    def needs_password_param?(_user, params)
-      params.key? :password
-    end
-
     concerning :DeviseOverrides do
       protected
 
       # [Devise] Redirect Users back to the profile page after updates
       #
       # @param _resource [User] resource requiring redirect
+      # @return [String] path to redirect the user to after a successful update
       def after_update_path_for(_resource)
         edit_user_registration_path
+      end
+
+      # [Devise] Returns true if new password param is included
+      # @return [Boolean] true if the passwords param is required
+      def needs_password_param?(_user, params)
+        params.key? :password
       end
     end
 

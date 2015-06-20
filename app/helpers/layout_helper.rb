@@ -23,9 +23,9 @@ module LayoutHelper
 
   # Header
 
-  # returns active class if navigation item is a link to the current page.
+  # Returns active class if navigation item is a link to the current page.
   #
-  # @param path [String] Path of Navigation Item
+  # @param paths [String, Array] Paths where Navigation Item should be active
   #
   def header_nav_class(*paths)
     paths.any? { |path| current_page?(path) } ? 'active' : nil

@@ -8,7 +8,9 @@ module Users
                                 through: :current_user,
                                 through_association: :related_versions
 
-    # GET /users/versions
+    # @api public
+    # @example GET /users/versions
+    # @return void
     def index
       @versions = @versions.reorder('created_at DESC')
     end

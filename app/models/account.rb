@@ -25,6 +25,10 @@
 #  index_accounts_on_deleted_at  (deleted_at)
 #  index_accounts_on_user_id     (user_id)
 #
+
+# Represents an Omniauth connected Account belonging to a {User}
+# @abstract Subclass and override {#account_uid} and {#provider} to implement
+#   a custom Account class.
 class Account < ActiveRecord::Base
   # All available account provider types
   PROVIDERS = %w(facebook twitter github google_oauth2 developer).freeze

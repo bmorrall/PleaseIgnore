@@ -9,7 +9,13 @@ class DashboardsController < ApplicationController
   # Don't check for permissions
   skip_authorization_check
 
-  # GET /dashboard
+  # Displays a Dashboard for the current User.
+  #
+  # Should act as the starting point for a user to begin their intended tasks.
+  #
+  # @api public
+  # @example GET /dashboard
+  # @return void
   def show
     # show.html.erb
   end

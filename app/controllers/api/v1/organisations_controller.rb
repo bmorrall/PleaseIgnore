@@ -9,18 +9,30 @@ module Api
                                   parent: false,
                                   find_by: :permalink
 
-      # GET /api/v1/organisations
+      # Returns a JSON representation of all Organisations the current user belongs to
+      #
+      # @api public
+      # @example GET /api/v1/organisations
+      # @return void
       def index
         # index.json.jbuilder
       end
 
-      # GET /api/v1/organisation/:id
+      # Returns a JSON representation of an Organisation
+      #
+      # @api public
+      # @example GET /api/v1/organisation/:id
+      # @raise [CanCan::AccessDenied] if the current user does not belong to the Organisation
+      # @return void
       def show
         # show.json.jbuilder
       end
 
       private
 
+      # Loads all Organisations the current user belongs to and assigns them to @organisations
+      # @api private
+      # @return void
       def load_organisation
         @organisations = current_user.organisations
       end

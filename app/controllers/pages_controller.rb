@@ -22,6 +22,9 @@ class PagesController < ApplicationController
   protected
 
   # Adds Metadata based on the current page
+  #
+  # @api private
+  # @return void
   def set_page_metadata
     params[:id].tap do |page|
       if %w(home privacy styles terms).include? page
@@ -33,6 +36,9 @@ class PagesController < ApplicationController
     end
   end
 
+  # @api private
+  # @return [String] the layout for the page, backend for privacy and terms,
+  #   otherwise frontend layout is used
   def layout_for_page
     case params[:id]
     when /terms|privacy/
