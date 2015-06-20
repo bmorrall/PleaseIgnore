@@ -129,7 +129,8 @@ class User < ActiveRecord::Base
   end
 
   concerning :DeviseOverrides do
-    # Checks if the password has not be set to the user, or the password was previous not set
+    # [Devise] Checks if the password has not be set to the user,
+    # or the password was previous not set
     def no_login_password?
       encrypted_password.blank? || (
         # Password is being added
@@ -137,12 +138,12 @@ class User < ActiveRecord::Base
       )
     end
 
-    # Allow users to continue using the app without confirming their email addresses
+    # [Devise] Allow users to continue using the app without confirming their email addresses
     def confirmation_required?
       false
     end
 
-    # Checks whether a password is needed or not. For validations only.
+    # [Devise] Checks whether a password is needed or not. For validations only.
     # Passwords are always required if it's a new record, or if the password
     # or confirmation are being set somewhere.
     def password_required?

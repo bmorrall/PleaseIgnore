@@ -1,4 +1,4 @@
-= simple_form_for(@organisation,
+= simple_form_for(organisation,
                   turboboost: true,
                   html: { role: 'form', class: 'form-horizontal' },
                   wrapper: :horizontal_bootstrap_wide,
@@ -7,11 +7,11 @@
 
   .form-inputs
     = f.input :name, input_html: { data: { placeholder_path: utils_safe_permalink_path, placeholder_target: 'organisation_permalink' } }
-    = f.input :permalink, disabled: @organisation.persisted?
+    = f.input :permalink, disabled: organisation.persisted?
 
   .form-group
     .col-sm-offset-2.col-sm-8
-      - if @organisation.persisted?
+      - if organisation.persisted?
         %button.btn.btn-primary(type='submit')
           = fa 'sitemap'
           Update Organisation
