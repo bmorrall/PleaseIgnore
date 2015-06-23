@@ -34,7 +34,7 @@ describe 'Pages', type: :request do
     end
   end
 
-  describe 'GET /home' do
+  describe 'GET /doc/home' do
     context 'as a visitor' do
       it 'redirects to the root_url' do
         get page_path('home')
@@ -46,7 +46,7 @@ describe 'Pages', type: :request do
   end
 
   %w(styles privacy terms).each do |page|
-    describe "GET /#{page}" do
+    describe "GET /doc/#{page}" do
       context 'as a visitor' do
         it "renders the #{page} page" do
           get page_path(page)

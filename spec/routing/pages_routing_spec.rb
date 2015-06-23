@@ -7,8 +7,8 @@ describe PagesController, type: :routing do
     end
 
     %w(styles privacy terms).each do |page|
-      it "routes /#{page} to #show" do
-        expect(get("/#{page}")).to route_to('pages#show', id: page)
+      it "routes /docs/#{page} to #show" do
+        expect(get("/docs/#{page}")).to route_to('pages#show', id: page)
       end
     end
   end

@@ -22,16 +22,16 @@ describe ContactsController, type: :controller do
       end
       context 'with a request containg a HTTP_REFERER header' do
         before(:each) do
-          request.headers['HTTP_REFERER'] = 'http://pleaseignore.com/terms'
+          request.headers['HTTP_REFERER'] = 'http://pleaseignore.com/docs/terms'
           get :show
         end
         it 'should set the contact referrer' do
           contact = assigns(:contact)
-          expect(contact.referer).to eq('http://pleaseignore.com/terms')
+          expect(contact.referer).to eq('http://pleaseignore.com/docs/terms')
         end
         it do
           is_expected.to set_flash.now[:info].to(
-            t('flash.contacts.show.info', referer: 'http://pleaseignore.com/terms')
+            t('flash.contacts.show.info', referer: 'http://pleaseignore.com/docs/terms')
           )
         end
       end

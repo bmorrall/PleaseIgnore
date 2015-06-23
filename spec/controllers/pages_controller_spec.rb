@@ -5,7 +5,7 @@ describe PagesController, type: :controller do
     context 'as a visitor' do
       # Frontend Pages
       %w(home styles).each do |page|
-        context "with GET to /#{page}" do
+        context "with GET to /docs/#{page}" do
           before(:each) { get :show, id: page }
           it { is_expected.to render_template(page) }
           it { is_expected.to render_with_layout('frontend_static') }
@@ -20,7 +20,7 @@ describe PagesController, type: :controller do
 
       # Documentation
       %w(privacy terms).each do |page|
-        context "with GET to /#{page}" do
+        context "with GET to /docs/#{page}" do
           before(:each) { get :show, id: page }
           it { is_expected.to render_template(page) }
           it { is_expected.to render_with_layout('backend_static') }

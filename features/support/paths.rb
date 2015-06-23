@@ -38,10 +38,10 @@ module NavigationHelpers
         '/users/edit'
 
       when /the privacy policy page/
-        '/privacy'
+        '/docs/privacy'
 
       when /the terms of service page/
-        '/terms'
+        '/docs/terms'
 
       # Add more mappings here.
       # Here is an example that pulls values out of the Regexp:

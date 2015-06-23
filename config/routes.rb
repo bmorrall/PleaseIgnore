@@ -51,8 +51,8 @@ Rails.application.routes.draw do
   end
 
   # HighVoltage Pages
-  get '/home', to: redirect('/')
-  get '/*id' => 'pages#show', as: :page, format: false
+  get '/docs/home', to: redirect('/')
+  get '/docs/*id' => 'pages#show', as: :page, format: false
   root to: 'pages#show', id: 'home'
 
   # The priority is based upon order of creation: first created -> highest priority.
