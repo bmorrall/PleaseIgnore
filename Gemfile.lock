@@ -211,6 +211,11 @@ GEM
       addressable (~> 2.3)
     local_time (1.0.2)
       coffee-rails
+    lograge (0.3.3)
+      actionpack (>= 3)
+      activesupport (>= 3)
+      railties (>= 3)
+    logstash-event (1.2.02)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -481,6 +486,8 @@ DEPENDENCIES
   jquery-rails
   jquery-rails-cdn
   local_time
+  lograge
+  logstash-event
   non-stupid-digest-assets
   omniauth-facebook
   omniauth-github

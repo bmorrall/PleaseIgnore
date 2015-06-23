@@ -4,6 +4,8 @@
 # - Filters extra params for Devise (name)
 #
 class ApplicationController < ActionController::Base
+  include Concerns::LogrageExtensions
+
   # Add common responders to Application
   self.responder = ApplicationResponder
 

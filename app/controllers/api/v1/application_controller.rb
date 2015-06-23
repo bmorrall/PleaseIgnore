@@ -2,6 +2,8 @@ module Api
   module V1
     # Base Controller class for Api::V1 Controllers
     class ApplicationController < ::ActionController::Base
+      include Concerns::LogrageExtensions
+
       # Prevent CSRF attacks by clearning the session..
       protect_from_forgery with: :null_session
 

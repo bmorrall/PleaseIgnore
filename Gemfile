@@ -135,6 +135,10 @@ gem 'secure_headers', '~> 2.1.0'
 # Devops
 # ==============
 
+# Reduces noise from Rails logger
+gem 'lograge'
+gem 'logstash-event'
+
 gem 'rollbar', '~> 1.5.1'
 
 group :production do
