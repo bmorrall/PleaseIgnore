@@ -68,7 +68,6 @@ describe Account, type: :model do
 end
 
 describe Accounts::Github, type: :model do
-
   describe 'validations' do
     it { is_expected.to allow_value('Accounts::Github').for(:type) }
   end

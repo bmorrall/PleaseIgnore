@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Contact, type: :model do
-
   describe 'Validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:email) }
@@ -27,5 +26,4 @@ describe Contact, type: :model do
       expect(subject.attributes[:referer]).to eq('http://pleaseignore.com')
     end
   end
-
 end

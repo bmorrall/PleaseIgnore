@@ -6,7 +6,6 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
-
       protected
 
       # Sets the page title

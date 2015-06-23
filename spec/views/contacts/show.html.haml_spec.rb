@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'contacts/show.html.haml', type: :view do
-
   context 'with a new Contact' do
     let(:contact) { Contact.new }
     before(:each) { assign(:contact, contact) }
@@ -63,5 +62,4 @@ describe 'contacts/show.html.haml', type: :view do
       end
     end
   end
-
 end

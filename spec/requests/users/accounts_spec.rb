@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Users::Accounts', type: :request do
-
   describe 'DELETE /users/accounts/1 AS xhr' do
     context 'as a user belonging to the account' do
       login_user
@@ -33,5 +32,4 @@ describe 'Users::Accounts', type: :request do
       end
     end
   end
-
 end

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Users::PasswordsController, type: :routing do
   describe 'routing' do
-
     it 'routes to #new' do
       expect(get('/users/password/new')).to route_to('users/passwords#new')
     end
@@ -19,6 +18,5 @@ describe Users::PasswordsController, type: :routing do
       expect(put('/users/password')).to route_to('users/passwords#update')
       expect(patch('/users/password')).to route_to('users/passwords#update')
     end
-
   end
 end

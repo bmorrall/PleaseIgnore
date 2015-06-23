@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Users::AccountsController, type: :controller do
-
   describe 'DELETE destroy' do
     context 'with a signed in User' do
       login_user

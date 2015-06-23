@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Users::RegistrationsController, type: :routing do
   describe 'routing' do
-
     it 'routes to #cancel' do
       expect(get('/users/cancel')).to route_to('users/registrations#cancel')
     end
@@ -27,6 +26,5 @@ describe Users::RegistrationsController, type: :routing do
     it 'routes to #destroy' do
       expect(delete('/users')).to route_to('users/registrations#destroy')
     end
-
   end
 end

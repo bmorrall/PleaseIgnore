@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'devise/registrations/edit.html.haml', type: :view do
-
   def stub_user_accounts(user, *accounts)
     skip_double_verification do
       decorated_accounts = AccountDecorator.decorate_collection(accounts)
@@ -125,7 +124,6 @@ describe 'devise/registrations/edit.html.haml', type: :view do
     end
 
     describe 'connected social media links' do
-
       describe 'sortable accounts list' do
         it 'renders the sortable list for multiple accounts' do
           facebook_account = build_stubbed(:facebook_account, user: user)

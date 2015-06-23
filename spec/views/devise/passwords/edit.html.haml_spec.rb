@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'devise/passwords/edit.html.haml', type: :view do
-
   context 'with a new user resource' do
     let(:user) { User.new }
     before(:each) do
@@ -41,5 +40,4 @@ describe 'devise/passwords/edit.html.haml', type: :view do
       end
     end
   end
-
 end

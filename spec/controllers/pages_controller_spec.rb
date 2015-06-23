@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe PagesController, type: :controller do
-
   describe 'GET show' do
     context 'as a visitor' do
       # Frontend Pages
@@ -35,5 +34,4 @@ describe PagesController, type: :controller do
       end
     end
   end
-
 end

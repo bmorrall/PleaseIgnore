@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Accounts::AuthenticateWithAccount do
-
   describe '.call' do
     let(:auth_hash) { double(:auth_hash) }
     let(:provider) { Account::PROVIDERS.sample }

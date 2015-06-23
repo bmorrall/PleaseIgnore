@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe PagesController, type: :routing do
   describe 'routing' do
-
     it 'routes root to #show' do
       expect(get('/')).to route_to('pages#show', id: 'home')
     end

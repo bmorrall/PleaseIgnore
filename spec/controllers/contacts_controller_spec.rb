@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe ContactsController, type: :controller do
-
   def valid_create_attributes
     attributes_for(:contact)
   end
@@ -140,5 +139,4 @@ describe ContactsController, type: :controller do
       end
     end
   end
-
 end

@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Users::OmniauthCallbacksController, type: :routing do
   describe 'routing' do
-
     it 'routes to #facebook callback' do
       expect(post('/users/auth/facebook/callback')).to route_to('users/omniauth_callbacks#facebook')
     end
@@ -20,6 +19,5 @@ describe Users::OmniauthCallbacksController, type: :routing do
         route_to('users/omniauth_callbacks#google_oauth2')
       )
     end
-
   end
 end

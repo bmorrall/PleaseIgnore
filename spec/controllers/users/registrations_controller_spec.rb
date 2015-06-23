@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Users::RegistrationsController, type: :controller do
-
   let(:valid_password_change_attributes) do
     {
       password: 'newpassword',
@@ -115,5 +114,4 @@ describe Users::RegistrationsController, type: :controller do
       end
     end
   end
-
 end

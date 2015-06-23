@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'devise/registrations/new.html.haml', type: :view do
-
   context 'with a new user resource' do
     let(:user) { User.new }
     before(:each) do
@@ -107,5 +106,4 @@ describe 'devise/registrations/new.html.haml', type: :view do
       assert_select 'a[href=?][rel="external"]', page_path('terms')
     end
   end
-
 end

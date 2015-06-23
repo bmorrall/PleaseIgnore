@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Users/Versions', type: :request do
-
   describe 'GET index' do
     context 'as a admin' do
       login_user

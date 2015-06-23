@@ -7,7 +7,6 @@ APP_ROOT = Pathname.new File.expand_path('../../',  __FILE__)
 require File.join(APP_ROOT, 'lib', 'command')
 
 Dir.chdir APP_ROOT do
-
   # Configuration
 
   def env_options(options)
@@ -57,14 +56,14 @@ Dir.chdir APP_ROOT do
     network_settings(container)['IPAddress']
   end
 
-  def container_port(container, port)
+  def container_port(_container, port)
     port.split('/').first # ['Ports'][port][0]['HostPort']
   end
 
   # Init
 
-  puts "== Booting Instance =="
-  command "vagrant up"
+  puts '== Booting Instance =='
+  command 'vagrant up'
   system "vagrant ssh -c 'sudo docker start please_ignore-postgres please_ignore-redis mailcatcher'"
 
   puts "\n== Building image =="
@@ -92,7 +91,7 @@ Dir.chdir APP_ROOT do
 
   puts "\n== Migrating database =="
   worker_config = webapp_options.join(' ')
-  db_setup_script = "RAILS_ENV=production bundle exec rake db:migrate"
+  db_setup_script = 'RAILS_ENV=production bundle exec rake db:migrate'
   command "vagrant ssh -c 'sudo docker run #{worker_config} please_ignore su app -c \"#{db_setup_script}\"'"
 
   puts "\n== Stopping webapp container =="
@@ -107,6 +106,6 @@ Dir.chdir APP_ROOT do
   command "vagrant ssh -c 'sudo docker run -d --name please_ignore-webapp #{webapp_config} please_ignore'"
 
   puts "\n== Done =="
-  command "open http://localhost:1080/" # mailcatcher
-  command "open http://localhost:8080/" # webapp
+  command 'open http://localhost:1080/' # mailcatcher
+  command 'open http://localhost:8080/' # webapp
 end

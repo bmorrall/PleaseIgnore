@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'pages/privacy.html.haml', type: :view do
-
   context do # Within default nesting
     it 'renders the privacy page' do
       render
@@ -16,5 +15,4 @@ describe 'pages/privacy.html.haml', type: :view do
       assert_select 'h3#questions', 'Questions'
     end
   end
-
 end

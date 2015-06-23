@@ -9,16 +9,16 @@ Dir.chdir APP_ROOT do
   # This script is a starting point to setup your application in a Docker container.
   preamble = 'RAILS_ENV=production DEVISE_SECRET_KEY=devise'
 
-  puts "== Updating configuration =="
+  puts '== Updating configuration =='
   system 'mkdir -p log tmp tmp/pids'
 
   puts "\n== Downloading assets =="
-  command "node_modules/.bin/bower install"
+  command 'node_modules/.bin/bower install'
 
   puts "\n== Compiling assets =="
   command "#{preamble} bundle exec rake assets:precompile"
 
   puts "\n== Removing old logs and tempfiles =="
-  system "rm -f log/*"
-  system "rm -rf tmp/cache"
+  system 'rm -f log/*'
+  system 'rm -rf tmp/cache'
 end

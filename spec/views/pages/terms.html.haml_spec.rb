@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'pages/terms.html.haml', type: :view do
-
   context do # Within default nesting
     it 'renders the terms page' do
       render
@@ -16,5 +15,4 @@ describe 'pages/terms.html.haml', type: :view do
       assert_select 'h3#general-conditions', 'General Conditions'
     end
   end
-
 end

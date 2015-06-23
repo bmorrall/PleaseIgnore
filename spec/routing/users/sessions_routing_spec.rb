@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Users::SessionsController, type: :routing do
   describe 'routing' do
-
     it 'routes to #new' do
       expect(get('/users/sign_in')).to route_to('users/sessions#new')
     end
@@ -14,6 +13,5 @@ describe Users::SessionsController, type: :routing do
     it 'routes to #destroy' do
       expect(delete('/users/sign_out')).to route_to('users/sessions#destroy')
     end
-
   end
 end

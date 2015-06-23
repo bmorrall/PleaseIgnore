@@ -69,7 +69,6 @@ describe Account, type: :model do
 end
 
 describe Accounts::Facebook, type: :model do
-
   describe 'validations' do
     it { is_expected.to allow_value('Accounts::Facebook').for(:type) }
   end

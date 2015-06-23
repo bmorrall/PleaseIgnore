@@ -1,7 +1,6 @@
+require 'English'
 
 def command(*args)
   system(*args)
-  # rubocop:disable Style/SpecialGlobalVars
-  fail "Unable to run command #{args.join(' ')}" unless $?.exitstatus == 0
-  # rubocop:enable Style/SpecialGlobalVars
+  fail "Unable to run command #{args.join(' ')}" unless $CHILD_STATUS.success?
 end

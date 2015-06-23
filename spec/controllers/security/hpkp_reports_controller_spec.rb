@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Security::HpkpReportsController, type: :controller do
-
   describe 'POST #create' do
     context 'with hpkp report' do
       let(:hpkp_report) do

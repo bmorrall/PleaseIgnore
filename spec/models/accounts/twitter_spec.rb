@@ -70,7 +70,6 @@ describe Account, type: :model do
 end
 
 describe Accounts::Twitter, type: :model do
-
   describe 'validations' do
     it { is_expected.to allow_value('Accounts::Twitter').for(:type) }
   end

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Sessions', type: :request do
-
   describe 'GET new' do
     context 'as a visitor' do
       it 'renders the new page' do
@@ -54,5 +53,4 @@ describe 'Sessions', type: :request do
       end
     end
   end
-
 end

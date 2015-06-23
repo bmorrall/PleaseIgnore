@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'devise/sessions/new.html.haml', type: :view do
-
   context 'with a new user resource' do
     let(:user) { User.new }
     before(:each) do
@@ -56,5 +55,4 @@ describe 'devise/sessions/new.html.haml', type: :view do
       assert_select 'a[href=?]', new_user_password_path
     end
   end
-
 end

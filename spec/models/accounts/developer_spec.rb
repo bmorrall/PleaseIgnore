@@ -27,7 +27,6 @@
 require 'rails_helper'
 
 describe Accounts::Developer, type: :model do
-
   describe 'validations' do
     it { is_expected.to allow_value('Accounts::Developer').for(:type) }
   end

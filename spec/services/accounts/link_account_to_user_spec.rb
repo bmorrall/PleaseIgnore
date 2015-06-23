@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Accounts::LinkAccountToUser do
-
   describe '.call' do
     let(:user) { double(:user) }
     let(:auth_hash) { double(:auth_hash) }

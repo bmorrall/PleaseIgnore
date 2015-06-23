@@ -68,7 +68,6 @@ describe Account, type: :model do
 end
 
 describe Accounts::GoogleOauth2, type: :model do
-
   describe 'validations' do
     it { is_expected.to allow_value('Accounts::GoogleOauth2').for(:type) }
   end

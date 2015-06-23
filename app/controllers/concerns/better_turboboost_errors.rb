@@ -5,7 +5,6 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
-
       # Override Turboboost errors with better messages
       def render_turboboost_errors_for(record)
         messages = {}
