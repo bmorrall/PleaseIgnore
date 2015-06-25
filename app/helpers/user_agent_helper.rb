@@ -37,29 +37,33 @@ module UserAgentHelper
 
   protected
 
+  # @return [String] FontAwesome Icon used to represent the User Agent's Desktop Operating System
   def desktop_user_agent_icon_image(user_agent)
-    case user_agent.os
-    when /Windows/
-      'windows'
-    when /Linux/
-      'linux'
-    when /OS X/
-      'laptop'
-    else
-      'desktop'
-    end
+    platform_icon_image(user_agent) || 'desktop'
   end
 
+  # @return [String] FontAwesome Icon used to represent the User Agent's Mobile Operating System
   def mobile_user_agent_icon_image(user_agent)
+    platform_icon_image(user_agent) || 'mobile'
+  end
+
+  # rubocop:disable Metrics/MethodLength
+
+  # @return [String] FontAwesome icon representing a known Operating System or nil
+  def platform_icon_image(user_agent)
     case user_agent.os
     when /Android/
       'android'
     when /iOS/
       'apple'
+    when /Linux/
+      'linux'
+    when /OS X/
+      'laptop'
     when /Windows/
       'windows'
-    else
-      'mobile'
     end
   end
+
+  # rubocop:enable Metrics/MethodLength
 end
