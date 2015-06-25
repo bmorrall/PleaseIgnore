@@ -55,13 +55,7 @@ module PaperTrail
     end
 
     def whodunnit_ago
-      parts = [whodunnit, created_at_ago]
-
-      if object.created_at > 1.day.ago
-        parts.join(' ')
-      else
-        parts.join(' on ')
-      end.html_safe
+      [whodunnit, created_at_ago].join(' ').html_safe
     end
 
     protected

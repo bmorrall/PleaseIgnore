@@ -10,7 +10,7 @@
 
     .list-group
       - grouped_versions.each do |unstyled_version|
-        = cache [cache_uid, unstyled_version, date_is_recent?(unstyled_version.created_at) ? :recent : :archive], { expires_in: 1.hour } do
+        - cache [cache_uid, unstyled_version, :history_item], expires_in: 1.hour do
           - decorate_version(unstyled_version) do |version|
             = link_to '#', class: 'list-group-item' do
               %h4.list-group-item-heading
