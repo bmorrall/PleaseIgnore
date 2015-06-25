@@ -1,13 +1,13 @@
-%meta(charset='utf-8')
-%meta(http-equiv='X-UA-Compatible' content='IE=edge')
-%meta(name='viewport' content='width=device-width, initial-scale=1.0')
+%meta{ charset: 'utf-8' }
+%meta{ 'http-equiv' => 'X-UA-Compatible', content: 'IE=edge' }
+%meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
 = meta_tag 'description', yield(:meta_description)
 = meta_tag 'author', yield(:meta_author)
 
 %title<
-  = page_title app_name: application_name, separator: " | "
+  = page_title app_name: application_name, separator: ' | '
 
-= stylesheet_link_tag 'application', media: 'all', "data-turbolinks-track" => true
+= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
 = favicon_link_tag 'favicon.ico'
 
 / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -18,7 +18,7 @@
                            'data-turbolinks-track' => true
 
 = jquery_include_tag :google, 'data-turbolinks-track' => false, force: Rails.env.test?
-= javascript_include_tag "application", "data-turbolinks-track" => true
+= javascript_include_tag 'application', 'data-turbolinks-track' => true
 
 - initialize_scripts = render(partial: 'initialize_scripts', formats: [:js])
 - unless initialize_scripts.blank?

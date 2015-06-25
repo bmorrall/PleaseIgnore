@@ -1,4 +1,4 @@
-%footer#footer(role='footer')
+%footer#footer{ role: 'footer' }
   .container-fluid.text-center
     .row
       .col-sm-12.col-lg-offset-1.col-lg-10.col-xl-offset-2.col-xl-8
@@ -10,11 +10,11 @@
             Project
             ·
             Modified by
-          %a(href='http://benmorrall.com') Ben Morrall
+          = external_link 'Ben Morrall', 'http://benmorrall.com'
         %div
           Code licensed under
-          %a(href='http://opensource.org/licenses/mit-license.html')  MIT License
+          = external_link 'MIT License', 'http://opensource.org/licenses/mit-license.html'
         %div
-          %a(href='https://github.com/bmorrall/PleaseIgnore') GitHub Project
+          = external_link 'GitHub Project', 'https://github.com/bmorrall/PleaseIgnore'
           ·
-          %a(href='https://github.com/bmorrall/PleaseIgnore/issues')  Issues
+          = external_link 'Issues', 'https://github.com/bmorrall/PleaseIgnore/issues'

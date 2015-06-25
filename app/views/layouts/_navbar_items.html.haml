@@ -1,29 +1,30 @@
 - if dynamic && user_signed_in?
-  - cache [cache_uid, current_user, :organisation_navbar, organisation.try(:id) || :home], default_cache_params do
+  - organisation_uid = organisation.try(:id) || :home
+  - cache [cache_uid, current_user, :organisation_navbar, organisation_uid], default_cache_params do
     - if current_user.organisations.any?
       / User has Organisations List
-      %li.js-only.dropdown.organisation-dropdown{class: organisation ? ' active' : nil}
-        = link_to dashboard_url, class: 'dropdown-toggle', data: { toggle: 'dropdown' } do\
+      %li.js-only.dropdown.organisation-dropdown{ class: organisation ? ' active' : nil }
+        = link_to dashboard_url, class: 'dropdown-toggle', data: { toggle: 'dropdown' } do
           = organisation.try(:name) || t('.home')
           &nbsp;
           %i.caret
         %ul.dropdown-menu
           - current_user.organisations.order(:name).each do |org|
-            %li{class: organisation == org ? 'active' : nil}
+            %li{ class: organisation == org ? 'active' : nil }
               = link_to org.name, organisation_url(org)
           %li.divider
           %li
             = link_to t('.home'), dashboard_url
-      %li.no-js-only{class: header_nav_class(dashboard_path)}<
+      %li.no-js-only{ class: header_nav_class(dashboard_path) }<
         = link_to t('.home'), dashboard_url
     - else
       / User does not have Organisations
-      %li{class: header_nav_class(dashboard_path)}<
+      %li{ class: header_nav_class(dashboard_path) }<
         = link_to t('.home'), dashboard_url
 - else
-  %li{class: header_nav_class(dashboard_path)}<
+  %li{ class: header_nav_class(dashboard_path) }<
     = link_to t('.home'), new_user_session_url
-%li{class: header_nav_class(page_path('styles'))}<
+%li{ class: header_nav_class(page_path('styles')) }<
   = link_to t('.styles'), page_url('styles')
-%li{class: header_nav_class(contact_path)}<
+%li{ class: header_nav_class(contact_path) }<
   = link_to t('.contact'), contact_url

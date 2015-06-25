@@ -1,11 +1,11 @@
 !!! 5
-%html(class="no-js")
+%html.no-js
   %head
     = render 'layouts/head'
     = static_csrf_meta_tags
   %body{ class: body_class }
     #wrap
-      = render 'layouts/navigation_static', { navbar_style: 'navbar-inverse' }
+      = render 'layouts/navigation_static', navbar_style: 'navbar-inverse'
       .container-fluid
         .row
           %main.col-sm-12.col-lg-offset-1.col-lg-10.col-xl-offset-2.col-xl-8.main
