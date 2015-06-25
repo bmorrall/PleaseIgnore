@@ -3,16 +3,7 @@ module Accounts
   class AuthenticateWithAccount
     include Concerns::Service
 
-    # Error while authenticating with an account
-    class Error < ::StandardError
-      attr_reader :provider, :provider_name
-      def initialize(message_key, provider)
-        @provider = provider
-        @provider_name = Account.provider_name(provider)
-        super I18n.t(message_key, scope: 'account.reasons.failure', kind: @provider_name)
-      end
-    end
-    class AccountDisabledError < Error; end
+    class AccountDisabledError < AuthenticationError; end
 
     attr_reader :auth_hash, :provider
     attr_reader :account, :success
@@ -23,6 +14,11 @@ module Accounts
       @provider = provider
     end
 
+    # Sets #success to true, if the account exists or has not been connected yet.
+    #
+    # @api public
+    # @example AuthenticateWithAccount.call(auth_hash, provider)
+    # @throws Accounts::AuthenticationError if the account has been disabled
     def call
       @account = Account.find_for_oauth(auth_hash, provider)
       if account.nil?

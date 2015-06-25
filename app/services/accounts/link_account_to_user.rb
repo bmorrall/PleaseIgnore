@@ -3,19 +3,10 @@ module Accounts
   class LinkAccountToUser
     include Concerns::Service
 
-    # Error while linking account to a user
-    class Error < ::StandardError
-      attr_reader :provider, :provider_name
-      def initialize(message_key, provider)
-        @provider = provider
-        @provider_name = Account.provider_name(provider)
-        super I18n.t(message_key, scope: 'account.reasons.failure', kind: @provider_name)
-      end
-    end
-    class AccountDisabledError < Error; end
-    class AccountInvalidError < Error; end
-    class AccountLimitError < Error; end
-    class PreviouslyLinkedError < Error; end
+    class AccountDisabledError < AuthenticationError; end
+    class AccountInvalidError < AuthenticationError; end
+    class AccountLimitError < AuthenticationError; end
+    class PreviouslyLinkedError < AuthenticationError; end
 
     attr_reader :user, :auth_hash, :provider
     attr_reader :account, :success
@@ -26,6 +17,11 @@ module Accounts
       @provider = provider
     end
 
+    # Creates a new account and links it to the user
+    #
+    # @api public
+    # @example LinkAccountToUser.call(auth_hash, provider)
+    # @throws Accounts::AuthenticationError if the account cannot be linked to the user
     def call
       @account = Account.find_for_oauth(auth_hash, provider)
       if account.present?

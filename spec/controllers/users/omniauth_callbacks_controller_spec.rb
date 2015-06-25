@@ -83,9 +83,9 @@ describe Users::OmniauthCallbacksController, type: :controller do
             end
           end
 
-          context 'when AuthenticateWithAccount.call raises a AuthenticateWithAccount::Error' do
+          context 'when AuthenticateWithAccount.call raises a AuthenticationError' do
             let(:error) do
-              Accounts::AuthenticateWithAccount::Error.new(:account_disabled, provider)
+              Accounts::AuthenticationError.new(:account_disabled, provider)
             end
             before(:each) do
               expect(Accounts::AuthenticateWithAccount).to(
@@ -134,9 +134,9 @@ describe Users::OmniauthCallbacksController, type: :controller do
             end
           end
 
-          context 'when LinkAccountToUser.call raises a LinkAccountToUser::Error' do
+          context 'when LinkAccountToUser.call raises a AuthenticationError' do
             let(:error) do
-              Accounts::LinkAccountToUser::Error.new(:previously_linked, provider)
+              Accounts::AuthenticationError.new(:previously_linked, provider)
             end
             before(:each) do
               expect(Accounts::LinkAccountToUser).to(

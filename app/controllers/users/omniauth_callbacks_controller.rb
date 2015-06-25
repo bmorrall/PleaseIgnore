@@ -18,8 +18,7 @@ module Users
       authorize! :create, Account
     end
 
-    rescue_from Accounts::LinkAccountToUser::Error, with: :handle_link_account_error
-    rescue_from Accounts::AuthenticateWithAccount::Error, with: :handle_account_authentication_error
+    rescue_from Accounts::AuthenticationError, with: :handle_account_authentication_error
 
     # OAuth Authentication
 
@@ -69,21 +68,8 @@ module Users
       set_flash_message(:notice, message, kind: provider_name)
     end
 
-    # Displays a failure message when linking to an account
-    # @api private
-    # @return void
-    def handle_link_account_error(account_error)
-      return unless is_navigational_format?
-
-      reason = account_error.message
-      provider_name = account_error.provider_name
-
-      set_flash_message(:alert, :failure, kind: provider_name, reason: reason)
-      redirect_to edit_user_registration_path
-    end
-
-    # Displays a failure message when authenticating with an account
-    # and redirects the user to the login form
+    # Displays a failure message when authenticating with an account.
+    #
     # @api private
     # @return void
     def handle_account_authentication_error(account_error)
@@ -93,7 +79,11 @@ module Users
       provider_name = account_error.provider_name
 
       set_flash_message(:alert, :failure, kind: provider_name, reason: reason)
-      redirect_to new_user_session_path
+      if user_signed_in?
+        redirect_to edit_user_registration_path
+      else
+        redirect_to new_user_session_path
+      end
     end
 
     # Store the auth_hash for registration
