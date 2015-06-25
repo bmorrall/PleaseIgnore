@@ -185,6 +185,7 @@ group :test, :development do
   gem 'i18n-tasks', require: false
   gem 'brakeman', require: false
   gem 'cane', require: false
+  gem 'haml_lint', require: false
   gem 'rubocop', require: false
   gem 'yardstick', require: false
 end
