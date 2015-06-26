@@ -10,6 +10,7 @@ module Concerns
         # Request params
         payload[:ip] = request.ip
         payload[:user_agent] = request.user_agent
+        payload[:xhr] = request.xhr?
 
         # Logged in user params
         return unless user_signed_in?

@@ -20,12 +20,13 @@ Rails.application.configure do
 
   config.lograge.custom_options = lambda do |event|
     {
+      xhr: event.payload[:xhr],
       host: ENV.fetch('VIRTUAL_HOST', Rails.env),
-      ip: event.payload[:ip],
       params: filter_params(event.payload[:params]),
       user: event.payload[:user],
+      user_id: event.payload[:user_id],
       user_agent: event.payload[:user_agent],
-      user_id: event.payload[:user_id]
+      ip: event.payload[:ip]
     }
   end
 end
