@@ -8,9 +8,11 @@ module Concerns
         super
 
         # Request params
+        payload[:xhr] = request.xhr?
+
+        # Client params
         payload[:ip] = request.ip
         payload[:user_agent] = request.user_agent
-        payload[:xhr] = request.xhr?
 
         # Logged in user params
         return unless user_signed_in?
