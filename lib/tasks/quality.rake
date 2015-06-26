@@ -26,7 +26,9 @@ namespace :quality do
     warn 'haml_lint not available, haml_lint task not provided.'
   else
     desc 'Run haml-lint analyser on views'
-    HamlLint::RakeTask.new
+    HamlLint::RakeTask.new do |task|
+      task.files = ['app/views', 'lib/templates']
+    end
   end
 
   # Rubocop Rake Task
@@ -76,5 +78,4 @@ namespace :quality do
 end
 
 desc 'Run code quality metrics on project'
-task quality: %w(quality:cane quality:rubocop brakeman:run quality:yardstick)
-# TODO: Add quality:haml_lint task to checklist
+task quality: %w(quality:cane quality:rubocop brakeman:run quality:haml_lint quality:yardstick)

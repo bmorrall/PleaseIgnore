@@ -1,8 +1,4 @@
 linters:
   LineLength:
     max: 100
-    exclude:
-      - './app/views/pages/privacy.html.haml'
-      - './app/views/pages/styles.html.haml'
-      - './app/views/pages/terms.html.haml'
-
+    enabled: false
