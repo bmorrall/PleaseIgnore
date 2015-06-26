@@ -19,9 +19,7 @@ describe 'users/versions/index.html.haml', type: :view do
 
         it 'renders the IP address as a geocoded element' do
           render
-          within '.list-group-item-text' do
-            assert_select ".ip-address [data-geocode-ip='#{ip}']", text: ip
-          end
+          assert_select ".list-group-item-text .ip-address [data-geocode-ip='#{ip}']", text: ip
         end
       end
 
@@ -38,10 +36,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Android 4.0 (Android 4.0.3)'
-              assert_select '.user-agent .fa-android'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Android 4.0 (Android 4.0.3)'
+            assert_select '.list-group-item-text .user-agent .fa-android'
           end
         end
 
@@ -50,10 +46,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'BlackBerry 7.1.0.346 (BlackBerry 9900)'
-              assert_select '.user-agent .fa-mobile'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'BlackBerry 7.1.0.346 (BlackBerry 9900)'
+            assert_select '.list-group-item-text .user-agent .fa-mobile'
           end
         end
 
@@ -62,10 +56,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Safari 6.0 (iOS 6.0)'
-              assert_select '.user-agent .fa-apple'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Safari 6.0 (iOS 6.0)'
+            assert_select '.list-group-item-text .user-agent .fa-apple'
           end
         end
 
@@ -74,10 +66,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Safari 5.0.2 (iOS 4.2.1)'
-              assert_select '.user-agent .fa-apple'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Safari 5.0.2 (iOS 4.2.1)'
+            assert_select '.list-group-item-text .user-agent .fa-apple'
           end
         end
 
@@ -86,10 +76,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Safari 8.0 (iOS 8.0)'
-              assert_select '.user-agent .fa-apple'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Safari 8.0 (iOS 8.0)'
+            assert_select '.list-group-item-text .user-agent .fa-apple'
           end
         end
 
@@ -98,10 +86,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Safari 7.0 (iOS 7.0.6)'
-              assert_select '.user-agent .fa-apple'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Safari 7.0 (iOS 7.0.6)'
+            assert_select '.list-group-item-text .user-agent .fa-apple'
           end
         end
 
@@ -110,10 +96,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Chrome 30.0.1599.38 (ChromeOS 4537.56.0)'
-              assert_select '.user-agent .fa-desktop'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Chrome 30.0.1599.38 (ChromeOS 4537.56.0)'
+            assert_select '.list-group-item-text .user-agent .fa-desktop'
           end
         end
 
@@ -122,10 +106,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Firefox 8.0 (Linux Debian i686)'
-              assert_select '.user-agent .fa-linux'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Firefox 8.0 (Linux Debian i686)'
+            assert_select '.list-group-item-text .user-agent .fa-linux'
           end
         end
 
@@ -134,10 +116,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Firefox 17.0 (Linux x86_64)'
-              assert_select '.user-agent .fa-linux'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Firefox 17.0 (Linux x86_64)'
+            assert_select '.list-group-item-text .user-agent .fa-linux'
           end
         end
 
@@ -146,10 +126,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Chrome 41.0.2227.1 (OS X 10.10.1)'
-              assert_select '.user-agent .fa-laptop'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Chrome 41.0.2227.1 (OS X 10.10.1)'
+            assert_select '.list-group-item-text .user-agent .fa-laptop'
           end
         end
 
@@ -158,10 +136,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Safari 7.0.3 (OS X 10.9.3)'
-              assert_select '.user-agent .fa-laptop'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Safari 7.0.3 (OS X 10.9.3)'
+            assert_select '.list-group-item-text .user-agent .fa-laptop'
           end
         end
 
@@ -170,10 +146,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Firefox 36.0 (Windows 8.1)'
-              assert_select '.user-agent .fa-windows'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Firefox 36.0 (Windows 8.1)'
+            assert_select '.list-group-item-text .user-agent .fa-windows'
           end
         end
 
@@ -182,10 +156,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Internet Explorer 8.0 (Windows XP)'
-              assert_select '.user-agent .fa-windows'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Internet Explorer 8.0 (Windows XP)'
+            assert_select '.list-group-item-text .user-agent .fa-windows'
           end
         end
 
@@ -194,10 +166,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Internet Explorer 11.0 (Windows 7)'
-              assert_select '.user-agent .fa-windows'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Internet Explorer 11.0 (Windows 7)'
+            assert_select '.list-group-item-text .user-agent .fa-windows'
           end
         end
 
@@ -206,10 +176,8 @@ describe 'users/versions/index.html.haml', type: :view do
 
           it 'should render the parsed user agent' do
             render
-            within '.list-group-item-text' do
-              assert_select '.user-agent', text: 'Internet Explorer 9.0 (Windows Phone OS 7.5)'
-              assert_select '.user-agent .fa-windows'
-            end
+            assert_select '.list-group-item-text .user-agent', text: 'Internet Explorer 9.0 (Windows Phone OS 7.5)'
+            assert_select '.list-group-item-text .user-agent .fa-windows'
           end
         end
       end
