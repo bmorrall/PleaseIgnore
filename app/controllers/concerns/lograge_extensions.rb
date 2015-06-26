@@ -8,7 +8,7 @@ module Concerns
         super
 
         # Request params
-        payload[:xhr] = request.xhr?
+        payload[:xhr] = !!request.xhr?
 
         # Client params
         payload[:ip] = request.ip
