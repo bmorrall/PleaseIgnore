@@ -1,6 +1,6 @@
 - provider_name = provider_name(provider)
 - provider_class_name = provider_class(provider)
-.form-group{ class: "btn-#{provider_class_name} connect-account connect-#{provider_class_name}"}
+.form-group{ class: "btn-#{provider_class_name} connect-account connect-#{provider_class_name}" }
   %label.control-label.col-sm-3
     = provider_icon(provider)
     = t('users.accounts.labels.account', provider: provider_name)

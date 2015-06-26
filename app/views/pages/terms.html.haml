@@ -1,6 +1,7 @@
 %article
   %header.page-header
-    %h2 #{t '.page_title'}
+    %h2
+      = t '.page_title'
 
   %section
     :markdown
@@ -11,7 +12,7 @@
       Violation of any of the terms below will result in the termination of your Account. While #{application_name} prohibits such conduct and Content on the Service, you understand and agree that #{application_name} cannot be responsible for the Content posted on the Service and you nonetheless may be exposed to such materials. You agree to use the Service at your own risk.
 
   %section
-    = tos_header "Account Terms"
+    = tos_header 'Account Terms'
     :markdown
       1. You must be 13 years or older to use this Service.
 
@@ -90,7 +91,7 @@
       1. The look and feel of the Service is copyright &copy; Ben Morrall. All rights reserved. You may not duplicate, copy, or reuse any portion of the HTML/CSS, Javascript, or visual design elements or concepts without express written permission from Ben Morrall.
 
   %section
-    = tos_header "General Conditions"
+    = tos_header 'General Conditions'
     :markdown
       1. Your use of the Service is at your sole risk. The service is provided on an "as is" and "as available" basis.
 

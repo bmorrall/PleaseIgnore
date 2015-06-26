@@ -2,7 +2,7 @@
 = simple_form_for(resource,
                   as: resource_name,
                   url: session_path(resource_name),
-                  html: { role: 'form'}) do |f|
+                  html: { role: 'form' }) do |f|
   .form-group.row
     .col-sm-offset-2.col-sm-8
       %legend
@@ -11,7 +11,7 @@
 
   = f.error_notification
 
-  .form-group.row(style="margin-bottom: 0")
+  .form-group.row{ style: 'margin-bottom: 0' }
     .col-sm-offset-2.col-sm-8
       = f.input :email, input_html: { autofocus: true }
   .form-group.row
@@ -22,8 +22,8 @@
       = f.input_field :password
   .form-group.row
     .col-sm-offset-2.col-sm-8
-      %button.btn.btn-primary(type='submit')
-        = fa "unlock-alt"
+      %button.btn.btn-primary{ type: 'submit' }
+        = fa 'unlock-alt'
         = t('.buttons.sign_in')
       - if devise_mapping.registerable?
         = link_to t('.create_account'), new_registration_path(resource_name), class: 'btn btn-link create-account'

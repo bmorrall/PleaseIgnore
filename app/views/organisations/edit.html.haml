@@ -1,7 +1,6 @@
 - content_for(:page_title) { "#{@organisation.name} Settings" }
 %section
   .page-header
-    %h3
-      = "#{@organisation.name} Settings"
+    %h3 #{@organisation.name} Settings
 
   = render 'form', organisation: @organisation

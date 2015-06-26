@@ -1,6 +1,6 @@
 - content_for(:page_title) { t('.page_title') }
 .page-header
-  %h3 #{t('.page_title')}
+  %h3 = t('.page_title')
 
 = simple_form_for(@contact,
                   url: contact_path,
@@ -15,7 +15,7 @@
   = f.input :body, as: :text, input_html: { rows: 7, autofocus: contact_autofocus_input?(:body) }
   .form-group
     .col-sm-offset-2.col-sm-8
-      %button.btn.btn-default(type='submit')
+      %button.btn.btn-default{ type: 'submit' }
         = fa 'mail-forward'
         Send
       = image_tag 'sendgrid.png', height: 34, class: 'pull-right'

@@ -11,6 +11,6 @@
     = f.input :password, input_html: { autofocus: true }, label: 'New Password', placeholder: 'New Password'
     = f.input :password_confirmation
     .form-group
-      %button.btn.btn-primary(type='submit')
+      %button.btn.btn-primary{ type: 'submit' }
         = fa 'key'
         Change my password

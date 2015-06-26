@@ -1,6 +1,7 @@
-- account_provider_class = provider_class(pending_account.provider)
-- account_class = "pending-account pending-#{account_provider_class}"
-- account_provider_title = t('users.accounts.labels.account', provider: pending_account.provider_name)
+:ruby
+  account_provider_class = provider_class(pending_account.provider)
+  account_class = "pending-account pending-#{account_provider_class}"
+  account_provider_title = t('users.accounts.labels.account', provider: pending_account.provider_name)
 .form-group{ class: account_class, data: { account_id: pending_account.id } }
   .col-sm-offset-2.col-sm-8
     .input-group
