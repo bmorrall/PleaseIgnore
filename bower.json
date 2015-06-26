@@ -22,6 +22,7 @@
     "font-awesome": "4.3.0",
     "html5sortable": "git+https://github.com/farhadi/html5sortable.git",
     "jquery-throttle-debounce": "git+https://github.com/cowboy/jquery-throttle-debounce.git",
-    "ladda": "0.9.8"
+    "ladda": "0.9.8",
+    "spin.js": "2.0.2"
   }
 }
