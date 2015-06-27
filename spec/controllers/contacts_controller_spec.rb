@@ -159,6 +159,12 @@ describe ContactsController, type: :controller do
             let(:user_agent) { Faker::Internet.user_agent }
             before(:each) { request.headers['USER-AGENT'] = user_agent }
 
+            it 'should redirect to the thank you page with a flash notice' do
+              xhr :post, :create, contact: valid_user_contact_attributes
+              is_expected.to redirect_to thank_you_contact_path
+              is_expected.to set_flash[:notice].to t('flash.contacts.create.notice')
+            end
+
             it 'should set Contact#user_agent' do
               xhr :post, :create, contact: valid_user_contact_attributes
               contact = assigns(:contact)

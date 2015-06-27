@@ -70,7 +70,7 @@ class ContactsController < ApplicationController
   # Adds the user agent, and name and email if the user is signed in
   def contact_params_from_request
     { user_agent: request.user_agent }.tap do |extra_params|
-      extra_params.merge(name: current_user.name, email: current_user.email) if user_signed_in?
+      extra_params.merge!(name: current_user.name, email: current_user.email) if user_signed_in?
     end
   end
 
