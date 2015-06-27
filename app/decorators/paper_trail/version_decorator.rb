@@ -3,6 +3,7 @@ module PaperTrail
   # Providers
   # - methods for display who, what and where of a change
   class VersionDecorator < Draper::Decorator
+    USER_WHODUNNIT_REGEX = /\A(\d+)(\s.+)?\z/
     delegate_all
 
     def comments
@@ -41,9 +42,9 @@ module PaperTrail
 
     def whodunnit
       h.content_tag :span, class: 'whodunnit' do
-        if object.whodunnit =~ /\A\d+\z/
+        if object.whodunnit =~ USER_WHODUNNIT_REGEX
           # Display as User action
-          whodunnit_as_user
+          whodunnit_as_user(Regexp.last_match(1).to_i)
         elsif object.whodunnit
           # Display as System command
           whodunnit_as_command
@@ -61,7 +62,7 @@ module PaperTrail
     protected
 
     def system_generated_entry?
-      object.whodunnit && object.whodunnit !~ /\A\d+\z/
+      object.whodunnit && object.whodunnit !~ USER_WHODUNNIT_REGEX
     end
 
     def user_location_as_ip
@@ -84,12 +85,12 @@ module PaperTrail
       end
     end
 
-    def whodunnit_as_user
-      user = User.with_deleted.find_by_id(object.whodunnit.to_i)
+    def whodunnit_as_user(user_id)
+      user = User.with_deleted.find_by_id(user_id)
       if user
         "#{user.name} <#{user.email}>"
       else
-        h.content_tag :em, "Removed User ##{object.whodunnit}"
+        h.content_tag :em, "Removed User <#{object.whodunnit.split(' ').last}>"
       end
     end
 

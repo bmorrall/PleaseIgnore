@@ -3,6 +3,7 @@ module Api
     # Base Controller class for Api::V1 Controllers
     class ApplicationController < ::ActionController::Base
       include Concerns::LogrageMetadata
+      include Concerns::PaperTrailMetadata
 
       # Prevent CSRF attacks by clearning the session..
       protect_from_forgery with: :null_session

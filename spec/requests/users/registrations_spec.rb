@@ -45,4 +45,35 @@ describe 'Registrations', type: :request do
       end
     end
   end
+
+  describe 'PUT update' do
+    context 'as a user' do
+      login_user
+
+      context 'with valid user params' do
+        let(:valid_user_params) { { name: Faker::Name.name } }
+
+        it 'updates the logged in user' do
+          put user_registration_path, user: valid_user_params
+
+          logged_in_user.reload
+          expect(logged_in_user.name).to eq valid_user_params[:name]
+        end
+
+        it 'creates a PaperTrail::Version for the user' do
+          with_versioning do
+            expect do
+              put user_registration_path, user: valid_user_params
+            end.to change(PaperTrail::Version, :count).by(1)
+          end
+
+          version = PaperTrail::Version.last
+          expect(version.event).to eq 'update'
+          expect(version.item).to eq logged_in_user
+          expect(version.item_owner).to eq logged_in_user
+          expect(version.whodunnit).to eq "#{logged_in_user.id} #{logged_in_user.email}"
+        end
+      end
+    end
+  end
 end

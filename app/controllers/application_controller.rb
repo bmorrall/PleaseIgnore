@@ -5,6 +5,7 @@
 #
 class ApplicationController < ActionController::Base
   include Concerns::LogrageMetadata
+  include Concerns::PaperTrailMetadata
 
   # Add common responders to Application
   self.responder = ApplicationResponder
