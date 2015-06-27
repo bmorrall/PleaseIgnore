@@ -53,6 +53,7 @@ describe User, type: :model do
         context 'with an account belonging to the user' do
           let(:account) { create :developer_account, user: user }
 
+          it { is_expected.to be_able_to(:read, account) }
           it { is_expected.to be_able_to(:update, account) }
           it { is_expected.to be_able_to(:destroy, account) }
         end
@@ -60,6 +61,7 @@ describe User, type: :model do
           let(:another_user) { create :user }
           let(:account) { create :developer_account, user: another_user }
 
+          it { is_expected.to_not be_able_to(:read, account) }
           it { is_expected.to_not be_able_to(:update, account) }
           it { is_expected.to_not be_able_to(:destroy, account) }
         end

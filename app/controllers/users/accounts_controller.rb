@@ -3,15 +3,23 @@ module Users
   # Users Accounts Controller
   # Allows users to Delete and Sort connected OmniAuth accounts
   class AccountsController < ::ApplicationController
+    layout 'dashboard_backend'
+
     # CanCanCan Authorization
     before_action :authenticate_user!
-    load_resource through: :current_user, only: [:sort]
+    load_resource through: :current_user, only: [:index, :sort]
     before_action :safe_load_account_from_current_user, except: [:sort]
     authorize_resource
 
     # Setup responders
-    self.responder = UsersResponder
     respond_to :html
+
+    # @api public
+    # @example GET /users/accounts
+    # @return void
+    def index
+      # @accounts = current_user.accounts
+    end
 
     # @api public
     # @example DELETE /users/accounts/1 [xhr]
@@ -24,7 +32,7 @@ module Users
         # Display warning as account is not linked to profile
         flash[:warning] = t('flash.users.accounts.destroy.warning')
       end
-      respond_with(@account, flash: false)
+      respond_with(@account, flash: false, location: users_accounts_path)
     end
 
     # @api public
@@ -38,6 +46,10 @@ module Users
     end
 
     protected
+
+    # def safe_load_accounts_through_current_user
+    #   @accounts = current_user.accounts
+    # end
 
     # Loads the current users account without raising a ActiveRecord::RecordNotFound
     # @api private

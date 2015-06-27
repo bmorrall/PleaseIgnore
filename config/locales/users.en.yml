@@ -52,7 +52,6 @@ en:
           add_password: Add Login Password
           change_password: Change Password
           delete_user: Delete Account
-          linked_accounts: Linked Accounts
           profile: Profile Information
         labels:
           avatar_hint: 'Change your avatar at Gravatar.com'

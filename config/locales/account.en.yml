@@ -35,5 +35,9 @@ en:
     accounts:
       buttons:
         link_account: Link your %{provider_name} Account
+      index:
+        page_title: Connected Accounts
+        linked_accounts: Linked Accounts
+        connect_accounts: Connect Accounts
       labels:
         account: "%{provider} account"

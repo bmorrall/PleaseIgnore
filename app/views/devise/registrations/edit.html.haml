@@ -53,24 +53,6 @@
           - if resource.errors.any?
             = link_to t('buttons.cancel'), edit_user_registration_path, class: 'btn btn-default'
 
-- if display_accounts? && omniauth_providers.any?
-  %section
-    %header.page-header
-      %h3
-        = t('.headers.linked_accounts')
-
-    - cache [cache_uid, resource, :profile_accounts], default_cache_params do
-      .form-horizontal
-        // Linked Accounts
-        - decorate_account_collection resource.accounts do |accounts|
-          = sortable_accounts_list resource do
-            = render partial: 'account', collection: accounts
-
-        // Link Account Items
-        - omniauth_providers.each do |provider|
-          - unless resource.provider_account? provider
-            = render 'connect_account', provider: provider
-
 - if display_accounts? && can?(:destroy, resource)
   %section
     %header.page-header

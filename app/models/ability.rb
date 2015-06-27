@@ -17,6 +17,7 @@ class Ability
 
     # Restrictable Visitor Abilities
     can :create, Account
+    can :read, Account, user_id: user.id
 
     return unless user.persisted?
 

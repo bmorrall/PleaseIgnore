@@ -2,6 +2,9 @@
   = link_to edit_user_registration_path, class: 'btn btn-default' do
     = fa 'user'
     = t('layouts.navigation.my_profile')
+  = link_to users_accounts_path, class: 'btn btn-default' do
+    = fa 'sign-in'
+    = t('layouts.navigation.my_accounts')
   - if can? :read, PaperTrail::Version
     = link_to users_versions_path, class: 'btn btn-default' do
       = fa 'list-ul'

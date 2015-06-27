@@ -1,6 +1,29 @@
 require 'rails_helper'
 
 describe Users::AccountsController, type: :controller do
+  describe 'GET index' do
+    context 'with a signed in User' do
+      login_user
+      grant_ability :read, Account
+
+      context 'with a facebook account belonging to the user' do
+        let!(:facebook_account) { create(:facebook_account, user: logged_in_user) }
+
+        it 'should assign the account to @accounts' do
+          get :index
+          expect(assigns(:accounts)).to eq [facebook_account]
+        end
+
+        it 'should render the index template' do
+          get :index
+          expect(response).to be_success
+          expect(response).to render_template(:index)
+          expect(response).to render_with_layout(:dashboard_backend)
+        end
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     context 'with a signed in User' do
       login_user
@@ -19,7 +42,7 @@ describe Users::AccountsController, type: :controller do
             xhr :delete, :destroy, id: facebook_account.to_param
           end
 
-          it { expect(response).to redirect_to edit_user_registration_path }
+          it { expect(response).to redirect_to users_accounts_path }
           it do
             is_expected.to set_flash[:notice].to(
               t('flash.users.accounts.destroy.notice', provider_name: 'Facebook')
@@ -40,7 +63,7 @@ describe Users::AccountsController, type: :controller do
             xhr :delete, :destroy, id: facebook_account.to_param
           end
 
-          it { expect(response).to redirect_to edit_user_registration_path }
+          it { expect(response).to redirect_to users_accounts_path }
           it do
             is_expected.to set_flash[:warning].to(
               t('flash.users.accounts.destroy.warning')

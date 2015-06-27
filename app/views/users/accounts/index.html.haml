@@ -1,0 +1,32 @@
+- content_for(:page_title) { t('.page_title') }
+- content_for(:sidenav) { render 'users/sidenav', user: current_user }
+
+- if @accounts.any?
+  %section
+    %header.page-header
+      %h3
+        = t('.linked_accounts')
+
+    %p You can sign into your account by using the following accounts.
+
+    - cache [cache_uid, current_user, :linked_accounts], default_cache_params do
+      .form-horizontal
+        // Linked Accounts
+        - decorate_account_collection @accounts do |accounts|
+          = sortable_accounts_list current_user do
+            = render partial: 'account', collection: accounts
+
+- unless @accounts.count == omniauth_providers.count
+  %section
+    %header.page-header
+      %h3
+        = t('.connect_accounts')
+
+    %p Connecting your Social Network Accounts allows you to sign in with a single click.
+
+    - cache [cache_uid, current_user, :linked_account], default_cache_params do
+      .form-horizontal
+        // Link Account Items
+        - omniauth_providers.each do |provider|
+          - unless current_user.provider_account? provider
+            = render 'connect_account', provider: provider

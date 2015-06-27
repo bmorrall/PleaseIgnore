@@ -127,7 +127,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
             context 'with a valid request' do
               before(:each) { get provider }
 
-              it { is_expected.to redirect_to(edit_user_registration_path) }
+              it { is_expected.to redirect_to(users_accounts_path) }
               it 'should set the flash to notice' do
                 is_expected.to set_flash[:notice].to(account.success_message)
               end
@@ -147,7 +147,7 @@ describe Users::OmniauthCallbacksController, type: :controller do
             context 'with a valid request' do
               before(:each) { get provider }
 
-              it { is_expected.to redirect_to(edit_user_registration_path) }
+              it { is_expected.to redirect_to(users_accounts_path) }
               it 'should set the flash to alert' do
                 is_expected.to set_flash[:alert].to(
                   t('devise.omniauth_callbacks.failure', kind: provider_name, reason: error.message)

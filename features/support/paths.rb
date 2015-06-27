@@ -37,6 +37,9 @@ module NavigationHelpers
       when /my profile page/
         '/users/edit'
 
+      when /my accounts page/
+        '/users/accounts'
+
       when /the privacy policy page/
         '/docs/privacy'
 

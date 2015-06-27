@@ -30,7 +30,7 @@ module Users
           # Attempt to link account to current user
           account = Accounts::LinkAccountToUser.call(current_user, auth_hash, provider)
 
-          redirect_to edit_user_registration_path, notice: account.success_message
+          redirect_to users_accounts_path, notice: account.success_message
         else
           # Attempt to authenticate with account
           account = Accounts::AuthenticateWithAccount.call(auth_hash, provider)
@@ -80,7 +80,7 @@ module Users
 
       set_flash_message(:alert, :failure, kind: provider_name, reason: reason)
       if user_signed_in?
-        redirect_to edit_user_registration_path
+        redirect_to users_accounts_path
       else
         redirect_to new_user_session_path
       end

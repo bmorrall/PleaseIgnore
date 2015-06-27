@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resource :dashboard, only: [:show]
 
   namespace :users do
-    resources :accounts, only: :destroy do
+    resources :accounts, only: [:index, :destroy] do
       post :sort, on: :collection
     end
     resources :versions, only: [:index]

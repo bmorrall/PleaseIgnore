@@ -72,7 +72,7 @@ class AccountDecorator < Draper::Decorator
       method: 'delete',
       class: "input-group-addon unlink-account unlink-#{provider_class}",
       data: {
-        confirm: I18n.t('decorators.account.prompts.unlink_account', object.provider_name)
+        confirm: I18n.t('decorators.account.prompts.unlink_account', provider: object.provider_name)
       }
     )
   end
