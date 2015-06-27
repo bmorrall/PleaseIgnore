@@ -77,7 +77,7 @@ def reset_password
   page.body # No-op as background operation may not be complete
 end
 
-def visit_my_account
+def visit_my_profile
   within 'nav.navbar' do
     click_link t('layouts.navigation.my_dashboard')
   end if page.has_selector?('nav.navbar a', text: t('layouts.navigation.my_dashboard'))
@@ -87,7 +87,7 @@ def visit_my_account
     click_link @visitor[:name]
   end
   within 'nav.navbar' do
-    click_link t('layouts.navigation.my_account')
+    click_link t('layouts.navigation.my_profile')
   end
 end
 
@@ -157,13 +157,13 @@ When(/^I return to the site$/) do
 end
 
 When(/^I edit my account details$/) do
-  visit_my_account
+  visit_my_profile
   fill_in 'user_name', with: 'newname'
   click_button 'Update'
 end
 
 When(/^I edit my password details$/) do
-  visit_my_account
+  visit_my_profile
   fill_in 'user_password', with: 'newpassword1'
   fill_in 'user_password_confirmation', with: 'newpassword1'
   fill_in 'user_current_password', with: @visitor[:password]

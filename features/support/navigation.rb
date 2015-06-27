@@ -36,7 +36,7 @@ module NavigationHelpers
           click_link t('layouts.navigation.my_dashboard')
         end
         click_link @visitor[:name]
-        click_link t('layouts.navigation.my_account')
+        click_link t('layouts.navigation.my_profile')
       end
 
     when /the privacy policy page/
