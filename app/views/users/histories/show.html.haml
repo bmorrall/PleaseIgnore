@@ -2,6 +2,6 @@
 - content_for(:sidenav) { render 'users/sidenav', user: current_user }
 
 - if @versions.any?
-  = render 'grouped_list', versions: @versions
+  = render 'users/versions/grouped_list', versions: @versions
 - else
   = render_cell 'dashboard/empty', :display

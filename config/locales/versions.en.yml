@@ -9,6 +9,9 @@ en:
         guest: Guest
         rake: Rake
   users:
+    histories:
+      show:
+        page_title: 'Changelog'
     versions:
       index:
         page_title: History

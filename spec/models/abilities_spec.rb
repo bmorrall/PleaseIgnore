@@ -22,7 +22,22 @@ describe User, type: :model do
       it_behaves_like 'a standard user'
 
       # Versions
-      it { is_expected.to_not be_able_to(:read, PaperTrail::Version) }
+      it 'should be able to read versions created by the user' do
+        is_expected.to be_able_to(
+          :read, build_stubbed(:papertrail_version, whodunnit: user.id.to_s)
+        )
+        is_expected.to be_able_to(
+          :read, build_stubbed(:papertrail_version, whodunnit: "#{user.id} #{user.email}")
+        )
+        is_expected.to_not be_able_to(:read, build_stubbed(:papertrail_version))
+      end
+
+      it 'should not be able to inspect papertrail versions' do
+        is_expected.to_not be_able_to(:inspect, PaperTrail::Version)
+        is_expected.to_not be_able_to(
+          :inspect, build_stubbed(:papertrail_version, whodunnit: user.id.to_s)
+        )
+      end
     end
 
     describe 'as a admin' do
@@ -32,6 +47,7 @@ describe User, type: :model do
 
       # Versions
       it { is_expected.to be_able_to(:read, PaperTrail::Version) }
+      it { is_expected.to be_able_to(:inspect, PaperTrail::Version) }
     end
 
     describe 'as a banned user' do

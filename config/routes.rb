@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :accounts, only: [:index, :destroy] do
       post :sort, on: :collection
     end
+    resource :history, only: [:show]
     resources :versions, only: [:index]
   end
 

@@ -55,10 +55,6 @@ module PaperTrail
       end
     end
 
-    def whodunnit_ago
-      [whodunnit, created_at_ago].join(' ').html_safe
-    end
-
     protected
 
     def system_generated_entry?

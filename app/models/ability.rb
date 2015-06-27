@@ -17,24 +17,24 @@ class Ability
 
     # Restrictable Visitor Abilities
     can :create, Account
-    can :read, Account, user_id: user.id
 
     return unless user.persisted?
 
     # Authenticated User Abilties
     grant_account_abilities(user)
     grant_organisation_abilities(user)
+    grant_version_abilities(user)
 
     return unless user.has_role? :admin
 
     # Admin User Abilities
-    can :read, PaperTrail::Version
+    can [:read, :inspect], PaperTrail::Version
   end
 
   private
 
   def grant_account_abilities(user)
-    can [:update, :sort], Account, user_id: user.id
+    can [:read, :update, :sort], Account, user_id: user.id
     can :destroy, Account do |account|
       account.user_id == user.id && (!user.no_login_password? || user.accounts.size > 1)
     end
@@ -46,6 +46,13 @@ class Ability
     end
     can [:update, :destroy], Organisation do |organisation|
       user.has_role? :owner, organisation
+    end
+  end
+
+  def grant_version_abilities(user)
+    can :read, PaperTrail::Version do |version|
+      version.whodunnit == user.id.to_s ||
+        version.whodunnit.try(:starts_with?, "#{user.id} ")
     end
   end
 end

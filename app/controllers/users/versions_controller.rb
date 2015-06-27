@@ -4,15 +4,20 @@ module Users
     layout 'dashboard_backend'
 
     before_filter :authenticate_user!
-    load_and_authorize_resource class: 'PaperTrail::Version',
-                                through: :current_user,
-                                through_association: :related_versions
+    before_filter :authorize_inspect_history
 
     # @api public
     # @example GET /users/versions
     # @return void
     def index
+      @versions = current_user.related_versions
       @versions = @versions.reorder('created_at DESC')
+    end
+
+    protected
+
+    def authorize_inspect_history
+      authorize! :inspect, PaperTrail::Version
     end
   end
 end

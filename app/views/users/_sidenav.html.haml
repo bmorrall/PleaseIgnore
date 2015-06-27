@@ -5,7 +5,10 @@
   = link_to users_accounts_path, class: 'btn btn-default' do
     = fa 'sign-in'
     = t('layouts.navigation.my_accounts')
-  - if can? :read, PaperTrail::Version
-    = link_to users_versions_path, class: 'btn btn-default' do
-      = fa 'list-ul'
-      History
+  = link_to users_history_path, class: 'btn btn-default' do
+    = fa 'list-ul'
+    = t('layouts.navigation.my_history')
+
+- if can? :inspect, PaperTrail::Version
+  %p.small.text-center{ style: 'margin-top: 10px' }
+    = link_to 'changelog', users_versions_path

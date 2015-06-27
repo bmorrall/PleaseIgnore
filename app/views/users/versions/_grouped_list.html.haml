@@ -14,11 +14,14 @@
               %h4.list-group-item-heading
                 = version.title
               %p.list-group-item-text
-                = version.whodunnit_ago
+                - if can?(:inspect, version)
+                  = succeed ' ' do
+                    = version.whodunnit
+                = version.created_at_ago
               .collapse
                 %p.list-group-item-text
                   %small.user-location
                     = version.user_location
-                - if version.display_change_summary?
+                - if can?(:inspect, version) && version.display_change_summary?
                   .well.list-group-item-text.change-summary
                     = version.change_summary

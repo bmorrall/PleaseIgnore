@@ -240,6 +240,11 @@ class User < ActiveRecord::Base
     def related_versions
       PaperTrail::Version.where(item_owner: self)
     end
+
+    # Returns all version changes made by the current user
+    def history
+      PaperTrail::Version.where('whodunnit = (?) OR whodunnit like (?)', id.to_s, "#{id} %")
+    end
   end
 
   # Instance Methods (Images)
