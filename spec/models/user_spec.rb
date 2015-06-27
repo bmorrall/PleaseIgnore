@@ -116,42 +116,6 @@ describe User, type: :model do
         end
       end
     end
-
-    describe '#profile_picture' do
-      context 'with a primary account' do
-        let(:account) { build_stubbed(:developer_account) }
-        before(:each) do
-          # Stub the primary_account method
-          allow(subject).to receive(:primary_account).and_return(account)
-        end
-        context 'with a profile_picture' do
-          let(:account_image) { 'http://graph.facebook.com/1234567/picture?type=square' }
-          before(:each) { allow(account).to receive(:profile_picture).and_return(account_image) }
-
-          it 'returns the profile_picture from the primary account ' do
-            expect(subject.profile_picture).to be(account_image)
-          end
-        end
-        context 'without a profile picture' do
-          before(:each) { allow(account).to receive(:profile_picture).and_return(nil) }
-
-          it 'reverts back to the gravatar image' do
-            gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
-            allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
-
-            expect(subject.profile_picture).to eq(gravatar_image)
-          end
-        end
-      end
-      context 'with no accounts' do
-        it 'returns the gravatar image for the user' do
-          gravatar_image = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
-          allow(subject).to receive(:gravatar_image).and_return(gravatar_image)
-
-          expect(subject.profile_picture).to eq(gravatar_image)
-        end
-      end
-    end
   end
 
   describe 'Authentication' do

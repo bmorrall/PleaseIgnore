@@ -80,16 +80,6 @@ class User < ActiveRecord::Base
       accounts.first
     end
 
-    # Picture representation of user.
-    # Attempts to use accunt image, but falls back to #gravatar_image if not present
-    #
-    # @param size [Fixnum] size of the requested image (in px)
-    def profile_picture(size = 128)
-      account = primary_account
-      image ||= account && account.profile_picture(size)
-      image || gravatar_image(size)
-    end
-
     # Updates default properties from account
     #
     # @param account [Account] updated Account belonging to user

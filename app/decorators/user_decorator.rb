@@ -12,9 +12,7 @@ class UserDecorator < Draper::Decorator
 
   # Displays default sized profile image (32px)
   def profile_image
-    image_source = Rails.cache.fetch([object, :profile_image]) do
-      object.profile_picture(32)
-    end
+    image_source = object.gravatar_image(32)
     h.image_tag image_source, class: 'profile-image' if image_source
   end
 end

@@ -18,6 +18,8 @@
       = f.input :email,
                 disabled: resource.confirmed_at?,
                 hint: email_hint
+      = avatar_image_input_tag resource.gravatar_image(32)
+
       .form-group
         .col-sm-offset-3.col-sm-6
           %button.btn.btn.btn-primary{ type: 'submit' }
