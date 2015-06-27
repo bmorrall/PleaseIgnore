@@ -130,7 +130,7 @@ gem 'whenever', require: false
 # ==============
 
 gem 'rack-attack'
-gem 'secure_headers', '~> 2.1.0'
+gem 'secure_headers', '~> 2.2.1'
 
 # Devops
 # ==============
