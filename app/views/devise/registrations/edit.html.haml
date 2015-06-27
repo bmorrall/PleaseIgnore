@@ -14,7 +14,7 @@
                       defaults: horizontal_bootstrap_defaults) do |f|
       = f.error_notification
       = f.input :name
-      - email_hint = resource.last_sign_in_at? ? t('.labels.email_hint', date: local_time(resource.last_sign_in_at)).html_safe : nil
+      - email_hint = resource.confirmed_at? ? t('.labels.email_hint', date: local_time(resource.confirmed_at)).html_safe : nil
       = f.input :email,
                 disabled: resource.confirmed_at?,
                 hint: email_hint
