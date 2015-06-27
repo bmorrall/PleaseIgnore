@@ -21,6 +21,14 @@ body {
   padding: 0 0 120px;
 }
 
+// Forms
+// -------------------------
+
+// Preven form controls from having border on focus
+.input-group a.form-control:focus {
+  border-color: $input-border;
+}
+
 // Social Buttons
 // -------------------------
 
