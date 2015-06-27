@@ -10,10 +10,15 @@
                   wrapper: :horizontal_bootstrap_wide,
                   defaults: horizontal_bootstrap_wide_defaults) do |f|
   = f.error_notification
-  = f.input :referer, as: :hidden
-  = f.input :name, input_html: { autofocus: contact_autofocus_input?(:name) }
-  = f.input :email, input_html: { autofocus: contact_autofocus_input?(:email) }
-  = f.input :body, as: :text, input_html: { rows: 7, autofocus: contact_autofocus_input?(:body) }
+  = f.input :referer,
+            as: :hidden
+  = f.input :name,
+            input_html: { autofocus: contact_autofocus_input?(:name), disabled: user_signed_in? }
+  = f.input :email,
+            input_html: { autofocus: contact_autofocus_input?(:email), disabled: user_signed_in? }
+  = f.input :body,
+            as: :text,
+            input_html: { rows: 7, autofocus: contact_autofocus_input?(:body) || user_signed_in? }
   .form-group
     .col-sm-offset-2.col-sm-8
       %button.btn.btn-default{ type: 'submit' }

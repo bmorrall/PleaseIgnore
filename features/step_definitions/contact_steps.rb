@@ -59,11 +59,6 @@ Then(/^I should be notified I am making a request from (.+)$/) do |page_name|
   )
 end
 
-Then(/^I should see my name and email on the contact form$/) do
-  expect(find_field('contact_name').value).to eq(@visitor[:name])
-  expect(find_field('contact_email').value).to eq(@visitor[:email])
-end
-
 Then(/^I should see a thank you message$/) do
   expect(page).to have_selector(
     '.alert.alert-success', text: t('flash.contacts.create.notice')

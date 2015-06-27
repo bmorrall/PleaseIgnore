@@ -4,12 +4,6 @@ Feature: Contact Request pre-filled with User details
   A visitor or user starting a contact request
   Should have as much data already entered as possible
 
-  Scenario: Logged in user makes request
-    Given I am logged in
-    And I am at the home page
-    When I begin a new contact request
-    Then I should see my name and email on the contact form
-
   Scenario: Begin a contact request from the Sign up page
     Given I am at the sign up page
      When I begin a new contact request

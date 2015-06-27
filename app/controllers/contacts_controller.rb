@@ -56,7 +56,14 @@ class ContactsController < ApplicationController
   # @api private
   # @return [Hash] Sanitised params for creating a {Contact}
   def contact_params
-    params.require(:contact).permit(:name, :email, :body, :referer)
+    if user_signed_in?
+      params.require(:contact).permit(:body, :referer).merge(
+        name: current_user.name,
+        email: current_user.email
+      )
+    else
+      params.require(:contact).permit(:name, :email, :body, :referer)
+    end
   end
 
   # @api private
