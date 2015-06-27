@@ -11,7 +11,7 @@ AllCops:
 
 Metrics/AbcSize:
   Exclude:
-    - 'app/controllers/concerns/lograge_extensions.rb'
+    - 'app/controllers/concerns/lograge_metadata.rb'
 
 Metrics/ClassLength:
   Exclude:

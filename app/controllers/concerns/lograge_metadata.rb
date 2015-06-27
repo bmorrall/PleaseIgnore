@@ -1,6 +1,6 @@
 module Concerns
   # Extensions for Lograge Logging info
-  module LogrageExtensions
+  module LogrageMetadata
     extend ActiveSupport::Concern
     included do
       # Allows ip, user_agent and current user info to be added to logs
