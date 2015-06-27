@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: ($navbar-height + 20px);
 }
 
 #wrap {
@@ -20,21 +20,6 @@ body {
   /* Pad bottom by footer height + (optional) extra spacing */
   padding: 0 0 120px;
 }
-
-#footer {
-  height: 110px;
-  padding-top: 15px;
-}
-
-// Navbar
-// -------------------------
-
-.navbar-nav .profile-image {
-  width: 30px;
-  height: 30px;
-  margin: -15px 10px -15px 0;
-}
-
 
 // Social Buttons
 // -------------------------

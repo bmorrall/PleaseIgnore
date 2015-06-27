@@ -15,14 +15,30 @@
  *= require_self
  */
 
-@import 'themes/flatly/variables';
-@import 'variables';
-@import 'bootstrap_includes';
-@import 'themes/flatly/bootswatch';
-@import 'boostrap_xl';
+// Themes are from https://bootswatch.com/
 
+// Import bootstrap-sprockets
+@import 'bootstrap-sprockets';
+
+// Import bootswatch variables
+@import "bootswatch/flatly/variables";
+
+// Import theme overrides
+@import 'overrides/variables';
+@import 'overrides/inverted_navbar';
+
+// Then bootstrap itself
+@import 'bootstrap';
+
+// Import bootswatch theme
+@import "bootswatch/flatly/bootswatch";
+
+@import 'boostrap_xl';
 @import 'overrides/bootswatch';
 @import 'overrides/turbolinks';
+
+@import 'layouts/navbar';
+@import 'layouts/footer';
 
 @import 'layout';
 @import 'devise';

@@ -1,0 +1,6 @@
+// Extra Large Grid Columns
+$screen-xl-min: 1600px;
+
+// Flatten Navbar Height
+$navbar-height: min(45px, $navbar-height);
+$navbar-padding-vertical: (($navbar-height - $line-height-computed) / 2);

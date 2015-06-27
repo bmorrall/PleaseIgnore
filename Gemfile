@@ -104,6 +104,11 @@ gem 'email_prefixer'
 # Adds ActiveModel::Errors#details display method
 gem 'active_model-errors_details'
 
+# Assets
+# ==============
+
+gem 'bootswatch-rails'
+
 # Authentication
 # ==============
 

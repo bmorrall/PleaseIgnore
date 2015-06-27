@@ -1,0 +1,19 @@
+// Navbar
+// -------------------------
+
+.navbar {
+  border-bottom-width: 1px;
+}
+
+// Navbar -> Profile Image
+// -------------------------
+
+$profile-image-size: 30px;
+
+.navbar-nav .profile-image {
+  width: $profile-image-size;
+  height: $profile-image-size;
+
+  $profile-image-margin: -($profile-image-size / 2);
+  margin: ($profile-image-margin - 3px) 10px $profile-image-margin 0;
+}
