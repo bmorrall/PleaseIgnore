@@ -1,0 +1,24 @@
+- versions.group_by { |item| item.created_at.to_date }.each do |created_on, grouped_versions|
+  %section.versions-list
+    %h3.page-header
+      - if date_is_today? created_on
+        = t('paper_trail.versions.created_on.today')
+      - else
+        = l created_on, format: :long
+
+    .list-group
+      - grouped_versions.each do |unstyled_version|
+        - cache [cache_uid, unstyled_version, :history_item], expires_in: 1.hour do
+          - decorate_version(unstyled_version) do |version|
+            = link_to '#', class: 'list-group-item' do
+              %h4.list-group-item-heading
+                = version.title
+              %p.list-group-item-text
+                = version.whodunnit_ago
+              .collapse
+                %p.list-group-item-text
+                  %small.user-location
+                    = version.user_location
+                - if version.display_change_summary?
+                  .well.list-group-item-text.change-summary
+                    = version.change_summary
