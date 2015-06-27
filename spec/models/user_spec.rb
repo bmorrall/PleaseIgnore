@@ -40,14 +40,14 @@ describe User, type: :model do
       before(:each) { subject.email = 'bemo56@hotmail.com' }
       context 'with no arguments' do
         it 'returns a 128px gravatar image url' do
-          expected = 'http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128'
+          expected = 'https://secure.gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128&r=PG&d=identicon'
           expect(subject.gravatar_image).to eq(expected)
         end
       end
       %w(16 32 64 128).each do |size|
         context "with a size argument of #{size}" do
           it "returns a #{size}px gravatar image url" do
-            expected = "http://gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}"
+            expected = "https://secure.gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}&r=PG&d=identicon"
             expect(subject.gravatar_image(size)).to eq(expected)
           end
         end

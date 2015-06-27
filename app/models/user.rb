@@ -261,6 +261,6 @@ class User < ActiveRecord::Base
     return if email.blank?
 
     gravatar_id = Digest::MD5.hexdigest(email.downcase)
-    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
+    "https://secure.gravatar.com/avatar/#{gravatar_id}.png?s=#{size}&r=PG&d=identicon"
   end
 end
