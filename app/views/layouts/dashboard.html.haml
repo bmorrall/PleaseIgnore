@@ -9,7 +9,7 @@
       .container-fluid
         .row
           %aside.hidden-xs.hidden-sm.col-md-2.sidenav{ role: 'aside' }
-            = render 'sidenav'
+            = yield(:sidenav)
           %main.col-sm-12.col-md-10.col-lg-9.col-xl-8.main{ role: 'main' }
             = render 'layouts/messages'
             = yield

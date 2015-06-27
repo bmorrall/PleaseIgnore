@@ -1,7 +1,7 @@
-- if can? :update, @organisation
+- if can? :update, organisation
   .btn-group-vertical
-    = link_to organisation_path(@organisation), class: 'btn btn-default' do
-      = @organisation.name
-    = link_to edit_organisation_path(@organisation), class: 'btn btn-default' do
+    = link_to organisation_path(organisation), class: 'btn btn-default' do
+      = organisation.name
+    = link_to edit_organisation_path(organisation), class: 'btn btn-default' do
       = fa 'cog'
       Settings

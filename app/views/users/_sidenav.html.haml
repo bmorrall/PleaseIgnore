@@ -1,0 +1,11 @@
+.btn-group-vertical
+  = link_to dashboard_path, class: 'btn btn-default' do
+    = fa 'home'
+    = t('layouts.navigation.my_dashboard')
+  = link_to edit_user_registration_path, class: 'btn btn-default' do
+    = fa 'user'
+    = t('layouts.navigation.my_profile')
+  - if can? :read, PaperTrail::Version
+    = link_to users_versions_path, class: 'btn btn-default' do
+      = fa 'list-ul'
+      History

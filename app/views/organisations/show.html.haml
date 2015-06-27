@@ -1,4 +1,6 @@
 - content_for(:page_title) { @organisation.name }
+- content_for(:sidenav) { render 'organisations/sidenav', organisation: @organisation }
+
 %section
   .page-header
     %h3

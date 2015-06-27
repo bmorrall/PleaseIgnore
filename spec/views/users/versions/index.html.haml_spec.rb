@@ -1,12 +1,10 @@
 require 'rails_helper'
 
 describe 'users/versions/index.html.haml', type: :view do
-  context 'with a logged in user' do
+  context 'with a logged in user', :authenticated_view do
     let(:user) { create :user }
-    let(:ability) { Object.new.tap { |o| o.extend(CanCan::Ability) } }
     before(:each) do
       allow(controller).to receive(:current_user).and_return(user)
-      allow(controller).to receive(:current_ability).and_return(@ability)
     end
 
     context 'with a array of versions' do

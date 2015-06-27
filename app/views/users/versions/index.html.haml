@@ -1,3 +1,4 @@
 - content_for(:page_title) { t('.page_title') }
+- content_for(:sidenav) { render 'users/sidenav', user: current_user }
 
 = render 'grouped_list', versions: @versions

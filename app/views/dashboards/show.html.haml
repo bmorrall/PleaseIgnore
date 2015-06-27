@@ -1,3 +1,11 @@
 - content_for(:page_title) { t('.page_title') }
+- content_for(:sidenav) do
+  - if user_signed_in? && display_external_services?
+    %h5 Services
+    .btn-group-vertical
+      - if display_sidekiq_service_link?
+        = external_link sidekiq_web_path, class: 'btn btn-default' do
+          = fa 'line-chart'
+          Sidekiq
 
 - render_dashboard :dashboard, current_user
