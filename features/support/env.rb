@@ -71,16 +71,13 @@ Capybara.javascript_driver = :webkit
 # Turn the Cache on, ensure no cache leakage
 ActionController::Base.cache_store = :memory_store
 
-World(AbstractController::Translation) # Add t() translation helper
-
-# Allow known CDN urls to connect to the outside world
-Before('@javascript') do
-  Capybara.current_session.driver.tap do |driver|
-    driver.block_unknown_urls
-    driver.allow_url('ajax.googleapis.com') # Allow CDN Hosted jQuery
-    driver.allow_url('fonts.googleapis.com') # Allow Custom Fonts
-  end if Capybara.current_session.driver.respond_to? :block_unknown_urls
+Capybara::Webkit.configure do |config|
+  config.block_unknown_urls
+  config.allow_url('ajax.googleapis.com') # Allow CDN Hosted jQuery
+  config.allow_url('fonts.googleapis.com') # Allow Custom Fonts
 end
+
+World(AbstractController::Translation) # Add t() translation helper
 
 After do
   # Prevent rack-attack from limiting requests

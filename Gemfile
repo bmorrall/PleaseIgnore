@@ -190,7 +190,7 @@ group :test, :development do
   gem 'yardstick', require: false
 end
 group :test do
-  gem 'capybara-webkit'
+  gem 'capybara-webkit', '~> 1.6.0'
   gem 'capybara-screenshot'
   gem 'coveralls', require: false
   gem 'cucumber-rails', require: false
