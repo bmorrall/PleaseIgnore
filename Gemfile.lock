@@ -65,9 +65,9 @@ GEM
       execjs
       json
     bcrypt (3.1.10)
-    bootstrap-sass (3.3.5)
+    bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.2.19)
+      sass (>= 3.3.0)
     brakeman (3.0.5)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -91,7 +91,7 @@ GEM
     capybara-screenshot (1.0.9)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.5.2)
+    capybara-webkit (1.6.0)
       capybara (>= 2.3.0, < 2.5.0)
       json
     cells (3.11.3)
@@ -112,7 +112,7 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     connection_pool (2.2.0)
-    coveralls (0.8.1)
+    coveralls (0.8.2)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
       simplecov (~> 0.10.0)
@@ -270,7 +270,7 @@ GEM
     parallel (1.6.0)
     paranoia (2.1.3)
       activerecord (~> 4.0)
-    parser (2.2.2.5)
+    parser (2.3.0.pre.2)
       ast (>= 1.1, < 3.0)
     passenger (5.0.11)
       rack
