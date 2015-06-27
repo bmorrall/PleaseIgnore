@@ -14,3 +14,8 @@ Referer:
   <%= @contact.referer %>
 
 <%- end -%>
+<% unless @contact.user_agent.blank? -%>
+User Agent:
+  <%= @contact.user_agent %>
+
+<%- end -%>

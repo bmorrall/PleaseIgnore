@@ -17,6 +17,9 @@ class Contact
   # @return [String] referer url used to visit contact page
   attr_accessor :referer
 
+  # @return [String] user_agent of the signed in user
+  attr_accessor :user_agent
+
   # Validations
 
   validates :name, presence: true
@@ -34,7 +37,8 @@ class Contact
       name: name,
       email: email,
       body: body,
-      referer: referer
+      referer: referer,
+      user_agent: user_agent
     }
   end
 

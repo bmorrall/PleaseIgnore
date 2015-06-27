@@ -80,18 +80,35 @@ describe ContactsController, type: :controller do
     context 'as a visitor' do
       grant_ability :create, Contact
 
-      context 'with a valid xhr request' do
-        before(:each) { xhr :post, :create, contact: valid_create_attributes }
-        it { is_expected.to redirect_to thank_you_contact_path }
-        it { is_expected.to set_flash[:notice].to t('flash.contacts.create.notice') }
-        it 'should send a contact email to support' do
-          email = ActionMailer::Base.deliveries.last
-          expect(email.to).to eq(['support@pleaseignore.com'])
-          expect(email.from).to eq(['contact@pleaseignore.com'])
-          expect(email.subject).to end_with t('contact_mailer.support_email.subject')
-          expect(email.subject).to start_with "[#{t('application.name')} TEST] "
+      context 'with valid contact params' do
+        context 'with a valid xhr request' do
+          before(:each) { xhr :post, :create, contact: valid_create_attributes }
+
+          it 'should redirect to the thank you page with a flash notice' do
+            is_expected.to redirect_to thank_you_contact_path
+            is_expected.to set_flash[:notice].to t('flash.contacts.create.notice')
+          end
+          it 'should send a contact email to support' do
+            email = ActionMailer::Base.deliveries.last
+            expect(email.to).to eq(['support@pleaseignore.com'])
+            expect(email.from).to eq(['contact@pleaseignore.com'])
+            expect(email.subject).to end_with t('contact_mailer.support_email.subject')
+            expect(email.subject).to start_with "[#{t('application.name')} TEST] "
+          end
+        end
+
+        context 'with a xhr request containg a User Agent' do
+          let(:user_agent) { Faker::Internet.user_agent }
+          before(:each) { request.headers['USER-AGENT'] = user_agent }
+
+          it 'should set the contact referrer' do
+            xhr :post, :create, contact: valid_create_attributes
+            contact = assigns(:contact)
+            expect(contact.user_agent).to eq(user_agent)
+          end
         end
       end
+
       context 'with a xhr request with errors' do
         before(:each) { xhr :post, :create, contact: { name: 'not-valid' } }
         it { is_expected.to respond_with(:unprocessable_entity) }
@@ -123,6 +140,32 @@ describe ContactsController, type: :controller do
         expect do
           xhr :post, :create, contact: { name: 'not-valid' }
         end.to_not change(ActionMailer::Base.deliveries, :count)
+      end
+    end
+
+    context 'as a logged in user' do
+      context 'as a signed in user' do
+        login_user
+        grant_ability :create, Contact
+
+        context 'with valid params' do
+          def valid_user_contact_attributes
+            attributes_for(:contact).reject do |param|
+              %w(name email).include? param.to_s
+            end
+          end
+
+          context 'with a xhr request containg a User Agent' do
+            let(:user_agent) { Faker::Internet.user_agent }
+            before(:each) { request.headers['USER-AGENT'] = user_agent }
+
+            it 'should set Contact#user_agent' do
+              xhr :post, :create, contact: valid_user_contact_attributes
+              contact = assigns(:contact)
+              expect(contact.user_agent).to eq(user_agent)
+            end
+          end
+        end
       end
     end
   end

@@ -11,6 +11,7 @@ namespace :quality do
       cane.no_doc        = true
       cane.style_glob    = './{app,config,feature,lib,spec}/**/*.rb'
       cane.style_exclude = [
+        './lib/core_extensions/faker/user_agent.rb',
         './spec/spec_helper.rb',
         './spec/support/**/*.rb',
         './spec/views/users/versions/index.html.haml_spec.rb'

@@ -56,20 +56,22 @@ class ContactsController < ApplicationController
   # @api private
   # @return [Hash] Sanitised params for creating a {Contact}
   def contact_params
-    if user_signed_in?
-      params.require(:contact).permit(:body, :referer).merge(
-        name: current_user.name,
-        email: current_user.email
-      )
-    else
-      params.require(:contact).permit(:name, :email, :body, :referer)
-    end
+    allowed_params = [:body, :referer]
+    allowed_params << [:name, :email] unless user_signed_in?
+    params.require(:contact).permit(allowed_params).merge(contact_params_from_request)
   end
 
   # @api private
   # @return [Strings] The url previously visited when displaying the contact form
   def http_referer
     @http_referer ||= request.headers['HTTP_X_XHR_REFERER'] || request.headers['HTTP_REFERER']
+  end
+
+  # Adds the user agent, and name and email if the user is signed in
+  def contact_params_from_request
+    { user_agent: request.user_agent }.tap do |extra_params|
+      extra_params.merge(name: current_user.name, email: current_user.email) if user_signed_in?
+    end
   end
 
   # Sets default values for contact based on current_user and refererr

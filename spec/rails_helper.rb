@@ -16,6 +16,9 @@ require 'rspec/rails'
 
 require 'capybara-screenshot/rspec'
 
+require 'core_extensions/faker/user_agent'
+Faker::Internet.extend(CoreExtensions::Faker::UserAgent)
+
 # Use webkit for js features
 Capybara.javascript_driver = :webkit
 

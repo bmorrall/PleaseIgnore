@@ -25,6 +25,7 @@ Metrics/LineLength:
   Exclude:
     - 'bin/vagrant'
     - 'features/**/*'
+    - 'lib/core_extensions/faker/user_agent.rb'
     - 'lib/tasks/cucumber.rake'
     - 'spec/views/users/versions/index.html.haml_spec.rb'
 
