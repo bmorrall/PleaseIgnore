@@ -30,7 +30,7 @@ module AccountsHelper
   def provider_icon(provider)
     icon_name =
       if provider.to_s =~ /developer/
-        'user'  # Generic user icon
+        'user' # Generic user icon
       else
         provider_class(provider)
       end

@@ -25,7 +25,7 @@ describe 'Sessions', type: :request do
       context 'with a successful login attempt' do
         let(:user) { create(:user) }
         before(:each) do
-          post user_session_path,  user: { email: user.email, password: user.password }
+          post user_session_path, user: { email: user.email, password: user.password }
         end
 
         it 'redirects to the user dashboard' do
@@ -34,7 +34,7 @@ describe 'Sessions', type: :request do
       end
       context 'with a failed login attempt' do
         before(:each) do
-          post user_session_path,  user: { email: 'test@example.com', password: 'wrong' }
+          post user_session_path, user: { email: 'test@example.com', password: 'wrong' }
         end
 
         it 'displays a generic alert to the user' do
@@ -44,7 +44,7 @@ describe 'Sessions', type: :request do
       context 'with a invalid login attempt' do
         before(:each) do
           create :user, email: 'test@example.com'
-          post user_session_path,  user: { email: 'test@example.com', password: 'wrong' }
+          post user_session_path, user: { email: 'test@example.com', password: 'wrong' }
         end
 
         it 'displays a generic alert to the user' do

@@ -203,3 +203,11 @@ More details can be found at: https://gist.github.com/afeld/5704079.
 Initial installation requires the Postgres addon to be added to the dyno.
 
 `heroku addons:add heroku-postgresql`
+
+## Updating Libraries
+
+### Ruby/Rails
+
+Run `bundle update` to update all unlocked gems to the latest version.
+Verify everything works by running `rake travis`.
+Then individually unlock gems and run `bundle update` until updated to a satisfactory level.

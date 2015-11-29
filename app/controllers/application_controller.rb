@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     # @param [Number] max_age maximum time for cache to be kept
     # @api private
     def add_cache_control_headers(max_age = 10.minutes.to_s)
-      request.session_options[:skip] = true  # removes session data
+      request.session_options[:skip] = true # removes session data
       response.headers['Cache-Control'] = "public, max-age=#{max_age}"
     end
 

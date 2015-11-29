@@ -34,7 +34,7 @@ describe 'Registrations', type: :request do
           follow_redirect! # to callback path
           follow_redirect! # to user registration
 
-          post user_registration_path,  user: attributes_for(:user)
+          post user_registration_path, user: attributes_for(:user)
         end
 
         it 'displays a failed login attempt to the user' do

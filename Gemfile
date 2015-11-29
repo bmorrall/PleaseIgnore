@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.3'
+gem 'rails', '4.2.5'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18.2'
@@ -26,7 +26,7 @@ gem 'jquery-rails-cdn'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks', '~> 2.5.3'
-gem 'turboboost', git: 'https://github.com/waymondo/turboboost.git'
+gem 'turboboost'
 
 # Use Twitter Bootstrap for base stylesheet
 gem 'bootstrap-sass'
@@ -35,12 +35,12 @@ gem 'bootstrap-sass'
 gem 'jbuilder' # , '~> 1.2'
 
 # Use simple form to simplify forms
-gem 'simple_form', '~> 3.1.0'
+gem 'simple_form'
 
 gem 'acts_as_list'
 
 # User authentication with Devise
-gem 'devise', '~> 3.5.1'
+gem 'devise'
 
 # Use Action Caching to save pages
 gem 'actionpack-action_caching'
@@ -61,10 +61,10 @@ gem 'high_voltage'
 gem 'flutie'
 
 # Soft Delete Critical Records
-gem 'paranoia', '~> 2.0'
+gem 'paranoia', '2.1.3'
 
 # Use redcarpet for markdown parseing
-gem 'redcarpet'
+gem 'redcarpet', require: 'tilt/redcarpet'
 
 # Use sendgrid to send emails
 gem 'sendgrid'
@@ -96,7 +96,7 @@ gem 'devise-async'
 gem 'devise-async-activejob'
 
 # Leave a Paper Trail
-gem 'paper_trail'
+gem 'paper_trail', '~> 3.0.8'
 
 # Add Application Name Prefix to Emails
 gem 'email_prefixer'
@@ -183,11 +183,11 @@ end
 # gem 'debugger', group: [:development, :test]
 
 group :test, :development do
-  gem 'rspec-rails', '~> 3.3.2'
+  gem 'rspec-rails', '~> 3.4.0'
   gem 'pry-rails'
 
   # Code Quality Metrics
-  gem 'i18n-tasks', require: false
+  gem 'i18n-tasks', '~> 0.8.5', require: false
   gem 'brakeman', require: false
   gem 'cane', require: false
   gem 'haml_lint', require: false
@@ -195,7 +195,7 @@ group :test, :development do
   gem 'yardstick', require: false
 end
 group :test do
-  gem 'capybara-webkit', '~> 1.6.0'
+  gem 'capybara-webkit'
   gem 'capybara-screenshot'
   gem 'coveralls', require: false
   gem 'cucumber-rails', require: false
@@ -204,5 +204,5 @@ group :test do
   gem 'faker'
   gem 'email_spec'
   gem 'rspec-its'
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda', require: false
 end
