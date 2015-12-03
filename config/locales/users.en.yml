@@ -35,6 +35,8 @@ en:
       form:
         title: Confirm your Account
         send: Send Confirmation Email
+    failure:
+      deleted_account: "You've deleted your account. Thanks!"
     passwords:
       edit:
         page_title: Change your password
