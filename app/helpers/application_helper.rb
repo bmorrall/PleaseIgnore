@@ -2,6 +2,15 @@
 #
 # Provides common helpers for application
 module ApplicationHelper
+  # Cells 3 style cell render call.
+  # @param name Name of cell to be rendered
+  # @param state Name of view method to be invoked
+  # @deprecated use cell(name).call(state) instead
+  def render_cell(name, state, *args)
+    cell(name).call(state, *args)
+  end
+  deprecate :render_cell
+
   # Returns the translated Application Name of the app
   def application_name
     @application_name ||= t('application.name')

@@ -4,4 +4,4 @@
 - if @versions.any?
   = render 'users/versions/grouped_list', versions: @versions
 - else
-  = render_cell 'dashboard/empty', :display
+  = cell('dashboard/empty').call(:display)
