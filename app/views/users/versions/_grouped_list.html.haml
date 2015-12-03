@@ -14,7 +14,7 @@
               %h4.list-group-item-heading
                 = version.title
               %p.list-group-item-text
-                - if can?(:inspect, version)
+                - if can?(:inspect, unstyled_version)
                   = succeed ' ' do
                     = version.whodunnit
                 = version.created_at_ago
@@ -22,6 +22,6 @@
                 %p.list-group-item-text
                   %small.user-location
                     = version.user_location
-                - if can?(:inspect, version) && version.display_change_summary?
+                - if can?(:inspect, unstyled_version) && version.display_change_summary?
                   .well.list-group-item-text.change-summary
                     = version.change_summary
