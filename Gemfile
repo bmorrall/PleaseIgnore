@@ -89,7 +89,7 @@ gem 'rolify'
 
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
-gem 'sidekiq', '~> 3.4.0'
+gem 'sidekiq', '~> 4.0.1'
 
 # Send Devise mail through Sidekiq
 gem 'devise-async'
@@ -136,7 +136,7 @@ gem 'whenever', require: false
 # ==============
 
 gem 'rack-attack'
-gem 'secure_headers', '~> 2.2.1'
+gem 'secure_headers', '~> 2.4.4'
 
 # Devops
 # ==============
@@ -145,7 +145,7 @@ gem 'secure_headers', '~> 2.2.1'
 gem 'lograge'
 gem 'logstash-event'
 
-gem 'rollbar', '~> 1.5.1'
+gem 'rollbar'
 
 group :production do
   # Integration with heroku
