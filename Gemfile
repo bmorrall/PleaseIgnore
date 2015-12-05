@@ -95,7 +95,7 @@ gem 'devise-async'
 gem 'devise-async-activejob'
 
 # Leave a Paper Trail
-gem 'paper_trail', '~> 3.0'
+gem 'paper_trail', '~> 4.1.0'
 
 # Add Application Name Prefix to Emails
 gem 'email_prefixer'

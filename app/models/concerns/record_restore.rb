@@ -10,7 +10,7 @@ module Concerns # :nodoc:
     # [paper_trail] tricks record_update into creating a 'restore' event
     def record_restore
       self.paper_trail_event = 'restore'
-      record_update.save! # NOTE: Future versions of paper_trail call create
+      record_update(true) # NOTE: Future versions of paper_trail call create
       clear_version_instance!
       self.paper_trail_event = nil
     end

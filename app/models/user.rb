@@ -113,15 +113,17 @@ class User < ActiveRecord::Base
 
       # Adds a Version on the Role Object indicatating a added role
       def after_add_role(role)
-        role.send(:record_create).tap do |role_version|
-          update_role_version_attributes role_version, role
+        role.send(:record_create).tap do
+          last_version = role.versions.last
+          update_role_version_attributes(last_version, role) if last_version.event == 'create'
         end if PaperTrail.enabled? && Role.paper_trail_enabled_for_model?
       end
 
       # Adds a Version on the Role Object indicating a removeds Role
       def after_remove_role(role)
-        role.send(:record_destroy).tap do |role_versions|
-          update_role_version_attributes role_versions.last, role # Last is the created item
+        role.send(:record_destroy).tap do
+          last_version = role.versions.last
+          update_role_version_attributes(last_version, role) if last_version.event == 'destroy'
         end if PaperTrail.enabled? && Role.paper_trail_enabled_for_model?
       end
     end
