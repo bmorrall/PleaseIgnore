@@ -52,7 +52,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 
 # Use Haml for cleaner HTML
-gem 'haml', github: 'haml/haml', ref: '7c7c169' # Use 4.1, required for cells
+gem 'haml', github: 'haml/haml', ref: '9f025d1' # Use 4.1, required for cells
 
 # Static Pages served with high_voltage
 gem 'high_voltage'
