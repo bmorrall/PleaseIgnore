@@ -1,7 +1,7 @@
 GIT
   remote: git://github.com/haml/haml.git
-  revision: 9f025d1509b648b3f94cd45c21c67fa3a12c0fb5
-  ref: 9f025d1
+  revision: faa42fb0fa3c71209855e9862d1ec0949979a813
+  tag: 4.1.0.beta.1
   specs:
     haml (4.1.0.beta.1)
       tilt
