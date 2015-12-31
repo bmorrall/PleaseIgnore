@@ -19,7 +19,7 @@
 
   / Registration Details
   = f.input :name, input_html: { autofocus: true }
-  = f.input :email
+  = f.input :email, required: resource.email_required?
 
   / Don't require passwords with linked accounts
   - if resource.password_required?

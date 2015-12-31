@@ -25,6 +25,8 @@ module Concerns
 
         # Callbacks
 
+        before_validation :convert_blank_email_to_nil
+
         # Save built accounts that have been imported from a session
         after_create :save_new_session_accounts
 
@@ -40,6 +42,11 @@ module Concerns
           super.tap do |user|
             user.send :add_accounts_from_session, session
           end
+        end
+
+        # [Devise] Allows users to be saved without an email address if a account has been linked
+        def email_required?
+          new_session_accounts.empty? && accounts.empty?
         end
 
         # [Devise] Allows valid_password to accept a nil current_password value
@@ -77,7 +84,7 @@ module Concerns
       # @param account [Account] updated Account belonging to user
       def update_defaults_from_account(account)
         self.name = account.name if name.blank?
-        self.email = account.email if email.blank?
+        self.email = account.email if email.blank? && !email_changed?
       end
 
       # New Session Accounts
@@ -99,6 +106,11 @@ module Concerns
       end
 
       protected
+
+      # Changes a blank email string to nil
+      def convert_blank_email_to_nil
+        self.email = nil if email == ''
+      end
 
       # Collects auth hashes from all stored providers and adds them to the new_session_accounts
       # temporary list.

@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
+#  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
@@ -50,6 +50,7 @@ FactoryGirl.define do
       confirmed_at { Time.zone.now }
     end
     trait(:no_login_password) do
+      email nil
       password nil
       password_confirmation nil
       after(:build) { |user| user.new_session_accounts << build(:developer_account) }
