@@ -36,26 +36,32 @@ describe User, type: :model do
   it_behaves_like 'a soft deletable model'
 
   describe '#gravatar_image' do
+    let(:instance) { described_class.new }
+
     context 'with a email address' do
-      before(:each) { subject.email = 'bemo56@hotmail.com' }
-      context 'with no arguments' do
-        it 'returns a 128px gravatar image url' do
-          expected = 'https://secure.gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=128&r=PG&d=identicon'
-          expect(subject.gravatar_image).to eq(expected)
+      let(:email) { Faker::Internet.email }
+      before(:each) { instance.email = email }
+
+      context 'with no size argument' do
+        subject { instance.gravatar_image }
+
+        it 'calls the gravatar service with email and a size argument of 128' do
+          gravatar_url = double('gravatar url')
+          expect(Gravatar).to receive(:gravatar_image_url).with(email, 128).and_return(gravatar_url)
+          expect(subject).to eq gravatar_url
         end
       end
       %w(16 32 64 128).each do |size|
         context "with a size argument of #{size}" do
-          it "returns a #{size}px gravatar image url" do
-            expected = "https://secure.gravatar.com/avatar/63095bd9974641871e51b92ef72b20a8.png?s=#{size}&r=PG&d=identicon"
-            expect(subject.gravatar_image(size)).to eq(expected)
+          subject { instance.gravatar_image(size.to_i) }
+
+          it "calls the gravatar service with email and a size argument of #{size}" do
+            gravatar_url = double('gravatar url')
+            expect(Gravatar).to receive(:gravatar_image_url).with(email, size.to_i)
+              .and_return(gravatar_url)
+            expect(subject).to eq gravatar_url
           end
         end
-      end
-    end
-    context 'with no email address' do
-      it 'returns nil' do
-        expect(subject.gravatar_image).to be_nil
       end
     end
   end

@@ -33,10 +33,9 @@ module Accounts
     end
 
     # Account Profile Picture
-    # @param [Fixnum] _size Preferred size of the image
     # @return [String] Path to Account Profile Picture or nil
-    def profile_picture(_size = 128)
-      nil
+    def image
+      Gravatar.gravatar_image_url(uid, 32)
     end
 
     # Common name for Account Provider

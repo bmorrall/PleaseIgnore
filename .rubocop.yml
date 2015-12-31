@@ -27,7 +27,7 @@ Metrics/LineLength:
     - 'features/**/*'
     - 'lib/core_extensions/faker/user_agent.rb'
     - 'lib/tasks/cucumber.rake'
-    - 'spec/models/user_spec.rb'
+    - 'spec/services/gravatar_spec.rb'
     - 'spec/views/users/versions/index.html.haml_spec.rb'
 
 Style/Documentation:
