@@ -32,6 +32,7 @@
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
+
 class User < ActiveRecord::Base
   # Use paranoia to soft delete records (instead of destroying them)
   acts_as_paranoid
@@ -57,38 +58,6 @@ class User < ActiveRecord::Base
 
   # Concerns
 
-  concerning :Accounts do
-    included do
-      include Concerns::AccountsFromSession
-
-      has_many :accounts,
-               -> { order 'position ASC, accounts.type ASC' },
-               dependent: :destroy
-    end
-
-    # Returns true if the user has at least one Account with `provider`
-    #
-    # @param provider [String] name of provider
-    # @return [Boolean] true if the account has a provider account
-    def provider_account?(provider)
-      account_type = Account.provider_account_class(provider).name
-      accounts.where(type: account_type).any?
-    end
-
-    # Primary account of user
-    def primary_account
-      accounts.first
-    end
-
-    # Updates default properties from account
-    #
-    # @param account [Account] updated Account belonging to user
-    def update_defaults_from_account(account)
-      self.name = account.name if name.blank?
-      self.email = account.email if email.blank?
-    end
-  end
-
   concerning :Authentication do
     included do
       # Include default devise modules. Others available are:
@@ -101,25 +70,17 @@ class User < ActiveRecord::Base
         :rememberable,
         :trackable,
         :validatable,
-        :async, # Send email through Sidekiq
-        :omniauthable,
-        :token_authenticatable,
-        omniauth_providers: [
-          :developer,
-          :facebook,
-          :twitter,
-          :github,
-          :google_oauth2
-        ]
+        :async # Send email through Sidekiq
       )
 
-      # Authentications are used for api authentication
-      has_many :authentication_tokens, dependent: :destroy
+      include Concerns::Users::DeviseTokenAuthentication
+      include Concerns::Users::DeviseAccountAuthentication
+      include Concerns::Users::DeviseSoftDeletion
     end
   end
 
   concerning :DeviseOverrides do
-    # [Devise] Checks if the password has not be set to the user,
+    # Checks if the password has not be set to the user,
     # or the password was previous not set
     def no_login_password?
       encrypted_password.blank? || (
@@ -131,46 +92,6 @@ class User < ActiveRecord::Base
     # [Devise] Allow users to continue using the app without confirming their email addresses
     def confirmation_required?
       false
-    end
-
-    # [Devise] Checks whether a password is needed or not. For validations only.
-    # Passwords are always required if it's a new record, or if the password
-    # or confirmation are being set somewhere.
-    def password_required?
-      (!persisted? && new_session_accounts.empty?) ||
-        !password.nil? ||
-        !password_confirmation.nil?
-    end
-
-    # [Devise] Allows valid_password to accept a nil current_password value
-    def update_with_password(params, *options)
-      @allow_empty_password = true
-      super
-    ensure
-      @allow_empty_password = false
-    end
-
-    # Verifies whether an password (ie from sign in) is the user password.
-    def valid_password?(password)
-      # User is adding a password
-      return allow_empty_password? if password.nil? && encrypted_password.blank?
-      super # Fallback to standard logic
-    end
-
-    # ensure user account is active
-    def active_for_authentication?
-      super && !deleted_at?
-    end
-
-    # provide a custom message for a deleted account
-    def inactive_message
-      !deleted_at? ? super : :deleted_account
-    end
-
-    protected
-
-    def allow_empty_password?
-      !!@allow_empty_password
     end
   end
 

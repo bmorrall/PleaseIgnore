@@ -79,49 +79,6 @@ describe User, type: :model do
     end
   end
 
-  describe 'Accounts' do
-    it { is_expected.to have_many(:accounts).dependent(:destroy) }
-
-    describe '#primary_account' do
-      it 'returns the first account' do
-        first_account = build_stubbed(:developer_account)
-        allow(subject).to receive(:accounts).and_return([
-          first_account,
-          build_stubbed(:developer_account)
-        ])
-        expect(subject.primary_account).to be(first_account)
-      end
-    end
-
-    describe '#provider_account?' do
-      subject { create(:user) }
-      context 'with no Account' do
-        Account::PROVIDERS.each do |provider|
-          it "returns false for #{provider}" do
-            subject.provider_account?(provider)
-          end
-        end
-      end
-      Account::PROVIDERS.each do |provider|
-        context "with a #{provider} account" do
-          let!(:account) { create :"#{provider}_account", user: subject }
-          it "returns true for #{provider}" do
-            expect(subject.provider_account? provider).to be(true)
-          end
-          Account::PROVIDERS.reject { |p| p == provider }.each do |p|
-            it "returns false for #{p}" do
-              expect(subject.provider_account? p).to be(false)
-            end
-          end
-        end
-      end
-    end
-  end
-
-  describe 'Authentication' do
-    it { should have_many(:authentication_tokens).dependent(:destroy) }
-  end
-
   describe 'DeviseOverrides' do
     describe '#no_login_password?' do
       let(:instance) { described_class.new }
@@ -144,79 +101,6 @@ describe User, type: :model do
         it 'should remain false when a new password has been set' do
           instance.password = Faker::Lorem.word
           is_expected.to be(false)
-        end
-      end
-    end
-
-    describe '#password_required?' do
-      let(:instance) { described_class.new }
-      subject { instance.password_required? }
-
-      it 'returns true when password is set' do
-        instance.password = Faker::Lorem.word
-        is_expected.to be(true)
-      end
-      it 'returns true when password_confirmation is set' do
-        instance.password_confirmation = Faker::Lorem.word
-        is_expected.to be(true)
-      end
-      context 'with a new user' do
-        context 'with a new session account' do
-          before(:each) do
-            allow(instance).to receive(:new_session_accounts).and_return([double(:account)])
-          end
-          it { is_expected.to be(false) }
-        end
-        context 'with no new session accounts' do
-          before(:each) do
-            allow(instance).to receive(:new_session_accounts).and_return([])
-          end
-          it { is_expected.to be(true) }
-        end
-      end
-      context 'with a persisted user' do
-        let(:instance) { create(:user).tap(&:reload) }
-
-        context 'with a new session account' do
-          before(:each) do
-            allow(instance).to receive(:new_session_accounts).and_return([double(:account)])
-          end
-          it { is_expected.to be(true) }
-        end
-      end
-    end
-
-    describe '#update_with_password' do
-      let(:instance) { described_class.new }
-      let(:attributes) { { password: 'test' } }
-      subject { instance.update_with_password(attributes) }
-
-      it 'should call update_attributes with a valid password' do
-        expect(instance).to receive(:valid_password?).with(nil).and_return(true)
-        expect(instance).to receive(:update_attributes)
-        subject
-      end
-      it 'should call valid_password with allow_empty_password as true then return it to false' do
-        expect(instance).to receive(:valid_password?) do
-          expect(instance.send(:allow_empty_password?)).to be(true)
-        end
-        expect(instance).to receive(:update_attributes)
-        subject
-        expect(instance.send(:allow_empty_password?)).to be(false)
-      end
-    end
-
-    describe '#valid_password?' do
-      subject { instance.valid_password?(password) }
-
-      context 'when the password is nil and the encrypted password is blank' do
-        let(:password) { nil }
-        let(:instance) { described_class.new }
-
-        it 'should return the result from allow_empty_password?' do
-          result = double('result')
-          allow(instance).to receive(:allow_empty_password?).and_return(result)
-          expect(subject).to eq result
         end
       end
     end
