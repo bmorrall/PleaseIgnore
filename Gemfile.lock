@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/haml/haml.git
+  remote: git://github.com/bmorrall/haml.git
   revision: faa42fb0fa3c71209855e9862d1ec0949979a813
   tag: 4.1.0.beta.1
   specs:
