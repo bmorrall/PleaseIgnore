@@ -26,7 +26,7 @@
 #  index_accounts_on_user_id     (user_id)
 #
 
-# Represents an Omniauth connected Account belonging to a {User}
+# Represents an OmniAuth connected Account belonging to a {User}
 # @abstract Subclass and override {#account_uid} and {#provider} to implement
 #   a custom Account class.
 class Account < ActiveRecord::Base
@@ -70,7 +70,7 @@ class Account < ActiveRecord::Base
   class << self
     # Finds a existing Account from an OmniAuth hash, and updates from latest details
     #
-    # @param auth_hash [OmniAuth::AuthHash] Hash containg payload from Omniauth
+    # @param auth_hash [OmniAuth::AuthHash] Hash containg payload from OmniAuth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] Account matching `auth_hash` or nil
     # @raise [InvalidProviderError] if the `expected_provider` doesn't match the `auth_hash`
@@ -87,7 +87,7 @@ class Account < ActiveRecord::Base
 
     # Creates a new Account from an OmniAuth hash
     #
-    # @param auth_hash [Hash] Hash containg payload from Omniauth
+    # @param auth_hash [Hash] Hash containg payload from OmniAuth
     # @param expected_provider [String] runs check to ensure `auth_hash` is from expected provider
     # @return [Account] a new Account containing extracted data from `auth_hash`
     # @raise [InvalidProviderError] if the `expected_provider` doesn't match the `auth_hash`
@@ -235,7 +235,7 @@ class Account < ActiveRecord::Base
   # Update Account properties from OAuth data
   #
   # @api private
-  # @param auth_hash [Hash] Hash containg payload from Omniauth
+  # @param auth_hash [Hash] Hash containg payload from OmniAuth
   def update_from_auth_hash(auth_hash)
     update_account_info auth_hash['info']
     update_oauth_credentials auth_hash['credentials']
@@ -247,7 +247,7 @@ class Account < ActiveRecord::Base
   # Logs any failed attempts to save.
   #
   # @api private
-  # @param auth_hash [Hash] Hash containg payload from Omniauth
+  # @param auth_hash [Hash] Hash containg payload from OmniAuth
   def update_and_save_from_auth_hash(auth_hash)
     update_from_auth_hash(auth_hash)
     unless save

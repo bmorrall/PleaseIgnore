@@ -1,4 +1,4 @@
-# Provides helpers for handling Omniauth
+# Provides helpers for handling OmniAuth
 module OmniauthHelpers
   # Sets OmniAuth to accept provider login attempts by returning auth_hash
   def set_oauth(provider, auth_hash)
@@ -8,6 +8,6 @@ module OmniauthHelpers
 end
 
 RSpec.configure do |config|
-  # Include Omniauth helpers with omniauth tag
+  # Include OmniAuth helpers with omniauth tag
   config.include OmniauthHelpers, omniauth: true
 end

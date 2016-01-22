@@ -1,4 +1,4 @@
-# Provides helpers for handling Omniauth
+# Provides helpers for handling OmniAuth
 module OmniauthHelpers
   # @param provider [Symbol] name of provider to create auth hash for
   # @return [Hash] OAuth Hash for representing a provider account

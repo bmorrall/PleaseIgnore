@@ -49,9 +49,9 @@ module Users
 
     private
 
-    # Auth Hash provided by Omniauth
+    # Auth Hash provided by OmniAuth
     # @api private
-    # @return [Hash] Omniauth Hash with Account Credentials
+    # @return [Hash] OmniAuth Hash with Account Credentials
     def auth_hash
       @auth_hash ||= request.env['omniauth.auth']
     end

@@ -45,7 +45,7 @@ gem 'devise'
 # Use Action Caching to save pages
 gem 'actionpack-action_caching'
 
-# Omniauth providers
+# OmniAuth providers
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'

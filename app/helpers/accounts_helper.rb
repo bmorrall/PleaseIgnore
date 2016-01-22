@@ -9,7 +9,7 @@ module AccountsHelper
     decorate_collection accounts, AccountDecorator, &block
   end
 
-  # Returns Omniauth providers in even groups
+  # Returns OmniAuth providers in even groups
   def omniauth_provider_groups(&block)
     # Find the most even number of groups
     groups = [5, 4].find { |g| omniauth_providers.count % g == 0 }

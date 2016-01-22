@@ -51,13 +51,15 @@ module Concerns
 
         # [Devise] Allows valid_password to accept a nil current_password value
         def update_with_password(params, *options)
-          @allow_empty_password = encrypted_password.blank?
+          @allow_empty_password = !!encrypted_password.blank?
           super
         ensure
           @allow_empty_password = false
         end
 
-        # Verifies whether an password (ie from sign in) is the user password.
+        # [Devise] Verifies whether an password (ie from sign in) is the user password.
+        # @param password [String] password to be checked or blank
+        # @return [Boolean] true if the password is valid, or allowed to be blank
         def valid_password?(password)
           # User is adding a password
           return allow_empty_password? if password.nil? && encrypted_password.blank?
@@ -75,6 +77,7 @@ module Concerns
       end
 
       # Primary account of user
+      # @return [Account] Account the User prefers to consider as primary
       def primary_account
         accounts.first
       end
@@ -127,10 +130,10 @@ module Concerns
         end
       end
 
-      # Collections auth hashes from all stored providers and adds them to
-      # the `new_session_accounts` temporary list
+      # builds accounts from Stored OmniAuth hashes
       #
       # @param session [Hash] Guest session containg provider auth hashes
+      # @return void
       def add_accounts_from_session(session)
         Account::PROVIDERS.each do |provider|
           provider_key = "devise.#{provider}_data"
@@ -143,6 +146,9 @@ module Concerns
         end
       end
 
+      # Sanitization method for checking if an empty password is allowed
+      # @api private
+      # @return [Boolean] true if the user is able to register an account without a password
       def allow_empty_password?
         !!@allow_empty_password
       end
