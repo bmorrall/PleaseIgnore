@@ -90,6 +90,7 @@ gem 'rolify'
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
 gem 'sidekiq', '~> 4.0.1'
+gem 'redis-namespace' # Required for Sidekiq namespace
 
 # Send Devise mail through Sidekiq
 gem 'devise-async'
