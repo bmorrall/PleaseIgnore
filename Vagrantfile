@@ -69,6 +69,6 @@ Vagrant.configure(2) do |config|
     sudo apt-get install -y curl
 
     # Install Docker
-    curl -sSL https://get.docker.com/ubuntu/ | sudo sh
+    curl -sSL https://get.docker.com/ | sudo sh
   SHELL
 end

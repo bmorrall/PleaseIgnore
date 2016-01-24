@@ -1,6 +1,6 @@
 # See https://github.com/phusion/passenger-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM phusion/passenger-customizable:0.9.15
+FROM phusion/passenger-customizable:0.9.18
 MAINTAINER Ben Morrall <bemo56@hotmail.com>
 
 # Set correct environment variables.
