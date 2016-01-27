@@ -1,6 +1,6 @@
 # Allows for hourly and daily scheduled tasks to be run (and tested)
 class Cron
-  # Runs all daily cron tasks
+  # Enqueues all daily cron tasks
   #
   # Should only enqueue tasks for ActiveJob to perform, as this task should be lightweight
   #
@@ -16,11 +16,13 @@ class Cron
     # Add Daily Cron Tasks after this line
   end
 
-  # Runs all hourly cron tasks
+  # Enqueues all hourly cron tasks
   #
   # Should only enqueue tasks for ActiveJob to perform, as this task should be lightweight
   #
   # Use Time.now.hour to control hour task is run (i.e. `Time.now.hour % 4 == 0` for every 4 hours)
+  #
+  # The current time zone is UTC, so user time zones must be taken into account.
   #
   # @api public
   # @example Run all hourly cron tasks for the current hour
