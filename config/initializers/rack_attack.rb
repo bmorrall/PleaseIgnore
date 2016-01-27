@@ -2,7 +2,7 @@ module Rack
   # Rack::Attack is used to prevent brute force attacks and the like
   # see. https://github.com/kickstarter/rack-attack
   class Attack
-    SIGN_IN_URLS = %w(/users/sign_in /api/v1/session)
+    SIGN_IN_URLS = %w(/users/sign_in /api/v1/session).freeze
 
     ### Configure Cache ###
 

@@ -206,6 +206,12 @@ class Account < ActiveRecord::Base
     user.present?
   end
 
+  # Accounts can be disabled to prevent sign in
+  # @return [Boolean] true if the Account is disabled
+  def disabled?
+    user.nil?
+  end
+
   # Account Profile Picture
   # @param [Fixnum] _size Preferred size of the image
   # @return [String] Path to Account Profile Picture or nil

@@ -24,12 +24,12 @@ module Accounts
       if account.nil?
         # User needs to register an account
         @success = :success_registered
-      elsif account.enabled?
-        # User can be authenticated with account
-        @success = :success_authenticated
       else
         # Prevent users from logging in with banned accounts
-        fail AccountDisabledError.new(:account_disabled, provider)
+        fail AccountDisabledError.new(:account_disabled, provider) unless account.enabled?
+
+        # User can be authenticated with account
+        @success = :success_authenticated
       end
     end
 

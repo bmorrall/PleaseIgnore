@@ -32,7 +32,7 @@ class Organisation < ActiveRecord::Base
     utils
     wp-admin
     wp-content
-  )
+  ).freeze
 
   before_validation :assign_permalink_from_name, on: :create
 

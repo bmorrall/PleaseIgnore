@@ -27,9 +27,6 @@ module Accounts
       if account.present?
         # Account has been found, ensure belongs to current user
         check_account_is_linked_to_user
-      elsif user.provider_account? provider
-        # User already has linked to a provider account
-        fail AccountLimitError.new(:account_limit, provider)
       else
         # Need to create account for current user
         create_account_for_user
@@ -49,28 +46,24 @@ module Accounts
 
     # Account has previously been linked, display success or alert
     def check_account_is_linked_to_user
-      if account.user_id.blank?
-        # User belongs to another user
-        fail AccountDisabledError.new(:account_disabled, provider)
-      elsif account.user_id == user.id
-        # Account has already been linked to this user
-        @success = :success_linked
-      else
-        # User belongs to another user
-        fail PreviouslyLinkedError.new(:previously_linked, provider)
-      end
+      fail AccountDisabledError.new(:account_disabled, provider) if account.disabled?
+      fail PreviouslyLinkedError.new(:previously_linked, provider) if account.user_id != user.id
+
+      @success = :success_linked
     end
 
     # Links account the the current user
     def create_account_for_user
-      @account = user.accounts.new_with_auth_hash(auth_hash, provider)
-      if account.save
-        # Account has been linked to profile
-        @success = :success_linked
-      else
-        # Account is not valid and cannot be saved
-        fail AccountInvalidError.new(:account_invalid, provider)
-      end
+      # User already has linked to a provider account
+      fail AccountLimitError.new(:account_limit, provider) if user.provider_account?(provider)
+      @account = build_account
+      fail AccountInvalidError.new(:account_invalid, provider) unless account.save
+
+      @success = :success_linked
+    end
+
+    def build_account
+      user.accounts.new_with_auth_hash(auth_hash, provider)
     end
   end
 end

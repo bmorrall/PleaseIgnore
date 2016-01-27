@@ -121,10 +121,12 @@ describe Concerns::Users::DeviseAccountAuthentication do
   describe '#primary_account' do
     it 'returns the first account' do
       first_account = build_stubbed(:developer_account)
-      allow(subject).to receive(:accounts).and_return([
-        first_account,
-        build_stubbed(:developer_account)
-      ])
+      allow(subject).to receive(:accounts).and_return(
+        [
+          first_account,
+          build_stubbed(:developer_account)
+        ]
+      )
       expect(subject.primary_account).to be(first_account)
     end
   end
@@ -142,11 +144,11 @@ describe Concerns::Users::DeviseAccountAuthentication do
       context "with a #{provider} account" do
         let!(:account) { create :"#{provider}_account", user: subject }
         it "returns true for #{provider}" do
-          expect(subject.provider_account? provider).to be(true)
+          expect(subject.provider_account?(provider)).to be(true)
         end
-        Account::PROVIDERS.reject { |p| p == provider }.each do |p|
-          it "returns false for #{p}" do
-            expect(subject.provider_account? p).to be(false)
+        Account::PROVIDERS.reject { |p| p == provider }.each do |other_provider|
+          it "returns false for #{other_provider}" do
+            expect(subject.provider_account?(other_provider)).to be(false)
           end
         end
       end

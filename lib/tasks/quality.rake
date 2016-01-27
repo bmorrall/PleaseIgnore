@@ -79,11 +79,11 @@ namespace :quality do
   task yardstick: %w(yardstick:verify)
 end
 
-# brakeman:run
+# quality:haml_lint
 desc 'Run code quality metrics on project'
 task quality: %w(
+  brakeman:run
   quality:cane
   quality:rubocop
-  quality:haml_lint
   quality:yardstick
 )

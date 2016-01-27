@@ -17,8 +17,8 @@ module AuthenticationTokens
 
     def users
       User.joins(:authentication_tokens)
-        .group('users.id')
-        .having('count(authentication_tokens) > ?', maximum_tokens_per_user)
+          .group('users.id')
+          .having('count(authentication_tokens) > ?', maximum_tokens_per_user)
     end
   end
 end

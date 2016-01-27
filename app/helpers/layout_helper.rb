@@ -35,9 +35,8 @@ module LayoutHelper
 
   # @return [Boolean] true if user should see list of external services
   def display_external_services?
-    current_user.has_role?(:admin) && (
+    current_user.has_role?(:admin) &&
       display_sidekiq_service_link?
-    )
   end
 
   # @return [Boolean] true if user should see link to sidekiq service

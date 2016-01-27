@@ -8,7 +8,7 @@ module SimpleForm
       BaseErrorNotification.new(self, options).render
     end
 
-    alias_method :input_without_error_prefix, :input
+    alias input_without_error_prefix input
 
     # Monkey Path input to display error messages with Name
     def input(attribute_name, options = {}, &block)

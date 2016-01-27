@@ -47,9 +47,7 @@ module PleaseIgnore
     config.action_view.embed_authenticity_token_in_remote_forms = true
 
     # Add response codes for common exceptions
-    Rails.application.config.action_dispatch.rescue_responses.merge!(
-      'CanCan::AccessDenied' => :forbidden
-    )
+    Rails.application.config.action_dispatch.rescue_responses['CanCan::AccessDenied'] = :forbidden
 
     # Use Rack::Attack to secure critical points against attacks
     config.middleware.use Rack::Attack

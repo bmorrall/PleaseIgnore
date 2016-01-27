@@ -5,8 +5,8 @@ Rails.application.configure do
   def filter_params(params)
     params = params.reject do |param|
       param.starts_with?('_') ||
-      param == ApplicationController.request_forgery_protection_token.to_s ||
-      IGNORED_PARAMS.include?(param)
+        param == ApplicationController.request_forgery_protection_token.to_s ||
+        IGNORED_PARAMS.include?(param)
     end
 
     filter_parameters = Rails.application.config.filter_parameters
