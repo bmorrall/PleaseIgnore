@@ -63,7 +63,7 @@ class Settings
   config_var :ssl_enabled?
 
   def virtual_host
-    secrets.virtual_host
+    secrets.virtual_host.presence
   end
   config_var :virtual_host
 

@@ -21,7 +21,7 @@ Rails.application.configure do
   config.lograge.custom_options = lambda do |event|
     {
       # Server params
-      host: ::Settings.virtual_host,
+      host: ::Settings.virtual_host || Rails.env,
       # Request params
       xhr: event.payload[:xhr],
       params: filter_params(event.payload[:params]),

@@ -1,9 +1,4 @@
 ::SecureHeaders::Configuration.configure do |config|
-  # Load the application host, or allow for relative paths
-  application_protocol = ::Settings.ssl_enabled? ? 'https' : 'http'
-  application_host = ::Settings.virtual_host
-  application_domain = "#{application_protocol}://#{application_host}"
-
   # Generic Secure Header Protection
   config.hsts = ::Settings.ssl_enabled? && { max_age: 20.years.to_i, include_subdomains: true }
   config.x_frame_options = 'DENY'
@@ -17,6 +12,11 @@
 
   # HTTP Public Key Pinning
   if ::Settings.hpkp_security_enabled?
+    # Load the application host, or allow for relative paths
+    protocol = ::Settings.ssl_enabled? ? 'https' : 'http'
+    virtual_host = ::Settings.virtual_host
+    application_domain = "#{protocol}://#{virtual_host}" if virtual_host
+
     config.hpkp = {
       max_age: 60.days.to_i,
       include_subdomains: true,
