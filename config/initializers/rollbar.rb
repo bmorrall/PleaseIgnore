@@ -1,15 +1,14 @@
+require 'settings'
 require 'rollbar/rails'
 
 Rollbar.configure do |config|
   # Without configuration, Rollbar is enabled in all environments.
   # To disable in specific environments, set config.enabled=false.
 
-  config.access_token = Rails.application.secrets.rollbar_access_token
+  config.access_token = ::Settings.rollbar_access_token
 
   # Here we'll disable in 'test':
-  if Rails.application.secrets.rollbar_access_token.blank?
-    config.enabled = false
-  end
+  config.enabled = ::Settings.rollbar_enabled?
 
   # By default, Rollbar will try to call the `current_user` controller method
   # to fetch the logged-in user object, and then call that object's `id`,
@@ -46,10 +45,11 @@ Rollbar.configure do |config|
   # config.use_sucker_punch
 
   # Enable delayed reporting (using Sidekiq)
-  if Rails.application.secrets.redis_url
-    config.use_sidekiq
+  if ::Settings.sidekiq_enabled?
     # You can supply custom Sidekiq options:
     config.use_sidekiq 'queue' => 'high_priority'
+
+    config.sidekiq_threshold = 3 # Start reporting from 3 retries jobs
   end
 
   # Scrub out the "X-User-Email" and "X-User-Token" http header

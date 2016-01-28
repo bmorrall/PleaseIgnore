@@ -1,4 +1,4 @@
-<%- unless Rails.application.secrets.google_analytics['analytics_id'].blank? -%>
+<%- if ::Settings.google_analytics_enabled? -%>
 <%# Initialize Google Analytics %>
-GoogleAnalytics.load(<%=raw Rails.application.secrets.google_analytics['analytics_id'].to_json %>);
+GoogleAnalytics.load(<%=raw ::Settings.google_analytics_id.to_json %>);
 <%- end -%>

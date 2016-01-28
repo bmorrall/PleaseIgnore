@@ -1,3 +1,5 @@
+require 'settings'
+
 # Contact Mailer
 # Mailer used by the Contact controller
 #
@@ -5,7 +7,7 @@
 class ContactMailer < ActionMailer::Base
   include SendGrid
   sendgrid_category :use_subject_lines
-  default from: Rails.application.secrets.contact_email_address
+  default from: proc { ::Settings.contact_email_address }
 
   add_template_helper(ApplicationHelper)
 
@@ -16,6 +18,6 @@ class ContactMailer < ActionMailer::Base
     sendgrid_category 'Contact Email'
     @contact = Contact.new(attributes)
 
-    mail to: Rails.application.secrets.support_email_address
+    mail to: ::Settings.support_email_address
   end
 end

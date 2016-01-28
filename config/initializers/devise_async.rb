@@ -1,4 +1,8 @@
+require 'settings'
 
 # Send devise emails through ActiveJob
-Devise::Async.enabled = true
-Devise::Async.backend = :active_job
+Devise::Async.setup do |config|
+  config.enabled = ::Settings.sidekiq_enabled?
+  config.backend = :active_job
+  config.queue = :mailer
+end

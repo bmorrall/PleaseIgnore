@@ -42,7 +42,7 @@ module LayoutHelper
 
   # @return [Boolean] true if user should see link to sidekiq service
   def display_sidekiq_service_link?
-    !!Rails.application.secrets.redis_url
+    ::Settings.redis_url.present?
   end
 
   # Forms

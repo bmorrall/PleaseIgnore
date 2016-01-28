@@ -1,8 +1,10 @@
-if Rails.application.secrets.redis_url
+require 'settings'
+
+if ::Settings.redis_url
   redis_config = {
     namespace: 'sidekiq',
     network_timeout: 2,
-    url: Rails.application.secrets.redis_url
+    url: ::Settings.redis_url
   }
 
   Sidekiq.configure_server do |config|

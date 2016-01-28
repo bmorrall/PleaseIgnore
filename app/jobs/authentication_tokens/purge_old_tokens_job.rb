@@ -1,6 +1,8 @@
 module AuthenticationTokens
   # Finds users with expired authentication tokens and purges them
   class PurgeOldTokensJob < ActiveJob::Base
+    include Rollbar::ActiveJob
+
     queue_as :low_priority
 
     def perform
