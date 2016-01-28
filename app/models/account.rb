@@ -1,5 +1,3 @@
-# Accounts belong to a User and contains all stored account data based on provider
-#
 # == Schema Information
 #
 # Table name: accounts
@@ -26,6 +24,8 @@
 #  index_accounts_on_user_id     (user_id)
 #
 
+# Accounts belong to a User and contains all stored account data based on provider
+#
 # Represents an OmniAuth connected Account belonging to a {User}
 # @abstract Subclass and override {#account_uid} and {#provider} to implement
 #   a custom Account class.

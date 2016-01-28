@@ -12,6 +12,8 @@
 #
 #  index_organisations_on_permalink  (permalink) UNIQUE
 #
+
+# Users belong to an Organisation, most classes belong to the organisation
 class Organisation < ActiveRecord::Base
   include Concerns::BelongsToUser
 

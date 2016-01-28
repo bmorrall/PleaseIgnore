@@ -1,5 +1,3 @@
-# Role class used with User to determine access to resources
-#
 # == Schema Information
 #
 # Table name: roles
@@ -15,6 +13,9 @@
 #
 #  index_roles_on_name                                    (name)
 #  index_roles_on_name_and_resource_type_and_resource_id  (name,resource_type,resource_id)
+#
+
+# Role class used with User to determine access to resources
 #
 class Role < ActiveRecord::Base
   # All available roles to Users

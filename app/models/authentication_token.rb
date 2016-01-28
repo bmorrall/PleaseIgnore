@@ -15,6 +15,8 @@
 #
 #  index_authentication_tokens_on_user_id  (user_id)
 #
+
+# Used for Authentication via non-browser devices for long term
 class AuthenticationToken < ActiveRecord::Base
   belongs_to :user
 end

@@ -1,6 +1,3 @@
-# User Model
-# Contains details of all Users of the Application
-#
 # == Schema Information
 #
 # Table name: users
@@ -31,6 +28,10 @@
 #  index_users_on_deleted_at            (deleted_at)
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+
+# User Model
+# Contains details of all Users of the Application
 #
 class User < ActiveRecord::Base
   # Use paranoia to soft delete records (instead of destroying them)
