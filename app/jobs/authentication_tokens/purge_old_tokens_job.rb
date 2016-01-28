@@ -6,7 +6,9 @@ module AuthenticationTokens
     queue_as :low_priority
 
     def perform
-      users.find_each { |user| Tiddle.purge_old_tokens(user) }
+      ActiveRecord::Base.connection_pool.with_connection do
+        users.find_each { |user| Tiddle.purge_old_tokens(user) }
+      end
     end
 
     protected
