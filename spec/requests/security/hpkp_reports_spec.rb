@@ -23,7 +23,7 @@ RSpec.describe 'Security::HpkpReports', type: :request do
         }.to_json, 'CONTENT_TYPE' => 'application/json'
       end.to change(ActionMailer::Base.deliveries, :count).by(1)
 
-      subject = t('security.hpkp_report_mailer.support_email.subject')
+      subject = t('security.report_mailer.hpkp_report.subject')
       expect(ActionMailer::Base.deliveries.last.subject).to eq(
         "[#{application_name} TEST] #{subject}"
       )

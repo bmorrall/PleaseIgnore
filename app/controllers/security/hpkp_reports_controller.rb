@@ -13,7 +13,7 @@ module Security
     # @example POST /security/hpkp_report
     # @return void
     def create
-      Security::HpkpReportMailer.support_email(parsed_hpkp_report).deliver_later(queue: :mailer)
+      Security::ReportMailer.hpkp_report(parsed_hpkp_report).deliver_later(queue: :mailer)
 
       render text: ''
     end

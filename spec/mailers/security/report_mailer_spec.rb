@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Security::HpkpReportMailer, type: :mailer do
-  describe 'support_email' do
+RSpec.describe Security::ReportMailer, type: :mailer do
+  describe 'hpkp_report' do
     let(:hpkp_report) do
       {
         "date-time": DateTime.now.rfc3339,
@@ -15,10 +15,10 @@ RSpec.describe Security::HpkpReportMailer, type: :mailer do
         "known-pins": []
       }
     end
-    let(:mail) { described_class.support_email(hpkp_report) }
+    let(:mail) { described_class.hpkp_report(hpkp_report) }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq t('security.hpkp_report_mailer.support_email.subject')
+      expect(mail.subject).to eq t('security.report_mailer.hpkp_report.subject')
       expect(mail.to).to eq(['security@pleaseignore.com'])
       expect(mail.from).to eq(['security@pleaseignore.com'])
     end

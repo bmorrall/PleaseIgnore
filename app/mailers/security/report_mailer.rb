@@ -1,8 +1,8 @@
 module Security
   # Sends a HTTP Public Key Pinning Violation Report to Support
-  class HpkpReportMailer < ActionMailer::Base
+  class ReportMailer < ActionMailer::Base
     include SendGrid
-    sendgrid_category :use_subject_lines
+    sendgrid_category 'Security Report'
     default from: proc { ::Settings.security_email_address },
             to: proc { ::Settings.security_email_address }
 
@@ -11,10 +11,9 @@ module Security
     # Subject can be set in your I18n file at config/locales/en.yml
     # with the following lookup:
     #
-    #   en.security.hpkp_reports.support_email.subject
+    #   en.security.report_mailer.hpkp_report.subject
     #
-    def support_email(hpkp_report)
-      sendgrid_category 'Security Email'
+    def hpkp_report(hpkp_report)
       @hpkp_report = hpkp_report
 
       mail
