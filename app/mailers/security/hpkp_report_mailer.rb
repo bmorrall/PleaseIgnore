@@ -3,7 +3,8 @@ module Security
   class HpkpReportMailer < ActionMailer::Base
     include SendGrid
     sendgrid_category :use_subject_lines
-    default from: proc { ::Settings.support_email_address }
+    default from: proc { ::Settings.security_email_address },
+            to: proc { ::Settings.security_email_address }
 
     add_template_helper(ApplicationHelper)
 
@@ -16,7 +17,7 @@ module Security
       sendgrid_category 'Security Email'
       @hpkp_report = hpkp_report
 
-      mail to: ::Settings.support_email_address
+      mail
     end
   end
 end

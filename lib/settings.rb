@@ -127,6 +127,11 @@ class Settings
   end
   config_var :contact_email_address
 
+  def security_email_address
+    secrets.security_email_address.presence || support_email_address
+  end
+  config_var :security_email_address
+
   def support_email_address
     secrets.support_email_address.presence
   end

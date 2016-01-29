@@ -19,8 +19,8 @@ RSpec.describe Security::HpkpReportMailer, type: :mailer do
 
     it 'renders the headers' do
       expect(mail.subject).to eq t('security.hpkp_report_mailer.support_email.subject')
-      expect(mail.to).to eq(['support@pleaseignore.com'])
-      expect(mail.from).to eq(['support@pleaseignore.com'])
+      expect(mail.to).to eq(['security@pleaseignore.com'])
+      expect(mail.from).to eq(['security@pleaseignore.com'])
     end
 
     it 'renders the hpkp report as pretty JSON' do
