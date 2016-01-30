@@ -206,5 +206,5 @@ group :test do
   gem 'faker'
   gem 'email_spec'
   gem 'rspec-its'
-  gem 'shoulda', require: false
+  gem 'shoulda-matchers', '~> 3.1'
 end

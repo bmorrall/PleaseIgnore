@@ -123,7 +123,7 @@ describe User, type: :model do
       context 'when email has changed' do
         before(:each) { allow(subject).to receive(:email_changed?).and_return(true) }
 
-        it { should validate_uniqueness_of :email }
+        it { should validate_uniqueness_of(:email).case_insensitive }
 
         it 'should allow valid emails' do
           %w(
@@ -242,7 +242,7 @@ describe User, type: :model do
 
     it 'should validate the uniqueness of email' do
       create :user
-      is_expected.to validate_uniqueness_of(:email)
+      is_expected.to validate_uniqueness_of(:email).case_insensitive
     end
 
     context 'with a existing soft deleted user' do
@@ -250,7 +250,7 @@ describe User, type: :model do
       # Ensure validate_uniqueness_of compares against soft deleted model
       before(:each) { expect(described_class).to receive(:first).and_return(user) }
 
-      it { is_expected.to validate_uniqueness_of(:email) }
+      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     end
   end
 
