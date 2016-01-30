@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.2.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18.2'
@@ -89,7 +89,7 @@ gem 'rolify'
 
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
-gem 'sidekiq', '~> 4.0.1'
+gem 'sidekiq', '~> 4.1.0'
 gem 'redis-namespace' # Required for Sidekiq namespace
 
 # Send Devise mail through Sidekiq
@@ -97,7 +97,7 @@ gem 'devise-async'
 gem 'devise-async-activejob'
 
 # Leave a Paper Trail
-gem 'paper_trail', '~> 3.0.8'
+gem 'paper_trail', '~> 3.0'
 
 # Add Application Name Prefix to Emails
 gem 'email_prefixer'
@@ -137,7 +137,7 @@ gem 'whenever', require: false
 # ==============
 
 gem 'rack-attack'
-gem 'secure_headers', '~> 2.4.4'
+gem 'secure_headers', '~> 2.5.1'
 
 # Devops
 # ==============
