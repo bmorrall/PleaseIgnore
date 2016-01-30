@@ -1,9 +1,9 @@
-::SecureHeaders::Configuration.configure do |config|
+::SecureHeaders::Configuration.default do |config|
   # Generic Secure Header Protection
   config.hsts = ::Settings.ssl_enabled? && { max_age: 20.years.to_i, include_subdomains: true }
   config.x_frame_options = 'DENY'
   config.x_content_type_options = 'nosniff'
-  config.x_xss_protection = { value: 1, mode: 'block' }
+  config.x_xss_protection = '1; mode=block'
   config.x_download_options = 'noopen'
   config.x_permitted_cross_domain_policies = 'none'
 
