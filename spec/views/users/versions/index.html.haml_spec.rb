@@ -178,6 +178,16 @@ describe 'users/versions/index.html.haml', type: :view do
             assert_select '.list-group-item-text .user-agent .fa-windows'
           end
         end
+
+        context 'with a GoogleBot User Agent String' do
+          let(:user_agent) { 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' }
+
+          it 'should render the parsed user agent' do
+            render
+            assert_select '.list-group-item-text .user-agent', text: 'Mozilla 5.0 (Googlebot/2.1)'
+            assert_select '.list-group-item-text .user-agent .fa-bug'
+          end
+        end
       end
     end
   end
