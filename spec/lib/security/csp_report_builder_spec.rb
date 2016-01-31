@@ -28,7 +28,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config with https directives' do
           should eq(
-            enabled: true,
+            enforce: true,
             default_src: ['https:', asset_host],
             base_uri: ["https://#{virtual_host}"],
             block_all_mixed_content: false,
@@ -58,7 +58,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config limited to localhost' do
           should eq(
-            enabled: true,
+            enforce: true,
             default_src: ['https:', "'self'"],
             base_uri: ["https://#{virtual_host}"],
             block_all_mixed_content: false,
@@ -93,7 +93,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config without https directives' do
           should eq(
-            enabled: true,
+            enforce: true,
             default_src: ['http:', asset_host],
             base_uri: ["http://#{virtual_host}"],
             block_all_mixed_content: false,
@@ -123,7 +123,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config limited to localhost' do
           should eq(
-            enabled: true,
+            enforce: true,
             default_src: ['http:', "'self'"],
             base_uri: ["http://#{virtual_host}"],
             block_all_mixed_content: false,

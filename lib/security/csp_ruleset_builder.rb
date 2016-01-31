@@ -21,7 +21,7 @@ module Security
 
     def build
       {
-        enabled: true,
+        enforce: true,
         default_src: default_csp_params,
         base_uri: base_uri,
         block_all_mixed_content: false,

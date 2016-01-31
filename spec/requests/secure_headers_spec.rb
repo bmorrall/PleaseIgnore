@@ -8,7 +8,7 @@ describe 'SecureHeaders' do
     form_action
     frame_ancestors
     plugin_types
-    enabled
+    enforce
   ).freeze
 
   def format_csp_policies(csp_policies)
@@ -41,7 +41,7 @@ describe 'SecureHeaders' do
         csp_policies = Security::CspRulesetBuilder.build(settings: ::Settings.instance)
         csp_policies = format_csp_policies(csp_policies)
 
-        content_security_policy = response.headers['Content-Security-Policy-Report-Only']
+        content_security_policy = response.headers['Content-Security-Policy']
         csp_policies.each do |csp_policy|
           expect(content_security_policy).to match(csp_policy)
         end

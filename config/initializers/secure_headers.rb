@@ -20,7 +20,7 @@ require 'security/csp_ruleset_builder'
     application_domain = "#{protocol}://#{virtual_host}" if virtual_host
 
     config.hpkp = {
-      enforced: true,
+      enforce: true,
       max_age: 60.days.to_i,
       include_subdomains: true,
       report_uri: "#{application_domain}/security/hpkp_report",
