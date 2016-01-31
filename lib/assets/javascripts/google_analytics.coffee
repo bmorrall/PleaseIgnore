@@ -3,7 +3,6 @@
 class @GoogleAnalytics
 
   @load: (analyticsId) ->
-    console.log "Loading: #{analyticsId}"
     return unless analyticsId
 
     # Google Analytics depends on a global _gaq array. window is the global scope.
@@ -33,7 +32,6 @@ class @GoogleAnalytics
         window._gaq.push ["_trackPageview", url]
       else
         window._gaq.push ["_trackPageview"]
-    console.log window._gaq
 
   @isLocalRequest: ->
     GoogleAnalytics.documentDomainIncludes "local"
