@@ -37,3 +37,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ingnore deployed gems
+/vendor/bundle
+
