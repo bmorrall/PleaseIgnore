@@ -6,6 +6,7 @@
  * DEPENDENCIES:
  *   - jquery
  *   - jquery_ujs
+ *   - google_analytics.js
  *   - users.js
  *
  * @author Ben Morrall <bemo56@hotmail.com>
@@ -17,6 +18,11 @@
   "use strict";
 
   var PleaseIgnore = window.PleaseIgnore || (window.PleaseIgnore = {});
+
+  $(function() {
+    // Initialize Google Analytics
+    GoogleAnalytics.load($('html').data('google-analytics-id'));
+  })
 
   // Update content on Turbolinks ready/change event
   $(document).on("page:change", function () {

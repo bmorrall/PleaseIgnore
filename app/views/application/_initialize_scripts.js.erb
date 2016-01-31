@@ -1,4 +1,0 @@
-<%- if ::Settings.google_analytics_enabled? -%>
-<%# Initialize Google Analytics %>
-GoogleAnalytics.load(<%=raw ::Settings.google_analytics_id.to_json %>);
-<%- end -%>

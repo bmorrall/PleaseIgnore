@@ -3,6 +3,7 @@
 class @GoogleAnalytics
 
   @load: (analyticsId) ->
+    console.log "Loading: #{analyticsId}"
     return unless analyticsId
 
     # Google Analytics depends on a global _gaq array. window is the global scope.
@@ -21,7 +22,7 @@ class @GoogleAnalytics
     # If it isn't supported, just track the pageview now.
     if typeof Turbolinks isnt 'undefined' and Turbolinks.supported
       document.addEventListener "page:change", (->
-        GoogleAnalytics.trackPageview()
+        GoogleAnalytics.trackPageview(window.location.pathname)
       ), true
     else
       GoogleAnalytics.trackPageview()
@@ -32,7 +33,7 @@ class @GoogleAnalytics
         window._gaq.push ["_trackPageview", url]
       else
         window._gaq.push ["_trackPageview"]
-      window._gaq.push ["_trackPageLoadTime"]
+    console.log window._gaq
 
   @isLocalRequest: ->
     GoogleAnalytics.documentDomainIncludes "local"

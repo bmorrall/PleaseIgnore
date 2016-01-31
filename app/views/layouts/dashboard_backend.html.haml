@@ -1,5 +1,5 @@
 !!! 5
-%html.no-js
+%html.no-js{ data: { google_analytics_id: ::Settings.google_analytics_id } }
   %head
     = render 'layouts/head'
     = csrf_meta_tags

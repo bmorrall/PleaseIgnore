@@ -93,11 +93,6 @@ class Settings
 
   # Analytics
 
-  def google_analytics_enabled?
-    google_analytics_id.present?
-  end
-  config_var :google_analytics_enabled?
-
   def google_analytics_id
     secrets.google_analytics['analytics_id'].presence
   end

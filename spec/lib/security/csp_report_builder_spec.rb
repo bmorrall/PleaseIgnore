@@ -46,7 +46,7 @@ describe Security::CspRulesetBuilder do
               'pbs.twimg.com'
             ],
             object_src: ["'none'"],
-            script_src: ['https:', asset_host, 'ajax.googleapis.com'],
+            script_src: ['https:', asset_host, 'ssl.google-analytics.com', 'ajax.googleapis.com'],
             style_src: ['https:', asset_host, "'unsafe-inline'", 'fonts.googleapis.com'],
             report_uri: ["https://#{virtual_host}/security/csp_report"]
           )
@@ -76,7 +76,7 @@ describe Security::CspRulesetBuilder do
               'pbs.twimg.com'
             ],
             object_src: ["'none'"],
-            script_src: ['https:', "'self'", 'ajax.googleapis.com'],
+            script_src: ['https:', "'self'", 'ssl.google-analytics.com', 'ajax.googleapis.com'],
             style_src: ['https:', "'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
             report_uri: ["https://#{virtual_host}/security/csp_report"]
           )
@@ -85,7 +85,7 @@ describe Security::CspRulesetBuilder do
     end
 
     context 'when ssl is disabled' do
-      before { allow(settings).to receive(:ssl_enabled?).and_return(true) }
+      before { allow(settings).to receive(:ssl_enabled?).and_return(false) }
 
       context 'when a asset host has been provided' do
         let(:asset_host) { Faker::Internet.domain_name }
@@ -94,26 +94,26 @@ describe Security::CspRulesetBuilder do
         it 'should build a csp config without https directives' do
           should eq(
             enabled: true,
-            default_src: ['https:', asset_host],
-            base_uri: ["https://#{virtual_host}"],
+            default_src: ['http:', asset_host],
+            base_uri: ["http://#{virtual_host}"],
             block_all_mixed_content: false,
             child_src: ["'none'"],
-            font_src: ['https:', asset_host, 'data:', 'fonts.gstatic.com'],
+            font_src: ['http:', asset_host, 'data:', 'fonts.gstatic.com'],
             form_action: ["'self'"],
             frame_ancestors: ["'none'"],
             frame_src: ["'none'"],
             img_src: [
               'data:',
-              'https:',
+              'http:',
               asset_host,
               'secure.gravatar.com',
               'graph.facebook.com',
               'pbs.twimg.com'
             ],
             object_src: ["'none'"],
-            script_src: ['https:', asset_host, 'ajax.googleapis.com'],
-            style_src: ['https:', asset_host, "'unsafe-inline'", 'fonts.googleapis.com'],
-            report_uri: ["https://#{virtual_host}/security/csp_report"]
+            script_src: ['http:', asset_host, 'www.google-analytics.com', 'ajax.googleapis.com'],
+            style_src: ['http:', asset_host, "'unsafe-inline'", 'fonts.googleapis.com'],
+            report_uri: ["http://#{virtual_host}/security/csp_report"]
           )
         end
       end
@@ -124,26 +124,26 @@ describe Security::CspRulesetBuilder do
         it 'should build a csp config limited to localhost' do
           should eq(
             enabled: true,
-            default_src: ['https:', "'self'"],
-            base_uri: ["https://#{virtual_host}"],
+            default_src: ['http:', "'self'"],
+            base_uri: ["http://#{virtual_host}"],
             block_all_mixed_content: false,
             child_src: ["'none'"],
-            font_src: ['https:', "'self'", 'data:', 'fonts.gstatic.com'],
+            font_src: ['http:', "'self'", 'data:', 'fonts.gstatic.com'],
             form_action: ["'self'"],
             frame_ancestors: ["'none'"],
             frame_src: ["'none'"],
             img_src: [
               'data:',
-              'https:',
+              'http:',
               "'self'",
               'secure.gravatar.com',
               'graph.facebook.com',
               'pbs.twimg.com'
             ],
             object_src: ["'none'"],
-            script_src: ['https:', "'self'", 'ajax.googleapis.com'],
-            style_src: ['https:', "'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
-            report_uri: ["https://#{virtual_host}/security/csp_report"]
+            script_src: ['http:', "'self'", 'www.google-analytics.com', 'ajax.googleapis.com'],
+            style_src: ['http:', "'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+            report_uri: ["http://#{virtual_host}/security/csp_report"]
           )
         end
       end

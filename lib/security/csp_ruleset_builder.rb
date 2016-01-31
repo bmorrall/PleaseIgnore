@@ -103,7 +103,9 @@ module Security
     end
 
     def external_script_sources
+      ga_source = (ssl_enabled? ? 'ssl' : 'www') + '.google-analytics.com'
       [
+        ga_source,
         jquery_cdn_host
       ]
     end
