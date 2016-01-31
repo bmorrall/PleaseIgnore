@@ -13,7 +13,7 @@ describe 'Security::CSPReport', type: :request do
             "violated-directive": 'style-src cdn.example.com',
             "original-policy": policy
           }
-        }.to_json, 'CONTENT_TYPE' => 'application/json'
+        }.to_json, 'CONTENT_TYPE' => 'application/csp-report'
       end.to change(ActionMailer::Base.deliveries, :count).by(1)
 
       subject = t('security.report_mailer.csp_report.subject')

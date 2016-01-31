@@ -20,7 +20,7 @@ RSpec.describe 'Security::HpkpReports', type: :request do
           "known-pins": [
             Faker::Internet.slug
           ]
-        }.to_json, 'CONTENT_TYPE' => 'application/json'
+        }.to_json
       end.to change(ActionMailer::Base.deliveries, :count).by(1)
 
       subject = t('security.report_mailer.hpkp_report.subject')

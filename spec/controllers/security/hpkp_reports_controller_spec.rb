@@ -14,7 +14,7 @@ RSpec.describe Security::HpkpReportsController, type: :controller do
           "served-certificate-chain": [],
           "validated-certificate-chain": [],
           "known-pins": []
-        }
+        }.to_json
       end
 
       it 'sends a new HPKP Report Email' do
@@ -29,7 +29,7 @@ RSpec.describe Security::HpkpReportsController, type: :controller do
       end
 
       it 'responds with success' do
-        post :create, hpkp_report: hpkp_report
+        post :create, hpkp_report
 
         expect(response).to be_success
         expect(response.body).to eq ''

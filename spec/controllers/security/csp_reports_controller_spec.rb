@@ -13,12 +13,12 @@ RSpec.describe Security::CspReportsController, type: :controller do
             "violated-directive": 'style-src cdn.example.com',
             "original-policy": policy
           }
-        }
+        }.to_json
       end
 
       it 'sends a new CSP Report Email' do
         expect do
-          post :create, csp_report: csp_report
+          post :create, csp_report
         end.to change(ActionMailer::Base.deliveries, :count).by(1)
 
         subject = t('security.report_mailer.csp_report.subject')
@@ -28,11 +28,20 @@ RSpec.describe Security::CspReportsController, type: :controller do
       end
 
       it 'responds with success' do
-        post :create, csp_report: csp_report
+        post :create, csp_report
 
         expect(response).to be_success
         expect(response.body).to eq ''
       end
+    end
+
+    it 'handles malformed csp report requests' do
+      expect(Rollbar).to receive(:error).with(
+        kind_of(JSON::ParserError), use_exception_level_filters: true
+      )
+      expect do
+        post :create, 'totally, not valid json]'
+      end.to change(ActionMailer::Base.deliveries, :count).by(1)
     end
   end
 end
