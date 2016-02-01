@@ -30,12 +30,8 @@ describe Security::CspRulesetBuilder do
           should eq(
             enforce: true,
             default_src: ['https:', asset_host],
-            base_uri: ["https://#{virtual_host}"],
-            block_all_mixed_content: false,
-            child_src: ["'none'"],
+            connect_src: ["'self'", asset_host],
             font_src: ['https:', asset_host, 'data:', 'fonts.gstatic.com'],
-            form_action: ["'self'"],
-            frame_ancestors: ["'none'"],
             frame_src: ["'none'"],
             img_src: [
               'data:',
@@ -45,11 +41,19 @@ describe Security::CspRulesetBuilder do
               'graph.facebook.com',
               'pbs.twimg.com'
             ],
+            media_src: ['https:', asset_host],
             object_src: ["'none'"],
             script_src: ['https:', asset_host, 'ssl.google-analytics.com', 'ajax.googleapis.com'],
             style_src: ['https:', asset_host, "'unsafe-inline'", 'fonts.googleapis.com'],
             report_uri: ["https://#{virtual_host}/security/csp_report"]
           )
+        end
+
+        it 'should only include Content Security Policy level 1.0 flags' do
+          directives = subject.keys.reject { |k| %i(enforce).include? k }
+          directives.each do |flag|
+            expect(SecureHeaders::ContentSecurityPolicy::Constants::DIRECTIVES_1_0).to include(flag)
+          end
         end
       end
 
@@ -60,12 +64,8 @@ describe Security::CspRulesetBuilder do
           should eq(
             enforce: true,
             default_src: ['https:', "'self'"],
-            base_uri: ["https://#{virtual_host}"],
-            block_all_mixed_content: false,
-            child_src: ["'none'"],
+            connect_src: ["'self'"],
             font_src: ['https:', "'self'", 'data:', 'fonts.gstatic.com'],
-            form_action: ["'self'"],
-            frame_ancestors: ["'none'"],
             frame_src: ["'none'"],
             img_src: [
               'data:',
@@ -75,6 +75,7 @@ describe Security::CspRulesetBuilder do
               'graph.facebook.com',
               'pbs.twimg.com'
             ],
+            media_src: ['https:', "'self'"],
             object_src: ["'none'"],
             script_src: ['https:', "'self'", 'ssl.google-analytics.com', 'ajax.googleapis.com'],
             style_src: ['https:', "'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
@@ -95,12 +96,8 @@ describe Security::CspRulesetBuilder do
           should eq(
             enforce: true,
             default_src: ['http:', asset_host],
-            base_uri: ["http://#{virtual_host}"],
-            block_all_mixed_content: false,
-            child_src: ["'none'"],
+            connect_src: ["'self'", asset_host],
             font_src: ['http:', asset_host, 'data:', 'fonts.gstatic.com'],
-            form_action: ["'self'"],
-            frame_ancestors: ["'none'"],
             frame_src: ["'none'"],
             img_src: [
               'data:',
@@ -110,6 +107,7 @@ describe Security::CspRulesetBuilder do
               'graph.facebook.com',
               'pbs.twimg.com'
             ],
+            media_src: ['http:', asset_host],
             object_src: ["'none'"],
             script_src: ['http:', asset_host, 'www.google-analytics.com', 'ajax.googleapis.com'],
             style_src: ['http:', asset_host, "'unsafe-inline'", 'fonts.googleapis.com'],
@@ -125,12 +123,8 @@ describe Security::CspRulesetBuilder do
           should eq(
             enforce: true,
             default_src: ['http:', "'self'"],
-            base_uri: ["http://#{virtual_host}"],
-            block_all_mixed_content: false,
-            child_src: ["'none'"],
+            connect_src: ["'self'"],
             font_src: ['http:', "'self'", 'data:', 'fonts.gstatic.com'],
-            form_action: ["'self'"],
-            frame_ancestors: ["'none'"],
             frame_src: ["'none'"],
             img_src: [
               'data:',
@@ -140,6 +134,7 @@ describe Security::CspRulesetBuilder do
               'graph.facebook.com',
               'pbs.twimg.com'
             ],
+            media_src: ['http:', "'self'"],
             object_src: ["'none'"],
             script_src: ['http:', "'self'", 'www.google-analytics.com', 'ajax.googleapis.com'],
             style_src: ['http:', "'self'", "'unsafe-inline'", 'fonts.googleapis.com'],

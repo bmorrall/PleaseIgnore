@@ -23,19 +23,12 @@ module Security
       {
         enforce: true,
         default_src: default_csp_params,
-        base_uri: base_uri,
-        block_all_mixed_content: false,
-        # see [http://www.w3.org/TR/mixed-content/](http://www.w3.org/TR/mixed-content/)
-        child_src: [NONE],
-        # connect_src: %w(wws:),
+        connect_src: connect_src,
         font_src: font_src,
-        form_action: [SELF],
-        frame_ancestors: [NONE],
         frame_src: frame_src,
         img_src: img_src,
-        # media_src: [asset_host_or_self],
+        media_src: media_src,
         object_src: [NONE],
-        # plugin_types: NONE,
         script_src: script_src,
         style_src: style_src,
         report_uri: [report_uri]
@@ -46,8 +39,8 @@ module Security
       @default_csp_params ||= ["#{protocol}:", asset_host_or_self]
     end
 
-    def base_uri
-      @base_uri ||= Array.wrap(application_domain || SELF)
+    def connect_src
+      @connect_src ||= [SELF, asset_host].compact
     end
 
     def font_src
@@ -55,15 +48,15 @@ module Security
     end
 
     def frame_src
-      @frame_src ||= [NONE]
+      @frame_src ||= external_frame_sources.empty? ? [NONE] : external_frame_sources
     end
 
     def img_src
       @img_src ||= %w(data:) + default_csp_params + external_image_sources
     end
 
-    def report_uri
-      @report_uri ||= "#{application_domain}/security/csp_report"
+    def media_src
+      @media_src ||= default_csp_params + external_media_sources
     end
 
     def script_src
@@ -72,6 +65,10 @@ module Security
 
     def style_src
       @style_src ||= default_csp_params + %w('unsafe-inline') + external_style_sources
+    end
+
+    def report_uri
+      @report_uri ||= "#{application_domain}/security/csp_report"
     end
 
     def application_domain
@@ -99,6 +96,16 @@ module Security
     def external_font_sources
       %w(
         fonts.gstatic.com
+      )
+    end
+
+    def external_frame_sources
+      %w(
+      )
+    end
+
+    def external_media_sources
+      %w(
       )
     end
 

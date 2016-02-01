@@ -2,11 +2,6 @@ require 'rails_helper'
 
 describe 'SecureHeaders' do
   REJECTED_CSP_POLICIES = %i(
-    base_uri
-    child_src
-    block_all_mixed_content
-    form_action
-    frame_ancestors
     plugin_types
     enforce
   ).freeze
