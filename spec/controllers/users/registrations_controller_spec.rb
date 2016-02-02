@@ -31,7 +31,7 @@ describe Users::RegistrationsController, type: :controller do
         it { is_expected.to render_template(:edit) }
         it { is_expected.to render_with_layout(:dashboard_backend) }
         it 'displays all forms' do
-          expect(controller.send(:display_password_change?)).to be(true)
+          expect(controller.send(:display_password_change?)).to be(false)
           expect(controller.send(:display_accounts?)).to be(true)
           expect(controller.send(:display_profile?)).to be(true)
         end

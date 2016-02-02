@@ -1,0 +1,4 @@
+- content_for(:page_title) { t('.page_title') }
+- content_for(:sidenav) { render 'users/sidenav', user: current_user }
+
+= render 'password_change', resource: current_user

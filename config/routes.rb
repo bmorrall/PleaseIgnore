@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       post :sort, on: :collection
     end
     resource :history, only: [:show]
+    resources :password, only: [:index]
     resources :versions, only: [:index]
   end
 

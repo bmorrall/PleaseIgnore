@@ -84,3 +84,7 @@ en:
       user:
         current_password: 'Current Password'
         password_confirmation: 'Confirm Password'
+  users:
+    password:
+      index:
+        page_title: Change Password

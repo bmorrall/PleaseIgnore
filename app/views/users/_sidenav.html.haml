@@ -3,8 +3,11 @@
     = fa 'user'
     = t('layouts.navigation.my_profile')
   = link_to users_accounts_path, class: 'btn btn-default' do
-    = fa 'sign-in'
+    = fa 'share-square-o'
     = t('layouts.navigation.my_accounts')
+  = link_to users_password_index_path, class: 'btn btn-default' do
+    = fa 'key'
+    = t('layouts.navigation.my_password')
   = link_to users_history_path, class: 'btn btn-default' do
     = fa 'list-ul'
     = t('layouts.navigation.my_history')

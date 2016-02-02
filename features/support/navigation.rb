@@ -43,6 +43,10 @@ module NavigationHelpers
       navigate_to 'my profile page'
       click_link t('layouts.navigation.my_accounts')
 
+    when /my password page/
+      navigate_to 'my profile page'
+      click_link t('layouts.navigation.my_password')
+
     when /the privacy policy page/
       navigate_to 'the sign up page'
       click_link 'Privacy Policy'

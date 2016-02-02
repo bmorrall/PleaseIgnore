@@ -106,7 +106,7 @@ module Users
 
       # Only display password on #show or if change password fails
       def display_password_change?
-        params[:user].nil? || params[:user].key?(:password)
+        !params[:user].nil? && params[:user].key?(:password)
       end
 
       # Only display accounts on #show

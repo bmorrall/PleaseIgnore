@@ -37,6 +37,9 @@ module NavigationHelpers
       when /my profile page/
         '/users/edit'
 
+      when /my password page/
+        '/users/password'
+
       when /my accounts page/
         '/users/accounts'
 

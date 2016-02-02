@@ -30,28 +30,7 @@
             = link_to t('buttons.cancel'), edit_user_registration_path, class: 'btn btn-default'
 
 - if display_password_change?
-  %section
-    %header.page-header
-      %h3
-        = resource.no_login_password? ? t('.headers.add_password') : t('.headers.change_password')
-
-    = simple_form_for(resource,
-                      as: resource_name,
-                      url: registration_path(resource_name),
-                      html: { method: :put, role: 'form', class: 'form-horizontal' },
-                      wrapper: :horizontal_bootstrap,
-                      defaults: horizontal_bootstrap_defaults) do |f|
-      = f.error_notification
-      = f.input :password, label: t('.labels.password')
-      = f.input :password_confirmation
-      = f.input :current_password unless resource.no_login_password?
-      .form-group
-        .col-sm-offset-3.col-sm-6
-          %button.btn.btn-primary{ type: 'submit' }
-            = fa 'key'
-            = resource.no_login_password? ? t('.buttons.add_password') : t('.buttons.change_password')
-          - if resource.errors.any?
-            = link_to t('buttons.cancel'), edit_user_registration_path, class: 'btn btn-default'
+  = render 'users/password/password_change', resource: resource
 
 - if display_accounts? && can?(:destroy, resource)
   %section
@@ -66,6 +45,6 @@
         = fa 'trash-o'
         = t('.buttons.delete_user')
 
-- if resource.last_sign_in_at?
+- if display_profile? && resource.last_sign_in_at?
   %p.small
     = t('.labels.last_signed_in', date: local_time(resource.last_sign_in_at)).html_safe

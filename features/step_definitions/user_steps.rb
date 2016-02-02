@@ -163,7 +163,7 @@ When(/^I edit my account details$/) do
 end
 
 When(/^I edit my password details$/) do
-  visit_my_profile
+  navigate_to 'my password page'
   fill_in 'user_password', with: 'newpassword1'
   fill_in 'user_password_confirmation', with: 'newpassword1'
   fill_in 'user_current_password', with: @visitor[:password]
