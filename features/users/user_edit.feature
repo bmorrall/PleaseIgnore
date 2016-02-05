@@ -8,8 +8,3 @@ Feature: Edit User
       Given I am logged in
       When I edit my account details
       Then I should see an account edited message
-
-    Scenario: I sign in and change my password
-      Given I am logged in
-      When I edit my password details
-      Then I should see a password changed message

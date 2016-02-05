@@ -49,12 +49,20 @@ FactoryGirl.define do
     trait(:confirmed) do
       confirmed_at { Time.zone.now }
     end
+    trait(:with_auth_hash) do
+      transient do
+        auth_hash { create :developer_auth_hash }
+      end
+      initialize_with do
+        User.new_with_session({}, "devise.#{auth_hash['provider']}_data" => auth_hash)
+      end
+    end
     trait(:no_login_password) do
+      with_auth_hash
+
       email nil
       password nil
       password_confirmation nil
-      after(:build) { |user| user.new_session_accounts << build(:developer_account) }
-      after(:create) { |user| user.update_column :encrypted_password, '' }
     end
 
     trait :soft_deleted do

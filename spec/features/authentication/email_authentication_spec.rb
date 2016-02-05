@@ -50,7 +50,7 @@ feature 'Email Authentication', type: :feature do
 
   scenario 'Guest with no login password attempts to sign in' do
     # Given there is a user without a login password
-    user = create(:user, :no_login_password)
+    user = create(:user, :no_login_password, email: Faker::Internet.email)
 
     # When I attempt to login without a password
     sign_in_with_credentials(user.email, '')

@@ -16,7 +16,7 @@ module Users
     helper_method :display_profile?
     helper_method :display_password_change?
 
-    # Attempts to save the Password or the Profile for the `current_user`.
+    # Attempts to save the Password or the Profile for the `current_user`
     #
     # Keeps the User signed in upon a successful update.
     #
@@ -70,8 +70,9 @@ module Users
     # @api private
     # @return [Boolean] success if the current_user is updated
     def save_account_or_password
+      password_added = @user.encrypted_password.blank?
       if needs_password_param?(@user, account_update_params)
-        @success_message = :updated_password
+        @success_message = password_added ? :added_password : :updated_password
         @user.update_with_password account_update_params
       else
         @success_message = :updated

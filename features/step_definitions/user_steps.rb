@@ -162,14 +162,6 @@ When(/^I edit my account details$/) do
   click_button 'Update'
 end
 
-When(/^I edit my password details$/) do
-  navigate_to 'my password page'
-  fill_in 'user_password', with: 'newpassword1'
-  fill_in 'user_password_confirmation', with: 'newpassword1'
-  fill_in 'user_current_password', with: @visitor[:password]
-  click_button 'Change Password'
-end
-
 When(/^I look at the list of users$/) do
   pending 'TODO: Display list of users'
 end
@@ -231,10 +223,6 @@ end
 
 Then(/^I should see an account edited message$/) do
   expect(page).to have_content t('devise.registrations.updated')
-end
-
-Then(/^I should see a password changed message$/) do
-  expect(page).to have_content t('devise.registrations.updated_password')
 end
 
 Then(/^I should see my name$/) do
