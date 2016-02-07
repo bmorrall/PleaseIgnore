@@ -10,7 +10,7 @@ describe Concerns::Users::DeviseAccountAuthentication do
   subject(:instance) { DeviseAccountAuthenticationTestUser.new }
 
   describe 'Associations' do
-    it { is_expected.to have_many(:accounts).dependent(:destroy) }
+    it { is_expected.to have_many(:accounts).dependent(nil) }
   end
 
   describe '.new_with_session' do

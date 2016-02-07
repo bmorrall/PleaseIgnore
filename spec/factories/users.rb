@@ -68,5 +68,8 @@ FactoryGirl.define do
     trait :soft_deleted do
       deleted_at { DateTime.now }
     end
+    trait(:expired) do
+      deleted_at { (2.months + 1.day).ago }
+    end
   end
 end

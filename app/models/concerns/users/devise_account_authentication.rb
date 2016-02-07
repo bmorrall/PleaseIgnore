@@ -20,8 +20,7 @@ module Concerns
 
         has_many :accounts,
                  -> { order 'position ASC, accounts.type ASC' },
-                 foreign_key: :user_id,
-                 dependent: :destroy
+                 foreign_key: :user_id
 
         # Callbacks
 
@@ -42,11 +41,6 @@ module Concerns
           super.tap do |user|
             user.send :add_accounts_from_session, session
           end
-        end
-
-        # [Devise] Allows users to be saved without an email address if a account has been linked
-        def email_required?
-          new_session_accounts.empty? && accounts.empty?
         end
 
         # [Devise] Allows valid_password to accept a nil current_password value

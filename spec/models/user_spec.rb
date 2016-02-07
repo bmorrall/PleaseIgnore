@@ -429,6 +429,17 @@ describe User, type: :model do
         expect(user.encrypted_password).to be_blank
         expect(user.accounts.size).to be(1)
       end
+
+      it 'creates a soft deleted user' do
+        user = create(:user, :soft_deleted)
+        expect(user).to be_deleted_at
+        expect(user).to_not be_expired
+      end
+      it 'creates a expired user' do
+        user = create(:user, :expired)
+        expect(user).to be_deleted_at
+        expect(user).to be_expired
+      end
     end
   end
 end

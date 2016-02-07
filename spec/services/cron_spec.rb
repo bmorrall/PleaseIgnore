@@ -16,6 +16,7 @@ describe Cron do
 
     it 'runs daily jobs' do
       expect(AuthenticationTokens::PurgeOldTokensJob).to receive(:perform_later).with(no_args)
+      expect(Users::ArchiveExpiredUsersJob).to receive(:perform_later).with(no_args)
 
       travel_to(Time.now.midnight) do
         subject

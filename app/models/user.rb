@@ -76,6 +76,17 @@ class User < ActiveRecord::Base
       include Concerns::Users::DeviseTokenAuthentication
       include Concerns::Users::DeviseAccountAuthentication
       include Concerns::Users::DeviseSoftDeletion
+
+      # [Devise] Allows users to be saved without an email address if a account has been linked
+      def email_required?
+        if expired?
+          false # Expired users do not have an email address
+        elsif new_session_accounts.any? || accounts.any?
+          false # Users with Accounts (or pending accounts) do not need a password
+        else
+          super # Users without accounts may require an email address
+        end
+      end
     end
   end
 

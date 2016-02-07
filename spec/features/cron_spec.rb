@@ -15,4 +15,15 @@ feature 'Cron Tasks', type: :feature do
 
     expect(user.authentication_tokens.count).to eq Tiddle::TokenIssuer::MAXIMUM_TOKENS_PER_USER
   end
+
+  scenario 'Expired users should have their details stripped daily' do
+    user = create(:user, :expired)
+
+    Sidekiq::Testing.inline! do
+      expect do
+        Cron.daily
+        user.reload
+      end.to change(user, :email).to(nil)
+    end
+  end
 end

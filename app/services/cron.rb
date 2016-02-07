@@ -12,6 +12,7 @@ class Cron
     Rollbar.debug('Daily cron task')
 
     AuthenticationTokens::PurgeOldTokensJob.perform_later
+    Users::ArchiveExpiredUsersJob.perform_later
 
     # Add Daily Cron Tasks after this line
   end
