@@ -251,6 +251,11 @@ describe User, type: :model do
 
         it { should validate_presence_of :email }
       end
+      context 'when email is not required' do
+        before(:each) { allow(subject).to receive(:email_required?).and_return(false) }
+
+        it { should_not validate_presence_of :email }
+      end
 
       context 'when email has changed' do
         before(:each) { allow(subject).to receive(:email_changed?).and_return(true) }
