@@ -5,7 +5,14 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
   Coveralls::SimpleCov::Formatter
 ])
-SimpleCov.start('rails')
+SimpleCov.start 'rails' do
+  add_group 'Cells', 'app/cells'
+  add_group 'Jobs', 'app/jobs'
+  add_group 'Decorators', 'app/decorators'
+  add_group 'Presenters', 'app/presenters'
+  add_group 'Responders', 'app/responders'
+  add_group 'Services', 'app/services'
+end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
