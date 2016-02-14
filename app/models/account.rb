@@ -125,7 +125,7 @@ class Account < ActiveRecord::Base
     def provider_account_class(provider)
       @provider_account_class ||= {}
       @provider_account_class[provider] ||= begin
-        fail UnknownProviderError, provider unless PROVIDERS.include? provider
+        raise UnknownProviderError, provider unless PROVIDERS.include? provider
         "Accounts::#{provider.classify}".constantize
       end
     end
@@ -137,7 +137,7 @@ class Account < ActiveRecord::Base
       provider = auth_hash['provider']
       return if !expected_provider || provider == expected_provider
 
-      fail InvalidProviderError.new(provider, expected_provider)
+      raise InvalidProviderError.new(provider, expected_provider)
     end
   end
 
@@ -197,7 +197,7 @@ class Account < ActiveRecord::Base
 
   # @return [String] unique id of account, scoped to provider
   def account_uid
-    fail NotImplementedError
+    raise NotImplementedError
   end
 
   # Accounts can be disabled to prevent sign in
@@ -221,7 +221,7 @@ class Account < ActiveRecord::Base
 
   # @return [String] Common name for Account Provider
   def provider
-    fail NotImplementedError
+    raise NotImplementedError
   end
 
   # @return [String] Human Readable Account Profile Name

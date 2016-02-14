@@ -58,7 +58,7 @@ module NavigationHelpers
       switch_to_new_tab
 
     else
-      fail "Don't know how to navigate to \"#{page_name}\".\n"\
+      raise "Don't know how to navigate to \"#{page_name}\".\n"\
            "Now, go and add a mapping in #{__FILE__}"
     end
 

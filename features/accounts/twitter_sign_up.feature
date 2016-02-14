@@ -1,5 +1,5 @@
 Feature: Twitter Registration
-  As a vistor to the website
+  As a visitor to the website
   I want to sign up using my Twitter account
   So I can create a new account quickly
 

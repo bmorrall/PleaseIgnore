@@ -13,7 +13,7 @@ module RequestMacros
 
   # Accessor for logged in user
   def logged_in_user
-    fail 'No user logged in' if @logged_in_user.nil?
+    raise 'No user logged in' if @logged_in_user.nil?
     @logged_in_user
   end
 

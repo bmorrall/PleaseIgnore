@@ -6,7 +6,7 @@ describe ContactsController, type: :controller do
   end
 
   describe 'GET show' do
-    context 'as a vistor' do
+    context 'as a visitor' do
       grant_ability :create, Contact
 
       context 'with a valid request' do

@@ -48,7 +48,7 @@ module Features
 
     # The currently logged in user
     def logged_in_user
-      @logged_in_user || fail('User has not been assigned')
+      @logged_in_user || raise('User has not been assigned')
     end
   end
 end

@@ -25,7 +25,7 @@ module Users
     # @throws StandardError if the user is not able to be archived safely
     # @return void
     def call
-      fail 'Attempted to strip a non-expireable user!' unless safe_to_strip?
+      raise 'Attempted to strip a non-expireable user!' unless safe_to_strip?
 
       ActiveRecord::Base.transaction do
         user.update_attributes!(

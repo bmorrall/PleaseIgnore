@@ -46,8 +46,8 @@ module Accounts
 
     # Account has previously been linked, display success or alert
     def check_account_is_linked_to_user
-      fail AccountDisabledError.new(:account_disabled, provider) if account.disabled?
-      fail PreviouslyLinkedError.new(:previously_linked, provider) if account.user_id != user.id
+      raise AccountDisabledError.new(:account_disabled, provider) if account.disabled?
+      raise PreviouslyLinkedError.new(:previously_linked, provider) if account.user_id != user.id
 
       @success = :success_linked
     end
@@ -55,9 +55,9 @@ module Accounts
     # Links account the the current user
     def create_account_for_user
       # User already has linked to a provider account
-      fail AccountLimitError.new(:account_limit, provider) if user.provider_account?(provider)
+      raise AccountLimitError.new(:account_limit, provider) if user.provider_account?(provider)
       @account = build_account
-      fail AccountInvalidError.new(:account_invalid, provider) unless account.save
+      raise AccountInvalidError.new(:account_invalid, provider) unless account.save
 
       @success = :success_linked
     end

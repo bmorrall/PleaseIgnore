@@ -1,5 +1,5 @@
 Feature: Google Registration
-  As a vistor to the website
+  As a visitor to the website
   I want to sign up using my Google account
   So I can create a new account quickly
 

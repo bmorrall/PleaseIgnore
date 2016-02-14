@@ -18,7 +18,7 @@ module ControllerMacros
   # Authentication Methods
 
   def logged_in_user
-    @logged_in_user || fail('No user logged in')
+    @logged_in_user || raise('No user logged in')
   end
 
   # Authorization Methods

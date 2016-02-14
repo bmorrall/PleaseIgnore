@@ -26,7 +26,7 @@ module Accounts
         @success = :success_registered
       else
         # Prevent users from logging in with banned accounts
-        fail AccountDisabledError.new(:account_disabled, provider) unless account.enabled?
+        raise AccountDisabledError.new(:account_disabled, provider) unless account.enabled?
 
         # User can be authenticated with account
         @success = :success_authenticated

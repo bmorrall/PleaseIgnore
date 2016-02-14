@@ -120,7 +120,7 @@ module Concerns
           logger.error "Unable to save Account: #{account.provider}: #{account.uid}"
           error_message = "Unable to add your #{Account.provider_name(account.provider)} account"
           errors.add :base, error_message
-          fail ActiveRecord::RecordInvalid, account
+          raise ActiveRecord::RecordInvalid, account
         end
       end
 
