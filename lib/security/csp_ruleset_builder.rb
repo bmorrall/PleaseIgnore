@@ -8,8 +8,10 @@ module Security
 
     # Buils a new CSB Ruleset that limits the application down
     def self.build(settings: ::Settings.instance)
-      new(settings: settings).build
+      new(settings: settings).send(:build)
     end
+
+    private_class_method :new
 
     delegate :virtual_host, :asset_host, :ssl_enabled?, to: :settings
 
@@ -18,6 +20,8 @@ module Security
     def initialize(settings:)
       @settings = settings
     end
+
+    protected
 
     def build
       {

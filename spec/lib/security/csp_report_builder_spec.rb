@@ -2,20 +2,9 @@ require 'rails_helper'
 require 'security/csp_ruleset_builder'
 
 describe Security::CspRulesetBuilder do
-  let(:settings) { instance_double('Settings') }
-  subject(:instance) { described_class.new(settings: settings) }
-
   describe '.build' do
-    it 'creates a new instance of CspRulesetBuilder and returns the result' do
-      build_results = double('build_results')
-      ruleset_builder = instance_double(described_class.name, build: build_results)
-      expect(described_class).to receive(:new).with(settings: settings).and_return(ruleset_builder)
-      expect(described_class.build(settings: settings)).to eq build_results
-    end
-  end
-
-  describe '#build' do
-    subject { instance.build }
+    let(:settings) { instance_double('Settings') }
+    subject { described_class.build(settings: settings) }
     let(:virtual_host) { Faker::Internet.domain_name }
     before { allow(settings).to receive(:virtual_host).and_return(virtual_host) }
 

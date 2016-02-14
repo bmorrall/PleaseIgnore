@@ -18,6 +18,7 @@ Metrics/ClassLength:
   Exclude:
     - 'app/models/account.rb'
     - 'app/models/user.rb'
+    - 'lib/security/csp_ruleset_builder.rb'
 
 # Configuration parameters: AllowURI, URISchemes.
 Metrics/LineLength:
