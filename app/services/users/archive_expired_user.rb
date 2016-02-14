@@ -42,7 +42,7 @@ module Users
     # @api private
     # @return [Boolean] true if it is safe to remove a user
     def safe_to_strip?
-      user.email? && user.expired?
+      user.expired? && (user.email? || user.accounts.any?)
     end
   end
 end

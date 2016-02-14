@@ -22,4 +22,14 @@ feature 'Cron Tasks', type: :feature do
       user.reload
     end.to change(user, :email).to(nil)
   end
+
+  scenario 'Expired users should have their accounts removed daily' do
+    create(:user, :expired, :with_auth_hash)
+
+    Sidekiq::Testing.inline! do
+      expect do
+        Cron.daily
+      end.to change(Account, :count).by(-1)
+    end
+  end
 end

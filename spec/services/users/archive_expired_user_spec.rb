@@ -30,12 +30,23 @@ describe Users::ArchiveExpiredUser do
     let(:user) { instance_double('User', email?: true, expired?: true) }
     subject { described_class.new(user).safe_to_strip? }
 
-    context 'when the user is expired and has not been stripped' do
+    context 'when the user is expired and still has an email' do
+      let(:user) { instance_double('User', email?: true, expired?: true) }
       it { should be true }
     end
 
-    context 'when the user has an empty email' do
-      before { allow(user).to receive(:email?).and_return(false) }
+    context 'when the user is expired and has an account' do
+      let(:user) do
+        instance_double('User', email?: false, expired?: true, accounts: [double('account')])
+      end
+      it { should be true }
+    end
+
+    context 'when the user has an empty email and no accounts' do
+      before do
+        allow(user).to receive(:email?).and_return(false)
+        allow(user).to receive(:accounts).and_return([])
+      end
       it { should be false }
     end
 

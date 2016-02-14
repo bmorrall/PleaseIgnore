@@ -21,13 +21,16 @@ module Users
       archived_count
     end
 
-    # Returns the expired users to be archived
+    # Returns the expired users with an email to be removed
     # @api private
     # @return [ActiveRecord::Collection] Users safe to archive
     def expired_users_with_email
       @expired_users_with_email ||= User.expired.where.not(email: nil)
     end
 
+    # Returns the expired users with an account to be removed
+    # @api private
+    # @return [ActiveRecord::Collection] Users safe to archive
     def expired_users_with_accounts
       @expired_users_with_accounts ||= User.expired
                                            .joins(:accounts)
