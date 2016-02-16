@@ -1,0 +1,9 @@
+en:
+  security:
+    rack_attack:
+      limit_exceeded_message: 'Too many requests. Please try again later.'
+    report_mailer:
+      csp_report:
+        subject: Content Security Policy Violation!
+      hpkp_report:
+        subject: HTTP Public Key Pins Violation!

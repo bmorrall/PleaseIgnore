@@ -49,9 +49,6 @@ module PleaseIgnore
     # Add response codes for common exceptions
     Rails.application.config.action_dispatch.rescue_responses['CanCan::AccessDenied'] = :forbidden
 
-    # Use Rack::Attack to secure critical points against attacks
-    config.middleware.use Rack::Attack
-
     # Set whodunnint for non-ActionController changes
     rake_tasks do
       # Keep track of rake tasks

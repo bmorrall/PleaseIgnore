@@ -1,0 +1,8 @@
+Description:
+    Installs the security engine with default values
+
+Example:
+    rails generate security:initializer
+
+    This will create:
+        config/initialiser/security.rb

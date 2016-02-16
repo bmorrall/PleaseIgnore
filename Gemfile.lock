@@ -6,6 +6,15 @@ GIT
     haml (4.1.0.beta.1)
       tilt
 
+PATH
+  remote: engines/security
+  specs:
+    security (0.0.1)
+      rack-attack
+      rails (~> 4.2.5.1)
+      secure_headers (~> 2.5.1)
+      sendgrid
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -528,7 +537,6 @@ DEPENDENCIES
   pg (~> 0.18.2)
   pry-rails
   quiet_assets
-  rack-attack
   rack-mini-profiler
   rails (= 4.2.5.1)
   rails_12factor
@@ -542,7 +550,7 @@ DEPENDENCIES
   rubocop
   sass-rails (~> 5.0.1)
   sdoc
-  secure_headers (~> 2.5.1)
+  security!
   sendgrid
   shoulda-matchers (~> 3.1)
   sidekiq (~> 4.1.0)

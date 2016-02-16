@@ -59,7 +59,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
 
           expect(response.status).to eq 429
           expect(response.body).to eq(
-            { status: 429, error: I18n.t('rack_attack.limit_exceeded_message') }.to_json
+            { status: 429, error: I18n.t('security.rack_attack.limit_exceeded_message') }.to_json
           )
           expect(response.headers['Retry-After']).to eq 20
         end
@@ -75,7 +75,7 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
 
           expect(response.status).to eq 429
           expect(response.body).to eq(
-            { status: 429, error: I18n.t('rack_attack.limit_exceeded_message') }.to_json
+            { status: 429, error: I18n.t('security.rack_attack.limit_exceeded_message') }.to_json
           )
           expect(response.headers['Retry-After']).to eq 20
         end

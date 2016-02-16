@@ -136,8 +136,7 @@ gem 'whenever', require: false
 # Security
 # ==============
 
-gem 'rack-attack'
-gem 'secure_headers', '~> 2.5.1'
+gem 'security', path: 'engines/security'
 
 # Devops
 # ==============

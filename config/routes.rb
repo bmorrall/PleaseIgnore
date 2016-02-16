@@ -25,10 +25,7 @@ Rails.application.routes.draw do
   end
 
   # Security Actions
-  namespace :security do
-    resource :csp_report, only: :create
-    resource :hpkp_report, only: :create
-  end
+  mount Security::Engine => '/security'
 
   # Utility Methods
   namespace :utils do

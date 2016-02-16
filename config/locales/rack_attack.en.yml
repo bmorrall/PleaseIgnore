@@ -1,3 +1,0 @@
-en:
-  rack_attack:
-    limit_exceeded_message: 'Too many requests. Please try again later.'

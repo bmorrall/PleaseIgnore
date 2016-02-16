@@ -59,34 +59,5 @@ module Rack
     throttle('logins/email', limit: 5, period: 20.seconds) do |req|
       req.params['user'].try(:[], 'email').presence if SIGN_IN_URLS.include?(req.path) && req.post?
     end
-
-    # Prevent the csp report from being flooded
-    throttle('security/csp_report', limit: 5, period: 5.minutes) do |req|
-      req.ip if req.path.starts_with?('/security/csp_report')
-    end
-
-    # Prevent the hpkp report from being flooded
-    throttle('security/hpkp_report', limit: 5, period: 5.minutes) do |req|
-      req.ip if req.path.starts_with?('/security/hpkp_report')
-    end
-
-    ### Custom Throttle Response ###
-
-    # By default, Rack::Attack returns an HTTP 429 for throttled responses,
-    # which is just fine.
-    #
-    # If you want to return 503 so that the attacker might be fooled into
-    # believing that they've successfully broken your app (or you just want to
-    # customize the response), then uncomment these lines.
-    self.throttled_response = lambda do |env|
-      status = 429 # Too Many Requests
-      headers = { 'Retry-After' => env['rack.attack.match_data'][:period] }
-      body = {
-        status: status,
-        error: I18n.t('rack_attack.limit_exceeded_message')
-      }
-
-      [429, headers, [body.to_json]]
-    end
   end
 end
