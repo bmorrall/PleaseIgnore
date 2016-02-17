@@ -23,6 +23,8 @@ describe 'SecureHeaders' do
       it 'adds HTTP Secure Headers' do
         get root_url
 
+        expect(response.headers).to_not have_key('Strict-Transport-Security')
+
         expect(response.headers['X-Frame-Options']).to eq('DENY')
         expect(response.headers['X-XSS-Protection']).to eq('1; mode=block')
         expect(response.headers['X-Content-Type-Options']).to eq('nosniff')
@@ -31,9 +33,12 @@ describe 'SecureHeaders' do
       end
 
       it 'adds HTTPS Secure Headers' do
-        get root_url, {}, { 'HTTPS' => 'on' }
+        get root_url, {}, 'HTTPS' => 'on'
 
-        expect(response.headers['Strict-Transport-Security']).to eq('max-age=631152000; includeSubdomains')
+        expect(response.headers['Strict-Transport-Security']).to eq(
+          'max-age=631152000; includeSubdomains'
+        )
+
         expect(response.headers['X-Frame-Options']).to eq('DENY')
         expect(response.headers['X-XSS-Protection']).to eq('1; mode=block')
         expect(response.headers['X-Content-Type-Options']).to eq('nosniff')
