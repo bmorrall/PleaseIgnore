@@ -2,7 +2,7 @@ require 'security/csp_ruleset_builder'
 
 ::SecureHeaders::Configuration.default do |config|
   # Generic Secure Header Protection
-  config.hsts = ::Settings.ssl_enabled? && { max_age: 20.years.to_i, include_subdomains: true }
+  config.hsts = 'max-age=631152000; includeSubdomains'
   config.x_frame_options = 'DENY'
   config.x_content_type_options = 'nosniff'
   config.x_xss_protection = '1; mode=block'

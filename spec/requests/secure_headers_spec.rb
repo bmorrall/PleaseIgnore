@@ -30,6 +30,17 @@ describe 'SecureHeaders' do
         expect(response.headers['X-Permitted-Cross-Domain-Policies']).to eq('none')
       end
 
+      it 'adds HTTPS Secure Headers' do
+        get root_url, {}, { 'HTTPS' => 'on' }
+
+        expect(response.headers['Strict-Transport-Security']).to eq('max-age=631152000; includeSubdomains')
+        expect(response.headers['X-Frame-Options']).to eq('DENY')
+        expect(response.headers['X-XSS-Protection']).to eq('1; mode=block')
+        expect(response.headers['X-Content-Type-Options']).to eq('nosniff')
+        expect(response.headers['X-Download-Options']).to eq('noopen')
+        expect(response.headers['X-Permitted-Cross-Domain-Policies']).to eq('none')
+      end
+
       it 'adds Content Security Policy Headers' do
         get root_url
 
