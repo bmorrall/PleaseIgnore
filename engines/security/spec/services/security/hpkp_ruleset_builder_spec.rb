@@ -37,6 +37,14 @@ describe Security::HpkpRulesetBuilder do
         end
       end
 
+      context 'when the virtual_host is nil' do
+        let(:virtual_host) { nil }
+
+        it 'should set the report_uri to a relative path' do
+          expect(subject[:report_uri]).to eq '/security/hpkp_report'
+        end
+      end
+
       context 'with ssl disabled' do
         before { allow(configuration).to receive(:ssl_enabled?).and_return(false) }
 

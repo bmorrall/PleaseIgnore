@@ -25,7 +25,7 @@ module Security
 
     alias ssl_enabled? ssl_enabled
 
-    validates :virtual_host, presence: true, format: { with: URL_HOST_REGEX }
+    validates :virtual_host, format: { with: URL_HOST_REGEX, allow_nil: true }
     validates :asset_host, format: { with: URL_HOST_REGEX, allow_nil: true }
     validates :ssl_enabled, inclusion: { in: [true, false] }
 

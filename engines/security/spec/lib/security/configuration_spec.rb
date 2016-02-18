@@ -4,7 +4,7 @@ describe Security::Configuration, type: :model do
   subject(:instance) { described_class.new }
 
   describe 'Validations' do
-    it { should validate_presence_of(:virtual_host) }
+    it { should_not validate_presence_of(:virtual_host) }
     it { should allow_value('pleaseignore.com').for(:virtual_host) }
     it { should allow_value('test').for(:virtual_host) }
 

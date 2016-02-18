@@ -45,7 +45,7 @@ module Security
     end
 
     def application_domain
-      @application_domain ||= "#{protocol}://#{virtual_host}"
+      @application_domain ||= "#{protocol}://#{virtual_host}" if virtual_host
     end
 
     private

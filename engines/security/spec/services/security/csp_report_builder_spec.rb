@@ -49,6 +49,14 @@ describe Security::CspRulesetBuilder do
           )
         end
 
+        context 'when the virtual_host is nil' do
+          let(:virtual_host) { nil }
+
+          it 'should set the report_uri to a relative path' do
+            expect(subject[:report_uri]).to eq ['/security/csp_report']
+          end
+        end
+
         it 'should only include Content Security Policy level 1.0 flags' do
           directives = subject.keys.reject { |k| %i(enforce).include? k }
           directives.each do |flag|

@@ -54,6 +54,13 @@ module Security
       end
     end
 
+    config.after_initialize do
+      config = Security.configuration
+      unless config.valid?
+        raise "Invalid security configuration: #{config.errors.messages.inspect}"
+      end
+    end
+
     config.generators do |g|
       g.test_framework :rspec, fixture: false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
