@@ -5,7 +5,7 @@ module Security
   class Configuration
     include ActiveModel::Validations
 
-    URL_HOST_REGEX = /\A\w+(\.\w+)*\z/
+    URL_HOST_REGEX = /\A(\w(\-\w)*)+(\.\w+)*\z/
 
     attr_accessor :security_email_address
     attr_accessor :virtual_host

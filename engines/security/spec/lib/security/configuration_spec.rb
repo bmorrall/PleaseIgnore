@@ -5,6 +5,7 @@ describe Security::Configuration, type: :model do
 
   describe 'Validations' do
     it { should_not validate_presence_of(:virtual_host) }
+    it { should allow_value('please-ignore.herokuapp.com').for(:virtual_host) }
     it { should allow_value('pleaseignore.com').for(:virtual_host) }
     it { should allow_value('test').for(:virtual_host) }
 
