@@ -1,8 +1,13 @@
 module Security
   # Provides a Stripped Down ActionController with no session memory
   class ApplicationController < ActionController::Base
+    include Logging::ControllerLogging
+
     # Prevent CSRF attacks by clearning the session..
     protect_from_forgery with: :null_session
+
+    # Requests aren't from session, allow them
+    skip_before_filter :verify_authenticity_token
 
     protected
 
@@ -17,7 +22,7 @@ module Security
         begin
           JSON.parse(request_body_as_string)
         rescue JSON::ParserError => e
-          NotifyErrorHandlers.call(e)
+          Logging.log_error(e)
           { body: request_body_as_string }
         end
     end

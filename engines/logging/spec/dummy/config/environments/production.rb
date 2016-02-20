@@ -1,26 +1,5 @@
-require 'settings'
-
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
-  # Configure Sendgrid
-  if ENV['CI']
-    ActionMailer::Base.smtp_settings = {
-      address: ENV['MAILCATCHER_PORT_1025_TCP_ADDR'],
-      port: ENV['MAILCATCHER_PORT_1025_TCP_PORT'],
-      domain: ::Settings.virtual_host
-    }
-  else
-    ActionMailer::Base.smtp_settings = {
-      user_name: ENV['SENDGRID_USERNAME'],
-      password: ENV['SENDGRID_PASSWORD'],
-      domain: ::Settings.virtual_host,
-      address: 'smtp.sendgrid.net',
-      port: 587,
-      authentication: :plain,
-      enable_starttls_auto: true
-    }
-  end
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -43,7 +22,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ::Settings.serve_static_files?
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -59,15 +38,13 @@ Rails.application.configure do
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
-  unless ::Settings.serve_static_files?
-    config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
-  end
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = ::Settings.ssl_enabled?
+  # config.force_ssl = true
 
-  # Rely on third parties for detailed debugging information
-  config.log_level = :info
+  # Use the lowest log level to ensure availability of diagnostic information
+  # when problems arise.
+  config.log_level = :debug
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
@@ -75,30 +52,11 @@ Rails.application.configure do
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  # Use memcached in production.
-  dalli_options = {
-    namespace: 'please_ignore_cache',
-    compress: true,
-    expires_in: 1.day,
-    raise_errors: false,
-    socket_timeout: 1.5,
-    socket_failure_delay: 0.2
-  }
-  if ENV['MEMCACHIER_SERVERS']
-    # [Heroku] Use Memcachier service
-    config.cache_store = :dalli_store, ENV['MEMCACHIER_SERVERS'].split(','), {
-      username: ENV['MEMCACHIER_USERNAME'],
-      password: ENV['MEMCACHIER_PASSWORD'],
-      failover: true
-    }.reverse_merge(dalli_options)
-  else
-    # [Docker] Use Memcached on localhost
-    config.cache_store = :dalli_store, nil, dalli_options
-  end
+  # Use a different cache store in production.
+  # config.cache_store = :mem_cache_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
-  config.action_controller.asset_host = ::Settings.asset_host if ::Settings.asset_host
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -112,11 +70,8 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  # config.log_formatter = ::Logger::Formatter.new
+  config.log_formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  # Set the default url host
-  config.action_mailer.default_url_options = { host: ::Settings.virtual_host || Rails.env }
 end

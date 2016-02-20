@@ -7,9 +7,18 @@ GIT
       tilt
 
 PATH
+  remote: engines/logging
+  specs:
+    logging (0.0.1)
+      lograge
+      logstash-event
+      rails (~> 4.2.5.1)
+
+PATH
   remote: engines/security
   specs:
     security (0.0.1)
+      logging
       rack-attack
       rails (~> 4.2.5.1)
       secure_headers (~> 2.5.1)
@@ -231,7 +240,7 @@ GEM
       addressable (~> 2.3)
     local_time (1.0.3)
       coffee-rails
-    lograge (0.3.5)
+    lograge (0.3.6)
       actionpack (>= 3)
       activesupport (>= 3)
       railties (>= 3)
@@ -524,8 +533,7 @@ DEPENDENCIES
   jquery-rails
   jquery-rails-cdn
   local_time
-  lograge
-  logstash-event
+  logging!
   non-stupid-digest-assets
   omniauth-facebook
   omniauth-github

@@ -141,9 +141,7 @@ gem 'security', path: 'engines/security'
 # Devops
 # ==============
 
-# Reduces noise from Rails logger
-gem 'lograge'
-gem 'logstash-event'
+gem 'logging', path: 'engines/logging'
 
 gem 'rollbar'
 

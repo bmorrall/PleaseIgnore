@@ -39,9 +39,7 @@ RSpec.describe Security::CspReportsController, type: :controller do
     end
 
     it 'handles malformed csp report requests' do
-      expect(Rollbar).to receive(:error).with(
-        kind_of(JSON::ParserError), use_exception_level_filters: true
-      )
+      expect(Logging).to receive(:log_error).with(kind_of(JSON::ParserError))
       expect do
         post :create, 'totally, not valid json]'
       end.to change(ActionMailer::Base.deliveries, :count).by(1)
