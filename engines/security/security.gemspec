@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 4.2.5.1'
   s.add_dependency 'logging'
 
-  s.add_dependency 'secure_headers', '~> 2.5.1'
+  s.add_dependency 'secure_headers', '~> 3.0'
   s.add_dependency 'rack-attack'
   s.add_dependency 'sendgrid'
 

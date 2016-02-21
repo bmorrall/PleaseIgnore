@@ -36,7 +36,7 @@ module Security
 
     def build
       {
-        enforce: true,
+        report_only: false,
         default_src: default_csp_params,
         connect_src: connect_src,
         font_src: font_src,

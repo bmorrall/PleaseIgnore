@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'SecureHeaders' do
   REJECTED_CSP_POLICIES = %i(
     plugin_types
-    enforce
+    report_only
   ).freeze
 
   def format_csp_policies(csp_policies)
@@ -57,7 +57,7 @@ describe 'SecureHeaders' do
           expect(content_security_policy).to match(csp_policy)
         end
 
-        formatted_csp_policies = csp_policies.join('; ') + ';'
+        formatted_csp_policies = csp_policies.join('; ')
         expect(content_security_policy).to eq(formatted_csp_policies)
       end
     end

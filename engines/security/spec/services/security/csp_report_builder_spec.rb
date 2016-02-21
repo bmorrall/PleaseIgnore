@@ -28,7 +28,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config with https directives' do
           should eq(
-            enforce: true,
+            report_only: false,
             default_src: ['https:', asset_host],
             connect_src: ["'self'", asset_host],
             font_src: ['https:', asset_host, 'data:', 'fonts.gstatic.com'],
@@ -58,10 +58,14 @@ describe Security::CspRulesetBuilder do
         end
 
         it 'should only include Content Security Policy level 1.0 flags' do
-          directives = subject.keys.reject { |k| %i(enforce).include? k }
+          directives = subject.keys.reject { |k| %i(report_only).include? k }
           directives.each do |flag|
-            expect(SecureHeaders::ContentSecurityPolicy::Constants::DIRECTIVES_1_0).to include(flag)
+            expect(SecureHeaders::ContentSecurityPolicy::DIRECTIVES_1_0).to include(flag)
           end
+        end
+
+        it 'should return a valid configuration' do
+          SecureHeaders::ContentSecurityPolicy.validate_config! subject
         end
       end
 
@@ -70,7 +74,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config limited to localhost' do
           should eq(
-            enforce: true,
+            report_only: false,
             default_src: ['https:', "'self'"],
             connect_src: ["'self'"],
             font_src: ['https:', "'self'", 'data:', 'fonts.gstatic.com'],
@@ -102,7 +106,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config without https directives' do
           should eq(
-            enforce: true,
+            report_only: false,
             default_src: ['http:', asset_host],
             connect_src: ["'self'", asset_host],
             font_src: ['http:', asset_host, 'data:', 'fonts.gstatic.com'],
@@ -129,7 +133,7 @@ describe Security::CspRulesetBuilder do
 
         it 'should build a csp config limited to localhost' do
           should eq(
-            enforce: true,
+            report_only: false,
             default_src: ['http:', "'self'"],
             connect_src: ["'self'"],
             font_src: ['http:', "'self'", 'data:', 'fonts.gstatic.com'],

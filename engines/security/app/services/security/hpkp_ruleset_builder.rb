@@ -21,10 +21,10 @@ module Security
     end
 
     def build
-      return false unless hpkp_enabled?
+      return SecureHeaders::OPT_OUT unless hpkp_enabled?
 
       {
-        enforce: true,
+        report_only: false,
         max_age: 60.days.to_i,
         include_subdomains: true,
         report_uri: report_uri,

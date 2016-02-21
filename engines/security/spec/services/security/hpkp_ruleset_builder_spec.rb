@@ -25,7 +25,7 @@ describe Security::HpkpRulesetBuilder do
 
         it 'should return a https configuration' do
           should eq(
-            enforce: true,
+            report_only: false,
             max_age: 60.days.to_i,
             include_subdomains: true,
             report_uri: "https://#{virtual_host}/security/hpkp_report",
@@ -50,7 +50,7 @@ describe Security::HpkpRulesetBuilder do
 
         it 'should return a http configuration' do
           should eq(
-            enforce: true,
+            report_only: false,
             max_age: 60.days.to_i,
             include_subdomains: true,
             report_uri: "http://#{virtual_host}/security/hpkp_report",
@@ -63,14 +63,14 @@ describe Security::HpkpRulesetBuilder do
       end
     end
 
-    it 'should return false when there are no hpkp_public_keys' do
+    it 'should return OPT_OUT when there are no hpkp_public_keys' do
       expect(configuration).to receive(:hpkp_public_keys).and_return([])
-      expect(subject).to be false
+      expect(subject).to be SecureHeaders::OPT_OUT
     end
 
-    it 'should return false when there is one hpkp_public_keys' do
+    it 'should return OPT_OUT when there is one hpkp_public_keys' do
       expect(configuration).to receive(:hpkp_public_keys).and_return([double('public key')])
-      expect(subject).to be false
+      expect(subject).to be SecureHeaders::OPT_OUT
     end
   end
 end
