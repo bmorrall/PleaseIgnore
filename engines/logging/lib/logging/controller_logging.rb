@@ -8,7 +8,11 @@ module Logging
       def append_info_to_payload(payload)
         super
 
-        payload.merge(event_payload_data)
+        event_payload_data.each do |key, value|
+          payload[key] = value
+        end
+
+        payload
       end
     end
 

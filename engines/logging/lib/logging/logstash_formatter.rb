@@ -11,6 +11,7 @@ module Logging
       LogStash::Event.new(
         message: msg,
         :@severity => severity,
+        :@progname => progname,
         :@tags => current_tags,
         :@timestamp => time
       ).to_json + "\n"
