@@ -17,9 +17,6 @@ class ApplicationController < ActionController::Base
   # Ensure CanCan(Can) authorizes all actions
   check_authorization unless: :devise_controller?
 
-  # Add Security Policy Headers
-  ensure_security_headers
-
   concerning :Caching do
     included do
       helper_method :cache_uid
