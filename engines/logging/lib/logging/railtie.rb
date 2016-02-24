@@ -22,13 +22,13 @@ module Logging
 
     # Set whodunnint for non-ActionController changes
     rake_tasks do
-      Logging.global_params[:request_id] = String(Process.pid)
+      Logging.global_params[:request_id] = "rake:#{Process.pid}"
     end
     runner do
-      Logging.global_params[:request_id] = String(Process.pid)
+      Logging.global_params[:request_id] = "runner:#{Process.pid}"
     end
     console do
-      Logging.global_params[:request_id] = String(Process.pid)
+      Logging.global_params[:request_id] = "console:#{Process.pid}"
     end
   end
 end
