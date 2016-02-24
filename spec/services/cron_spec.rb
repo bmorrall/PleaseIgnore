@@ -3,37 +3,31 @@ require 'rails_helper'
 describe Cron do
   include ActiveSupport::Testing::TimeHelpers
 
-  before do
-    allow(AuthenticationTokens::PurgeOldTokensJob).to receive(:perform_later)
-  end
-
   after do
     travel_back
   end
 
-  describe '.daily' do
-    subject { described_class.daily }
+  describe '.daily', :queue_workers do
+    around do |example|
+      travel_to(Time.now.midnight) { example.run }
+    end
 
-    it 'runs daily jobs' do
-      expect(AuthenticationTokens::PurgeOldTokensJob).to receive(:perform_later).with(no_args)
-      expect(Users::ArchiveExpiredUsersJob).to receive(:perform_later).with(no_args)
-
-      travel_to(Time.now.midnight) do
-        subject
-      end
+    it 'enqueues a AuthenticationTokens::PurgeOldTokensJob' do
+      expect { described_class.daily }.to enqueue_a_worker(AuthenticationTokens::PurgeOldTokensJob)
+    end
+    it 'enqueues a Users::ArchiveExpiredUsersJob' do
+      expect { described_class.daily }.to enqueue_a_worker(Users::ArchiveExpiredUsersJob)
     end
   end
 
-  describe '.hourly' do
-    subject { described_class.hourly }
-
+  describe '.hourly', :queue_workers do
     it 'runs hourly jobs' do
-      now = Time.now.midnight + 1.hour
+      midnight = Time.now.midnight
 
-      expect(AuthenticationTokens::PurgeOldTokensJob).to_not receive(:perform_later)
-
-      travel_to(now) do
-        subject
+      23.times do |offset|
+        travel_to(midnight + offset.hours) do
+          expect { described_class.hourly }.to_not enqueue_a_worker
+        end
       end
     end
   end

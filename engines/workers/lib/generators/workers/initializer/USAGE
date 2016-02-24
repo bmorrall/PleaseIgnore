@@ -1,0 +1,8 @@
+Description:
+    Installs the logging engine with default values
+
+Example:
+    rails generate logging:initializer
+
+    This will create:
+        config/initialiser/logging.rb

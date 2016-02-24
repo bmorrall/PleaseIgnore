@@ -4,7 +4,7 @@ describe 'Security::CSPReport', type: :request do
   include ActiveSupport::Testing::TimeHelpers
 
   describe 'POST /security/csp_report' do
-    it 'sends a CSP Report email' do
+    it 'sends a CSP Report email', :inline_workers do
       expect do
         policy = "default-src 'none'; style-src cdn.example.com; report-uri /security/csp_report"
         post '/security/csp_report', {

@@ -89,10 +89,8 @@ gem 'rolify'
 
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
-gem 'sidekiq', '~> 4.1.0'
-gem 'redis-namespace' # Required for Sidekiq namespace
 
-# Send Devise mail through Sidekiq
+# Send Devise mail through ActiveJob
 gem 'devise-async'
 gem 'devise-async-activejob'
 
@@ -142,6 +140,7 @@ gem 'security', path: 'engines/security'
 # ==============
 
 gem 'logging', path: 'engines/logging'
+gem 'workers', path: 'engines/workers'
 
 gem 'rollbar'
 

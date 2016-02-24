@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
   s.add_dependency 'rails', '~> 4.2.5.1'
+  s.add_dependency 'workers'
   s.add_dependency 'logging'
 
   s.add_dependency 'secure_headers', '~> 3.0'

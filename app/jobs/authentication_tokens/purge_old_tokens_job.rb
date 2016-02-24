@@ -1,14 +1,12 @@
 module AuthenticationTokens
   # Finds users with expired authentication tokens and purges them
   class PurgeOldTokensJob < ActiveJob::Base
-    include Rollbar::ActiveJob
+    include Workers::BackgroundJob
 
-    queue_as :low_priority
+    queue_as Workers::LOW_PRIORITY
 
     def perform
-      ActiveRecord::Base.connection_pool.with_connection do
-        users.find_each { |user| Tiddle.purge_old_tokens(user) }
-      end
+      users.find_each { |user| Tiddle.purge_old_tokens(user) }
     end
 
     protected

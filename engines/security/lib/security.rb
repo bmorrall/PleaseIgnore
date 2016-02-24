@@ -1,6 +1,7 @@
 require 'secure_headers'
 require 'rack/attack'
 require 'logging'
+require 'workers'
 
 require 'security/engine'
 require 'security/configuration'

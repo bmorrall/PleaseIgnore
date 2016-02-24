@@ -114,10 +114,12 @@ describe ContactsController, type: :controller do
         it { is_expected.to respond_with(:unprocessable_entity) }
         it { is_expected.not_to render_with_layout }
         it { is_expected.not_to set_flash }
+
         it 'should assign a contact with errors' do
           contact = assigns(:contact)
           expect(contact.errors).to_not be_empty
         end
+
         it 'should render valid JSON' do
           expect do
             JSON.parse(response.body)
@@ -125,18 +127,12 @@ describe ContactsController, type: :controller do
         end
       end
 
-      it 'should send contact emails through a action mailer delivery job queue' do
-        Sidekiq::Testing.fake! do
-          mailer_worker = ActiveJob::QueueAdapters::SidekiqAdapter::JobWrapper
-          expect do
-            xhr :post, :create, contact: valid_create_attributes
-          end.to change(mailer_worker.jobs, :size).by(1)
-
-          mailer_job = mailer_worker.jobs.last
-          expect(mailer_job['queue']).to eq('mailer')
-        end
+      it 'should send contact emails through a action mailer delivery job queue', :queue_workers do
+        expect do
+          xhr :post, :create, contact: valid_create_attributes
+        end.to enqueue_a_mailer(ContactMailer, :support_email)
       end
-      it 'should not send any emails with an invalid request' do
+      it 'should not send any emails with an invalid request', :inline_workers do
         expect do
           xhr :post, :create, contact: { name: 'not-valid' }
         end.to_not change(ActionMailer::Base.deliveries, :count)

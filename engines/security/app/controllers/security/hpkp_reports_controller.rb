@@ -7,7 +7,8 @@ module Security
     # @example POST /security/hpkp_report
     # @return void
     def create
-      Security::ReportMailer.hpkp_report(hpkp_report_param).deliver_later(queue: :mailer)
+      Security::ReportMailer.hpkp_report(hpkp_report_param)
+                            .deliver_later(queue: Workers::HIGH_PRIORITY)
 
       render text: ''
     end

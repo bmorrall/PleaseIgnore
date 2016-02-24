@@ -47,7 +47,7 @@ Rollbar.configure do |config|
   # Enable delayed reporting (using Sidekiq)
   if ::Settings.sidekiq_enabled?
     # You can supply custom Sidekiq options:
-    config.use_sidekiq 'queue' => 'high_priority'
+    config.use_sidekiq 'queue' => Workers::HIGH_PRIORITY
 
     config.sidekiq_threshold = 3 # Start reporting from 3 retries jobs
   end

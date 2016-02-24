@@ -4,7 +4,7 @@ RSpec.describe 'Security::HpkpReports', type: :request do
   include ActiveSupport::Testing::TimeHelpers
 
   describe 'POST /security/hpkp_reports' do
-    it 'sends a HPKP Report email' do
+    it 'sends a HPKP Report email', :inline_workers do
       expect do
         post '/security/hpkp_report', {
           "date-time": DateTime.now.rfc3339,

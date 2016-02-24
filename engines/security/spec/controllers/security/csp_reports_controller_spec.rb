@@ -20,14 +20,10 @@ RSpec.describe Security::CspReportsController, type: :controller do
         }.to_json
       end
 
-      it 'sends a new CSP Report Email' do
+      it 'sends a new CSP Report Email', :queue_workers do
         expect do
           post :create, csp_report
-        end.to change(ActionMailer::Base.deliveries, :count).by(1)
-
-        expect(ActionMailer::Base.deliveries.last.subject).to eq(
-          t('security.report_mailer.csp_report.subject')
-        )
+        end.to enqueue_a_mailer(Security::ReportMailer, :csp_report, queue: Workers::HIGH_PRIORITY)
       end
 
       it 'responds with success' do

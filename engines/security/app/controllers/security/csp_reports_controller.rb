@@ -7,7 +7,8 @@ module Security
     # @example POST /security/csp_report
     # @return void
     def create
-      Security::ReportMailer.csp_report(csp_report_param).deliver_later(queue: :mailer)
+      Security::ReportMailer.csp_report(csp_report_param)
+                            .deliver_later(queue: Workers::HIGH_PRIORITY)
 
       render text: ''
     end

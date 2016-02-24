@@ -23,14 +23,10 @@ RSpec.describe Security::HpkpReportsController, type: :controller do
         }.to_json
       end
 
-      it 'sends a new HPKP Report Email' do
+      it 'sends a new HPKP Report Email', :queue_workers do
         expect do
           post :create, hpkp_report
-        end.to change(ActionMailer::Base.deliveries, :count).by(1)
-
-        expect(ActionMailer::Base.deliveries.last.subject).to eq(
-          t('security.report_mailer.hpkp_report.subject')
-        )
+        end.to enqueue_a_mailer(Security::ReportMailer, :hpkp_report, queue: Workers::HIGH_PRIORITY)
       end
 
       it 'responds with success' do

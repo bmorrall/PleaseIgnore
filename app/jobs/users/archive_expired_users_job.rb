@@ -3,9 +3,9 @@ module Users
   # - have their abilities removed
   # - all details, aside from name removed
   class ArchiveExpiredUsersJob < ActiveJob::Base
-    include Rollbar::ActiveJob
+    include Workers::BackgroundJob
 
-    queue_as :low_priority
+    queue_as Workers::LOW_PRIORITY
 
     # Use `ArchiveExpiredUsersJob.perform_later` to invoke
     # @api private
