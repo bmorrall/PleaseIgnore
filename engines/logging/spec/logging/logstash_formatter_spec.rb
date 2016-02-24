@@ -15,7 +15,7 @@ describe Logging::LogStashFormatter do
 
       it 'should include message, severity, progname, tags, and timestamp in the result' do
         severity = 'WARN'
-        time = Time.iso8601("2013-01-01T00:00:00.000Z")
+        time = Time.iso8601('2013-01-01T00:00:00.000Z')
         progname = Faker::Lorem.word.downcase
         message = Faker::Lorem.sentence
         tags = Faker::Lorem.words

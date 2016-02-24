@@ -6,13 +6,13 @@ describe Logging::ControllerParamsFilter do
       token = Faker::Lorem.words.join('_').downcase
       allow(ActionController::Base).to receive(:request_forgery_protection_token).and_return(token)
 
-      result = described_class.filter({ token => 'blarg' })
+      result = described_class.filter(token => 'blarg')
       expect(result).to eq({})
     end
 
     it 'removes tokens starting with an underscore' do
-      result = described_class.filter({ '_foo' => 24, 'bar' => 42, '__baz' => 12 })
-      expect(result).to eq({ 'bar' => 42 })
+      result = described_class.filter('_foo' => 24, 'bar' => 42, '__baz' => 12)
+      expect(result).to eq('bar' => 42)
     end
 
     it 'replaces filtered parameters' do
