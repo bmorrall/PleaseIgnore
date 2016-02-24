@@ -44,7 +44,7 @@ module Users
       Users::ArchiveExpiredUser.call(user)
       true
     rescue ActiveRecord::RecordInvalid => e
-      Rollbar.error(e, user_id: user.id)
+      Logging.log_error(e, user_id: user.id, errors: user.errors.to_h)
       false
     end
   end

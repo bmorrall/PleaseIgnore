@@ -37,7 +37,9 @@ describe Users::ArchiveExpiredUsersJob do
       error = ActiveRecord::RecordInvalid.new(invalid_user)
 
       expect(Users::ArchiveExpiredUser).to receive(:call).with(invalid_user).and_raise(error)
-      expect(Rollbar).to receive(:error).with(error, user_id: invalid_user.id)
+      expect(Logging).to receive(:log_error).with(
+        error, user_id: invalid_user.id, errors: kind_of(Hash)
+      )
       expect(subject).to eq 0
     end
   end
