@@ -1,5 +1,5 @@
-module Security
-  # Provides a Generator to setup Security
+module Logging
+  # Provides a Generator to setup Logging
   class InitializerGenerator < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
 

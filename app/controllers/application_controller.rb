@@ -4,7 +4,7 @@
 # - Filters extra params for Devise (name)
 #
 class ApplicationController < ActionController::Base
-  include Concerns::LogrageMetadata
+  include Logging::ControllerLogging
   include Concerns::PaperTrailMetadata
 
   # Add common responders to Application

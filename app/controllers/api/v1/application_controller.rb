@@ -2,7 +2,7 @@ module Api
   module V1
     # Base Controller class for Api::V1 Controllers
     class ApplicationController < ::ActionController::Base
-      include Concerns::LogrageMetadata
+      include Logging::ControllerLogging
       include Concerns::PaperTrailMetadata
 
       # Prevent CSRF attacks by clearning the session..

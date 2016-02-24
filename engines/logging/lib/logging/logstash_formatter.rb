@@ -9,11 +9,11 @@ module Logging
       return super if Logging.skip_formatting? || severity == 'DEBUG'
 
       LogStash::Event.new(
-        message: msg,
-        :@severity => severity,
-        :@progname => progname,
-        :@tags => current_tags,
-        :@timestamp => time
+        'message' => msg,
+        '@severity' => severity,
+        '@progname' => progname,
+        '@tags' => current_tags,
+        '@timestamp' => time
       ).to_json + "\n"
     end
   end
