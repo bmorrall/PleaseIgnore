@@ -497,6 +497,7 @@ DEPENDENCIES
   bootstrap-sass
   bootswatch-rails
   brakeman
+  bundler (= 1.11.2)
   cancancan
   cane
   capybara-screenshot

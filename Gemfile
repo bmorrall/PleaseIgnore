@@ -161,6 +161,8 @@ group :doc do
 end
 
 group :development do
+  gem 'bundler', '1.11.2', require: false
+
   gem 'annotate' # Annotate models with db schema
   gem 'quiet_assets'
   gem 'rack-mini-profiler' # Add a profiling tab to each page
