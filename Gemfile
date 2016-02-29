@@ -39,9 +39,6 @@ gem 'simple_form'
 
 gem 'acts_as_list'
 
-# User authentication with Devise
-gem 'devise'
-
 # Use Action Caching to save pages
 gem 'actionpack-action_caching'
 
@@ -59,9 +56,6 @@ gem 'high_voltage'
 
 # Use flutie for page_title and body_class
 gem 'flutie'
-
-# Soft Delete Critical Records
-gem 'paranoia', '2.1.3'
 
 # Use redcarpet for markdown parseing
 gem 'redcarpet', require: 'tilt/redcarpet'
@@ -84,15 +78,8 @@ gem 'cancancan'
 # Use local time to parse time
 gem 'local_time'
 
-# Use Rolify to Mnnage User Roles
-gem 'rolify'
-
 # Use Sidekiq for background jobs
 gem 'sinatra', require: false # required by Sidekiq::Web
-
-# Send Devise mail through ActiveJob
-gem 'devise-async'
-gem 'devise-async-activejob'
 
 # Leave a Paper Trail
 gem 'paper_trail', '~> 4.1.0'
@@ -111,6 +98,7 @@ gem 'bootswatch-rails'
 # Authentication
 # ==============
 
+gem 'devise'
 gem 'tiddle'
 
 # Dashboard
@@ -135,6 +123,10 @@ gem 'whenever', require: false
 # ==============
 
 gem 'security', path: 'engines/security'
+
+# Authentication
+
+gem 'users', path: 'engines/users'
 
 # Devops
 # ==============

@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 2.2
+  Exclude:
+    - 'db/migrate/**/*.rb'
+    - 'spec/dummy/**/*.rb'
+
+# Configuration parameters: AllowURI, URISchemes.
+Metrics/LineLength:
+  Max: 100
+  AllowURI: true

@@ -35,37 +35,6 @@ require 'rails_helper'
 describe User, type: :model do
   it_behaves_like 'a soft deletable model'
 
-  describe '#gravatar_image' do
-    let(:instance) { described_class.new }
-
-    context 'with a email address' do
-      let(:email) { Faker::Internet.email }
-      before(:each) { instance.email = email }
-
-      context 'with no size argument' do
-        subject { instance.gravatar_image }
-
-        it 'calls the gravatar service with email and a size argument of 128' do
-          gravatar_url = double('gravatar url')
-          expect(Gravatar).to receive(:gravatar_image_url).with(email, 128).and_return(gravatar_url)
-          expect(subject).to eq gravatar_url
-        end
-      end
-      %w(16 32 64 128).each do |size|
-        context "with a size argument of #{size}" do
-          subject { instance.gravatar_image(size.to_i) }
-
-          it "calls the gravatar service with email and a size argument of #{size}" do
-            gravatar_url = double('gravatar url')
-            expect(Gravatar).to receive(:gravatar_image_url).with(email, size.to_i)
-              .and_return(gravatar_url)
-            expect(subject).to eq gravatar_url
-          end
-        end
-      end
-    end
-  end
-
   describe 'Associations' do
     describe '#organisations' do
       let(:instance) { create :user }
@@ -81,90 +50,6 @@ describe User, type: :model do
         create(:organisation)
 
         expect(subject).to eq []
-      end
-    end
-  end
-
-  describe 'DeviseOverrides' do
-    describe '#no_login_password?' do
-      let(:instance) { described_class.new }
-      subject { instance.no_login_password? }
-
-      it 'returns true when the encrypted_password is blank' do
-        is_expected.to be(true)
-      end
-
-      it 'returns true if the password has been assigned but not saved' do
-        instance.password = Faker::Lorem.word
-        is_expected.to be(true)
-      end
-
-      context 'when the user has a encrypted_password' do
-        let(:instance) { create(:user) }
-
-        it { is_expected.to be(false) }
-
-        it 'should remain false when a new password has been set' do
-          instance.password = Faker::Lorem.word
-          is_expected.to be(false)
-        end
-      end
-    end
-  end
-
-  describe 'DeviseValidations' do
-    describe 'email validation' do
-      context 'when email is required' do
-        before(:each) { allow(subject).to receive(:email_required?).and_return(true) }
-
-        it { should validate_presence_of :email }
-      end
-
-      context 'when email has changed' do
-        before(:each) { allow(subject).to receive(:email_changed?).and_return(true) }
-
-        it { should validate_uniqueness_of(:email).case_insensitive }
-
-        it 'should allow valid emails' do
-          %w(
-            a.b.c@example.com
-            test_mail@gmail.com
-            any@any.net
-            email@test.br
-            123@mail.test
-            1☃3@mail.test
-          ).each do |valid_email|
-            should allow_value(valid_email).for(:email)
-          end
-        end
-        it 'should not allow invalid emails' do
-          %w{
-            invalid_email_format
-            123
-            $$$
-            ()
-            ☃
-            bla@bla.
-          }.each_with_index do |invalid_email|
-            should_not allow_value(invalid_email).for(:email)
-          end
-        end
-      end
-
-      context 'with a soft_deleted user with the same email' do
-        before(:each) { create(:user, :soft_deleted, email: 'test@example.com') }
-
-        it 'should not allow the same email to be used' do
-          should_not allow_value('test@example.com').for(:email)
-        end
-      end
-    end
-
-    describe 'password validation' do
-      context 'when password is required' do
-        it { should validate_presence_of(:password) }
-        it { should validate_confirmation_of(:password) }
-        it { should validate_length_of(:password).is_at_least(8).is_at_most(128) }
       end
     end
   end
@@ -232,70 +117,6 @@ describe User, type: :model do
         expect(create_version.item_owner).to eq organisation
         expect(create_version.meta).to include(user_id: user.id, role: 'owner')
         expect(create_version.event).to eq 'destroy'
-      end
-    end
-  end
-
-  describe 'Validations' do
-    it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_acceptance_of(:terms_and_conditions) }
-
-    describe 'email validation' do
-      it 'should validate the uniqueness of email' do
-        create :user
-        is_expected.to validate_uniqueness_of(:email).case_insensitive
-      end
-
-      context 'when email is required' do
-        before(:each) { allow(subject).to receive(:email_required?).and_return(true) }
-
-        it { should validate_presence_of :email }
-      end
-      context 'when email is not required' do
-        before(:each) { allow(subject).to receive(:email_required?).and_return(false) }
-
-        it { should_not validate_presence_of :email }
-      end
-
-      context 'when email has changed' do
-        before(:each) { allow(subject).to receive(:email_changed?).and_return(true) }
-
-        %w(
-          a.b.c@example.com
-          test_mail@gmail.com
-          any@any.net
-          email@test.br
-          123@mail.test
-          1☃3@mail.test
-        ).each do |valid_email|
-          it { should allow_value(valid_email).for(:email) }
-        end
-        %w(
-          invalid_email_format
-          123
-          $$$
-          ()
-          ☃
-          bla@bla.
-        ).each do |invalid_email|
-          it { should_not allow_value(invalid_email).for(:email) }
-        end
-      end
-
-      context 'with a soft_deleted user with the same email' do
-        before(:each) { create(:user, :soft_deleted, email: 'test@example.com') }
-
-        it 'should not allow the same email to be used' do
-          should_not allow_value('test@example.com').for(:email)
-        end
-      end
-    end
-
-    describe 'password validation' do
-      context 'when password is required' do
-        it { should validate_presence_of(:password) }
-        it { should validate_confirmation_of(:password) }
-        it { should validate_length_of(:password).is_at_least(8).is_at_most(128) }
       end
     end
   end

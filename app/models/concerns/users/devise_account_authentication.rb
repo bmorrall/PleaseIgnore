@@ -93,6 +93,15 @@ module Concerns
 
       # Devise Overrides
 
+      # [Devise] Allows users to be saved without an email address if a account has been linked
+      def email_required?
+        if new_session_accounts.any? || accounts.any?
+          false # Users with Accounts (or pending accounts) do not need a password
+        else
+          super # Users without accounts may require an email address
+        end
+      end
+
       # [Devise] Checks whether a password is needed or not. For validations only.
       # Passwords are always required if it's a new record, or if the password
       # or confirmation are being set somewhere.
