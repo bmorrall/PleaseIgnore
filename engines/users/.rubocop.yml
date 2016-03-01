@@ -8,3 +8,8 @@ AllCops:
 Metrics/LineLength:
   Max: 100
   AllowURI: true
+
+Style/AsciiComments:
+  Exclude:
+    - 'lib/core_extensions/string/safe_permalink.rb'
+    - 'lib/core_extensions/string/transliterations.rb'

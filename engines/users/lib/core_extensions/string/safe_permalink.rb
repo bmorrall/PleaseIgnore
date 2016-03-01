@@ -5,6 +5,9 @@ module CoreExtensions
     # - converts invalid characters to single '-' strings
     module SafePermalink
       # Converts string into a safe permalink, relies on #transliterate
+      # @api public
+      # @example "JÃ¼rgen Borscht".safe_permalink => "jurgen-borscht"
+      # @return [String] a string safe to use as a permalink
       def safe_permalink
         # permalink has characters normalised from non-latin characters
         transliterate.tap do |permalink|

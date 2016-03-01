@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.minimum_coverage 80
+SimpleCov.minimum_coverage 90
 SimpleCov.start
 
 ENV['RAILS_ENV'] ||= 'test'
