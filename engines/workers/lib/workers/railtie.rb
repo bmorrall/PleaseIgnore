@@ -14,6 +14,7 @@ module Workers
     end
 
     initializer 'workers.initialize_sidekiq' do
+      # :nocov:
       if Workers.configuration.redis_url.present?
         Sidekiq.configure_server do |config|
           config.redis = Workers.sidekiq_config
@@ -22,6 +23,7 @@ module Workers
           config.redis = Workers.sidekiq_config
         end
       end
+      # :nocov:
     end
 
     initializer 'workers.monkey_patch_action_mailer_delivery_job' do
