@@ -49,6 +49,12 @@ module PleaseIgnore
     # Add response codes for common exceptions
     Rails.application.config.action_dispatch.rescue_responses['CanCan::AccessDenied'] = :forbidden
 
+    # Add Extensions onto the Version Model
+    config.after_initialize do
+      PaperTrail::Version.include CoreExtensions::PaperTrail::VersionItemOwner
+      PaperTrail::Version.include CoreExtensions::PaperTrail::VersionMetaStore
+    end
+
     # Set whodunnint for non-ActionController changes
     rake_tasks do
       # Keep track of rake tasks
