@@ -1,3 +1,8 @@
+User.include Concerns::Users::DeviseTokenAuthentication
+User.include Concerns::Users::DeviseAccountAuthentication
+User.include Concerns::Versions::UserVersioning
+Role.include Concerns::Versions::RoleVersioning
+
 Rails.application.routes.draw do
   devise_for :users, controllers: {
     confirmations: 'users/confirmations',
