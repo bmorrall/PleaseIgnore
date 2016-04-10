@@ -12,7 +12,7 @@ feature 'Email Authentication', type: :feature do
     sign_in_with_credentials(user.email, password)
 
     # Then I see a successful sign in message
-    expect(page).to have_selector '.alert-success', t('devise.sessions.signed_in')
+    expect(page).to have_selector('.alert-success', text: t('devise.sessions.signed_in'))
 
     # And I should be at the new registration path
     expect(current_path).to eq dashboard_path
@@ -28,7 +28,7 @@ feature 'Email Authentication', type: :feature do
     sign_in_with_credentials(Faker::Internet.email, Faker::Internet.password)
 
     # Then I should see an invalid password error
-    expect(page).to have_selector '.alert-danger', t('devise.failure.invalid')
+    expect(page).to have_selector('.alert-danger', text: t('devise.failure.invalid'))
 
     # And I should not be signed in
     assert_signed_out
@@ -42,7 +42,7 @@ feature 'Email Authentication', type: :feature do
     sign_in_with_credentials(user.email, Faker::Internet.password)
 
     # Then I should see an invalid password error
-    expect(page).to have_selector '.alert-danger', t('devise.failure.invalid')
+    expect(page).to have_selector('.alert-danger', text: t('devise.failure.invalid'))
 
     # And I should not be signed in
     assert_signed_out
@@ -56,7 +56,7 @@ feature 'Email Authentication', type: :feature do
     sign_in_with_credentials(user.email, '')
 
     # Then I should see an illegal password error
-    expect(page).to have_selector '.alert-danger', t('devise.failure.invalid')
+    expect(page).to have_selector('.alert-danger', text: t('devise.failure.invalid'))
 
     # And I should not be signed in
     assert_signed_out
@@ -65,13 +65,14 @@ feature 'Email Authentication', type: :feature do
   # THEN
 
   def assert_signed_in(user)
-    expect(page).to have_selector '.navbar-nav .user-name', user.name
+    expect(page).to have_selector('.navbar-nav .user-name', text: user.name)
   end
 
   def assert_signed_out
-    expect(page).to_not have_selector '.navbar-nav .user-name'
+    expect(page).to_not have_selector('.navbar-nav .user-name')
     expect(page).to have_selector(
-      ".navbar-nav a[href$='#{new_user_session_path}']", t('layouts.navigation.my_dashboard')
+      ".navbar-nav a[href$='#{new_user_session_path}']",
+      text: t('layouts.navigation.my_dashboard')
     )
   end
 end

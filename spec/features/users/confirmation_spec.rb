@@ -23,7 +23,10 @@ feature 'User Confirmation', type: :feature do
       click_button t('devise.confirmations.form.send')
     end
 
-    expect(page).to have_selector '.alert.alert-success strong', t('devise.confirmations.confirmed')
+    expect(page).to have_selector(
+      '.alert.alert-success strong',
+      text: t('devise.confirmations.send_paranoid_instructions')
+    )
   end
 
   # And I click the link on the received email
@@ -36,7 +39,10 @@ feature 'User Confirmation', type: :feature do
 
   # Then my account should be confirmed
   def assert_account_is_confirmed
-    expect(page).to have_selector '.alert.alert-success strong', t('devise.confirmations.confirmed')
+    expect(page).to have_selector(
+      '.alert.alert-success strong',
+      text: t('devise.confirmations.confirmed')
+    )
 
     logged_in_user.reload
     expect(logged_in_user).to be_confirmed_at
@@ -44,9 +50,9 @@ feature 'User Confirmation', type: :feature do
 
   # Then the confirmation widget should be hidden
   def assert_dashboard_widget_hidden
-    expect(page).to_not have_selector '.confirm-account'
+    expect(page).to_not have_selector('.confirm-account')
 
     # Empty Dashboard Cell
-    expect(page).to have_selector 'p', t('dashboard.empty.display.empty_message')
+    expect(page).to have_selector('p', text: t('dashboard.empty.display.empty_message'))
   end
 end
