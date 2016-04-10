@@ -6,7 +6,7 @@ feature 'Deauthentication', type: :feature do
     sign_out_via_navbar
 
     # Then I should see a signed out message
-    expect(page).to have_selector '.alert-success', t('devise.sessions.signed_out')
+    expect(page).to have_selector('.alert-success', text: t('devise.sessions.signed_out'))
 
     # And I should be signed out
     assert_signed_out
@@ -25,9 +25,10 @@ feature 'Deauthentication', type: :feature do
   end
 
   def assert_signed_out
-    expect(page).to_not have_selector '.navbar-nav .user-name'
+    expect(page).to_not have_selector('.navbar-nav .user-name')
     expect(page).to have_selector(
-      ".navbar-nav a[href$='#{new_user_session_path}']", t('layouts.navigation.my_dashboard')
+      ".navbar-nav a[href$='#{new_user_session_path}']",
+      text: t('layouts.navigation.my_dashboard')
     )
     expect(current_path).to eq new_user_session_path
   end
