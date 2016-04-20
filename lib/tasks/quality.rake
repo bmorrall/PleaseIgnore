@@ -47,6 +47,14 @@ namespace :quality do
     end
   end
 
+  begin
+    require 'bundler/audit/task'
+  rescue LoadError
+    warn 'bundler-audit not available, rubocop task not provided.'
+  else
+    Bundler::Audit::Task.new
+  end
+
   # Yardstick Rake Tasks
   namespace :yardstick do
     # Measure YARD Coverage
@@ -82,6 +90,7 @@ end
 desc 'Run code quality metrics on project'
 task quality: %w(
   brakeman:run
+  quality:bundle:audit
   quality:cane
   quality:haml_lint
   quality:rubocop

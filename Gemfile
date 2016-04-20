@@ -181,6 +181,7 @@ group :test, :development do
   # Code Quality Metrics
   gem 'i18n-tasks', '~> 0.8.5', require: false
   gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
   gem 'cane', require: false
   gem 'haml_lint', require: false
   gem 'rubocop', require: false
