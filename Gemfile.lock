@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/bmorrall/haml.git
-  revision: faa42fb0fa3c71209855e9862d1ec0949979a813
-  tag: 4.1.0.beta.1
-  specs:
-    haml (4.1.0.beta.1)
-      tilt
-
 PATH
   remote: engines/logging
   specs:
@@ -220,6 +212,8 @@ GEM
     gherkin (3.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    haml (4.1.0.beta.1)
+      tilt
     haml_lint (0.17.1)
       haml (~> 4.0)
       rake (>= 10, < 12)
@@ -530,7 +524,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   flutie
-  haml!
+  haml
   haml_lint
   high_voltage
   i18n-tasks (~> 0.8.5)
