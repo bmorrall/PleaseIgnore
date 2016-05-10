@@ -507,7 +507,7 @@ DEPENDENCIES
   bootstrap-sass
   bootswatch-rails
   brakeman
-  bundler (= 1.11.2)
+  bundler (= 1.12.3)
   bundler-audit
   cancancan
   cane
@@ -576,5 +576,8 @@ DEPENDENCIES
   workers!
   yardstick
 
+RUBY VERSION
+   ruby 2.2.4p230
+
 BUNDLED WITH
-   1.11.2
+   1.12.3

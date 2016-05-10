@@ -153,7 +153,7 @@ group :doc do
 end
 
 group :development do
-  gem 'bundler', '1.11.2', require: false
+  gem 'bundler', '1.12.3', require: false
 
   gem 'annotate' # Annotate models with db schema
   gem 'quiet_assets'
