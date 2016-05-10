@@ -37,7 +37,7 @@ module Users
       end
     end
 
-    protected
+    private
 
     # Filters
 

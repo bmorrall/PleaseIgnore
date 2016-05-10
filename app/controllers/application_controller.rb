@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
       before_action :delete_authentication_tokens
     end
 
-    protected
+    private
 
     # [Devise] Redirects signed in users to their profile instead of root
     # @api private
